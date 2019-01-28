@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="50dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/signup"
+            android:textColor="#FFF"
+            android:textSize="32sp"
+            app:fontFamily="@font/asap_medium"
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="75dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editText2"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:ems="10"
+                    android:hint="@string/signup_name1"
+                    android:textColorHint="#FFF"
+                    android:inputType="textPersonName"
+                    tools:layout_editor_absoluteX="40dp"
+                    tools:layout_editor_absoluteY="135dp" />
+
+                <EditText
+                    android:id="@+id/editText3"
+                    android:layout_width="179dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:ems="10"
+                    android:hint="@string/signup_name2"
+                    android:textColorHint="#FFF"
+                    android:inputType="textPersonName"
+                    tools:layout_editor_absoluteX="162dp"
+                    tools:layout_editor_absoluteY="135dp" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/spinner_school"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Spinner
+                android:id="@+id/spinner_department"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/editText4"
+                android:layout_width="301dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="@string/signup_email"
+                android:textColorHint="#FFF"
+                tools:layout_editor_absoluteX="40dp"
+                tools:layout_editor_absoluteY="197dp" />
+
+            <EditText
+                android:id="@+id/editText5"
+                android:layout_width="302dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="@string/signup_password1"
+                android:textColorHint="#FFF"
+                tools:layout_editor_absoluteX="40dp"
+                tools:layout_editor_absoluteY="260dp" />
+
+            <EditText
+                android:id="@+id/editText6"
+                android:layout_width="302dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="@string/signup_password2"
+                android:textColorHint="#FFF"
+                tools:layout_editor_absoluteX="39dp"
+                tools:layout_editor_absoluteY="327dp" />
+
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_round_button_yellow"
+                android:text="@string/next"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

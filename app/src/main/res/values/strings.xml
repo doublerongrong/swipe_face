@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">home</string>
+    <string name="title_home">課程清單</string>
+    <string name="title_leave">學生假單</string>
+    <string name="title_user">帳戶管理</string>
+    <string name="signup_name2">名字</string>
+    <string name="signup_name1">姓氏</string>
+    <string name="signup_email">電子信箱</string>
+    <string name="signup_password1">密碼</string>
+    <string name="signup_password2">再次輸入密碼</string>
+    <string name="signup_key">老師金鑰</string>
+    <string name="signup">Sign Up</string>
+    <string name="next">Next</string>
+    <string name="signup_choose">請選擇身分</string>
+    <string name="teacher">老師</string>
+    <string name="student">學生</string>
+    <string name="search_student">搜尋學生</string>
+</resources>
