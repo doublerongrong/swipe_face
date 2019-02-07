@@ -15,4 +15,7 @@
     <string name="teacher">老師</string>
     <string name="student">學生</string>
     <string name="search_student">搜尋學生</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
