@@ -11,4 +11,11 @@
         android:layout_height="match_parent"
         android:text="USER" />
 
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="120dp"
+        android:layout_height="112dp"
+        android:text="Button" />
+
+
 </FrameLayout>
