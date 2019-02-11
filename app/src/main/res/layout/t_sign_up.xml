@@ -43,6 +43,7 @@
                     android:ems="10"
                     android:hint="@string/signup_name1"
                     android:inputType="textPersonName"
+                    android:textColor="#FFF"
                     android:textColorHint="#FFF"
                     tools:layout_editor_absoluteX="40dp"
                     tools:layout_editor_absoluteY="135dp" />
@@ -55,6 +56,7 @@
                     android:ems="10"
                     android:hint="@string/signup_name2"
                     android:inputType="textPersonName"
+                    android:textColor="#FFF"
                     android:textColorHint="#FFF"
                     tools:layout_editor_absoluteX="162dp"
                     tools:layout_editor_absoluteY="135dp" />
@@ -67,7 +69,8 @@
                 android:layout_marginBottom="10dp"
                 android:ems="10"
                 android:hint="@string/signup_email"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
+                android:textColor="#FFF"
                 android:textColorHint="#FFF"
                 tools:layout_editor_absoluteX="40dp"
                 tools:layout_editor_absoluteY="197dp" />
@@ -78,8 +81,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
-                android:hint="@string/signup_password2"
-                android:inputType="textPersonName"
+                android:hint="@string/signup_password1"
+                android:inputType="textPassword"
+                android:textColor="#FFF"
                 android:textColorHint="#FFF"
                 tools:layout_editor_absoluteX="39dp"
                 tools:layout_editor_absoluteY="327dp" />
@@ -90,8 +94,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
-                android:hint="@string/signup_password1"
-                android:inputType="textPersonName"
+                android:hint="@string/signup_password2"
+                android:inputType="textPassword"
+                android:textColor="#FFF"
                 android:textColorHint="#FFF"
                 tools:layout_editor_absoluteX="40dp"
                 tools:layout_editor_absoluteY="260dp" />
@@ -103,6 +108,7 @@
                 android:ems="10"
                 android:hint="@string/signup_key"
                 android:inputType="textPersonName"
+                android:textColor="#FFF"
                 android:textColorHint="#FFF"
                 tools:layout_editor_absoluteX="40dp"
                 tools:layout_editor_absoluteY="391dp" />
