@@ -35,80 +35,86 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/editText2"
-                android:layout_width="112dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="@string/signup_name1"
-                android:textColorHint="#FFF"
-                tools:layout_editor_absoluteX="40dp"
-                tools:layout_editor_absoluteY="135dp" />
+                <EditText
+                    android:id="@+id/editTextName1"
+                    android:layout_width="112dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:ems="10"
+                    android:hint="@string/signup_name1"
+                    android:inputType="textPersonName"
+                    android:textColor="#FFF"
+                    android:textColorHint="#FFF"
+                    tools:layout_editor_absoluteX="40dp"
+                    tools:layout_editor_absoluteY="135dp" />
 
-            <EditText
-                android:id="@+id/editText3"
-                android:layout_width="179dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:hint="@string/signup_name2"
-                android:textColorHint="#FFF"
-                tools:layout_editor_absoluteX="162dp"
-                tools:layout_editor_absoluteY="135dp" />
+                <EditText
+                    android:id="@+id/editTextName2"
+                    android:layout_width="179dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:ems="10"
+                    android:hint="@string/signup_name2"
+                    android:inputType="textPersonName"
+                    android:textColor="#FFF"
+                    android:textColorHint="#FFF"
+                    tools:layout_editor_absoluteX="162dp"
+                    tools:layout_editor_absoluteY="135dp" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="301dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/signup_email"
-            android:textColorHint="#FFF"
-            tools:layout_editor_absoluteX="40dp"
-            tools:layout_editor_absoluteY="197dp" />
+            <EditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="301dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:hint="@string/signup_email"
+                android:inputType="textEmailAddress"
+                android:textColor="#FFF"
+                android:textColorHint="#FFF"
+                tools:layout_editor_absoluteX="40dp"
+                tools:layout_editor_absoluteY="197dp" />
 
             <EditText
-            android:id="@+id/editText6"
-            android:layout_width="302dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/signup_password2"
-            android:textColorHint="#FFF"
-            tools:layout_editor_absoluteX="39dp"
-            tools:layout_editor_absoluteY="327dp" />
-
-            <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/editTextPassword1"
                 android:layout_width="302dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
-                android:inputType="textPersonName"
                 android:hint="@string/signup_password1"
+                android:inputType="textPassword"
+                android:textColor="#FFF"
+                android:textColorHint="#FFF"
+                tools:layout_editor_absoluteX="39dp"
+                tools:layout_editor_absoluteY="327dp" />
+
+            <EditText
+                android:id="@+id/editTextPassword2"
+                android:layout_width="302dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:hint="@string/signup_password2"
+                android:inputType="textPassword"
+                android:textColor="#FFF"
                 android:textColorHint="#FFF"
                 tools:layout_editor_absoluteX="40dp"
                 tools:layout_editor_absoluteY="260dp" />
 
             <EditText
-            android:id="@+id/editText7"
-            android:layout_width="302dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/signup_key"
-            android:textColorHint="#FFF"
-            tools:layout_editor_absoluteX="40dp"
-            tools:layout_editor_absoluteY="391dp" />
+                android:id="@+id/editTextKey"
+                android:layout_width="302dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/signup_key"
+                android:inputType="textPersonName"
+                android:textColor="#FFF"
+                android:textColorHint="#FFF"
+                tools:layout_editor_absoluteX="40dp"
+                tools:layout_editor_absoluteY="391dp" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/buttonRegister"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"

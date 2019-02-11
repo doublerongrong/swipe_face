@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/editTextName1"
                     android:layout_width="112dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -48,7 +48,7 @@
                     tools:layout_editor_absoluteY="135dp" />
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/editTextName2"
                     android:layout_width="179dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -60,47 +60,55 @@
                     tools:layout_editor_absoluteY="135dp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Spinner
                 android:id="@+id/spinner_school"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Spinner
                 android:id="@+id/spinner_department"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/editTextEmail"
                 android:layout_width="301dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:hint="@string/signup_email"
                 android:textColorHint="#FFF"
                 tools:layout_editor_absoluteX="40dp"
                 tools:layout_editor_absoluteY="197dp" />
 
             <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/editTextPassword1"
                 android:layout_width="302dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:hint="@string/signup_password1"
                 android:textColorHint="#FFF"
                 tools:layout_editor_absoluteX="40dp"
                 tools:layout_editor_absoluteY="260dp" />
 
             <EditText
-                android:id="@+id/editText6"
+                android:id="@+id/editTextPassword2"
                 android:layout_width="302dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:hint="@string/signup_password2"
                 android:textColorHint="#FFF"
                 tools:layout_editor_absoluteX="39dp"
@@ -108,7 +116,7 @@
 
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/buttonRegister"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
