@@ -39,8 +39,8 @@ public class S_SignUp extends AppCompatActivity implements View.OnClickListener{
     private Spinner spinner1;
     private Spinner spinner2;
 
-    private String[] school = {"私立輔仁大學","國立台灣大學"}; //宣告字串陣列
-    private String[] department = {"資訊管理學系","日本語文學系"}; //宣告字串陣列
+    private String[] school = {"請選擇學校","私立輔仁大學","國立台灣大學"}; //宣告字串陣列
+    private String[] department = {"請選擇科系","資訊管理學系","日本語文學系"}; //宣告字串陣列
 
     private ArrayAdapter<String> listAdapter; //宣告listAdapter物件
     private ArrayAdapter<String> listAdapter2; //宣告listAdapter物件
@@ -70,8 +70,11 @@ public class S_SignUp extends AppCompatActivity implements View.OnClickListener{
 
         spinner1=(Spinner)findViewById(R.id.spinner_school); //指向畫面上id為changetype1的Spinner物件
         spinner2=(Spinner)findViewById(R.id.spinner_department); //指向畫面上id為changetype1的Spinner物件
-        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, school);
-        listAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, department);
+        listAdapter = new ArrayAdapter<String>(this, R.layout.myspinner, school);
+        listAdapter2 = new ArrayAdapter<String>(this, R.layout.myspinner, department);
+
+        listAdapter.setDropDownViewResource(R.layout.myspinner_dropdown);
+        listAdapter2.setDropDownViewResource(R.layout.myspinner_dropdown);
 
         spinner1.setAdapter(listAdapter);
         spinner2.setAdapter(listAdapter2);
@@ -84,6 +87,9 @@ public class S_SignUp extends AppCompatActivity implements View.OnClickListener{
         final String password1 = editTextPassword1.getText().toString().trim();
         String password2 = editTextPassword2.getText().toString().trim();
         final String name = name1 + name2;
+
+        final String school = spinner1.getSelectedItem().toString();
+        final String department = spinner2.getSelectedItem().toString();
 
 
         if(TextUtils.isEmpty(name1)) {
@@ -136,6 +142,8 @@ public class S_SignUp extends AppCompatActivity implements View.OnClickListener{
                             Map<String,Object> user = new HashMap<>();
                             user.put("teacher_name",name);
                             user.put("teacher_email",email);
+                            user.put("teacher_school",school);
+                            user.put("teacher_department",department);
 
 
                             db.collection("Student").add(user);
