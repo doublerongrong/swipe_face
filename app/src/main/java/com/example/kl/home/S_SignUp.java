@@ -1,10 +1,12 @@
 package com.example.kl.home;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -90,72 +92,142 @@ public class S_SignUp extends AppCompatActivity implements View.OnClickListener{
 
         final String school = spinner1.getSelectedItem().toString();
         final String department = spinner2.getSelectedItem().toString();
+        int t ;
+
 
 
         if(TextUtils.isEmpty(name1)) {
             //name1 is empty
             Toast.makeText(this, "請輸入姓氏", Toast.LENGTH_SHORT).show();
+            t = 1;
             //stopping the function execution further
             return;
+        }else{
+            t = 0;
         }
+        Log.e("test1",Integer.toString(t));
 
         if(TextUtils.isEmpty(name2)) {
             //name2 is empty
             Toast.makeText(this, "請輸入名字", Toast.LENGTH_SHORT).show();
             //stopping the function execution further
+            t =1;
             return;
+        }else{
+            t = 0;
         }
+        Log.e("test2",Integer.toString(t));
+        if(school == "請選擇學校") {
+            //school is empty
+            Toast.makeText(this, "請選擇學校", Toast.LENGTH_SHORT).show();
+            t = 1;
+            //stopping the function execution further
+            return;
+        }else {
+            t = 0;
+        }
+        Log.e("test3",Integer.toString(t));
+        if(department == "請選擇科系") {
+            //department is empty
+            Toast.makeText(this, "請選擇系所", Toast.LENGTH_SHORT).show();
+            t = 1;
+            //stopping the function execution further
+            return;
+        }else {
+            t = 0;
+        }
+        Log.e("test4",Integer.toString(t));
+
+
 
         if(TextUtils.isEmpty(email)) {
             //email is empty
             Toast.makeText(this, "請輸入email", Toast.LENGTH_SHORT).show();
             //stopping the function execution further
+            t = 1;
             return;
+        }else {
+            t = 0;
         }
+        Log.e("test5",Integer.toString(t));
 
         if(TextUtils.isEmpty(password1)) {
             //password1 is empty
             Toast.makeText(this, "請輸入密碼", Toast.LENGTH_SHORT).show();
             //stopping the function execution further
+            t = 1;
             return;
         }
+        else if(password1.length() < 5){
+            //length of password1  is small than 5
+            Toast.makeText(this,"密碼請輸入至少五碼",Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            t = 1;
+            return;
+        }else{
+            t = 0;
+        }
+        Log.e("test6",Integer.toString(t));
 
         if(TextUtils.isEmpty(password2)) {
             //password2 is empty
             Toast.makeText(this, "請再次輸入密碼", Toast.LENGTH_SHORT).show();
             //stopping the function execution further
+            t = 1;
+
             return;
         }
+        else if (!password1.equals(password2)){
+
+                Toast.makeText(this,"密碼確認有誤",Toast.LENGTH_SHORT).show();
+                t = 1;
+                return ;
+
+        }else {
+            t = 0;
+        }
+        Log.e("test7",Integer.toString(t));
 
 
         //if validations are ok
         //we will first show a progressbar
+        if(t == 0) {
+            Log.e("work","go");
 
-        progressDialog.setMessage("Registering User...");
-        progressDialog.show();
+            //progressDialog.setMessage("Registering User...");
+            //progressDialog.show();
+            firebaseAuth = FirebaseAuth.getInstance();
+            db = FirebaseFirestore.getInstance();
 
-        firebaseAuth.createUserWithEmailAndPassword(email,password1)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            Map<String,Object> user = new HashMap<>();
-                            user.put("teacher_name",name);
-                            user.put("teacher_email",email);
-                            user.put("teacher_school",school);
-                            user.put("teacher_department",department);
+            firebaseAuth.createUserWithEmailAndPassword(email, password1)
+
+                    .addOnCompleteListener(v -> {
 
 
-                            db.collection("Student").add(user);
 
-                            //user is successfully registered and logged in
-                            //we will start the profile activity here
-                            Toast.makeText(S_SignUp.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(S_SignUp.this, "Could not register. please try again.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                                Map<String, Object> user = new HashMap<>();
+                                user.put("teacher_name", name);
+                                user.put("teacher_email", email);
+                                user.put("teacher_school", school);
+                                user.put("teacher_department", department);
+
+
+                                db.collection("Student").add(user);
+
+                                //user is successfully registered and logged in
+                                //we will start the profile activity here
+                                Toast.makeText(S_SignUp.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+
+
+
+                    });
+            Intent i = new Intent();
+            i.setClass(S_SignUp.this,TrainAndTest.class);
+            startActivity(i);
+            finish();
+
+        }
+
 
 
 
@@ -169,6 +241,8 @@ public class S_SignUp extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View view) {
         if(view == buttonRegister) {
             registerUser();
+
         }
+
     }
 }

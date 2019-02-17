@@ -32,7 +32,7 @@ if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
 * */
 
 public class UploadPhoto {
-    private final String uri = "http://192.168.128.148:8080/ProjectApi/api/FaceApi/TrainFace/";
+    private final String uri = "http://192.168.1.10:8080/ProjectApi/api/FaceApi/TrainFace/";
     //http://localhost:8080/ProjectApi/api/FaceApi/TrainFace/
     private final String parameterName = "photos";
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//抓現在登入user
