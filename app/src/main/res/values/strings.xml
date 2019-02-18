@@ -6,7 +6,7 @@
     <string name="signup_name2">名字</string>
     <string name="signup_name1">姓氏</string>
     <string name="signup_email">電子信箱</string>
-    <string name="signup_password1">密碼</string>
+    <string name="signup_password1">密碼(至少五碼)</string>
     <string name="signup_password2">再次輸入密碼</string>
     <string name="signup_key">老師金鑰</string>
     <string name="signup">Sign Up</string>
@@ -15,6 +15,12 @@
     <string name="teacher">老師</string>
     <string name="student">學生</string>
     <string name="search_student">搜尋學生</string>
+    <string name="signin_email">請輸入Email</string>
+    <string name="signin_password">請輸入密碼</string>
+    <string name="signin">Sign In</string>
+    <string name="signup_">Sign Up</string>
+    <string name="or">───────OR───────</string>
+    <string name="test">test</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
