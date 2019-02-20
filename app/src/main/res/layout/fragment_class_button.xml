@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="點 名"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:drawableTop="@drawable/btn1"
+        android:background="@drawable/bg_class_button">
+    </Button>
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="今日出缺席"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:drawableTop="@drawable/btn2"
+        android:background="@drawable/bg_class_button">
+    </Button>
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="假單管理"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:drawableTop="@drawable/btn3"
+        android:background="@drawable/bg_class_button">
+    </Button>
+
+
+</LinearLayout>
