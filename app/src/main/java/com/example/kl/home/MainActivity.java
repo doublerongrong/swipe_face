@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -17,7 +18,8 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Fragment_ClassList.OnFragmentSelectedListener {
+    private static final String TAG = "BACKFLAG";
 
     private TextView mTextMessage;
     private Fragment_ClassList fragment_classList;
@@ -47,15 +49,18 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     transaction.replace(R.id.content,new Fragment_ClassList());
+                    transaction.addToBackStack(new Fragment_ClassList().getClass().getName());
                     transaction.commit();
 
                     return true;
                 case R.id.navigation_leave:
                     transaction.replace(R.id.content,new Fragment_LeaveList());
+                    transaction.addToBackStack(new Fragment_LeaveList().getClass().getName());
                     transaction.commit();
                     return true;
                 case R.id.navigation_user:
                     transaction.replace(R.id.content,new Fragment_User());
+                    transaction.addToBackStack(new Fragment_User().getClass().getName());
                     transaction.commit();
                     return true;
             }
@@ -88,4 +93,34 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
+
+    @Override
+    public void onBackPressed() {
+        int count = getFragmentManager().getBackStackEntryCount();
+
+//        if (count == 0) {
+//            super.onBackPressed();
+//        } else {
+//            getFragmentManager().popBackStack();
+//        }
+        if (!BackHandlerHelper.handleBackPress(this)) {
+            super.onBackPressed();
+            Log.d(TAG, "ERROR");
+        } else {
+            Log.d(TAG, "success");
+        }
+    }//fragment退回鍵
+
+    @Override
+    public void onFragmentSelected(String info ,String fragmentKey) {
+        if(fragmentKey.equals("ClassList")) {
+            FragmentClassDetail fragmentClassDetail = new FragmentClassDetail();
+            Bundle args = new Bundle();
+            args.putString("info", info);
+            fragmentClassDetail.setArguments(args);
+            Log.d(TAG, " MAIN");
+            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragmentClassDetail).commit();
+        }//判斷是哪個fragment傳來的請求
+    }//fragment傳值並換頁
+
 }

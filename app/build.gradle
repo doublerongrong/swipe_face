@@ -13,8 +13,10 @@ android {
         multiDexEnabled true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8 //解決Static interface methods are only supported starting with Android N (--min-api 24)
-        targetCompatibility JavaVersion.VERSION_1_8//解決Static interface methods are only supported starting with Android N (--min-api 24)
+        sourceCompatibility JavaVersion.VERSION_1_8
+        //解決Static interface methods are only supported starting with Android N (--min-api 24)
+        targetCompatibility JavaVersion.VERSION_1_8
+//解決Static interface methods are only supported starting with Android N (--min-api 24)
     }
     buildTypes {
         release {
