@@ -1,7 +1,6 @@
 package com.example.kl.home;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kl.home.Adapter.ClassListAdapter;
+import com.example.kl.home.Model.Class;
+import com.example.kl.home.Model.Teacher;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -87,6 +88,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
                         classList.add(aClass);
                         classListAdapter.notifyDataSetChanged();
+
 
 
 

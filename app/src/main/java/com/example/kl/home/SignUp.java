@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class T_SignUp extends AppCompatActivity implements View.OnClickListener{
+public class SignUp extends AppCompatActivity implements View.OnClickListener{
 
     private Button buttonRegister;
     private EditText editTextName1;
@@ -131,9 +131,9 @@ public class T_SignUp extends AppCompatActivity implements View.OnClickListener{
 
                             //user is successfully registered and logged in
                             //we will start the profile activity here
-                            Toast.makeText(T_SignUp.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUp.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(T_SignUp.this, "Could not register. please try again.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUp.this, "Could not register. please try again.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -1,4 +1,4 @@
-package com.example.kl.home;
+package com.example.kl.home.Model;
 
 import android.support.annotation.NonNull;
 

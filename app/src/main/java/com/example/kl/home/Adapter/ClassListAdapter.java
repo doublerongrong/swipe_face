@@ -1,7 +1,6 @@
-package com.example.kl.home;
+package com.example.kl.home.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.kl.home.Model.Class;
+import com.example.kl.home.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +46,17 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
 
         ArrayList<String> class_schoolyeat = new ArrayList<String>();
 
+        Integer classYearCheck = Integer.parseInt(ClassList.get(position).getClass_year());
+        String classYear;
+        if (classYearCheck % 2 != 0){
+            classYear = Integer.toString(classYearCheck / 100) + " 上";
+        }
+        else{
+            classYear = Integer.toString(classYearCheck / 100) + " 下";
+        }
 
         holder.class_name.setText(ClassList.get(position).getClass_name());
-        holder.class_schoolyear.setText(ClassList.get(position).getClass_schoolyear());
+        holder.class_year.setText(classYear);
         holder.student_total.setText(ClassList.get(position).getStudent_total().toString());
         holder.class_id.setText(ClassList.get(position).getClass_id());
         String classId= ClassList.get(position).classId;
@@ -64,8 +74,6 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
                 mTransPageListener.onTransPageClick(classId);
 
 
-
-
             }
         });
 
@@ -80,7 +88,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder {
         View mView;
         public TextView class_name;
-        public TextView class_schoolyear;
+        public TextView class_year;
         public TextView student_total;
         public TextView class_id;
 
@@ -89,7 +97,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
             mView = itemView;
 
             class_name = (TextView) mView.findViewById(R.id.class_name);
-            class_schoolyear = (TextView) mView.findViewById(R.id.class_schoolyear);
+            class_year = (TextView) mView.findViewById(R.id.class_schoolyear);
             student_total = (TextView) mView.findViewById(R.id.student_total);
             class_id = (TextView) mView.findViewById(R.id.class_id);
 
