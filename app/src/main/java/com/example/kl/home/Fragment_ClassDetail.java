@@ -12,7 +12,7 @@ import android.widget.Toast;
 import static com.example.kl.home.BackHandlerHelper.handleBackPress;
 
 
-public class FragmentClassDetail extends Fragment implements FragmentBackHandler {
+public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
 
 
     private String TAG = "ClassDetail";

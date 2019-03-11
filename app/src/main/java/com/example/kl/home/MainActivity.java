@@ -4,9 +4,7 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -113,8 +111,8 @@ public class MainActivity extends AppCompatActivity implements Fragment_ClassLis
 
     @Override
     public void onFragmentSelected(String info ,String fragmentKey) {
-        if(fragmentKey.equals("ClassList")) {
-            FragmentClassDetail fragmentClassDetail = new FragmentClassDetail();
+        if(fragmentKey.equals("ToClassList")) {
+            Fragment_ClassDetail fragmentClassDetail = new Fragment_ClassDetail();
             Bundle args = new Bundle();
             args.putString("info", info);
             fragmentClassDetail.setArguments(args);

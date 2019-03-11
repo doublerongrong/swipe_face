@@ -103,15 +103,15 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
             @Override
             public void onTransPageClick(String classId2) {
                 Log.d(TAG,"onTransPageClick0" +classId2);
-                mCallback.onFragmentSelected(classId2 , "ClassList");//fragment傳值
+                mCallback.onFragmentSelected(classId2 , "ToClassList");//fragment傳值
 //                Log.d(TAG," classId:"+classId);
 //
 //                fragmentManager = getChildFragmentManager();
 //                Log.d(TAG,"onTransPageClick1");
 //                transaction = fragmentManager.beginTransaction();
 //                Log.d(TAG,"onTransPageClick2");
-//                transaction.replace(R.id.fragment_class_list, new FragmentClassDetail());
-//                transaction.addToBackStack(new FragmentClassDetail().getClass().getName());
+//                transaction.replace(R.id.fragment_class_list, new Fragment_ClassDetail());
+//                transaction.addToBackStack(new Fragment_ClassDetail().getClass().getName());
 //                transaction.commit();
 
             }
