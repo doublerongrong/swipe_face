@@ -29,7 +29,7 @@ import java.util.List;
 
 
 public class Fragment_LeaveList extends Fragment {
-    private static final String TAG = "Ｆirelog";
+    private static final String TAG = "LeaveList";
     private RecyclerView mMainList;
     private FirebaseFirestore mFirestore;
     private LeaveListAdapter leaveListAdapter;
@@ -70,17 +70,19 @@ public class Fragment_LeaveList extends Fragment {
                 String sortWay =  leaveListWaySpinner.getSelectedItem().toString();
                 leaveList.clear();
                 if(sortWay.equals("未審核")){
+                    leaveList.clear();
                     mFirestore.collection("Leave").whereEqualTo("leave_check","核准中").addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
 
                             if(e != null){
-                                Log.d(TAG,"error" + e.getMessage());
+                                Log.d(TAG,"error00" + e.getMessage());
                             }
-                            leaveList.clear();
+
                             for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
 
                                 if(doc.getType() == DocumentChange.Type.ADDED){
+                                    Log.d(TAG,"here" );
 
                                     String leaveRecordId = doc.getDocument().getId();
 
@@ -91,10 +93,17 @@ public class Fragment_LeaveList extends Fragment {
                                 }
 
                             }
+                            if(leaveList.isEmpty()){
+                                Log.d(TAG,"here0" );
+
+                                leaveListAdapter.notifyDataSetChanged();
+                            }
                         }
                     });
+
                 }
                 else if(sortWay.equals("已審核")){
+                    leaveList.clear();
                     mFirestore.collection("Leave").whereEqualTo("leave_check","准假").addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -102,7 +111,7 @@ public class Fragment_LeaveList extends Fragment {
                             if(e != null){
                                 Log.d(TAG,"error" + e.getMessage());
                             }
-                            leaveList.clear();
+
                             for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
 
                                 if(doc.getType() == DocumentChange.Type.ADDED){
@@ -142,6 +151,7 @@ public class Fragment_LeaveList extends Fragment {
                     });
                 }
                 else if(sortWay.equals("所有假單")){
+                    leaveList.clear();
                     mFirestore.collection("Leave").addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -149,7 +159,7 @@ public class Fragment_LeaveList extends Fragment {
                             if(e != null){
                                 Log.d(TAG,"error" + e.getMessage());
                             }
-                            leaveList.clear();
+
                             for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
 
                                 if(doc.getType() == DocumentChange.Type.ADDED){
