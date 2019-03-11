@@ -46,17 +46,9 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
 
         ArrayList<String> class_schoolyeat = new ArrayList<String>();
 
-        Integer classYearCheck = Integer.parseInt(ClassList.get(position).getClass_year());
-        String classYear;
-        if (classYearCheck % 2 != 0){
-            classYear = Integer.toString(classYearCheck / 100) + " 上";
-        }
-        else{
-            classYear = Integer.toString(classYearCheck / 100) + " 下";
-        }
 
         holder.class_name.setText(ClassList.get(position).getClass_name());
-        holder.class_year.setText(classYear);
+        holder.class_year.setText(ClassList.get(position).getClass_year());
         holder.student_total.setText(ClassList.get(position).getStudent_total().toString());
         holder.class_id.setText(ClassList.get(position).getClass_id());
         String classId= ClassList.get(position).classId;
