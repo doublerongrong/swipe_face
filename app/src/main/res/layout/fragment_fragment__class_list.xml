@@ -13,10 +13,31 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/class_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
+            <!--以下為上方搜尋欄-->
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/activity_controller"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/navigation_actionbox_createclass"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp" />
+            </LinearLayout>
+            <!--以上為上方搜尋欄-->
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/class_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

@@ -16,11 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".S_SignUp"
-            android:label="@string/title_activity_s__homepage"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".TrainAndTest" />
+        <activity android:name=".CreateClassSt1"/>
+        <activity android:name=".CreateClassSt2"/>
+        <activity android:name=".LeaveRecord"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

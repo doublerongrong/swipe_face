@@ -1,6 +1,7 @@
 package com.example.kl.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Model.Class;
@@ -42,6 +44,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private String classId;
+    private Button createClassBtn;
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
     @Override
@@ -63,6 +66,8 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         mMainList.setHasFixedSize(true);
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(classListAdapter);
+
+        createClassBtn = (Button) view.findViewById(R.id.CreatClassbButton);
         Log.d(TAG, "Flag1");
 
 
@@ -95,6 +100,14 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
                     }
                 }
 
+            }
+        });
+        createClassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), CreateClassSt1.class);
+                startActivity(intent);
             }
         });
 
