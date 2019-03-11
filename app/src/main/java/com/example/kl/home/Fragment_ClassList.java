@@ -50,6 +50,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fragment__class_list, container, false);
     }
@@ -141,9 +142,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         return BackHandlerHelper.handleBackPress(this);
     }//fragment 返回鍵
 
-    public interface OnFragmentSelectedListener {
-        public void onFragmentSelected(String info ,String fragmentKey);
-    }//Fragment傳值
+
 
     @Override
     public void onAttach(Context context) {

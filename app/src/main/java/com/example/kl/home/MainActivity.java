@@ -16,7 +16,7 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity implements Fragment_ClassList.OnFragmentSelectedListener {
+public class MainActivity extends AppCompatActivity implements OnFragmentSelectedListener {
     private static final String TAG = "BACKFLAG";
 
     private TextView mTextMessage;
@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements Fragment_ClassLis
 
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
+    private String teacher_email = "053792@mail.fju.edu.tw";
 
     // 設置默認進來是tab 顯示的頁面
     private void setDefaultFragment(){
@@ -118,6 +119,16 @@ public class MainActivity extends AppCompatActivity implements Fragment_ClassLis
             fragmentClassDetail.setArguments(args);
             Log.d(TAG, " MAIN");
             getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragmentClassDetail).commit();
+        }//判斷是哪個fragment傳來的請求
+
+        else if (fragmentKey.equals("toLeaveManage")) {
+            Fragment_LeaveList fragment_leaveList = new Fragment_LeaveList();
+            Bundle args = new Bundle();
+            args.putString("info", info);
+            args.putString("teacher_email", teacher_email);
+            fragment_leaveList.setArguments(args);
+            Log.d(TAG, " toLeaveManage");
+            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
         }//判斷是哪個fragment傳來的請求
     }//fragment傳值並換頁
 
