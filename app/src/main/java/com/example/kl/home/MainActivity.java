@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
 
     @Override
     public void onFragmentSelected(String info ,String fragmentKey) {
-        if(fragmentKey.equals("ToClassList")) {
+        if(fragmentKey.equals("toClassListDetail")) {
             Fragment_ClassDetail fragmentClassDetail = new Fragment_ClassDetail();
             Bundle args = new Bundle();
             args.putString("info", info);

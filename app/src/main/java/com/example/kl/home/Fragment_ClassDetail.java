@@ -1,6 +1,7 @@
 package com.example.kl.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import static com.example.kl.home.BackHandlerHelper.handleBackPress;
+
 import com.example.kl.home.Model.Class;
 
 
@@ -35,7 +37,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     private TextView text_class_title;
 
 
-
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
 
@@ -47,9 +48,9 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
         Bundle args = new Bundle();//fragment傳值
         args = getArguments();//fragment傳值
-        classId=args.getString("info");
-        Log.d(TAG,"classId:" +classId);//fragment傳值
-        Toast.makeText(getContext(),"現在課程資料庫代碼是"+classId,Toast.LENGTH_LONG).show();
+        classId = args.getString("info");
+        Log.d(TAG, "classId:" + classId);//fragment傳值
+        Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
 
 
         return inflater.inflate(R.layout.fragment_fragment_class_detail, container, false);
@@ -68,7 +69,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                 text_class_title.setText(firestore_class.getClass_name());
                 text_class_id.setText(firestore_class.getClass_id());
 
-                setSingleEvent(gridLayout , firestore_class);
+                setSingleEvent(gridLayout, firestore_class);
             }
         });
 
@@ -127,7 +128,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     }
 
     // we are setting onClickListener for each element 處理選項
-    private void setSingleEvent(GridLayout gridLayout , Class firestore_class) {
+    private void setSingleEvent(GridLayout gridLayout, Class firestore_class) {
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             CardView cardView = (CardView) gridLayout.getChildAt(i);
             final int finalI = i;
@@ -138,38 +139,43 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             Toast.LENGTH_SHORT).show();
                     switch (finalI) {
                         case 0:
-                            //intent activity
+                            //intent activity 點名
                             break;
                         case 1:
-                            //intent activity
+                            //intent activity 今日出缺席
 
                             break;
                         case 2:
-
+                            //假單管理
                             mCallback.onFragmentSelected(firestore_class.getClass_id(), "toLeaveManage");//fragment傳值
 
                             break;
                         case 3:
-
+                            //學生清單
                             mCallback.onFragmentSelected("", "toClassPerformance");//fragment傳值
                             break;
                         case 4:
-
-
+                            //小組清單
 
                             break;
                         case 5:
-
+                            //點人答題
+                            Intent intent = new Intent();
+                            intent.setClass(getActivity(), Activity_PickAnswer.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("classId", classId);
+                            intent.putExtras(bundle);
+                            getActivity().startActivity(intent);
 
                             break;
                         case 6:
-                            //intent activity
+                            //intent activity 提問按鈕
                             break;
                         case 7:
-                            //intent activity
+                            //intent activity 計分設定
                             break;
                         case 8:
-                            //intent activity
+                            //intent activity 繪出成績
                             break;
 
                     }

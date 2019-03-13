@@ -117,7 +117,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
             @Override
             public void onTransPageClick(String classId2) {
                 Log.d(TAG,"onTransPageClick0" +classId2);
-                mCallback.onFragmentSelected(classId2 , "ToClassList");//fragment傳值
+                mCallback.onFragmentSelected(classId2 , "toClassListDetail");//fragment傳值
 //                Log.d(TAG," classId:"+classId);
 //
 //                fragmentManager = getChildFragmentManager();
