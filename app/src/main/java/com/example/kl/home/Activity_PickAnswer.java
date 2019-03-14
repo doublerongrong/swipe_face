@@ -42,7 +42,7 @@ public class Activity_PickAnswer extends AppCompatActivity  {
                 Fragment_PickAnswerDetail fragment_pickAnswerDetail = new Fragment_PickAnswerDetail();
                 Bundle args = new Bundle();
                 args.putString("classId", classId);
-                args.putString("type" , "0");
+                args.putString("type" , "random_pick");
                 fragment_pickAnswerDetail.setArguments(args);
                 Log.d(TAG, " btn_pa_random_pick:"+classId);
                 getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.container_pick ,fragment_pickAnswerDetail).commit();
@@ -56,7 +56,7 @@ public class Activity_PickAnswer extends AppCompatActivity  {
                 Fragment_PickAnswerDetail fragment_pickAnswerDetail = new Fragment_PickAnswerDetail();
                 Bundle args = new Bundle();
                 args.putString("classId", classId);
-                args.putString("type" , "1");
+                args.putString("type" , "low_attendence");
                 fragment_pickAnswerDetail.setArguments(args);
                 Log.d(TAG, " btn_pa_random_pick:"+classId);
                 getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.container_pick ,fragment_pickAnswerDetail).commit();
@@ -71,7 +71,7 @@ public class Activity_PickAnswer extends AppCompatActivity  {
                 Fragment_PickAnswerDetail fragment_pickAnswerDetail = new Fragment_PickAnswerDetail();
                 Bundle args = new Bundle();
                 args.putString("classId", classId);
-                args.putString("type" , "2");
+                args.putString("type" , "low_interaction");
                 fragment_pickAnswerDetail.setArguments(args);
                 Log.d(TAG, " btn_pa_random_pick:"+classId);
                 getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.container_pick ,fragment_pickAnswerDetail).commit();
