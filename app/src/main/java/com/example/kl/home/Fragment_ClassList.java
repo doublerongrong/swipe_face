@@ -1,6 +1,7 @@
 package com.example.kl.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Model.Class;
@@ -42,11 +44,13 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private String classId;
+    private Button createClassBtn;
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fragment__class_list, container, false);
     }
@@ -63,6 +67,8 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         mMainList.setHasFixedSize(true);
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(classListAdapter);
+
+        createClassBtn = (Button) view.findViewById(R.id.CreatClassbButton);
         Log.d(TAG, "Flag1");
 
 
@@ -97,21 +103,29 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
             }
         });
+        createClassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), CreateClassSt1.class);
+                startActivity(intent);
+            }
+        });
 
         classListAdapter.setOnTransPageClickListener(new ClassListAdapter.transPageListener() {
 
             @Override
             public void onTransPageClick(String classId2) {
                 Log.d(TAG,"onTransPageClick0" +classId2);
-                mCallback.onFragmentSelected(classId2 , "ClassList");//fragment傳值
+                mCallback.onFragmentSelected(classId2 , "toClassListDetail");//fragment傳值
 //                Log.d(TAG," classId:"+classId);
 //
 //                fragmentManager = getChildFragmentManager();
 //                Log.d(TAG,"onTransPageClick1");
 //                transaction = fragmentManager.beginTransaction();
 //                Log.d(TAG,"onTransPageClick2");
-//                transaction.replace(R.id.fragment_class_list, new FragmentClassDetail());
-//                transaction.addToBackStack(new FragmentClassDetail().getClass().getName());
+//                transaction.replace(R.id.fragment_class_list, new Fragment_ClassDetail());
+//                transaction.addToBackStack(new Fragment_ClassDetail().getClass().getName());
 //                transaction.commit();
 
             }
@@ -128,9 +142,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         return BackHandlerHelper.handleBackPress(this);
     }//fragment 返回鍵
 
-    public interface OnFragmentSelectedListener {
-        public void onFragmentSelected(String info ,String fragmentKey);
-    }//Fragment傳值
+
 
     @Override
     public void onAttach(Context context) {

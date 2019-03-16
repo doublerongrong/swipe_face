@@ -45,6 +45,19 @@
             android:background="#FFF"
             app:srcCompat="@android:drawable/ic_menu_search" />
 
+        <Button
+            android:id="@+id/CreatClassbButton"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="90dp"
+            android:layout_marginBottom="13dp"
+            android:background="#FFF"
+            android:text="創建課程"
+            android:textColor="#000000"/>
+
 
     </RelativeLayout>
 
