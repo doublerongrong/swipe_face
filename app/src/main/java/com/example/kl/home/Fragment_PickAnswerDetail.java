@@ -30,8 +30,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.OrderBy;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -98,11 +100,14 @@ public class Fragment_PickAnswerDetail extends Fragment {
                 break;
 
             case "low_attendence":
+
                 Log.d(TAG, "low_attendence:");
+                setLowAttendence();
                 break;
 
             case "low_interaction":
                 Log.d(TAG, "low_interaction:");
+                setLowInteraction();
                 break;
 
 
@@ -138,7 +143,7 @@ public class Fragment_PickAnswerDetail extends Fragment {
 
                                         student = document.toObject(Student.class);
 
-                                        setView(student , aClass);
+                                        setView(student, aClass);
                                     }
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -147,11 +152,134 @@ public class Fragment_PickAnswerDetail extends Fragment {
                         });
             }
         });
-
-
     }
 
-    private void setView(Student student ,Class aClass) {
+    private void setLowAttendence() {
+        aClass = new Class();
+        db = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = db.collection("Class").document(classId);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                aClass = documentSnapshot.toObject(Class.class);
+                Log.d(TAG, "limit0: " + aClass.getStudent_id().size());
+                int limit = (int) Math.round(((aClass.getStudent_id().size()) * 3.) / 10);
+                Log.d(TAG, "limit1: " + ((aClass.getStudent_id().size()) * 3. )/ 10);
+                Log.d(TAG, "limit2: " + limit);
+
+                student_id = new ArrayList<>();
+                Log.d(TAG, "in lowAttnd : " + aClass.getClass_id());
+                db.collection("Performance")
+                        .whereEqualTo("class_id", aClass.getClass_id())
+                        .orderBy("performance_totalAttendance")
+                        .limit(limit)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        student_id.add(document.get("student_id").toString());
+                                        Log.d(TAG, "in LowAtt for: " + student_id);
+                                    }
+                                    random = (int) (Math.random() * student_id.size());
+                                    Log.d(TAG, "random size:" + student_id.size());
+                                    Log.d(TAG, "random :" + random);
+
+                                    db.collection("Student")
+                                            .whereEqualTo("student_id", student_id.get(random))
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                            student = document.toObject(Student.class);
+
+                                                            setView(student, aClass);
+                                                        }
+                                                    } else {
+                                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                                    }
+                                                }
+                                            });
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+            }
+
+
+        });
+    }
+
+    private void setLowInteraction() {
+        aClass = new Class();
+        db = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = db.collection("Class").document(classId);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                aClass = documentSnapshot.toObject(Class.class);
+                Log.d(TAG, "limit0: " + aClass.getStudent_id().size());
+                int limit = (int) Math.round(((aClass.getStudent_id().size()) * 3.) / 10);
+                Log.d(TAG, "limit1: " + ((aClass.getStudent_id().size()) * 3. )/ 10);
+                Log.d(TAG, "limit2: " + limit);
+
+                student_id = new ArrayList<>();
+                Log.d(TAG, "in lowAttnd : " + aClass.getClass_id());
+                db.collection("Performance")
+                        .whereEqualTo("class_id", aClass.getClass_id())
+                        .orderBy("performance_totalBonus")
+                        .limit(limit)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        student_id.add(document.get("student_id").toString());
+                                        Log.d(TAG, "in LowAtt for: " + student_id);
+                                    }
+                                    random = (int) (Math.random() * student_id.size());
+                                    Log.d(TAG, "random size:" + student_id.size());
+                                    Log.d(TAG, "random :" + random);
+
+                                    db.collection("Student")
+                                            .whereEqualTo("student_id", student_id.get(random))
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                            student = document.toObject(Student.class);
+
+                                                            setView(student, aClass);
+                                                        }
+                                                    } else {
+                                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                                    }
+                                                }
+                                            });
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+            }
+
+
+        });
+    }
+
+
+    private void setView(Student student, Class aClass) {
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("student_photo");
 
@@ -169,7 +297,8 @@ public class Fragment_PickAnswerDetail extends Fragment {
             @Override
             public void onClick(View v) {
 
-                setPoint(student , aClass);
+                setPoint(student, aClass);
+                setNextone(type);
 
             }
         });
@@ -184,42 +313,42 @@ public class Fragment_PickAnswerDetail extends Fragment {
         });
     }
 
-    private void setPoint(Student student , Class aClass) {
+    private void setPoint(Student student, Class aClass) {
         performance = new Performance();
         bonus = new Bonus();
-        Date date =new Date();
+        Date date = new Date();
         bonus.setBonus_reason("點人答題");
         bonus.setBonus_time(date);
         bonus.setClass_id(aClass.getClass_id());
         bonus.setStudent_id(student.getStudent_id());
-        Log.d(TAG , "here class_id:" + aClass.getClass_id());
-        Log.d(TAG , "here student_id:" + student.getStudent_id());
+        Log.d(TAG, "here class_id:" + aClass.getClass_id());
+        Log.d(TAG, "here student_id:" + student.getStudent_id());
         db.collection("Performance")
                 .whereEqualTo("class_id", aClass.getClass_id())
-                .whereEqualTo("student_id",student.getStudent_id() )
+                .whereEqualTo("student_id", student.getStudent_id())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        Log.d(TAG ,"Flag1");
+                        Log.d(TAG, "Flag1");
                         if (task.isSuccessful()) {
-                            Log.d(TAG ,"Flag2");
+                            Log.d(TAG, "Flag2");
 //                            task.getResult().getDocuments().get(0);
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                String PerformanceId= document.getId();
-                                Log.d(TAG , "PerformanceId:"+PerformanceId);
+                                String PerformanceId = document.getId();
+                                Log.d(TAG, "PerformanceId:" + PerformanceId);
 
                                 performance = document.toObject(Performance.class);
-                                performance.setPerformance_totalBonus(performance.getPerformance_totalBonus()+1);
+                                performance.setPerformance_totalBonus(performance.getPerformance_totalBonus() + 1);
                                 db.collection("Performance").document(PerformanceId).set(performance);
-                                Log.d(TAG , "come here");
+                                Log.d(TAG, "come here");
 
-                                db.collection("/Performance/"+PerformanceId+"/Bonus")
+                                db.collection("/Performance/" + PerformanceId + "/Bonus")
                                         .add(bonus)
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
-                                                Toast.makeText(getContext(), "該學生已獲得一分" , Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getContext(), "該學生已獲得一分", Toast.LENGTH_LONG).show();
                                                 Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                                             }
                                         })
@@ -254,10 +383,12 @@ public class Fragment_PickAnswerDetail extends Fragment {
 
             case "low_attendence":
                 Log.d(TAG, "setNextone:low_attendence:");
+                setLowAttendence();
                 break;
 
             case "low_interaction":
                 Log.d(TAG, "setNextone:low_interaction:");
+                setLowInteraction();
                 break;
 
 
