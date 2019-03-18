@@ -76,7 +76,7 @@ public class Fragment_PickAnswerDetail extends Fragment {
         type = args.getString("type");
         Log.d(TAG, "classId:" + classId);//fragment傳值
 //        Toast.makeText(getContext(), "現在課程資料庫代碼是:" + classId, Toast.LENGTH_LONG).show();
-        Toast.makeText(getContext(), "現在的模式是:" + type, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), "現在的模式是:" + type, Toast.LENGTH_LONG).show();
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pick_answer_detail, container, false);
