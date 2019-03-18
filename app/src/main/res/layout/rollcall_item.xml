@@ -10,81 +10,80 @@
     <android.support.v7.widget.CardView
         android:id="@+id/image_card_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
+        android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
+        android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="3dp"
         app:cardElevation="3dp"
-        app:cardUseCompatPadding="true"
-        >
+        app:cardUseCompatPadding="true">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/rollcall_image"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/egg"
-                />
+                android:src="@drawable/egg" />
+
             <TextView
                 android:id="@+id/rollcall_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:text="Material Design"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="16dp"
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp"
-                />
+                android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/rollcall_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:text="Material Design"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="16dp"
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp"
-                />
+                android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/rollcall_school"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:text="Material Design"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="16dp"
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp"
-                />
+                android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/rollcall_department"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:text="Material Design"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="16dp"
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp"
-                />
+                android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/rollcall_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 android:text="Material Design"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="16dp"
-                android:paddingRight="16dp"
-                android:paddingLeft="16dp"
-                />
+                android:textSize="24sp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>
