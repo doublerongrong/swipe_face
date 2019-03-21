@@ -3,7 +3,6 @@ package com.example.kl.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -11,12 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -26,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import static com.example.kl.home.BackHandlerHelper.handleBackPress;
 
 import com.example.kl.home.Model.Class;
-import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
@@ -40,7 +36,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     private GridLayout gridLayout;
     private TextView text_class_id;
     private TextView text_class_title;
-    private String class_id;
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
@@ -57,10 +52,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         classId = args.getString("info");
         Log.d(TAG, "classId:" + classId);//fragment傳值
         Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
-        db = FirebaseFirestore.getInstance();
-
-
-
 
 
         return inflater.inflate(R.layout.fragment_fragment_class_detail, container, false);
@@ -149,24 +140,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             Toast.LENGTH_SHORT).show();
                     switch (finalI) {
                         case 0:
-                            //intent activity
-
-                            DocumentReference docRef = db.collection("Class").document(classId);
-                            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                                        Class classG = documentSnapshot.toObject(Class.class);
-                                        class_id = classG.getClass_id();
-                                Intent i = new Intent();
-                                Log.d("classIdddd",class_id);
-
-                                Bundle bundlecall = new Bundle();
-                                bundlecall.putString("class_id", class_id);
-                                i.putExtras(bundlecall);
-                                i.setClass(getActivity(),CallNameRollCall.class);
-                                startActivity(i);
-                                    });
-
-
-
+                            //intent activity 點名
                             break;
                         case 1:
                             //intent activity 今日出缺席
@@ -183,7 +157,37 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 4:
                             //小組清單
+                            DocumentReference docRef = db.collection("Class").document(classId);
+                            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                                Class classG = documentSnapshot.toObject(Class.class);
+                                Log.d(TAG+"Group","groupNumHigh\t"+String.valueOf(classG.getGroup_numHigh())
+                                        +"\ngroupNumLow\t"+String.valueOf(classG.getGroup_numLow())+"\nclass_id"+String.valueOf(classG.getClass_id())
+                                        +"\ngroup_state\t"+String.valueOf(classG.isGroup_state()));
+                                if (!classG.isGroup_state()) {//判斷是否分組
+                                    Intent intent = new Intent();
+                                    intent.setClass(getActivity(), CreateClassGroupSt1.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("classId", classG.getClass_id());
+                                    bundle.putString("classYear", classG.getClass_year());
+                                    bundle.putString("className", classG.getClass_name());
+                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
+                                    intent.putExtras(bundle);
+                                    getActivity().startActivity(intent);
+                                } else {
+                                    Intent intent = new Intent();
+                                    intent.setClass(getActivity(), GroupPage.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("classId",classId);
+                                    bundle.putString("class_Id", classG.getClass_id());
+                                    bundle.putString("classYear", classG.getClass_year());
+                                    bundle.putString("className", classG.getClass_name());
+                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
+                                    intent.putExtras(bundle);
+                                    getActivity().startActivity(intent);
+                                }
 
+
+                            });
                             break;
                         case 5:
                             //點人答題

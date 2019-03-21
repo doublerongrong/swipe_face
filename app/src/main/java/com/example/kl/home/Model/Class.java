@@ -1,9 +1,10 @@
 package com.example.kl.home.Model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Class extends ClassId {
+public class Class extends ClassId{
     public Class() {
 
     }
@@ -23,6 +24,11 @@ public class Class extends ClassId {
     private Integer class_lateminus; //遲到扣分(出席)
     private Integer class_ewtimes; //預警 次數達到
     private Integer class_ewpoints; //預警 分數低於
+
+
+    private boolean group_state;
+    private Integer group_numLow;
+    private Integer group_numHigh;
 
     public String getClass_id() {
         return class_id;
@@ -149,6 +155,30 @@ public class Class extends ClassId {
 
     public void setClass_ewpoints(Integer class_ewpoints) {
         this.class_ewpoints = class_ewpoints;
+    }
+
+    public boolean isGroup_state() {
+        return group_state;
+    }
+
+    public void setGroup_state(boolean group_state) {
+        this.group_state = group_state;
+    }
+
+    public Integer getGroup_numLow() {
+        return group_numLow;
+    }
+
+    public void setGroup_numLow(Integer group_numLow) {
+        this.group_numLow = group_numLow;
+    }
+
+    public Integer getGroup_numHigh() {
+        return group_numHigh;
+    }
+
+    public void setGroup_numHigh(Integer group_numHigh) {
+        this.group_numHigh = group_numHigh;
     }
 }
 

@@ -2,7 +2,7 @@ package com.example.kl.home.Model;
 
 import java.util.ArrayList;
 
-public class Student {
+public class Student extends StudentId {
 	public Student() {
 		
 	}

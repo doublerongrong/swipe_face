@@ -16,17 +16,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity_PickAnswer"></activity>
+        <activity android:name=".GroupDetailSetting"></activity>
+        <activity android:name=".GroupDetail" />
+        <activity android:name=".CreateClassGroupSt2" />
+        <activity android:name=".CreateClassGroupSt1" />
+        <activity android:name=".GroupPage" />
+        <activity android:name=".Activity_PickAnswer" />
         <activity android:name=".TrainAndTest" />
         <activity android:name=".CreateClassSt1" />
         <activity android:name=".CreateClassSt2" />
         <activity android:name=".LeaveRecord" />
         <activity android:name=".CallNameRollCall"></activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+        <!--<activity-->
+            <!--android:name=".MainActivity"-->
+            <!--android:label="@string/app_name">-->
 
-        </activity>
+        <!--</activity>-->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -85,6 +85,7 @@ public class CreateClassSt2 extends AppCompatActivity {
         //抓老師id
         Map<String, Object> uploadMap = new HashMap<>();
         uploadMap.put("class_id", classid);
+        uploadMap.put("group_state",false);
         uploadMap.put("class_name", classname);
         uploadMap.put("class_year", classyear);
         uploadMap.put("teacher_email", TeacherEmail);
@@ -96,6 +97,7 @@ public class CreateClassSt2 extends AppCompatActivity {
         uploadMap.put("class_answerbonus", answerbonus);
         uploadMap.put("class_rdanswerbonus", randomanserbonus);
         uploadMap.put("student_id", StudentList);
+        uploadMap.put("group_state",false);
         Log.d(TAG, "TEST CREAT");
         mFirestore.collection("Class").add(uploadMap).addOnSuccessListener(a -> {
             Log.d(TAG, "TEST CREAT Success");
