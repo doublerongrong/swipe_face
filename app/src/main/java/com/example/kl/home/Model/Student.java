@@ -3,12 +3,7 @@ package com.example.kl.home.Model;
 import java.util.ArrayList;
 
 public class Student {
-	public Student(String student_name, String student_id, String student_school, String student_department,String image_url) {
-		this.student_name  = student_name;
-		this.student_id = student_id;
-		this.student_school = student_school;
-		this.student_department = student_department;
-		this.image_url = image_url;
+	public Student() {
 	}
 	ArrayList<String> class_id=new ArrayList<>();
 	String student_department;
@@ -16,7 +11,7 @@ public class Student {
 	String student_id;
 	String student_name;
 	String student_school;
-	String image_url;
+
 
 	public ArrayList<String> getClass_id() {
 		return class_id;
@@ -28,13 +23,6 @@ public class Student {
 		return student_department;
 	}
 
-	public String getImage_url() {
-		return image_url;
-	}
-
-	public void setImage_url(String image_url) {
-		this.image_url = image_url;
-	}
 
 	public void setStudent_department(String student_department) {
 		this.student_department = student_department;

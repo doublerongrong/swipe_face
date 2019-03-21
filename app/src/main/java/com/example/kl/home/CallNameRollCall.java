@@ -41,7 +41,7 @@ public class CallNameRollCall extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView mMainList;
     private RollCallAdapter rollCallAdapter;
-    private List<Student> rollCallList;
+    private List<RollCall> rollCallList;
     private CardView attend, absence;
     private Button  finishBtn;
     private ImageButton returnBtn;
@@ -88,13 +88,13 @@ public class CallNameRollCall extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         for (DocumentSnapshot querySnapshot : task.getResult()) {
-                            Student student = new Student(querySnapshot.getString("student_name"),
+                            RollCall rollCall = new RollCall(querySnapshot.getString("student_name"),
                                     querySnapshot.getString("student_id"), querySnapshot.getString("student_school"),
                                     querySnapshot.getString("student_department"),
                                     querySnapshot.getString("image_url"));
                             studentId.add(querySnapshot.getString("student_id"));
 
-                            rollCallList.add(student);
+                            rollCallList.add(rollCall);
                         }
                         rollCallAdapter = new RollCallAdapter(CallNameRollCall.this, rollCallList);
                         mMainList.setAdapter(rollCallAdapter);

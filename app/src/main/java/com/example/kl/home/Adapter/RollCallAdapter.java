@@ -28,12 +28,12 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
     @NonNull
 
     private ClassListAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
-    public List<Student> StudentList;
+    public List<RollCall> StudentList;
     public Context context;
 
 
 
-    public RollCallAdapter(Context context,List<Student> StudentList) {
+    public RollCallAdapter(Context context,List<RollCall> StudentList) {
 
         this.StudentList = StudentList;
         this.context =context;
