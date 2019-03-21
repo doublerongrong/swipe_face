@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.kl.home.Model.Class;
 import com.example.kl.home.Model.RollCall;
+import com.example.kl.home.Model.Student;
 import com.example.kl.home.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -26,12 +28,12 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
     @NonNull
 
     private ClassListAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
-    public List<RollCall> StudentList;
+    public List<Student> StudentList;
     public Context context;
 
 
 
-    public RollCallAdapter(Context context,List<RollCall> StudentList) {
+    public RollCallAdapter(Context context,List<Student> StudentList) {
 
         this.StudentList = StudentList;
         this.context =context;
@@ -53,10 +55,10 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
         holder.rollcall_id.setText(StudentList.get(position).getStudent_id());
         holder.rollcall_school.setText(StudentList.get(position).getStudent_school());
         holder.rollcall_department.setText(StudentList.get(position).getStudent_department());
-        holder.rollcall_email.setText(StudentList.get(position).getStudent_email());
         StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl(StudentList.get(position).getImage_url());
         Glide.with(holder.rollcall_image.getContext())
                 .load(gsReference)
+                .apply(new RequestOptions().override(1200,1000).fitCenter())
                 .into(holder.rollcall_image);
 
     }
@@ -73,7 +75,6 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
         public TextView rollcall_id;
         public TextView rollcall_school;
         public TextView rollcall_department;
-        public TextView rollcall_email;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -84,7 +85,7 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
             rollcall_id = (TextView) mView.findViewById(R.id.rollcall_id);
             rollcall_school = (TextView) mView.findViewById(R.id.rollcall_school);
             rollcall_department = (TextView) mView.findViewById(R.id.rollcall_department);
-            rollcall_email = (TextView) mView.findViewById(R.id.rollcall_email);
+
 
         }
 
