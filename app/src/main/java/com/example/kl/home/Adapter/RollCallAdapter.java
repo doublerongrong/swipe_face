@@ -1,10 +1,8 @@
 package com.example.kl.home.Adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.kl.home.Model.Class;
-import com.example.kl.home.Model.RollCall;
-import com.example.kl.home.Model.Student;
+import com.example.kl.home.Model.RollCallStudent;
 import com.example.kl.home.R;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHolder>{
@@ -28,12 +23,12 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
     @NonNull
 
     private ClassListAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
-    public List<RollCall> StudentList;
+    public List<RollCallStudent> StudentList;
     public Context context;
 
 
 
-    public RollCallAdapter(Context context,List<RollCall> StudentList) {
+    public RollCallAdapter(Context context,List<RollCallStudent> StudentList) {
 
         this.StudentList = StudentList;
         this.context =context;
