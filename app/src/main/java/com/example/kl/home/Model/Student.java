@@ -1,9 +1,11 @@
 package com.example.kl.home.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Student {
+public class Student extends StudentId implements Serializable {
 	public Student() {
+
 	}
 	ArrayList<String> class_id=new ArrayList<>();
 	String student_department;
@@ -11,7 +13,6 @@ public class Student {
 	String student_id;
 	String student_name;
 	String student_school;
-
 
 	public ArrayList<String> getClass_id() {
 		return class_id;
@@ -22,8 +23,6 @@ public class Student {
 	public String getStudent_department() {
 		return student_department;
 	}
-
-
 	public void setStudent_department(String student_department) {
 		this.student_department = student_department;
 	}
@@ -52,6 +51,6 @@ public class Student {
 		this.student_school = student_school;
 	}
 
-	
+
 
 }
