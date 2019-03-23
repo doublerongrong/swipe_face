@@ -28,6 +28,9 @@
         <activity android:name=".LeaveRecord" />
         <activity android:name=".CallNameRollCall" />
         <activity android:name=".RollcallResult"/>
+        <activity android:name=".Activity_ScoreSetting" />
+        <activity android:name=".Activity_ScoreSetting_Edit" />
+        <activity android:name=".Activity_StudentDetail"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

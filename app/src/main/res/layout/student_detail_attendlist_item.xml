@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/classlist_item_card"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_margin="5dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+
+        <TextView
+            android:id="@+id/textViewAttendDate"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:text="textView "
+            android:textSize="16dp"
+            tools:text="2018.01.03"/>
+        <TextView
+            android:id="@+id/textViewAttendance"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="textView "
+            android:textSize="16dp"
+            tools:text="事假"/>
+
+
+        <Button
+            android:id="@+id/checkAttendBtn"
+            android:layout_width="70dp"
+            android:layout_height="35dp"
+            android:text="查看"/>
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

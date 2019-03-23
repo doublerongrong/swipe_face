@@ -130,6 +130,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
             Log.d(TAG, " toLeaveManage");
             getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
         }//判斷是哪個fragment傳來的請求
+        else if (fragmentKey.equals("toClassStudentList")) {
+            Fragment_Class_StudentList fragment_Class_StudentList = new Fragment_Class_StudentList();
+            Bundle args = new Bundle();
+            args.putString("info", info);
+            args.putString("teacher_email", teacher_email);
+            fragment_Class_StudentList.setArguments(args);
+            Log.d(TAG, " toClassStudentList");
+            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_Class_StudentList).commit();
+        }//判斷是哪個fragment傳來的請求
     }//fragment傳值並換頁
 
 }

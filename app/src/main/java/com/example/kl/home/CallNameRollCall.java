@@ -7,8 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,18 +14,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Adapter.RollCallAdapter;
-import com.example.kl.home.Model.Class;
-import com.example.kl.home.Model.RollCall;
-import com.example.kl.home.Model.Student;
+import com.example.kl.home.Model.RollCallStudent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -41,7 +33,7 @@ public class CallNameRollCall extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView mMainList;
     private RollCallAdapter rollCallAdapter;
-    private List<Student> rollCallList;
+    private List<RollCallStudent> rollCallList;
     private CardView attend, absence;
     private Button  finishBtn;
     private ImageButton returnBtn;
@@ -88,13 +80,12 @@ public class CallNameRollCall extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         for (DocumentSnapshot querySnapshot : task.getResult()) {
-                            Student student = new Student(querySnapshot.getString("student_name"),
+                            RollCallStudent rollCall = new RollCallStudent(querySnapshot.getString("student_name"),
                                     querySnapshot.getString("student_id"), querySnapshot.getString("student_school"),
                                     querySnapshot.getString("student_department"),
                                     querySnapshot.getString("image_url"));
                             studentId.add(querySnapshot.getString("student_id"));
-
-                            rollCallList.add(student);
+                            rollCallList.add(rollCall);
                         }
                         rollCallAdapter = new RollCallAdapter(CallNameRollCall.this, rollCallList);
                         mMainList.setAdapter(rollCallAdapter);

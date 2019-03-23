@@ -2,14 +2,10 @@ package com.example.kl.home.Model;
 
 import java.util.ArrayList;
 
-public class Student  extends StudentId{
-    public Student(String student_name, String student_id, String student_school, String student_department,String image_url) {
-        this.student_name  = student_name;
-        this.student_id = student_id;
-        this.student_school = student_school;
-        this.student_department = student_department;
-        this.image_url = image_url;
-    }
+public class Student extends StudentId implements Serializable {
+	public Student() {
+
+	}
 	ArrayList<String> class_id=new ArrayList<>();
 	String student_department;
 	String student_email;

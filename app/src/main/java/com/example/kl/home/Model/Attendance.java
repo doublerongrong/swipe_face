@@ -2,17 +2,25 @@ package com.example.kl.home.Model;
 
 import java.util.Date;
 
-public class Attendance {
+public class Attendance extends RollcallId {
 
     private String student_id;
     private Date attendance_time;
     private String attendance_status;
 
-    public Attendance() {
 
+    public Attendance() {
     }
 
-    public Attendance(String student_id, Date attendance_time, String attendance_status) {
+    public String getRollcallId() {
+        return rollcallId;
+    }
+
+    public void setRollcallId(String rollcallId) {
+        this.rollcallId = rollcallId;
+    }
+
+    public Attendance(String student_id, Date attendance_time, String attendance_status, String rollcallId) {
         this.student_id = student_id;
         this.attendance_time = attendance_time;
         this.attendance_status = attendance_status;

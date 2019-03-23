@@ -1,8 +1,8 @@
 package com.example.kl.home.Model;
 
-public class RollCall {
+public class RollCallStudent {
 
-    public RollCall(String student_name, String student_id, String student_school, String student_department,String image_url){
+    public RollCallStudent(String student_name, String student_id, String student_school, String student_department, String image_url){
         this.student_name  = student_name;
         this.student_id = student_id;
         this.student_school = student_school;

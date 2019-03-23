@@ -62,7 +62,6 @@ public class CreateClassSt2 extends AppCompatActivity {
 
         });
 
-
     }
 
     private void create() {
@@ -70,9 +69,13 @@ public class CreateClassSt2 extends AppCompatActivity {
         String classname = bundle.getString("classnameB");
         String classyear = bundle.getString("classyearB");
 
+        String classid = "C";
+        String classidOri = UUID.randomUUID().toString().replace("-", "");
+        for(int i = 0; i < 10; i++){
+            classid += classidOri.charAt(i);
+        }
 
-        UUID uuid = UUID.randomUUID();
-        String classid = "C" + uuid;
+
         Integer totalpoints = Integer.parseInt(editTexttotalPoints.getText().toString().trim());
         Integer lateminus = Integer.parseInt(editTextlateMinus.getText().toString().trim());
         Integer absenteeminus = Integer.parseInt(editTextabsenteeMinus.getText().toString().trim());
