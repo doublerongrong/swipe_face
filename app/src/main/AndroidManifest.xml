@@ -26,12 +26,8 @@
         <activity android:name=".CreateClassSt1" />
         <activity android:name=".CreateClassSt2" />
         <activity android:name=".LeaveRecord" />
-        <activity android:name=".CallNameRollCall"></activity>
-        <!--<activity-->
-            <!--android:name=".MainActivity"-->
-            <!--android:label="@string/app_name">-->
-
-        <!--</activity>-->
+        <activity android:name=".CallNameRollCall" />
+        <activity android:name=".RollcallResult"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

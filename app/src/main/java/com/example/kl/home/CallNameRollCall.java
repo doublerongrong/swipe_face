@@ -14,11 +14,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Adapter.RollCallAdapter;
 import com.example.kl.home.Model.Class;
 import com.example.kl.home.Model.RollCall;
+import com.example.kl.home.Model.Student;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
@@ -39,8 +41,10 @@ public class CallNameRollCall extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView mMainList;
     private RollCallAdapter rollCallAdapter;
-    private List<RollCall> rollCallList;
+    private List<Student> rollCallList;
     private CardView attend, absence;
+    private Button  finishBtn;
+    private ImageButton returnBtn;
     private String classId;
     private List<String> studentId ;
     private List<String> attendList, absenceList;
@@ -84,13 +88,13 @@ public class CallNameRollCall extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         for (DocumentSnapshot querySnapshot : task.getResult()) {
-                            RollCall rollCall = new RollCall(querySnapshot.getString("student_name"),
+                            Student student = new Student(querySnapshot.getString("student_name"),
                                     querySnapshot.getString("student_id"), querySnapshot.getString("student_school"),
-                                    querySnapshot.getString("student_department"), querySnapshot.getString("student_email"),
+                                    querySnapshot.getString("student_department"),
                                     querySnapshot.getString("image_url"));
                             studentId.add(querySnapshot.getString("student_id"));
 
-                            rollCallList.add(rollCall);
+                            rollCallList.add(student);
                         }
                         rollCallAdapter = new RollCallAdapter(CallNameRollCall.this, rollCallList);
                         mMainList.setAdapter(rollCallAdapter);
@@ -211,6 +215,26 @@ public class CallNameRollCall extends AppCompatActivity {
 
                     }
                 });
+        returnBtn = (ImageButton) findViewById(R.id.imageButtonReturn);
+        returnBtn.setOnClickListener(view -> {
+            Intent i  = new Intent();
+            i.setClass(this,Fragment_ClassDetail.class);
+            startActivity(i);
+            finish();
+        });
+
+        finishBtn = (Button) findViewById(R.id.finishButton);
+        finishBtn.setOnClickListener(view -> {
+            Intent i = new Intent();
+            Log.d("classIdddd",classId);
+
+            Bundle bundlecall = new Bundle();
+            bundlecall.putString("class_id", classId);
+            i.putExtras(bundlecall);
+            i.setClass(this,RollcallResult.class);
+            startActivity(i);
+        });
+
 
     }
 
