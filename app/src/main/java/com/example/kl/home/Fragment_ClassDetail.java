@@ -33,7 +33,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
 
     private String TAG = "ClassDetail";
-    private String classId;
+    private String classId,rollcallDocId;
     private Class aclass;
     private Class firestore_class;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -55,12 +55,14 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         Bundle args = new Bundle();//fragment傳值
         args = getArguments();//fragment傳值
         classId = args.getString("info");
+        if(args.getString("rollcall_id") != null){
+            rollcallDocId = args.getString("rollcall_id");
+            class_id = args.getString("class_id");
+            Log.i("rollcallId",rollcallDocId);
+        }
         Log.d(TAG, "classId:" + classId);//fragment傳值
         Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
         db = FirebaseFirestore.getInstance();
-
-
-
 
 
         return inflater.inflate(R.layout.fragment_fragment_class_detail, container, false);
@@ -160,16 +162,27 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
                                 Bundle bundlecall = new Bundle();
                                 bundlecall.putString("class_id", class_id);
+                                bundlecall.putString("class_doc",classId);
                                 i.putExtras(bundlecall);
                                 i.setClass(getActivity(),CallNameRollCall.class);
                                 startActivity(i);
                                     });
-
-
-
                             break;
                         case 1:
                             //intent activity 今日出缺席
+                            if(rollcallDocId != null){
+                                Intent i = new Intent();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("class_id",class_id);
+                                bundle.putString("class_doc",classId);
+                                bundle.putString("classDoc_id",rollcallDocId);
+                                i.putExtras(bundle);
+                                i.setClass(getActivity(),RollcallResult.class);
+                                startActivity(i);
+                            }else{
+                                Toast.makeText(getActivity(),"今天還沒點名喔",Toast.LENGTH_LONG).show();
+                            }
+
 
                             break;
                         case 2:
