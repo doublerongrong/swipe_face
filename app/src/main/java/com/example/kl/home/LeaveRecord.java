@@ -63,6 +63,7 @@ public class LeaveRecord extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String leaveId = bundle.getString("id");
+        String ChangePage = bundle.getString("ChangePage");
 
         DocumentReference docRef = mFirestore.collection("Leave").document(leaveId);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -76,7 +77,7 @@ public class LeaveRecord extends AppCompatActivity {
 
 
                         SimpleDateFormat myFmt2 = new SimpleDateFormat("yyyy/MM/dd");
-                        String leaveUpdloadDate = myFmt2.format(leave.getLeave_uploaddate()).toString();
+                        String leaveUpdloadDate = myFmt2.format(leave.getLeave_uploaddate());
 
                         class_name.setText(leave.getClass_name());
                         leave_reason.setText(leave.getLeave_reason());
@@ -88,13 +89,10 @@ public class LeaveRecord extends AppCompatActivity {
                         String photoUrl = leave.getLeave_photoUrl();
 
                         StorageReference path = storageReference.child(photoUrl);
-                        Log.d("TEST",path.toString());
+                        Log.d("TEST", path.toString());
                         Glide.with(LeaveRecord.this)
                                 .load(path)
                                 .into(leave_photo);
-
-
-
 
 
                     } else {
@@ -105,7 +103,7 @@ public class LeaveRecord extends AppCompatActivity {
                 }
             }
         });
-        agreeBtn.setOnClickListener(v ->{
+        agreeBtn.setOnClickListener(v -> {
 
             DocumentReference leaveCheckRef = mFirestore.collection("Leave").document(leaveId);
             leaveCheckRef
@@ -115,9 +113,13 @@ public class LeaveRecord extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "DocumentSnapshot successfully updated!");
                             Intent intent = new Intent();
-                            intent.setClass(LeaveRecord.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            if (ChangePage.equals("Detail")) {
+                                finish();
+                            } else {
+                                intent.setClass(LeaveRecord.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
                     });
 
@@ -131,9 +133,13 @@ public class LeaveRecord extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             Log.d(TAG, "DocumentSnapshot successfully updated!");
                             Intent intent = new Intent();
-                            intent.setClass(LeaveRecord.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            if (ChangePage.equals("Detail")) {
+                                finish();
+                            } else {
+                                intent.setClass(LeaveRecord.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         }
                     });
 

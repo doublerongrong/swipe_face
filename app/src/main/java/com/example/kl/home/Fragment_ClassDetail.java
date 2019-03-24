@@ -192,7 +192,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 3:
                             //學生清單
-                            mCallback.onFragmentSelected("", "toClassPerformance");//fragment傳值
+                            mCallback.onFragmentSelected(classId, "toClassStudentList");//fragment傳值
                             break;
                         case 4:
                             //小組清單
@@ -213,6 +213,12 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 7:
                             //intent activity 計分設定
+                            Intent intent7 = new Intent();
+                            intent7.setClass(getActivity(), Activity_ScoreSetting.class);
+                            Bundle bundle7 = new Bundle();
+                            bundle7.putString("classId", classId);
+                            intent7.putExtras(bundle7);
+                            getActivity().startActivity(intent7);
                             break;
                         case 8:
                             //intent activity 繪出成績
