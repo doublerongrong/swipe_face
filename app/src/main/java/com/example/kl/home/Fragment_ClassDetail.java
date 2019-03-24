@@ -14,6 +14,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -23,19 +24,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import static com.example.kl.home.BackHandlerHelper.handleBackPress;
 
 import com.example.kl.home.Model.Class;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
 
 
     private String TAG = "ClassDetail";
-    private String classId;
+    private String classId,rollcallDocId;
     private Class aclass;
     private Class firestore_class;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private GridLayout gridLayout;
     private TextView text_class_id;
     private TextView text_class_title;
+    private String class_id;
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
@@ -50,8 +53,14 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         Bundle args = new Bundle();//fragment傳值
         args = getArguments();//fragment傳值
         classId = args.getString("info");
+        if(args.getString("rollcall_id") != null){
+            rollcallDocId = args.getString("rollcall_id");
+            class_id = args.getString("class_id");
+            Log.i("rollcallId",rollcallDocId);
+        }
         Log.d(TAG, "classId:" + classId);//fragment傳值
         Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
+        db = FirebaseFirestore.getInstance();
 
 
         return inflater.inflate(R.layout.fragment_fragment_class_detail, container, false);
@@ -140,10 +149,38 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             Toast.LENGTH_SHORT).show();
                     switch (finalI) {
                         case 0:
-                            //intent activity 點名
+                            //intent activity
+
+                            DocumentReference docRef = db.collection("Class").document(classId);
+                            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                                        Class classG = documentSnapshot.toObject(Class.class);
+                                        class_id = classG.getClass_id();
+                                Intent i = new Intent();
+                                Log.d("classIdddd",class_id);
+
+                                Bundle bundlecall = new Bundle();
+                                bundlecall.putString("class_id", class_id);
+                                bundlecall.putString("class_doc",classId);
+                                i.putExtras(bundlecall);
+                                i.setClass(getActivity(),CallNameRollCall.class);
+                                startActivity(i);
+                                    });
                             break;
                         case 1:
                             //intent activity 今日出缺席
+                            if(rollcallDocId != null){
+                                Intent i = new Intent();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("class_id",class_id);
+                                bundle.putString("class_doc",classId);
+                                bundle.putString("classDoc_id",rollcallDocId);
+                                i.putExtras(bundle);
+                                i.setClass(getActivity(),RollcallResult.class);
+                                startActivity(i);
+                            }else{
+                                Toast.makeText(getActivity(),"今天還沒點名喔",Toast.LENGTH_LONG).show();
+                            }
+
 
                             break;
                         case 2:
@@ -157,8 +194,8 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 4:
                             //小組清單
-                            DocumentReference docRef = db.collection("Class").document(classId);
-                            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                            DocumentReference docRefGroup = db.collection("Class").document(classId);
+                            docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
                                 Class classG = documentSnapshot.toObject(Class.class);
                                 Log.d(TAG+"Group","groupNumHigh\t"+String.valueOf(classG.getGroup_numHigh())
                                         +"\ngroupNumLow\t"+String.valueOf(classG.getGroup_numLow())+"\nclass_id"+String.valueOf(classG.getClass_id())

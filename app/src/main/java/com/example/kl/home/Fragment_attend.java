@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.kl.home.Adapter.RollCallListAdapter;
 import com.example.kl.home.Model.RollCallList;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -29,7 +30,7 @@ public class Fragment_attend extends Fragment {
     private RecyclerView mMainList;
     private RollCallListAdapter rollCallListAdapter;
     private List<RollCallList> rollCallList;
-    private String classId;
+    private String classId,docId;
     private List<String>attendList,lateList;
 
     @Nullable
@@ -37,12 +38,12 @@ public class Fragment_attend extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         Bundle bundle = getArguments();
+        classId = bundle.getString("class_id");
+        docId = bundle.getString("classDoc_id");
+        Log.i("attendClass_id",classId);
+        Log.i("attendClassDoc_id",docId);
 
-        //classId = bundle.getString("class_id");
-         //Log.i("classid:",classId);
         return inflater.inflate(R.layout.fragment_attend, container, false);
-
-
     }
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
@@ -51,26 +52,21 @@ public class Fragment_attend extends Fragment {
         lateList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
 
-        Query queryId = db.collection("Rollcall").whereEqualTo("class_id","Cf1f876435d");
-        queryId.get().addOnCompleteListener(task1 -> {
-            QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
-
-            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                Log.i("documentUrl", documentSnapshot.getId());
-                attendList = (ArrayList) documentSnapshot.get("rollcall_attend");
-                lateList = (ArrayList) documentSnapshot.get("rollcall_late");
-                Log.i("attend",attendList.toString());
-                Log.i("late",lateList.toString());
-            }
+        DocumentReference docRef = db.collection("Rollcall").document(docId);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            attendList = (ArrayList)documentSnapshot.get("rollcall_attend");
+            lateList = (ArrayList)documentSnapshot.get("rollcall_late");
+            Log.i("attend",attendList.toString());
+            Log.i("late",lateList.toString());
 
             for (int i=0;i<attendList.size();i++){
                 Query queryStudent = db.collection("Student").whereEqualTo("student_id",attendList.get(i));
                 queryStudent.get().addOnCompleteListener(task -> {
                     QuerySnapshot querySnapshot1 = task.isSuccessful() ? task.getResult() : null;
                     Log.i("query","work");
-                    for (DocumentSnapshot documentSnapshot : querySnapshot1.getDocuments()){
-                        RollCallList StudentList = new RollCallList(documentSnapshot.getString("student_id"),
-                                documentSnapshot.getString("student_department"),documentSnapshot.getString("student_name"));
+                    for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()){
+                        RollCallList StudentList = new RollCallList(documentSnapshot2.getString("student_id"),
+                                documentSnapshot2.getString("student_department"),documentSnapshot2.getString("student_name"));
 
                         rollCallList.add(StudentList);
                     }
@@ -83,17 +79,15 @@ public class Fragment_attend extends Fragment {
                 Query queryStudent = db.collection("Student").whereEqualTo("student_id",lateList.get(i));
                 queryStudent.get().addOnCompleteListener(task -> {
                     QuerySnapshot querySnapshot2 = task.isSuccessful() ? task.getResult() : null;
-                    for (DocumentSnapshot documentSnapshot : querySnapshot2.getDocuments()){
-                        RollCallList StudentList = new RollCallList(documentSnapshot.getString("student_id"),
-                                documentSnapshot.getString("student_department"),documentSnapshot.getString("student_name"));
+                    for (DocumentSnapshot documentSnapshot2 : querySnapshot2.getDocuments()){
+                        RollCallList StudentList = new RollCallList(documentSnapshot2.getString("student_id"),
+                                documentSnapshot2.getString("student_department"),documentSnapshot2.getString("student_name"));
                         rollCallList.add(StudentList);
                     }
                 });
             }
             Log.i("rollcall",rollCallList.toString());
         });
-
-
 
         RollCallListAdapter rollCallListAdapter = new RollCallListAdapter(getActivity().getApplicationContext(),rollCallList,"出席");
         mMainList = (RecyclerView)getView().findViewById(R.id.rollcall_list);

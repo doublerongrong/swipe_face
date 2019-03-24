@@ -3,6 +3,7 @@ package com.example.kl.home;
 
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 
@@ -22,16 +23,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 public class RollcallResult extends AppCompatActivity implements ViewPager.OnPageChangeListener,
         TabLayout.OnTabSelectedListener{
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private String classId;
+    private String classId,docId,classDocId;
+    private Button finishBtn;
 
     private Fragment_attend fragmentAttend = new Fragment_attend();
     private Fragment_absence fragmentAbsence = new Fragment_absence();
-    private FragmentManager fragmentManager;
+    private  Fragment_ClassDetail fragmentClassDetail = new Fragment_ClassDetail();
+    private static Context mContext;
 
 
 
@@ -42,15 +46,33 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
 
         Bundle bundle = this.getIntent().getExtras();
         classId = bundle.getString("class_id");
-        Log.i("classid:",classId);
+        docId = bundle.getString("classDoc_id");
+        classDocId = bundle.getString("class_doc");
+        Log.i("classid",classId);
+
+        mContext = getApplicationContext();
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout)findViewById(R.id.tabLayout);
+        finishBtn = (Button)findViewById(R.id.finishButton);
 
 
         //註冊監聽
         viewPager.addOnPageChangeListener(this);
         tabLayout.addOnTabSelectedListener(this);
+
+        finishBtn.setOnClickListener(view -> {
+            Intent intent = new Intent();
+            intent.setClass(getApplicationContext(), MainActivity.class);
+            intent.putExtra("class_id", classId);
+            intent.putExtra("classDoc_id",classDocId);
+            intent.putExtra("rollcall_id",docId);
+            intent.putExtra("request",2);
+            startActivity(intent);
+            finish();
+        });
+
+
 
 
 
@@ -60,23 +82,21 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        Fragment_attend fragment_attend = new Fragment_attend();
                         Log.d("classIdddd",classId);
-                        Bundle bundlecall = new Bundle();
-                        bundlecall.putString("class_id", classId);
-                        fragment_attend.setArguments(bundlecall);
+                        Log.d("docIdddddd",docId);
+                        Bundle args = new Bundle();
+                        args.putString("class_id", classId);
+                        args.putString("classDoc_id",docId);
+                        fragmentAttend.setArguments(args);
 
-                        fragmentManager = getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.content2,fragment_attend);
-                        fragmentTransaction.commit();
-                        //---------------------
-                                //作者：vrinux
-                        //来源：CSDN
-                        //原文：https://blog.csdn.net/vrinux/article/details/44086649
-                    //版权声明：本文为博主原创文章，转载请附上博文链接！
                         return fragmentAttend;
                     case 1:
+
+                        Bundle args2 = new Bundle();
+                        args2.putString("class_id", classId);
+                        args2.putString("classDoc_id",docId);
+                        fragmentAbsence.setArguments(args2);
+
                         return fragmentAbsence;
 
                 }
@@ -125,5 +145,9 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    public static Context getmContext(){
+        return mContext;
     }
 }

@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private String teacher_email = "053792@mail.fju.edu.tw";
+    private String reClassId,reRollcallId,reClassDocId;
+    private int fragmentRequest;
 
     // 設置默認進來是tab 顯示的頁面
     private void setDefaultFragment(){
@@ -72,11 +74,26 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.t_activity_homepage);
 
+        Bundle bundle = this.getIntent().getExtras();
+        if(bundle != null) {
+            reClassId = bundle.getString("class_id");
+            reRollcallId = bundle.getString("rollcall_id");
+            reClassDocId = bundle.getString("classDoc_id");
+            fragmentRequest = bundle.getInt("request");
+
+            if (fragmentRequest == 2) {
+                gotoClassDetailFragment();
+            }
+        }else{
+            setDefaultFragment();
+        }
+
+
+
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        setDefaultFragment();
 
         //呼叫Permission
         MainActivityPermissionsDispatcher.AllPermissionsWithPermissionCheck(this);
@@ -140,5 +157,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
             getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_Class_StudentList).commit();
         }//判斷是哪個fragment傳來的請求
     }//fragment傳值並換頁
+
+
+    public void gotoClassDetailFragment() {    //去下载class_detail页面
+        Fragment_ClassDetail fragment_classDetail = new Fragment_ClassDetail();
+        Bundle args = new Bundle();
+        args.putString("info", reClassDocId);
+        args.putString("class_id",reClassId);
+        args.putString("rollcall_id",reRollcallId);
+        fragment_classDetail.setArguments(args);
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_classDetail).commit();
+    }
 
 }
