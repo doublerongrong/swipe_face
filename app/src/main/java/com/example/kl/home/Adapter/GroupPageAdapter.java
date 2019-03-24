@@ -15,25 +15,18 @@ import com.example.kl.home.Model.Group;
 import com.example.kl.home.Model.Student;
 import com.example.kl.home.R;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.model.Document;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
-public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.ViewHolder> {
-    final String TAG = "GroupListAdapter";
+public class GroupPageAdapter extends RecyclerView.Adapter<GroupPageAdapter.ViewHolder> {
+    private final String TAG = "GroupPageAdapter";
     public Context context;
-    private GroupListAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
-    public List<Group> groupList;
-    FirebaseFirestore db ;
-    String studentId,groupLeaderName;
+    private GroupPageAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
+    private List<Group> groupList;
+    private String studentId,groupLeaderName;
 
-    public GroupListAdapter(GroupPage groupPage, List<Group> groupList){
+    public GroupPageAdapter(GroupPage groupPage, List<Group> groupList){
         this.groupList = groupList;
         this.context = groupPage;
 
@@ -68,7 +61,11 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
         holder.tvGroupBonus.setText("回答次數\t\t"+groupBonus);
         List<String> student_Id  =groupList.get(position).getStudent_id();
         String[] studentIdArra = student_Id.toArray(new String[student_Id.size()]);
-        db = FirebaseFirestore.getInstance();
+
+        //init db
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //Get 小組組長名字
         db.collection("Student").whereEqualTo("student_id",groupLeader).addSnapshotListener((queryDocumentSnapshots, e) -> {
             if (e != null) {
                 Log.d(TAG, "Error :" + e.getMessage());
@@ -79,25 +76,26 @@ public class GroupListAdapter extends RecyclerView.Adapter<GroupListAdapter.View
                     Student student = doc.getDocument().toObject(Student.class).withId(studentId);
                     groupLeaderName = student.getStudent_name();
                     holder.tvGroupLeader.setText("組長\t\t"+groupLeaderName);
-
-
                 }
             }
         });
 
-
+        //回傳資料給GroupPage
         holder.mView.setOnClickListener(v -> {
             notifyItemChanged(position);
-            mTransPageListener.onTransPageClick(studentIdArra,groupLeader,groupBonus,groupId,groupList.get(position));
+            mTransPageListener.onTransPageClick(groupLeader,groupBonus,groupId);
        });
     }
-    public interface transPageListener {
-        void onTransPageClick(String[] studentIdArra,String groupLeader, String groupBonus,String groupId, Group group);
-    }//adapter跳轉fragment並攜帶需要的資料
 
-    public void setOnTransPageClickListener(GroupListAdapter.transPageListener transPageListener) {
+    //adapter跳轉fragment並攜帶需要的資料
+    public interface transPageListener {
+        void onTransPageClick(String groupLeader, String groupBonus,String groupId);
+    }
+
+    //adapter跳轉fragment
+    public void setOnTransPageClickListener(GroupPageAdapter.transPageListener transPageListener) {
         this.mTransPageListener = transPageListener;
-    }//adapter跳轉fragment
+    }
 
     @Override
     public int getItemCount() {

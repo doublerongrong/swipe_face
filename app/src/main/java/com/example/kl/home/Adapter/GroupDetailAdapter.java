@@ -18,15 +18,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class GroupListDetailAdapter extends RecyclerView.Adapter<GroupListDetailAdapter.ViewHolder> {
+public class GroupDetailAdapter extends RecyclerView.Adapter<GroupDetailAdapter.ViewHolder> {
 
     public Context context;
     FirebaseFirestore db;
     public List<Student> studentList;
-    String TAG = "GroupListDetailAdapter";
+    String TAG = "GroupDetailAdapter";
     String groupLeader;
 
-    public GroupListDetailAdapter(GroupDetail groupDetail, List<Student> studentList,String groupLeader ) {
+    public GroupDetailAdapter(GroupDetail groupDetail, List<Student> studentList, String groupLeader ) {
         this.context = groupDetail;
         this.studentList = studentList;
         this.groupLeader = groupLeader;

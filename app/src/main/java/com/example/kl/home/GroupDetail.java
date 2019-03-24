@@ -1,35 +1,27 @@
 package com.example.kl.home;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.kl.home.Adapter.GroupListDetailAdapter;
+import com.example.kl.home.Adapter.GroupDetailAdapter;
 import com.example.kl.home.Model.Group;
 import com.example.kl.home.Model.Student;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GroupDetail extends AppCompatActivity {
-    GroupListDetailAdapter groupListDetailAdapter;
+    GroupDetailAdapter groupDetailAdapter;
     RecyclerView groupDetailRecycleView;
     FirebaseFirestore db;
     List<Student> studentList;
@@ -46,45 +38,48 @@ public class GroupDetail extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         // Intent Bundle
-        Intent Intent = getIntent(); /* 取得傳入的 Intent 物件 */
+        Intent Intent = getIntent();
         Bundle bundle = Intent.getExtras();
-        groupBonus = bundle.getString("groupBonus");
-        groupLeader = bundle.getString("groupLeader");
-        classId = bundle.getString("classId");
-        class_Id = bundle.getString("class_Id");
-        groupId = bundle.getString("groupId");
-        Log.d(TAG, "\ngroupBonus\t" + groupBonus + "\ngroupLeader\t" + groupLeader + "\nclassId\t" +
-                classId + "\nclass_id\t" + class_Id + "\ngroupId\t" + groupId);
+        groupBonus = bundle.getString("groupBonus");//小組加分
+        groupLeader = bundle.getString("groupLeader");//小組組長
+        classId = bundle.getString("classId");//課程DocID
+        class_Id = bundle.getString("class_Id");//課程ID
+        groupId = bundle.getString("groupId");//小組DocID
+        Log.d(TAG, String.format("\ngroupBonus\t%s\ngroupLeader\t%s\nclassId\t%s\nclass_id\t%s\ngroupId\t%s",
+                groupBonus, groupLeader, classId, class_Id, groupId));
+
         // init xml
         tvGroupDetailBonus = findViewById(R.id.textViewGroupBonus);
-        tvGroupDetailBonus.setText("回答次數：\t\t" + groupBonus);
+        tvGroupDetailBonus.setText("回答次數：\t\t" + groupId/*應該是groupBonus*/);
         btGroupDetailSetting = findViewById(R.id.groupDetailSetting);
         btGroupDetailSetting.setOnClickListener(v -> {
             Intent intent = new Intent();
-            bundle.putString("class_Id", class_Id);
-            bundle.putString("groupBonus", groupBonus);
-            bundle.putString("groupLeader", groupLeader);
-            bundle.putString("classId", classId);
-            bundle.putString("groupId", groupId);
+            bundle.putString("class_Id", class_Id);//課程Id
+            bundle.putString("groupBonus", groupBonus);//小組加分
+            bundle.putString("groupLeader", groupLeader);//小組組長
+            bundle.putString("classId", classId);//課程docId
+            bundle.putString("groupId", groupId);//小組DocId
             intent.putExtras(bundle);
             intent.setClass(GroupDetail.this, GroupDetailSetting.class);
             startActivity(intent);
+            groupDetailAdapter.notifyDataSetChanged();
         });
 
         //init Adapter
         studentList = new ArrayList<>();
-        groupListDetailAdapter = new GroupListDetailAdapter(this, studentList, groupLeader);
+        groupDetailAdapter = new GroupDetailAdapter(this, studentList, groupLeader);
 
         //init RecycleView
         groupDetailRecycleView = findViewById(R.id.groupListDetail);
         groupDetailRecycleView.setHasFixedSize(true);
         LinearLayoutManager mgr = new LinearLayoutManager(this);
         groupDetailRecycleView.setLayoutManager(mgr);
-        groupDetailRecycleView.setAdapter(groupListDetailAdapter);
+        groupDetailRecycleView.setAdapter(groupDetailAdapter);
 
         if (class_Id != null) {
             Log.d(TAG, "setAllLave");
             setAllGroupDetail();
+            groupDetailAdapter.notifyDataSetChanged();
         }
     }
 
@@ -104,13 +99,12 @@ public class GroupDetail extends AppCompatActivity {
                             if (e != null) {
                                 Log.d(TAG, "Error :" + e.getMessage());
                             }
-
                             for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
                                     String studentId = doc.getDocument().getId();
                                     Student aStudent = doc.getDocument().toObject(Student.class).withId(studentId);
                                     studentList.add(aStudent);
-                                    groupListDetailAdapter.notifyDataSetChanged();
+                                    groupDetailAdapter.notifyDataSetChanged();
                                 }
                             }
                         });

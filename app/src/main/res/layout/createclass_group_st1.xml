@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CreateClassGroupSt1">
+    tools:context="com.example.swipe_face_student.CreateClassGroupSt1">
 
 
     <android.support.design.widget.NavigationView

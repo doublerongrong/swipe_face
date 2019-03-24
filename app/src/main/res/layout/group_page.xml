@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GroupPage"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".GroupPage">
+
     <android.support.design.widget.NavigationView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_gravity="top"
         android:background="@color/colorPrimary"
         android:fitsSystemWindows="false"
-        android:orientation="vertical"
         android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
         android:tooltipText="小組">
 
@@ -26,19 +25,39 @@
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="24sp" />
     </android.support.design.widget.NavigationView>
-    <TextView
-        android:id="@+id/textViewClassName"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="課程名稱："
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:background="#D7D7D7"
-        />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/grouplist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragment_pick_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:id="@+id/textViewClassName"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#D7D7D7"
+            android:gravity="center_vertical"
+            android:text="課程名稱："
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/grouplist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp">
+
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabPickGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp" />
+    </FrameLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

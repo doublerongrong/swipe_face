@@ -34,7 +34,7 @@ public class GroupDetailSettingAdapter extends RecyclerView.Adapter<GroupDetailS
     public Context context;
     FirebaseFirestore db;
     public List<Student> studentList;
-    String TAG = "GroupListDetailAdapter";
+    String TAG = "GroupDetailAdapter";
     String groupLeader;
 
     public GroupDetailSettingAdapter(GroupDetailSetting groupDetailSetting, List<Student> studentList, String groupLeader ) {

@@ -24,6 +24,8 @@ public class Class extends ClassId{
     private Integer class_lateminus; //遲到扣分(出席)
     private Integer class_ewtimes; //預警 次數達到
     private Integer class_ewpoints; //預警 分數低於
+    private ArrayList<String> group_leader =new ArrayList<String>();
+
 
 
     private boolean group_state;
@@ -179,6 +181,14 @@ public class Class extends ClassId{
 
     public void setGroup_numHigh(Integer group_numHigh) {
         this.group_numHigh = group_numHigh;
+    }
+
+    public ArrayList<String> getGroup_leader() {
+        return group_leader;
+    }
+
+    public void setGroup_leader(ArrayList<String> group_leader) {
+        this.group_leader = group_leader;
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.kl.home.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Student extends StudentId implements Serializable {

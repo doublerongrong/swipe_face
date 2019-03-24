@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_google_signin_btn_text_dark_default"
+    android:orientation="vertical"
     tools:context=".Fragment_PickAnswerDetail">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="200dp"
+        android:layout_weight="9">
 
         <TextView
             android:id="@+id/tvgroupnum"
@@ -20,17 +21,16 @@
             android:layout_height="80dp"
             android:background="@color/common_google_signin_btn_text_light_disabled"
             android:gravity="center_horizontal|center_vertical"
-            android:text="第幾組"
+            android:text=""
             android:textSize="40dp"
-            android:textStyle="bold"
-            android:layout_marginTop="200dp"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvgroupleader"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
-            android:text="組長金城武"
+            android:text=""
             android:textSize="20dp"
             android:textStyle="normal" />
 
@@ -39,17 +39,19 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
-            android:text="資訊管理系405401114"
+            android:text=""
             android:textSize="20dp"
             android:textStyle="normal"
 
             />
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|bottom">
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_correct_answer"
@@ -125,5 +127,5 @@
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>
 
