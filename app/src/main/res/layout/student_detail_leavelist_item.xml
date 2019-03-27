@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/textViewLeaveDate"
-            android:layout_width="160dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:text="textView "

@@ -2,17 +2,25 @@ package com.example.kl.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -30,6 +38,8 @@ public class CreateClassSt2 extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String TeacherEmail = "053792@mail.fju.edu.tw";
     private ArrayList<String> StudentList;
+    private List<String> classList;
+    private String class_id;
 
     private String TAG = "FLAG";
 
@@ -40,6 +50,8 @@ public class CreateClassSt2 extends AppCompatActivity {
 
         mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
+        classList = new ArrayList<>();
 
         /*FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setTimestampsInSnapshotsEnabled(true)
@@ -69,10 +81,10 @@ public class CreateClassSt2 extends AppCompatActivity {
         String classname = bundle.getString("classnameB");
         String classyear = bundle.getString("classyearB");
 
-        String classid = "C";
+        class_id = "C";
         String classidOri = UUID.randomUUID().toString().replace("-", "");
         for(int i = 0; i < 10; i++){
-            classid += classidOri.charAt(i);
+            class_id += classidOri.charAt(i);
         }
 
 
@@ -87,7 +99,7 @@ public class CreateClassSt2 extends AppCompatActivity {
         String teacherid = user.getEmail().toString();*/
         //抓老師id
         Map<String, Object> uploadMap = new HashMap<>();
-        uploadMap.put("class_id", classid);
+        uploadMap.put("class_id", class_id);
         uploadMap.put("class_name", classname);
         uploadMap.put("class_year", classyear);
         uploadMap.put("teacher_email", TeacherEmail);
@@ -101,7 +113,11 @@ public class CreateClassSt2 extends AppCompatActivity {
         uploadMap.put("student_id", StudentList);
         Log.d(TAG, "TEST CREAT");
         mFirestore.collection("Class").add(uploadMap).addOnSuccessListener(a -> {
+
+
             Log.d(TAG, "TEST CREAT Success");
+            setCalss(class_id, TeacherEmail);//要改抓user
+
             Intent intent = new Intent();
             intent.setClass(CreateClassSt2.this, MainActivity.class);
             startActivity(intent);
@@ -114,5 +130,33 @@ public class CreateClassSt2 extends AppCompatActivity {
             Toast.makeText(CreateClassSt2.this, "上傳失敗", Toast.LENGTH_SHORT).show();
 
         });
+    }
+
+    public void setCalss(String class_id, String teacher_email){
+        Query query = mFirestore.collection("Teacher").whereEqualTo("teacher_email",teacher_email);
+        query.get().addOnCompleteListener(task1 -> {
+            QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult(): null;
+            for(DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
+                Log.i("documentUrl",documentSnapshot.getId());
+                String docId = documentSnapshot.getId();
+                classList = (ArrayList)documentSnapshot.get("class_id");
+                if (!classList.contains(class_id)){
+
+                    classList.add(class_id);
+                }
+
+                Map<String, Object> attend = new HashMap<>();
+                attend.put("class_id",classList);
+               mFirestore.collection("Teacher").document(docId).update(attend);
+
+
+            }
+        });
+
+
+
+
+
+
     }
 }

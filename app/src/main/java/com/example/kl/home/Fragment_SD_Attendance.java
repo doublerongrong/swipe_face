@@ -146,7 +146,6 @@ public class Fragment_SD_Attendance extends Fragment {
                         }
                         for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
 
-
                             if (doc.getType() == DocumentChange.Type.ADDED) {
                                 performanceId = doc.getDocument().getId();
                                 Performance performance = doc.getDocument().toObject(Performance.class);
