@@ -5,17 +5,157 @@
     android:layout_height="match_parent"
     tools:context=".Fragment_User">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="USER" />
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/bt"
-        android:layout_width="120dp"
-        android:layout_height="112dp"
-        android:text="Button" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="#DDDDDD">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="帳戶管理"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:text="個人資料"
+                android:textSize="20dp"/>
+
+            <Button
+                android:id="@+id/settingBtn"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="120dp"
+                android:background="@android:color/transparent"
+                android:text="〉"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="	#DDDDDD"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:text="訊息推播"
+                android:textSize="20dp"/>
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:text="關於系統"
+                android:textSize="20dp"/>
+
+            <Button
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="120dp"
+                android:background="@android:color/transparent"
+                android:text="〉"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="	#DDDDDD"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:text="贊助我們"
+                android:textSize="20dp"/>
+
+            <Button
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="120dp"
+                android:background="@android:color/transparent"
+                android:text="〉"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="	#DDDDDD"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:text="意見回饋"
+                android:textSize="20dp"/>
+
+            <Button
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="120dp"
+                android:background="@android:color/transparent"
+                android:text="〉"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="	#DDDDDD"
+                />
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
 
 
 </FrameLayout>
