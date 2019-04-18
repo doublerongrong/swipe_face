@@ -131,6 +131,7 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
         group.put("create_time", ts);
         group.put("group_numLow", Integer.valueOf(etGroupNumLow.getText().toString()));
         group.put("group_numHigh", Integer.valueOf(etGroupNumHigh.getText().toString()));
+        group.put("group_state_go",true);
 
         db.collection("Class")
                 .document(classId)

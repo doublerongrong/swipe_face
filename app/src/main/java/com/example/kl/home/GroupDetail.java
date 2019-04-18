@@ -1,7 +1,11 @@
 package com.example.kl.home;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Parcelable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,7 +71,7 @@ public class GroupDetail extends AppCompatActivity {
 
         //init Adapter
         studentList = new ArrayList<>();
-        groupDetailAdapter = new GroupDetailAdapter(this, studentList, groupLeader);
+        groupDetailAdapter = new GroupDetailAdapter(this, studentList);
 
         //init RecycleView
         groupDetailRecycleView = findViewById(R.id.groupListDetail);
@@ -76,11 +80,29 @@ public class GroupDetail extends AppCompatActivity {
         groupDetailRecycleView.setLayoutManager(mgr);
         groupDetailRecycleView.setAdapter(groupDetailAdapter);
 
-        if (class_Id != null) {
-            Log.d(TAG, "setAllLave");
+//        if (class_Id != null) {
+//            Log.d(TAG, "setAllLave");
 //            setAllGroupDetail();
 //            groupDetailAdapter.notifyDataSetChanged();
-        }
+//        }
+        groupDetailAdapter.setOnTransPageClickListener((studentId, student_id) -> {
+            Log.d(TAG,"onTransPageClickTEST" + studentId);
+
+            Intent intentToStu = new Intent();
+            Bundle bundleToStu = new Bundle();
+            intentToStu.setClass(GroupDetail.this, Activity_StudentDetail.class);
+            Log.d(TAG,"TransPageInfo"+"student_id"+student_id+"studentId"+studentId+"student");
+            bundleToStu.putString("PassStudentId", studentId);
+            bundleToStu.putString("PassStudent_id", student_id);
+            bundleToStu.putString("PassClass_id" ,class_Id);
+            intentToStu.putExtras(bundleToStu);
+            startActivity(intentToStu);
+
+
+
+        });//Fragment換頁
+
+
     }
 
     //跳轉Activity時清空studentList
@@ -111,6 +133,8 @@ public class GroupDetail extends AppCompatActivity {
         intent.setClass(GroupDetail.this, GroupDetailSetting.class);
         startActivity(intent);
         groupDetailAdapter.notifyDataSetChanged();
+
+
     }
 
     private void setAllGroupDetail() {
@@ -149,4 +173,5 @@ public class GroupDetail extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -88,6 +88,14 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         });
 
 
+
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         //判斷分組時間和現在時間去改變group_state
         Date date = new Date();
         DocumentReference docRefGroup = db.collection("Class").document(classId);
@@ -101,10 +109,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                         .document(classId)
                         .update(group);
             }});
-
-
     }
-
 
     private void setClass(FirebaseCallback firebaseCallback) {
         firestore_class = new Class();
