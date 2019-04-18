@@ -135,7 +135,6 @@ public class GroupDetail extends AppCompatActivity {
 //                                    for(int i =0; i<studentList.size() ;i++){
 //
 //                                    }
-                                    //TODO
                                     studentList.add(aStudent);
                                     groupDetailAdapter.notifyDataSetChanged();
                                 }
