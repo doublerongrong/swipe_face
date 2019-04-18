@@ -94,30 +94,6 @@ public class Fragment_LeaveList extends Fragment {
 
 
 
-        /*mFirestore.collection("Leave").whereEqualTo("a","A").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                if(e != null){
-                        Log.d(TAG,"error" + e.getMessage());
-                    }
-                leaveRecordList.clear();
-            for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
-
-                        if(doc.getType() == DocumentChange.Type.ADDED){
-
-                            String leaveRecordId = doc.getDocument().getId();
-
-                            LeaveRecord leaverecord = doc.getDocument().toObject(LeaveRecord.class).withId(leaveRecordId);
-                            leaveRecordList.add(leaverecord);
-
-                        leaveRecordListAdapter.notifyDataSetChanged();
-                    }
-
-                }
-            }
-        });*/
-
     }
 
     @Override

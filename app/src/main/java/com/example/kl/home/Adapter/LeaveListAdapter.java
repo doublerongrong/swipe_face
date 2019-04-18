@@ -54,6 +54,7 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
             intent.setClass(context, LeaveRecord.class);
             Bundle bundle = new Bundle();
             bundle.putString("id", leaveId);
+            bundle.putString("ChangePage","Fragment");//
             intent.putExtras(bundle);
             context.startActivity(intent);
 
