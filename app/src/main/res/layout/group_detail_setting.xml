@@ -37,10 +37,10 @@
             android:orientation="vertical"
             android:layout_weight="1">
             <TextView
-                android:id="@+id/textViewGroupBonus"
+                android:id="@+id/textViewGroupInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:text="第幾組 回答次數:"
+                android:text="第幾組 人數限制"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:gravity="center_vertical"

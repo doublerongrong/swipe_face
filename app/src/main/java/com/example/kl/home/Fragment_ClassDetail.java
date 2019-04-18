@@ -26,6 +26,10 @@ import static com.example.kl.home.BackHandlerHelper.handleBackPress;
 import com.example.kl.home.Model.Class;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
 
@@ -82,6 +86,21 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                 setSingleEvent(gridLayout, firestore_class);
             }
         });
+
+
+        //判斷分組時間和現在時間去改變group_state
+        Date date = new Date();
+        DocumentReference docRefGroup = db.collection("Class").document(classId);
+        docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
+            Class classG = documentSnapshot.toObject(Class.class);
+            if(classG.getCreate_time().before(date)){
+                Map<String, Object> group = new HashMap<>();
+                group.put("group_state",true);
+
+                db.collection("Class")
+                        .document(classId)
+                        .update(group);
+            }});
 
 
     }
@@ -156,8 +175,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                                         Class classG = documentSnapshot.toObject(Class.class);
                                         class_id = classG.getClass_id();
                                 Intent i = new Intent();
-                                Log.d("classIdddd",class_id);
-
                                 Bundle bundlecall = new Bundle();
                                 bundlecall.putString("class_id", class_id);
                                 bundlecall.putString("class_doc",classId);
@@ -197,14 +214,11 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             DocumentReference docRefGroup = db.collection("Class").document(classId);
                             docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
                                 Class classG = documentSnapshot.toObject(Class.class);
-                                Log.d(TAG+"Group","groupNumHigh\t"+String.valueOf(classG.getGroup_numHigh())
-                                        +"\ngroupNumLow\t"+String.valueOf(classG.getGroup_numLow())+"\nclass_id"+String.valueOf(classG.getClass_id())
-                                        +"\ngroup_state\t"+String.valueOf(classG.isGroup_state()));
                                 if (!classG.isGroup_state()) {//判斷是否分組
                                     Intent intent = new Intent();
                                     intent.setClass(getActivity(), CreateClassGroupSt1.class);
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("classId", classG.getClass_id());
+                                    bundle.putString("classId", classId);
                                     bundle.putString("classYear", classG.getClass_year());
                                     bundle.putString("className", classG.getClass_name());
                                     bundle.putInt("classStuNum", classG.getStudent_id().size());
@@ -214,7 +228,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                                     Intent intent = new Intent();
                                     intent.setClass(getActivity(), GroupPage.class);
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("classId",classId);
+                                    bundle.putString("classId", classId);
                                     bundle.putString("class_Id", classG.getClass_id());
                                     bundle.putString("classYear", classG.getClass_year());
                                     bundle.putString("className", classG.getClass_name());
@@ -222,8 +236,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                                     intent.putExtras(bundle);
                                     getActivity().startActivity(intent);
                                 }
-
-
                             });
                             break;
                         case 5:

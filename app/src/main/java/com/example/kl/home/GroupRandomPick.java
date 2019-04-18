@@ -24,37 +24,49 @@ import java.util.List;
 import java.util.Map;
 
 public class GroupRandomPick extends AppCompatActivity {
-    private String classId,groupId;
+    private String classId;
+    String groupId;
     private FirebaseFirestore db;
-    private String TAG = "####ChienTestBy////Fragment_PickGroup";
-    private int random,groupBFBonus,groupAFBonus;
+    private String TAG = "GroupRandomPick";
+    Integer random;
+    Integer groupBFBonus;
+    Integer groupAFBonus;
 
     private Class aClass;
     private Group group;
     private Student student;
 
-    private TextView tvGroupNum,tvGroupLeader,tvDepartAndGrade;
+    private TextView tvGroupNum;
+    TextView tvGroupLeader;
+    TextView tvDepartAndGrade;
     private CardView card_nextone;
     private CardView card_correct_answer;
+    GroupNumberForCh groupNumberForCh = new GroupNumberForCh();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_random_pick);
-        Intent Intent = getIntent(); /* 取得傳入的 Intent 物件 */
+
+        //init Intent Bundle
+        Intent Intent = getIntent();
         Bundle bundle = Intent.getExtras();
         if (bundle != null) {
             classId = bundle.getString("classId");
         }
 
+        //init xml
         tvGroupNum = findViewById(R.id.tvgroupnum);
         tvGroupLeader = findViewById(R.id.tvgroupleader);
         tvDepartAndGrade = findViewById(R.id.tvdepartandgrade);
-
-
         card_nextone =findViewById(R.id.card_nextone);
         card_correct_answer = findViewById(R.id.card_correct_answer);
 
+        //init method
         setRandomPick();
+
+        //init function
     }
 
     private void setRandomPick() {
@@ -66,10 +78,11 @@ public class GroupRandomPick extends AppCompatActivity {
             List<String> groupLeaderRandom = null;
             if (aClass != null) {
                 groupLeaderRandom = aClass.getGroup_leader();
+                if (groupLeaderRandom != null) {
+                    random = (int) (Math.random() * groupLeaderRandom.size());
+                }
             }
-            if (groupLeaderRandom != null) {
-                random = (int) (Math.random() * groupLeaderRandom.size());
-            }
+
 
 
             if (groupLeaderRandom != null) {
@@ -104,7 +117,7 @@ public class GroupRandomPick extends AppCompatActivity {
                                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                                 }
                                                 tvGroupLeader.setText(student.getStudent_name());
-                                                tvGroupNum.setText(group.getGroup_num());
+                                                tvGroupNum.setText(groupNumberForCh.transNum(group.getGroup_num()));
                                                 tvDepartAndGrade.setText(student.getStudent_department());
                                             }
                                         });
@@ -136,7 +149,7 @@ public class GroupRandomPick extends AppCompatActivity {
 
     private void setPoint(String groupId,Integer groupAFBonus) {
         Map<String, Object> group = new HashMap<>();
-        group.put("group_bonus", groupAFBonus.toString());
+        group.put("group_bonus", groupAFBonus);
 
         db.collection("Class")
                 .document(classId).collection("Group")

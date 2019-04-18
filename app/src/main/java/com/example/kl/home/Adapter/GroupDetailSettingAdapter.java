@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.kl.home.GroupDetail;
@@ -37,26 +38,36 @@ public class GroupDetailSettingAdapter extends RecyclerView.Adapter<GroupDetailS
     String TAG = "GroupDetailAdapter";
     String groupLeader;
 
+    private GroupDetailSettingAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
+
+
     public GroupDetailSettingAdapter(GroupDetailSetting groupDetailSetting, List<Student> studentList, String groupLeader ) {
         this.context = groupDetailSetting;
         this.studentList = studentList;
         this.groupLeader = groupLeader;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d(TAG,"onCreateViewHolder");
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.group_detail_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.group_detail_setting_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG,"onBindViewHolder");
-            holder.tvGroupDetailName.setText(studentList.get(position).getStudent_id() + "\t\t" +
-                    studentList.get(position).getStudent_department() + "\t\t" + studentList.get(position).getStudent_name());
-
+            holder.tvGroupDetailName.setText(String.format("%s\t\t%s\t\t%s",
+                    studentList.get(position).getStudent_id(),
+                    studentList.get(position).getStudent_department(),
+                    studentList.get(position).getStudent_name()));
+        holder.btDeleteStudent.setOnClickListener(v -> {
+            notifyItemChanged(position);
+            String student_Id = studentList.get(position).getStudent_id();
+            mTransPageListener.onTransPageClick(student_Id,studentList.get(position));
+        });
     }
 
     @Override
@@ -69,12 +80,23 @@ public class GroupDetailSettingAdapter extends RecyclerView.Adapter<GroupDetailS
 
         View mView;
         public TextView tvGroupDetailName;
+        public Button btDeleteStudent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
             tvGroupDetailName = mView.findViewById(R.id.groupDetailName);
+            btDeleteStudent = mView.findViewById(R.id.deleteStudent);
+
         }
     }
+
+    public interface transPageListener {
+        void onTransPageClick(String student_Id, Student student);
+    }//adapter跳轉fragment並攜帶需要的資料
+
+    public void setOnTransPageClickListener(GroupDetailSettingAdapter.transPageListener transPageListener) {
+        this.mTransPageListener = transPageListener;
+    }//adapter跳轉fragment
 
 }

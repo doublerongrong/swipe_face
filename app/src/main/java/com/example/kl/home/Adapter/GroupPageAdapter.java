@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.example.kl.home.GroupNumberForCh;
 import com.example.kl.home.GroupPage;
 import com.example.kl.home.Model.Group;
 import com.example.kl.home.Model.Student;
@@ -24,7 +25,8 @@ public class GroupPageAdapter extends RecyclerView.Adapter<GroupPageAdapter.View
     public Context context;
     private GroupPageAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
     private List<Group> groupList;
-    private String studentId,groupLeaderName;
+    private String studentId;
+    String groupLeaderName;
 
     public GroupPageAdapter(GroupPage groupPage, List<Group> groupList){
         this.groupList = groupList;
@@ -41,24 +43,14 @@ public class GroupPageAdapter extends RecyclerView.Adapter<GroupPageAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        GroupNumberForCh groupNumberForCh = new GroupNumberForCh();
 
-        Integer groupNumber = Integer.parseInt(groupList.get(position).getGroup_num());
+        Integer groupNumber = groupList.get(position).getGroup_num();
+        Integer groupBonus = groupList.get(position).getGroup_bonus();
         String groupLeader = groupList.get(position).getGroup_leader();
-        String groupBonus = groupList.get(position).getGroup_bonus();
         String groupId = groupList.get(position).groupId;
-        switch (groupNumber){
-            case 0:
-                holder.tvGroupNum.setText("第一組");
-                break;
-            case 1:
-                holder.tvGroupNum.setText("第二組");
-                break;
-            case 2:
-                holder.tvGroupNum.setText("第三組");
-                break;
-
-        }
-        holder.tvGroupBonus.setText("回答次數\t\t"+groupBonus);
+        holder.tvGroupNum.setText(groupNumberForCh.transNum(groupNumber));
+        holder.tvGroupBonus.setText(String.format("回答次數\t\t%s", groupBonus.toString()));
         List<String> student_Id  =groupList.get(position).getStudent_id();
         String[] studentIdArra = student_Id.toArray(new String[student_Id.size()]);
 
@@ -89,7 +81,7 @@ public class GroupPageAdapter extends RecyclerView.Adapter<GroupPageAdapter.View
 
     //adapter跳轉fragment並攜帶需要的資料
     public interface transPageListener {
-        void onTransPageClick(String groupLeader, String groupBonus,String groupId);
+        void onTransPageClick(String groupLeader, Integer groupBonus,String groupId);
     }
 
     //adapter跳轉fragment

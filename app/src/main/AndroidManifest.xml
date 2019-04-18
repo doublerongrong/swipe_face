@@ -19,8 +19,8 @@
         <activity android:name=".GroupRandomPick"></activity>
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
-        <activity android:name="com.example.swipe_face_student.CreateClassGroupSt2" />
-        <activity android:name="com.example.swipe_face_student.CreateClassGroupSt1" />
+        <activity android:name=".CreateClassGroupSt2" />
+        <activity android:name=".CreateClassGroupSt1" />
         <activity android:name=".GroupPage" />
         <activity android:name=".Activity_PickAnswer" />
         <activity android:name=".TrainAndTest" />
@@ -32,7 +32,6 @@
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
         <activity android:name=".Activity_StudentDetail"/>
-        <activity android:name=".RollcallResult" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

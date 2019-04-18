@@ -22,10 +22,13 @@ public class GroupPage extends AppCompatActivity {
     private RecyclerView groupRecycleView; // RecycleView
     private FirebaseFirestore db;
     private List<Group> groupList; // for RecycleView
-    public String classYear,className,class_Id,classId; //年度,課程名,class內ID,class的DocId
+    public String classYear; // 年度
+    String className; // 課程名
+    String class_Id; // classId
+    String classId; //classDocId
     public TextView tvClassName;//xml上的年度課程欄位
     private Integer classNum;
-    private String TAG = "####ChienTestBy////GroupPage";
+    private String TAG = "GroupPage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +62,6 @@ public class GroupPage extends AppCompatActivity {
         tvClassName.setText(classYear+" "+className);
         View btPickGroup = findViewById(R.id.fabPickGroup);
         btPickGroup.setOnClickListener(v -> {
-//            Fragment_PickGroup fragment_PickGroup = new Fragment_PickGroup();
-//            Bundle bundlePickGroup = new Bundle();
-//            bundlePickGroup.putString("classId", classId);
-//            bundlePickGroup.putString("class_Id",class_Id);
-//            fragment_PickGroup.setArguments(bundlePickGroup);
-//            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.fragment_pick_group,fragment_PickGroup).commit();
-//            btPickGroup.setVisibility(View.GONE);
             Intent intent = new Intent();
             Bundle bundleGroupPick = new Bundle();
             intent.setClass(GroupPage.this,GroupRandomPick.class);
@@ -75,37 +71,55 @@ public class GroupPage extends AppCompatActivity {
         });
 
         //AllGroup Method
-        if (class_Id != null) {
-            Log.d(TAG,"setAllLave");
-            setAllGroup();
-        }
+//        if (class_Id != null) {
+//            Log.d(TAG,"setAllLave");
+//            setAllGroup();
+//            groupPageAdapter.notifyDataSetChanged();
+//        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setAllGroup();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        groupList.clear();
     }
 
     private void setAllGroup() {
-        db.collection("Class").document(classId).collection("Group").addSnapshotListener((documentSnapshots, e) -> {
+        db.collection("Class")
+                .document(classId)
+                .collection("Group")
+                .orderBy("group_num")
+                .addSnapshotListener((documentSnapshots, e) -> {
             if (e != null) {
                 Log.d(TAG, "Error :" + e.getMessage());
             }
             for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
                 if (doc.getType() == DocumentChange.Type.ADDED ) {
-                    String groupId = doc.getDocument().getId();
-                    Log.d(TAG+"75行",groupId);
+                    String groupId = doc.getDocument().getId();//group docId
+                    Log.d(TAG,groupId);
                     Group group = doc.getDocument().toObject(Group.class).withId(groupId);
                     groupList.add(group);
                     groupPageAdapter.notifyDataSetChanged();
                 }
             }
         });
+
         groupPageAdapter.setOnTransPageClickListener((groupLeader, groupBonus, groupId) -> {
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
             intent.setClass(GroupPage.this,GroupDetail.class);
             bundle.putString("class_Id",class_Id);
-            bundle.putString("groupBonus",groupBonus);
+            bundle.putInt("groupBonus",groupBonus);
             bundle.putString("groupLeader",groupLeader);
             bundle.putString("classId",classId);
             bundle.putString("groupId",groupId);
-            Log.d(TAG+"91行",class_Id+groupBonus+groupLeader+classId+groupId);
+            Log.d(TAG,"setOnTransPageClickListener : "+class_Id+groupBonus+groupLeader+classId+groupId);
             intent.putExtras(bundle);
             startActivity(intent);
 

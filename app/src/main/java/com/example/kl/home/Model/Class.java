@@ -1,8 +1,8 @@
 package com.example.kl.home.Model;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Class extends ClassId{
     public Class() {
@@ -24,13 +24,13 @@ public class Class extends ClassId{
     private Integer class_lateminus; //遲到扣分(出席)
     private Integer class_ewtimes; //預警 次數達到
     private Integer class_ewpoints; //預警 分數低於
-    private ArrayList<String> group_leader =new ArrayList<String>();
-
-
-
-    private boolean group_state;
-    private Integer group_numLow;
-    private Integer group_numHigh;
+    private ArrayList<String> group_leader = new ArrayList<>();// 小組 組長列表
+    private boolean group_state_go;//小組 分組狀態
+    private boolean group_state;//小組 分組狀態
+    private Integer group_num;//小組數量
+    private Integer group_numHigh;//小組人數上限
+    private Integer group_numLow;//小組人數下限
+    private Date create_time;//小組創立時間
 
     public String getClass_id() {
         return class_id;
@@ -189,6 +189,30 @@ public class Class extends ClassId{
 
     public void setGroup_leader(ArrayList<String> group_leader) {
         this.group_leader = group_leader;
+    }
+
+    public boolean isGroup_state_go() {
+        return group_state_go;
+    }
+
+    public void setGroup_state_go(boolean group_state_go) {
+        this.group_state_go = group_state_go;
+    }
+
+    public Integer getGroup_num() {
+        return group_num;
+    }
+
+    public void setGroup_num(Integer group_num) {
+        this.group_num = group_num;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
     }
 }
 

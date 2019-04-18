@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kl.home.Model.Class;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Timestamp;
@@ -20,11 +22,17 @@ import java.util.Map;
 
 
 public class CreateClassGroupSt2 extends AppCompatActivity {
-    String classIdG, classYear, className;
-    TextView stCreateclasstime, tvClassName, tvClassNum;
-    EditText etGroupNumLow, etGroupNumHigh;
+    final String TAG = "CreateClassGroupSt2";
+    String classId;//課程DocId
+    String classYear;//課程學年度
+    String className;//課程名稱
+    Integer classNum; //課程學生人數
+    TextView stCreateclasstime;
+    TextView tvClassName;
+    TextView tvClassNum;
+    EditText etGroupNumLow;
+    EditText etGroupNumHigh;
     Button btNextStepButton;
-    Integer classNum;
     FirebaseFirestore db;
     AttributeCheck attributeCheck = new AttributeCheck();
 
@@ -32,23 +40,41 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.createclass_group_st2);
+
+        //init db
+        db = FirebaseFirestore.getInstance();
+
+        //init function
         CustomDateTimePicker custom;
+
+        //init Intent Bundle
         Intent Intent = getIntent(); /* 取得傳入的 Intent 物件 */
         Bundle bundle = Intent.getExtras();
-        db = FirebaseFirestore.getInstance();
-        classIdG = bundle.getString("classId");
-        classYear = bundle.getString("classYear");
-        className = bundle.getString("className");
-        classNum = bundle.getInt("classStuNum");
+        classId = bundle.getString("classId");
+
+        if(!classId.isEmpty()) {
+            DocumentReference docRef = db.collection("Class").document(classId);
+            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                Class aClass = documentSnapshot.toObject(Class.class);
+                className = aClass.getClass_name();
+                classYear = aClass.getClass_year();
+                classNum = aClass.getStudent_id().size();
+
+                //init xml
+                tvClassName = findViewById(R.id.textViewClassName);
+                tvClassName.setText(classYear + "\t" + className);
+                tvClassNum = findViewById(R.id.classNum);
+                tvClassNum.setText("班級成員\t:\t\t" +classNum.toString() + "人");
+
+            });
+        }
+
+        //init xml
         stCreateclasstime = findViewById(R.id.createclasstime);
         etGroupNumLow = findViewById(R.id.groupNumLow);
         etGroupNumHigh = findViewById(R.id.groupNumHigh);
         btNextStepButton = findViewById(R.id.nextStepButton);
-        tvClassName = findViewById(R.id.textViewClassName);
-        tvClassName.setText(classYear + "\t" + className);
-        tvClassNum = findViewById(R.id.classNum);
-        tvClassNum.setText("班級成員\t:\t\t" +classNum.toString() + "人");
-        Log.d("TESTGROUPST2", (classIdG + className + classYear));
+
 
         custom = new CustomDateTimePicker(this,
                 new CustomDateTimePicker.ICustomDateTimeListener() {
@@ -61,10 +87,13 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
                                       int hour24, int hour12, int min, int sec,
                                       String AM_PM) {
                         stCreateclasstime.setText("");
-                        stCreateclasstime.setText(year
-                                + "-" + (monthNumber + 1) + "-" + calendarSelected.get(Calendar.DAY_OF_MONTH)
-                                + " " + hour24 + ":" + min
-                                + ":" + sec);
+                        stCreateclasstime.setText(String.format("%d-%d-%d %d:%d:%d",
+                                year,
+                                monthNumber + 1,
+                                calendarSelected.get(Calendar.DAY_OF_MONTH),
+                                hour24,
+                                min,
+                                sec));
                     }
 
                     @Override
@@ -75,6 +104,8 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
         custom.setDate(Calendar.getInstance());
         stCreateclasstime.setOnClickListener(v -> custom.showDialog());
 
+
+        //Button Click
         btNextStepButton.setOnClickListener(v -> {
             if (attributeCheck.stringsNotNull(stCreateclasstime.getText().toString()) &&
                     attributeCheck.stringsNotNull(etGroupNumLow.getText().toString()) &&
@@ -84,16 +115,15 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
                 Toast.makeText(this, "請確認是否填寫", Toast.LENGTH_LONG).show();
             }
         });
+
     }
 
+    //設定小組設定
     private void setGroupSet() {
         Timestamp ts = new Timestamp(System.currentTimeMillis());
-        System.out.println("Timestamp1" + stCreateclasstime.getText().toString());
-
         try {
-
             ts = Timestamp.valueOf(stCreateclasstime.getText().toString());
-            System.out.println("Timestamp" + ts);
+            Log.d(TAG,"TimeStamp : "+ts);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,9 +133,15 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
         group.put("group_numHigh", Integer.valueOf(etGroupNumHigh.getText().toString()));
 
         db.collection("Class")
-                .document("T40Qbn2ROrFBRiCorPxd")
+                .document(classId)
                 .update(group);
 
-
+        Intent intent = new Intent();
+        intent.setClass(CreateClassGroupSt2.this, CreateClassGroupSt1.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Bundle bundleGroup = new Bundle();
+        bundleGroup.putString("classId", classId);
+        intent.putExtras(bundleGroup);
+        startActivity(intent);
     }
 }

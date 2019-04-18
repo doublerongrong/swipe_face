@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.swipe_face_student.CreateClassGroupSt1">
+    tools:context="com.example.kl.home.CreateClassGroupSt1">
 
 
     <android.support.design.widget.NavigationView
@@ -47,10 +47,11 @@
 
     </ListView>
     <TextView
+        android:id="@+id/classGroupInfo"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center"
-        android:text="尚未分組"
+        android:text="載入中..."
         android:textSize="20sp"
         android:textStyle="bold" />
 
