@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,12 +18,12 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.kl.home.Adapter.Detail_AttendListAdapter;
+import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Adapter.RollCallAdapter;
 import com.example.kl.home.Model.Class;
 import com.example.kl.home.Model.Performance;
 import com.example.kl.home.Model.RollCallStudent;
 import com.example.kl.home.Model.Rollcall;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
@@ -117,7 +119,6 @@ public class CallNameRollCall extends AppCompatActivity {
                             rollCallAdapter = new RollCallAdapter(CallNameRollCall.this,rollCallList);
                             mMainList.setAdapter(rollCallAdapter);
 
-
                             attend = (CardView)findViewById(R.id.card_attendance);
                             attend.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -173,6 +174,12 @@ public class CallNameRollCall extends AppCompatActivity {
                                         });
 
                                     }
+                                    //---------------------
+                                    //作者：左上角的天空
+                                    //来源：CSDN
+                                    //原文：https://blog.csdn.net/pszwll/article/details/82780150
+                                    //版权声明：本文为博主原创文章，转载请附上博文链接！
+
                                 }
                             });
                             absence = (CardView)findViewById(R.id.card_absence);
@@ -189,8 +196,8 @@ public class CallNameRollCall extends AppCompatActivity {
 
                                         }
                                     }
-
                                     if (!absenceList.contains(studentId.get(currentPosition))) {
+
                                         absenceList.add(studentId.get(currentPosition));
                                     }
                                     if (attendList.contains(studentId.get(currentPosition))) {
@@ -215,7 +222,6 @@ public class CallNameRollCall extends AppCompatActivity {
                                         absence.put("rollcall_sick", sickList);
                                         absence.put("rollcall_time", time);
                                         db.collection("Rollcall").add(absence);
-
                                     } else {
                                         Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
                                         query.get().addOnCompleteListener(task1 -> {

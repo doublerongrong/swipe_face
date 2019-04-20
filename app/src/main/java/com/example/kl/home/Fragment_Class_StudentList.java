@@ -143,25 +143,21 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
             }
         });
 
-        studentListAdapter.setOnTransPageClickListener(new StudentListAdapter.transPageListener() {
-            @Override
-            public void onTransPageClick(String studentId, String student_id, Student student) {
-                Log.d(TAG,"onTransPageClickTEST" + studentId);
+        studentListAdapter.setOnTransPageClickListener((studentId, student_id, student) -> {
+            Log.d(TAG,"onTransPageClickTEST" + studentId);
 
 //                singleClick(view);
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                intent.setClass(getActivity(), Activity_StudentDetail.class);
-                bundle.putString("PassStudentId", studentId);
-                bundle.putString("PassStudent_id", student_id);
-                bundle.putSerializable("PassStudent", student);
-                bundle.putString("PassClass_id" ,class_id);
-                intent.putExtras(bundle);
-                startActivity(intent);
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            intent.setClass(getActivity(), Activity_StudentDetail.class);
+            bundle.putString("PassStudentId", studentId);
+            bundle.putString("PassStudent_id", student_id);
+            bundle.putSerializable("PassStudent", student);
+            bundle.putString("PassClass_id" ,class_id);
+            intent.putExtras(bundle);
+            startActivity(intent);
 
 
-
-            }
 
         });//Fragment換頁
     }

@@ -62,8 +62,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
                     transaction.commit();
                     return true;
                 case R.id.navigation_user:
-                    transaction.replace(R.id.content,new Fragment_User());
-                    transaction.addToBackStack(new Fragment_User().getClass().getName());
+                    Fragment_User fragment_user = new Fragment_User();
+                    Bundle args = new Bundle();
+                    args.putString("teacher_email", teacher_email);
+                    Log.d(TAG,"TEST" + teacher_email);
+                    fragment_user.setArguments(args);
+                    transaction.replace(R.id.content,fragment_user);
+                    transaction.addToBackStack(fragment_user.getClass().getName());
                     transaction.commit();
                     return true;
             }
@@ -158,6 +163,24 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
             Log.d(TAG, " toClassStudentList");
             getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_Class_StudentList).commit();
         }//判斷是哪個fragment傳來的請求
+        else if (fragmentKey.equals("toUserInfor")) {
+            Fragment_User_Infor fragment_user_infor = new Fragment_User_Infor();
+            Bundle args = new Bundle();
+            args.putString("info", info);
+            args.putString("teacher_email", teacher_email);
+            fragment_user_infor.setArguments(args);
+            Log.d(TAG, " toUserInfor");
+            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_user_infor).commit();
+        }//判斷是哪個fragment傳來的請求
+        else if (fragmentKey.equals("toUserInforSetting")) {
+            Fragment_User_InforSetting fragment_user_inforsetting = new Fragment_User_InforSetting();
+            Bundle args = new Bundle();
+            args.putString("info", info);
+            args.putString("teacher_email", teacher_email);
+            fragment_user_inforsetting.setArguments(args);
+            Log.d(TAG, " toUserInforSetting");
+            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_user_inforsetting).commit();
+        }//判斷是哪個fragment傳來的請求
     }//fragment傳值並換頁
 
 
@@ -170,5 +193,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         fragment_classDetail.setArguments(args);
         getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_classDetail).commit();
     }
+
+
 
 }

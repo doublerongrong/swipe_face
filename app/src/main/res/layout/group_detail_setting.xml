@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GroupDetailSetting"
+    android:orientation="vertical">
+    <android.support.design.widget.NavigationView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="top"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="false"
+        android:orientation="vertical"
+        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
+        android:tooltipText="小組">
+        <TextView
+            android:id="@+id/title_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="小組"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textSize="24sp" />
+    </android.support.design.widget.NavigationView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#D7D7D7"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/textViewGroupInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="第幾組 人數限制"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <Button
+                android:id="@+id/groupDetailSetting"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:background="#ffff"
+                android:text="完成"
+                android:gravity="center"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        card_view:cardCornerRadius="0dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/groupDetailSetPlus"
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/plus"
+                android:layout_gravity="center_vertical"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:text="新增成員"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/groupDetailSettingRecycleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

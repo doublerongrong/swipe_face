@@ -75,13 +75,13 @@ public class Fragment_LeaveList extends Fragment {
 
         mFirestore = FirebaseFirestore.getInstance();
 
-        mMainList = (RecyclerView) view.findViewById(R.id.leave_list);
+        mMainList = view.findViewById(R.id.leave_list);
         mMainList.setHasFixedSize(true);
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(leaveListAdapter);
 
-        leaveListWaySpinner = (Spinner) view.findViewById(R.id.spinner_LeaveListWay);
-        listAdapterLeave = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.leave_spinner_style, leaveListWay);//spinner值
+        leaveListWaySpinner =  view.findViewById(R.id.spinner_LeaveListWay);
+        listAdapterLeave = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.leave_spinner_style, leaveListWay);//spinner值
         listAdapterLeave.setDropDownViewResource(R.layout.leave_spinner_style);
 
         leaveListWaySpinner.setAdapter(listAdapterLeave);
@@ -93,30 +93,6 @@ public class Fragment_LeaveList extends Fragment {
         }
 
 
-
-        /*mFirestore.collection("Leave").whereEqualTo("a","A").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                if(e != null){
-                        Log.d(TAG,"error" + e.getMessage());
-                    }
-                leaveRecordList.clear();
-            for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
-
-                        if(doc.getType() == DocumentChange.Type.ADDED){
-
-                            String leaveRecordId = doc.getDocument().getId();
-
-                            LeaveRecord leaverecord = doc.getDocument().toObject(LeaveRecord.class).withId(leaveRecordId);
-                            leaveRecordList.add(leaverecord);
-
-                        leaveRecordListAdapter.notifyDataSetChanged();
-                    }
-
-                }
-            }
-        });*/
 
     }
 

@@ -84,40 +84,27 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
 
                 for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-
-
                     if (doc.getType() == DocumentChange.Type.ADDED ) {
                         classId = doc.getDocument().getId();
                         Class aClass = doc.getDocument().toObject(Class.class).withId(classId);
                         Log.d(TAG, "DB2 classId:"+classId);
 
-
                         classList.add(aClass);
                         classListAdapter.notifyDataSetChanged();
 
-
-
-
                     }
                 }
-
             }
         });
-        createClassBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), CreateClassSt1.class);
-                startActivity(intent);
-            }
+        createClassBtn.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), CreateClassSt1.class);
+            startActivity(intent);
         });
 
-        classListAdapter.setOnTransPageClickListener(new ClassListAdapter.transPageListener() {
-
-            @Override
-            public void onTransPageClick(String classId2) {
-                Log.d(TAG,"onTransPageClick0" +classId2);
-                mCallback.onFragmentSelected(classId2 , "toClassListDetail");//fragment傳值
+        classListAdapter.setOnTransPageClickListener(classId2 -> {
+            Log.d(TAG,"onTransPageClick0" +classId2);
+            mCallback.onFragmentSelected(classId2 , "toClassListDetail");//fragment傳值
 //                Log.d(TAG," classId:"+classId);
 //
 //                fragmentManager = getChildFragmentManager();
@@ -127,8 +114,6 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 //                transaction.replace(R.id.fragment_class_list, new Fragment_ClassDetail());
 //                transaction.addToBackStack(new Fragment_ClassDetail().getClass().getName());
 //                transaction.commit();
-
-            }
 
         });//Fragment換頁
 
