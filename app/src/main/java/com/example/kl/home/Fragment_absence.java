@@ -35,7 +35,7 @@ public class Fragment_absence extends Fragment {
     private List<RollCallList> rollCallList;
     private String classId,docId;
     private List<String>absenceList,attendList,lateList;
-    private int checkedItem = 0;
+    private int checkedItem = 1;
     private int studentIndex = 0;
     private List<String>absenceId;
     private View view1;

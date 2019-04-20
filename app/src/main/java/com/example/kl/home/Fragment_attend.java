@@ -166,6 +166,12 @@ public class Fragment_attend extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
         builder.setTitle("修改出席狀況：");
         String[] cities = {"出席", "缺席", "遲到"};
+        if (attendId.contains(student_id)){
+            checkedItem = 0;
+        }
+        if (lateId.contains(student_id)){
+            checkedItem = 2;
+        }
 
         builder.setSingleChoiceItems(cities, checkedItem, new DialogInterface.OnClickListener() {
             @Override

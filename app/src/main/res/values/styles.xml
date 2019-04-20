@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">#C1C1C1</item>
-        <item name="colorControlActivated">#FFF</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
