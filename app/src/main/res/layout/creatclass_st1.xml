@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+            >
 
 
         <LinearLayout
@@ -51,7 +52,8 @@
                 android:layout_weight="1"
                 android:text="課程學年 :"
                 android:textSize="20dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                />
 
             <Spinner
                 style="@style/Base.TextAppearance.AppCompat.Widget.DropDownItem"

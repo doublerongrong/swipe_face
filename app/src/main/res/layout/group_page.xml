@@ -25,7 +25,10 @@
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             android:textSize="24sp" />
     </android.support.design.widget.NavigationView>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/shadow" />
     <FrameLayout
         android:id="@+id/fragment_pick_group"
         android:layout_width="match_parent"

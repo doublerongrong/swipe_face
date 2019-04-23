@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -44,7 +45,7 @@ public class GroupPage extends AppCompatActivity {
         //init RecycleView
         groupRecycleView = findViewById(R.id.grouplist);
         groupRecycleView.setHasFixedSize(true);
-        GridLayoutManager mgr=new GridLayoutManager(this,2);//GridLayout 3列
+        LinearLayoutManager mgr = new LinearLayoutManager(this);
         groupRecycleView.setLayoutManager(mgr);
         groupRecycleView.setAdapter(groupPageAdapter);
 

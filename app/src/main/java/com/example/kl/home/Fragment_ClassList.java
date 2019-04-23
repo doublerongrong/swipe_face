@@ -17,12 +17,9 @@ import android.widget.Button;
 
 import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Model.Class;
-import com.example.kl.home.Model.Teacher;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +27,15 @@ import java.util.List;
 
 
 public class Fragment_ClassList extends Fragment  implements FragmentBackHandler {
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    private FirebaseFirestore db ;
     private RecyclerView mMainList;
     private ClassListAdapter classListAdapter;
     private List<Class> classList;
     private String TAG = "FLAG";
     private String teacher_email = "053792@mail.fju.edu.tw";
 
-    private Teacher teacher;
-    private ArrayList<String> class_id = new ArrayList<String>();
+//    private Teacher teacher;
 
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
@@ -57,45 +53,40 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-
+        //init DB
         db = FirebaseFirestore.getInstance();
 
+        //init Adapter
         classList = new ArrayList<>();
         classListAdapter = new ClassListAdapter(getActivity().getApplicationContext(),classList);
 
-        mMainList = (RecyclerView)getView().findViewById(R.id.class_list);
+        //init RecyclerView
+        mMainList = getView().findViewById(R.id.class_list);
         mMainList.setHasFixedSize(true);
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(classListAdapter);
 
-        createClassBtn = (Button) view.findViewById(R.id.CreatClassbButton);
+        createClassBtn = view.findViewById(R.id.CreatClassbButton);
         Log.d(TAG, "Flag1");
 
+        db.collection("Class").whereEqualTo("teacher_email", teacher_email)
+                .addSnapshotListener((documentSnapshots, e) -> {
+                    if (e != null) {
 
-
-
-        db.collection("Class").whereEqualTo("teacher_email", teacher_email).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                if (e != null) {
-
-                    Log.d(TAG, "Error :" + e.getMessage());
-                }
-
-
-                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() == DocumentChange.Type.ADDED ) {
-                        classId = doc.getDocument().getId();
-                        Class aClass = doc.getDocument().toObject(Class.class).withId(classId);
-                        Log.d(TAG, "DB2 classId:"+classId);
-
-                        classList.add(aClass);
-                        classListAdapter.notifyDataSetChanged();
-
+                        Log.d(TAG, "Error :" + e.getMessage());
                     }
-                }
-            }
-        });
+                    for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() == DocumentChange.Type.ADDED ) {
+                            classId = doc.getDocument().getId();
+                            Class aClass = doc.getDocument().toObject(Class.class).withId(classId);
+                            Log.d(TAG, "DB2 classId:"+classId);
+
+                            classList.add(aClass);
+                            classListAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
         createClassBtn.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setClass(getActivity(), CreateClassSt1.class);
@@ -105,15 +96,6 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         classListAdapter.setOnTransPageClickListener(classId2 -> {
             Log.d(TAG,"onTransPageClick0" +classId2);
             mCallback.onFragmentSelected(classId2 , "toClassListDetail");//fragment傳值
-//                Log.d(TAG," classId:"+classId);
-//
-//                fragmentManager = getChildFragmentManager();
-//                Log.d(TAG,"onTransPageClick1");
-//                transaction = fragmentManager.beginTransaction();
-//                Log.d(TAG,"onTransPageClick2");
-//                transaction.replace(R.id.fragment_class_list, new Fragment_ClassDetail());
-//                transaction.addToBackStack(new Fragment_ClassDetail().getClass().getName());
-//                transaction.commit();
 
         });//Fragment換頁
 
@@ -127,8 +109,6 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         return BackHandlerHelper.handleBackPress(this);
     }//fragment 返回鍵
 
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -138,6 +118,4 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
             throw new ClassCastException(context.toString() + "Mush implement OnFragmentSelectedListener ");
         }
     }
-
-
 }
