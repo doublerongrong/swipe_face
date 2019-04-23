@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kl.home.Adapter.Detail_AttendListAdapter;
 import com.example.kl.home.Model.Attendance;
@@ -44,8 +45,7 @@ public class Fragment_SD_Attendance extends Fragment {
     private String studentId;
     private String student_id;
     private String class_id;
-    private String rollcallId;
-    private String OriStatus;
+
     private int lateMinus;
     private int absenteeMinus;
     private int AttendPoints;
@@ -54,8 +54,8 @@ public class Fragment_SD_Attendance extends Fragment {
 
     private List<String> attendList, absenceList, lateList;//更改rollcall狀態
 
-    private Rollcall rollcall;
     private Attendance attendance;
+    private List<String> rollcallList, stateList;
 
     private Detail_AttendListAdapter attendanceListAdapter;
     private List<Attendance> attendanceList;
@@ -64,6 +64,7 @@ public class Fragment_SD_Attendance extends Fragment {
     private FirebaseFirestore mFirestore;
     public Context context;
     private int checkedItem = 0;
+    private int classIndex = 0;
 
 
     @Override
@@ -75,13 +76,12 @@ public class Fragment_SD_Attendance extends Fragment {
         studentId = arg.getString("PassStudentId");
         student_id = arg.getString("PassStudent_Id");
         class_id = arg.getString("PassClass_Id");
-        Log.d(TAG, "TEST FSD " + studentId);
-        Log.d(TAG, "TEST FSD " + student_id);
-        Log.d(TAG, "TEST FSD " + class_id);
 
         absenceList = new ArrayList<>();
         attendList = new ArrayList<>();
         lateList = new ArrayList<>();
+        rollcallList = new ArrayList<>();
+        stateList = new ArrayList<>();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment__sd__attendance, container, false);
     }
@@ -102,7 +102,6 @@ public class Fragment_SD_Attendance extends Fragment {
 
         ListAttendance(class_id, view);
 
-
     }
 
 
@@ -114,13 +113,16 @@ public class Fragment_SD_Attendance extends Fragment {
 
         if (rollcall.getRollcall_absence().contains(student_id)) {
             attendance.setAttendance_status("缺席");
-            OriStatus = "缺席";
+
+            stateList.add("缺席");
         } else if (rollcall.getRollcall_attend().contains(student_id)) {
             attendance.setAttendance_status("出席");
-            OriStatus = "出席";
+
+            stateList.add("出席");
         } else if (rollcall.getRollcall_late().contains(student_id)) {
             attendance.setAttendance_status("遲到");
-            OriStatus = "遲到";
+
+            stateList.add("遲到");
         } else if (rollcall.getRollcall_casual().contains(student_id)) {
             attendance.setAttendance_status("請假");
         } else if (rollcall.getRollcall_funeral().contains(student_id)) {
@@ -170,7 +172,7 @@ public class Fragment_SD_Attendance extends Fragment {
                         lateMinus = aClass.getClass_lateminus();
                         absenteeMinus = aClass.getClass_absenteeminus();
 
-                        Log.d(TAG, "in class " + class_id.toString());
+                        Log.d(TAG, "in class " + class_id);
                         Log.d(TAG, "in class " + Integer.toString(lateMinus));
                         Log.d(TAG, "in class " + Integer.toString(absenteeMinus));
                         mFirestore.collection("Rollcall").
@@ -187,14 +189,14 @@ public class Fragment_SD_Attendance extends Fragment {
                                         }
                                         for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
                                             if (doc.getType() == DocumentChange.Type.ADDED) {
-
-                                                rollcallId = doc.getDocument().getId();
+                                                String rollcallId = doc.getDocument().getId();
+                                                rollcallList.add(rollcallId);
                                                 Log.d(TAG, "docId  " + rollcallId);
-                                                rollcall = doc.getDocument().toObject(Rollcall.class);
+                                                Rollcall rollcall = doc.getDocument().toObject(Rollcall.class);
                                                 setAttendance(rollcall, rollcallId);
-
                                                 attendanceList.add(attendance);
                                                 attendanceListAdapter.notifyDataSetChanged();
+
                                             }
                                         }
                                     }
@@ -202,21 +204,40 @@ public class Fragment_SD_Attendance extends Fragment {
                     }
 
                 });
+
+        attendanceListAdapter.setOnClickMyButton(new Detail_AttendListAdapter.onClickMyButton() {
+            @Override
+            public void myButton(int id) {
+                classIndex = id;
+                Toast.makeText(getActivity(), Integer.toString(id), Toast.LENGTH_SHORT).show();
+            }
+        });
         attendanceListAdapter.setOnTransPageClickListener(new Detail_AttendListAdapter.transPageListener() {
             @Override
             public void onTransPageClick() {
-                Log.d(TAG, "onTransPageClickTEST" + student_id);
-                singleClick(view);
+                Log.d(TAG, "onTransPageClickTEST  " + student_id);
+                Log.d(TAG, "onTransPageClickTEST  " + rollcallList.get(classIndex));
+                Log.d(TAG, "onTransPageClickTEST  " + rollcallList);
+                Log.d(TAG, "onTransPageClickTEST  " + stateList);
+
+                singleClick(view, rollcallList.get(classIndex), stateList.get(classIndex));
 
             }
 
         });//Fragment換頁
     }
 
-    public void singleClick(View v) {
+    public void singleClick(View v, String rollcallId, String state) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-        builder.setTitle("修改出席狀況：");
+        builder.setTitle(getResources().getString(R.string.updateState));
         String[] cities = {"出席", "缺席", "遲到"};
+        if (state.equals("出席")) {
+            checkedItem = 0;
+        } else if (state.equals("缺席")) {
+            checkedItem = 1;
+        } else {
+            checkedItem = 2;
+        }
 
         builder.setSingleChoiceItems(cities, checkedItem, new DialogInterface.OnClickListener() {
             @Override
@@ -231,19 +252,19 @@ public class Fragment_SD_Attendance extends Fragment {
                 if (checkedItem == 0) {
                     Log.d(TAG, "TEST DIALOG" + "出席");
                     Log.d(TAG, "TEST DIALOG" + rollcallId + student_id);
-                    changePoints(OriStatus, "出席", v);
+                    changePoints(state, "出席", v);
                     addAttend(rollcallId, student_id);
 
                 } else if (checkedItem == 1) {
                     Log.d(TAG, "TEST DIALOG" + "缺席");
                     Log.d(TAG, "TEST DIALOG" + rollcallId + student_id);
                     addAbsense(rollcallId, student_id);
-                    changePoints(OriStatus, "缺席",v);
+                    changePoints(state, "缺席", v);
                 } else if (checkedItem == 2) {
                     Log.d(TAG, "TEST DIALOG" + "遲到");
                     Log.d(TAG, "TEST DIALOG" + rollcallId + student_id);
                     addLate(rollcallId, student_id);
-                    changePoints(OriStatus, "遲到",v);
+                    changePoints(state, "遲到", v);
                 }
 
             }
@@ -406,36 +427,31 @@ public class Fragment_SD_Attendance extends Fragment {
 
     }
 
-    public void changePoints(String Oristatus, String check, View view){
-        if(Oristatus.equals("出席") && check.equals("缺席")){
+    public void changePoints(String Oristatus, String check, View view) {
+        if (Oristatus.equals("出席") && check.equals("缺席")) {
             AttendPoints -= absenteeMinus;
-            OriStatus = "缺席";
+
             Log.d(TAG, "改分數:  " + "出席變缺席");
 
-        }
-        else if(Oristatus.equals("出席") && check.equals("遲到")){
+        } else if (Oristatus.equals("出席") && check.equals("遲到")) {
             AttendPoints -= lateMinus;
-            OriStatus = "遲到";
+
             Log.d(TAG, "改分數:  " + "出席變遲到");
-        }
-        else if(Oristatus.equals("遲到") && check.equals("出席")){
+        } else if (Oristatus.equals("遲到") && check.equals("出席")) {
             AttendPoints += lateMinus;
-            OriStatus = "出席";
+
             Log.d(TAG, "改分數:  " + "遲到變出席");
-        }
-        else if(Oristatus.equals("遲到") && check.equals("缺席")){
+        } else if (Oristatus.equals("遲到") && check.equals("缺席")) {
             AttendPoints = AttendPoints + lateMinus - absenteeMinus;
-            OriStatus = "缺席";
+
             Log.d(TAG, "改分數:  " + "遲到變缺席");
-        }
-        else if(Oristatus.equals("缺席") && check.equals("遲到")){
+        } else if (Oristatus.equals("缺席") && check.equals("遲到")) {
             AttendPoints = AttendPoints + absenteeMinus - lateMinus;
-            OriStatus = "遲到";
+
             Log.d(TAG, "改分數:  " + "缺席變遲到");
-        }
-        else if(Oristatus.equals("缺席") && check.equals("出席")){
+        } else if (Oristatus.equals("缺席") && check.equals("出席")) {
             AttendPoints += absenteeMinus;
-            OriStatus = "出席";
+
             Log.d(TAG, "改分數:  " + "缺席變出席");
         }
         DocumentReference ChangePointRef = mFirestore.collection("Performance").document(performanceId);
@@ -444,9 +460,11 @@ public class Fragment_SD_Attendance extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        setScore(class_id,student_id);
+                        setScore(class_id, student_id);
                         attendanceList.clear();
                         ListAttendance(class_id, view);
+                        stateList.clear();
+                        rollcallList.clear();
                     }
                 });
 

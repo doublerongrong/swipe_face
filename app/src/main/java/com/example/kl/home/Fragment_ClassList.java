@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -44,7 +45,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private String classId;
-    private Button createClassBtn;
+    private FloatingActionButton fabCreateClass;
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
     @Override
@@ -68,8 +69,11 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(classListAdapter);
 
-        createClassBtn = (Button) view.findViewById(R.id.CreatClassbButton);
+        fabCreateClass = (FloatingActionButton) view.findViewById(R.id.fab_creatClass);
         Log.d(TAG, "Flag1");
+
+        int itemSpace = 10;
+        mMainList.addItemDecoration(new SpacesItemDecoration(itemSpace));
 
 
 
@@ -103,7 +107,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
             }
         });
-        createClassBtn.setOnClickListener(new View.OnClickListener() {
+        fabCreateClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -118,15 +122,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
             public void onTransPageClick(String classId2) {
                 Log.d(TAG,"onTransPageClick0" +classId2);
                 mCallback.onFragmentSelected(classId2 , "toClassListDetail");//fragment傳值
-//                Log.d(TAG," classId:"+classId);
-//
-//                fragmentManager = getChildFragmentManager();
-//                Log.d(TAG,"onTransPageClick1");
-//                transaction = fragmentManager.beginTransaction();
-//                Log.d(TAG,"onTransPageClick2");
-//                transaction.replace(R.id.fragment_class_list, new Fragment_ClassDetail());
-//                transaction.addToBackStack(new Fragment_ClassDetail().getClass().getName());
-//                transaction.commit();
+
 
             }
 

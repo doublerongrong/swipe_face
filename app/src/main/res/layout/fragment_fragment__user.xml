@@ -12,147 +12,291 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="#DDDDDD">
+            android:layout_height="73dp">
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:text="帳戶管理"
-                android:textSize="24sp"
-                android:textStyle="bold"/>
+                android:textColor="#000000"
+                android:textSize="23sp" />
+
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/shadow" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:text="個人資料"
-                android:textSize="20dp"/>
-
-            <Button
-                android:id="@+id/settingBtn"
-                android:layout_width="110dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="120dp"
-                android:background="@android:color/transparent"
-                android:text="〉"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:textColor="	#DDDDDD"
-                />
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="31dp">
 
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_person_outline_black_24dp" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="個人資料"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:text="訊息推播"
-                android:textSize="20dp"/>
+            </LinearLayout>
 
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="185dp"
-                android:layout_height="wrap_content"/>
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:text="關於系統"
-                android:textSize="20dp"/>
-
-            <Button
-                android:layout_width="110dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="120dp"
-                android:background="@android:color/transparent"
-                android:text="〉"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:textColor="	#DDDDDD"
-                />
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/settingBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            </LinearLayout>
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:text="贊助我們"
-                android:textSize="20dp"/>
-
-            <Button
-                android:layout_width="110dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="120dp"
-                android:background="@android:color/transparent"
-                android:text="〉"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:textColor="	#DDDDDD"
-                />
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="31dp">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_notifications_active_black_24dp" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="訊息推播"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            </LinearLayout>
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:text="意見回饋"
-                android:textSize="20dp"/>
-
-            <Button
-                android:layout_width="110dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="120dp"
-                android:background="@android:color/transparent"
-                android:text="〉"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:textColor="	#DDDDDD"
-                />
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="31dp">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_person_outline_black_24dp" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="關於系統"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            </LinearLayout>
 
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="31dp">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_monetization_on_black_24dp" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="聯絡我們"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="31dp">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_error_outline_black_24dp" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="意見回饋"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="31dp">
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_input_black_24dp" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="登出"
+                    android:textColor="#0806b1"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/signOutBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
 
 
     </LinearLayout>

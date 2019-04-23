@@ -28,6 +28,7 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
     private EditText editTextanswerBouns;
     private EditText editTextrandomAnswerBonus;
     private Button updateBtn;
+    private Button ButtonCancel;
 
     private String classId;
 
@@ -57,6 +58,7 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
         editTextanswerBouns = (EditText) findViewById(R.id.editTextAnswerBonus);
         editTextrandomAnswerBonus = (EditText) findViewById(R.id.editTextRDBonus);
         updateBtn = (Button) findViewById(R.id.ButtonUpdate);
+        ButtonCancel = (Button) findViewById(R.id.ButtonCancel);
 
         DocumentReference docRef = mFirestore.collection("Class").document(classId);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -74,6 +76,18 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
                         editTextEWpoints.setText(setClass.getClass_ewtimes().toString());
                         editTextanswerBouns.setText(setClass.getClass_answerbonus().toString());
                         editTextrandomAnswerBonus.setText(setClass.getClass_rdanswerbonus().toString());
+
+                        ButtonCancel.setOnClickListener(v -> {
+
+                            Intent intent = new Intent();
+                            intent.setClass(Activity_ScoreSetting_Edit.this, Activity_ScoreSetting.class);
+                            Bundle bundle7 = new Bundle();
+                            bundle7.putString("classId", classId);
+                            intent.putExtras(bundle7);
+                            startActivity(intent);
+                            finish();
+
+                        });
 
                         updateBtn.setOnClickListener(v -> {
 
@@ -104,7 +118,7 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
         Integer answerbonus = Integer.parseInt(editTextrandomAnswerBonus.getText().toString().trim());
         Integer randomanserbonus = Integer.parseInt(editTextrandomAnswerBonus.getText().toString().trim());
 
-        DocumentReference leaveCheckRef = mFirestore.collection("Class").document("gM3rxBwnztyaoFjxRv6O");
+        DocumentReference leaveCheckRef = mFirestore.collection("Class").document(classId);
         leaveCheckRef
                 .update("class_totalpoints", totalpoints, "class_lateminus", lateminus,
                         "class_absenteeminus", absenteeminus, "class_ewtimes", EWtimes, "class_ewpoints", EWpoints,
@@ -113,9 +127,6 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully updated!");
-                        Intent intent = new Intent();
-                        intent.setClass(Activity_ScoreSetting_Edit.this, MainActivity.class);
-                        startActivity(intent);
                         finish();
                     }
                 });

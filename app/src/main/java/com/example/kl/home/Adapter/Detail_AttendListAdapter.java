@@ -24,14 +24,20 @@ public class Detail_AttendListAdapter extends RecyclerView.Adapter<Detail_Attend
 
 
     public List<Attendance> AttendanceList;
-    private String rollcallId;
-    private String student_id;
-
-    private int checkedItem = 0; //默认选中的item
+//    private String rollcallId;
+//    private String student_id;
 
     public Context context;
 
     private Detail_AttendListAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
+    private onClickMyButton onClickMyButton;
+
+    public interface onClickMyButton{
+        public void myButton(int id);
+    }
+    public void setOnClickMyButton(onClickMyButton onClickMyButton) {
+        this.onClickMyButton = onClickMyButton;
+    }
 
 
     public Detail_AttendListAdapter(Context context, List<Attendance> AttendanceList) {
@@ -56,20 +62,25 @@ public class Detail_AttendListAdapter extends RecyclerView.Adapter<Detail_Attend
         sdFormat.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
         Date attendanceDate = AttendanceList.get(position).getAttendance_time();
 
-        rollcallId = AttendanceList.get(position).getRollcallId();
-        student_id = AttendanceList.get(position).getStudent_id();
+//        rollcallId = AttendanceList.get(position).getRollcallId();
+//        student_id = AttendanceList.get(position).getStudent_id();
 
         holder.textViewAttendDate.setText(sdFormat.format(attendanceDate));
         holder.textViewAttendance.setText(AttendanceList.get(position).getAttendance_status());
 
+        holder.checkAttendBtn.setTag(position);
         holder.checkAttendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ///Toast.makeText(context,"Id  :  " + rollcallId + student_id, Toast.LENGTH_SHORT).show();
+                int position = (int) v.getTag();
+                //Toast.makeText(v.getContext(),Integer.toString(position),Toast.LENGTH_SHORT).show();
+                onClickMyButton.myButton(position);
                 notifyItemChanged(position);
                 mTransPageListener.onTransPageClick();
             }
         });
+
 
 
     }

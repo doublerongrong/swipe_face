@@ -1,43 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_class_list"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_controller"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment_ClassList">
+    android:orientation="vertical">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10">
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="課程清單"
+            android:textColor="#000000"
+            android:textSize="23sp"
+            android:textStyle="" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
+
+            <ImageButton
+
+                android:layout_width="27dp"
+                android:layout_height="31dp"
+                android:background="@drawable/ic_filter_list_black_24dp" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="@drawable/shadow" />
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".Fragment_ClassList">
 
-        <LinearLayout
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_creatClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="#c0c0ed"
+            android:clickable="true"
+            android:src="@drawable/ic_add_white_24dp"
+            app:backgroundTint="#0806b1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-
-
-            <!--以下為上方搜尋欄-->
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/activity_controller"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <include
-                    layout="@layout/navigation_actionbox_createclass"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp" />
-            </LinearLayout>
-            <!--以上為上方搜尋欄-->
 
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/class_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
         </LinearLayout>
-    </RelativeLayout>
-</FrameLayout>
+
+
+    </FrameLayout>
+</LinearLayout><!--以上為上方搜尋欄-->
