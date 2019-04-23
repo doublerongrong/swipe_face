@@ -9,58 +9,103 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="建立課程"
+                android:textSize="23sp"
+                android:textColor="#000000"
+                android:textStyle="" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@drawable/shadow"
+            />
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:layout_width="match_parent"
+            android:layout_height="77dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="47dp">
+
+            <ImageButton
+
+                android:layout_width="27dp"
+                android:layout_height="31dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/ic_today_black_24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif"
+                android:textStyle="normal"
+                android:textColor="#de000000"
+                android:lineSpacingExtra="11sp"
+                android:text= "課程學年"/>
+
+            <Spinner
+                android:id="@+id/spinner_classyear"
+                style="@style/Base.TextAppearance.AppCompat.Widget.DropDownItem"
+                android:layout_width="186dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="14dp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F5F5F5"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="77dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="47dp">
+
+            <ImageButton
+
+                android:layout_width="25dp"
+                android:layout_height="31dp"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/ic_class_black_24dp" />
 
             <TextView
                 android:id="@+id/textViewClassName"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="課程名稱 :"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
+                android:layout_marginLeft="10dp"
+                android:fontFamily="sans-serif"
+                android:text="課程名稱"
+                android:textColor="#de000000"
+                android:textSize="20sp"
+                android:textStyle="normal" />
 
 
             <EditText
                 android:id="@+id/editTextClassName"
-                android:layout_width="179dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:ems="10"
-                android:singleLine="true"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
-
-            <TextView
-                android:id="@+id/textViewClassYear"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="課程學年 :"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-
-            <Spinner
-                style="@style/Base.TextAppearance.AppCompat.Widget.DropDownItem"
-                android:id="@+id/spinner_classyear"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_marginTop="5dp"/>
-
+                android:layout_width="185dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="14dp"
+                android:hint="課程名稱"
+                android:singleLine="true"
+                android:textSize="17sp" />
         </LinearLayout>
 
         <ListView
@@ -69,17 +114,21 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:divider="#0000"></ListView>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="75dp"
+            android:background="#0806b1">
 
             <Button
                 android:id="@+id/nextStepButton"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="75dp"
                 android:text="下一步"
-                android:textSize="22sp"
-                android:textStyle="bold"/>
+                android:textSize="24sp"
+                android:textColor="#5f5ecd"
+                android:textStyle="bold"
+                android:background="#0806b1"/>
 
         </LinearLayout>
 

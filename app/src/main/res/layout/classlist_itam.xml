@@ -9,7 +9,6 @@
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-
     android:orientation="horizontal">
 
 
@@ -17,21 +16,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="30dp">
 
         <TextView
             android:id="@+id/class_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="107上 程式設計(三甲)"
-            android:textSize="24sp"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            android:textStyle="bold"
             tools:text="107上 程式設計(三甲)"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="7dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -42,61 +44,44 @@
                     android:id="@+id/schoolyear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="學年：" />
+                    android:text="學年："
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/class_schoolyear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TextView"
-                    tools:text="10701"></TextView>
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    tools:text="107  上"></TextView>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="70dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/student"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="學生：" />
-
-                <TextView
-                    android:id="@+id/student_total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    tools:text="70" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="位"
-                    tools:text="位" />
-            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="7dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="課程代碼："
-                tools:text="課程代碼：" />
+                tools:text="課程代碼："
+                android:textSize="18sp"
+                android:textColor="#000000"/>
 
             <TextView
                 android:id="@+id/class_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="XU6DW7J" />
+                android:text="XU6DW7J"
+                android:textSize="18sp"
+                android:textColor="#000000"/>
         </LinearLayout>
 
     </LinearLayout>
