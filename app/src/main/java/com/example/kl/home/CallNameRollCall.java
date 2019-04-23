@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,13 +17,22 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.kl.home.Adapter.Detail_AttendListAdapter;
+import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Adapter.RollCallAdapter;
+import com.example.kl.home.Model.Class;
+import com.example.kl.home.Model.Performance;
 import com.example.kl.home.Model.RollCallStudent;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.kl.home.Model.Rollcall;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -34,17 +45,19 @@ import java.util.Map;
 public class CallNameRollCall extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final String TAG = "CallNameRollCall";
     private RecyclerView mMainList;
     private RollCallAdapter rollCallAdapter;
     private List<RollCallStudent> rollCallList;
     private CardView attend, absence;
     private Button  finishBtn;
     private ImageButton returnBtn;
-    private String classId,classDoc;
+    private String classId,classDoc,performanceId,AttendPointString;
     private List<String> studentId,classMember ;
     private List<String> attendList, absenceList,casualList,funeralList,lateList,officalList,sickList;
     int currentPosition = 0;
     int count = 0;
+    private int AttendPoints,absenteeMinus;
     private String docId ;
     private Date time ;
 
@@ -222,14 +235,7 @@ public class CallNameRollCall extends AppCompatActivity {
                                             absence.put("rollcall_absence", absenceList);
                                             db.collection("Rollcall").document(docId).update(absence);
                                         });
-
                                     }
-                                    //---------------------
-                                    //作者：左上角的天空
-                                    //来源：CSDN
-                                    //原文：https://blog.csdn.net/pszwll/article/details/82780150
-                                    //版权声明：本文为博主原创文章，转载请附上博文链接！
-
                                 }
                             });
                         });
@@ -250,6 +256,7 @@ public class CallNameRollCall extends AppCompatActivity {
             intent.putExtra("class_id", classId);
             intent.putExtra("class_doc",classDoc);
             intent.putExtra("classDoc_id",docId);
+            intent.putExtra("request","1");
             startActivity(intent);
             finish();
 
@@ -261,6 +268,7 @@ public class CallNameRollCall extends AppCompatActivity {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-
     }
+
+
 }

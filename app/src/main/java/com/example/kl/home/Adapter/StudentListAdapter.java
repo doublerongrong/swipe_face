@@ -78,7 +78,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
         }
     }
     public interface transPageListener {
-        public void onTransPageClick(String studentId, String student_id, Student student);
+        void onTransPageClick(String studentId, String student_id, Student student);
     }//adapter跳轉fragment並攜帶需要的資料
 
     public void setOnTransPageClickListener(StudentListAdapter.transPageListener transPageListener) {

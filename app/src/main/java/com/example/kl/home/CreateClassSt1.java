@@ -42,7 +42,6 @@ public class CreateClassSt1 extends AppCompatActivity {
             bundle.putString("classyearB", classyear);
             intent.putExtras(bundle);
             startActivity(intent);
-            finish();
 
         });
     }

@@ -3,7 +3,6 @@ package com.example.kl.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +25,10 @@ import static com.example.kl.home.BackHandlerHelper.handleBackPress;
 
 import com.example.kl.home.Model.Class;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
@@ -86,8 +88,28 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         });
 
 
+
+
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //判斷分組時間和現在時間去改變group_state
+        Date date = new Date();
+        DocumentReference docRefGroup = db.collection("Class").document(classId);
+        docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
+            Class classG = documentSnapshot.toObject(Class.class);
+            if(classG.getCreate_time().before(date)){
+                Map<String, Object> group = new HashMap<>();
+                group.put("group_state",true);
+
+                db.collection("Class")
+                        .document(classId)
+                        .update(group);
+            }});
+    }
 
     private void setClass(FirebaseCallback firebaseCallback) {
         firestore_class = new Class();
@@ -158,8 +180,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                                         Class classG = documentSnapshot.toObject(Class.class);
                                         class_id = classG.getClass_id();
                                 Intent i = new Intent();
-                                Log.d("classIdddd",class_id);
-
                                 Bundle bundlecall = new Bundle();
                                 bundlecall.putString("class_id", class_id);
                                 bundlecall.putString("class_doc",classId);
@@ -196,7 +216,32 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 4:
                             //小組清單
-
+                            DocumentReference docRefGroup = db.collection("Class").document(classId);
+                            docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
+                                Class classG = documentSnapshot.toObject(Class.class);
+                                if (!classG.isGroup_state()) {//判斷是否分組
+                                    Intent intent = new Intent();
+                                    intent.setClass(getActivity(), CreateClassGroupSt1.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("classId", classId);
+                                    bundle.putString("classYear", classG.getClass_year());
+                                    bundle.putString("className", classG.getClass_name());
+                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
+                                    intent.putExtras(bundle);
+                                    getActivity().startActivity(intent);
+                                } else {
+                                    Intent intent = new Intent();
+                                    intent.setClass(getActivity(), GroupPage.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("classId", classId);
+                                    bundle.putString("class_Id", classG.getClass_id());
+                                    bundle.putString("classYear", classG.getClass_year());
+                                    bundle.putString("className", classG.getClass_name());
+                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
+                                    intent.putExtras(bundle);
+                                    getActivity().startActivity(intent);
+                                }
+                            });
                             break;
                         case 5:
                             //點人答題

@@ -18,7 +18,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +43,14 @@ public class CreateClassSt2 extends AppCompatActivity {
     private ArrayList<String> StudentList;
     private List<String> classList;
     private String class_id;
+    private Date date; //DB:create_time
+    private boolean group_state; //DB:group_state
+    private boolean group_state_go; // DB:group_state_go
+    private ArrayList<String> group_leader; // DB :group_leader
+    private Integer group_num;// DB : group_num
+    private Integer group_numHigh;// DB : group_numHigh
+    private Integer group_numLow;// DB : group_numLow
+
 
     private String TAG = "FLAG";
 
@@ -47,6 +58,21 @@ public class CreateClassSt2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creatclass_st2);
+
+        //init Group需要的DB屬性
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String dateString = "1990/01/01 00:00:00";
+        try {
+            date = sdf.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        group_state = false;
+        group_state_go = false;
+        group_leader = new ArrayList<>();
+        group_num = 0;
+        group_numHigh = 0;
+        group_numLow = 0;
 
         mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -111,6 +137,13 @@ public class CreateClassSt2 extends AppCompatActivity {
         uploadMap.put("class_answerbonus", answerbonus);
         uploadMap.put("class_rdanswerbonus", randomanserbonus);
         uploadMap.put("student_id", StudentList);
+        uploadMap.put("group_state",false);
+        uploadMap.put("group_state_go",false);
+        uploadMap.put("group_leader",group_leader);
+        uploadMap.put("group_num",group_num);
+        uploadMap.put("group_numHigh",group_numHigh);
+        uploadMap.put("group_numLow",group_numLow);
+        uploadMap.put("create_time",date);
         Log.d(TAG, "TEST CREAT");
         mFirestore.collection("Class").add(uploadMap).addOnSuccessListener(a -> {
 

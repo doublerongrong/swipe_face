@@ -75,13 +75,13 @@ public class Fragment_LeaveList extends Fragment {
 
         mFirestore = FirebaseFirestore.getInstance();
 
-        mMainList = (RecyclerView) view.findViewById(R.id.leave_list);
+        mMainList = view.findViewById(R.id.leave_list);
         mMainList.setHasFixedSize(true);
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(leaveListAdapter);
 
-        leaveListWaySpinner = (Spinner) view.findViewById(R.id.spinner_LeaveListWay);
-        listAdapterLeave = new ArrayAdapter<String>(getActivity().getApplicationContext(), R.layout.leave_spinner_style, leaveListWay);//spinner值
+        leaveListWaySpinner =  view.findViewById(R.id.spinner_LeaveListWay);
+        listAdapterLeave = new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.leave_spinner_style, leaveListWay);//spinner值
         listAdapterLeave.setDropDownViewResource(R.layout.leave_spinner_style);
 
         leaveListWaySpinner.setAdapter(listAdapterLeave);
