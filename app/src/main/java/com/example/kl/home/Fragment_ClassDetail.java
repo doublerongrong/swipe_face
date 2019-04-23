@@ -30,6 +30,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import permissions.dispatcher.RuntimePermissions;
+
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
 
@@ -46,7 +48,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -184,7 +185,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                                 bundlecall.putString("class_id", class_id);
                                 bundlecall.putString("class_doc",classId);
                                 i.putExtras(bundlecall);
-                                i.setClass(getActivity(),CallNameRollCall.class);
+                                i.setClass(getActivity(),RollcallSelect.class);
                                 startActivity(i);
                                     });
                             break;
