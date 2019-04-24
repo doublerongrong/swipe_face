@@ -181,6 +181,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
             Log.d(TAG, " toUserInforSetting");
             getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_user_inforsetting).commit();
         }//判斷是哪個fragment傳來的請求
+
+        else if (fragmentKey.equals("toUser")) {
+            Fragment_User fragment_user = new Fragment_User();
+            Bundle args = new Bundle();
+            args.putString("info", info);
+            args.putString("teacher_email", teacher_email);
+            fragment_user.setArguments(args);
+            Log.d(TAG, " toUserInforSetting");
+            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_user).commit();
+        }//判斷是哪個fragment傳來的請求
     }//fragment傳值並換頁
 
 

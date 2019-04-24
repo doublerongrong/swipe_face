@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -18,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/alert/ic_error_outline_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_person_outline_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,10 +33,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="9d9d9d" />
-                            <entry key="outputName" value="ic_error_outline_black_24dp" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_outline_help_outline_24px" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Su" />
+                            <entry key="sourceFile" value="C:\Users\Su\Desktop\老師端\帳戶管理\outline-help_outline-24px.svg" />
                           </map>
                         </option>
                       </PersistentState>

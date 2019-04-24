@@ -12,7 +12,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="73dp">
+            android:layout_height="56dp">
 
 
             <TextView
@@ -22,7 +22,7 @@
                 android:gravity="center"
                 android:text="帳戶管理"
                 android:textColor="#000000"
-                android:textSize="23sp" />
+                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -41,15 +41,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="31dp">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_person_outline_black_24dp" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_outline_account_circle_gray_24px" />
 
                 <TextView
                     android:layout_width="150dp"
@@ -57,7 +57,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="個人資料"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -69,8 +69,8 @@
 
                 <ImageButton
                     android:id="@+id/settingBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </LinearLayout>
 
@@ -86,15 +86,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="31dp">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_notifications_active_black_24dp" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_outline_notifications_active_24px" />
 
                 <TextView
                     android:layout_width="150dp"
@@ -102,7 +102,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="訊息推播"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -113,8 +113,8 @@
                 android:gravity="center">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </LinearLayout>
 
@@ -130,15 +130,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="31dp">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_person_outline_black_24dp" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_outline_info_24px" />
 
                 <TextView
                     android:layout_width="150dp"
@@ -146,7 +146,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="關於系統"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -157,8 +157,8 @@
                 android:gravity="center">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </LinearLayout>
 
@@ -174,15 +174,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="31dp">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_monetization_on_black_24dp" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_outline_monetization_on_24px" />
 
                 <TextView
                     android:layout_width="150dp"
@@ -190,7 +190,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="聯絡我們"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -201,8 +201,8 @@
                 android:gravity="center">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </LinearLayout>
 
@@ -218,15 +218,15 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="31dp">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_error_outline_black_24dp" />
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_outline_help_outline_24px" />
 
                 <TextView
                     android:layout_width="150dp"
@@ -234,7 +234,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="意見回饋"
                     android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -245,8 +245,8 @@
                 android:gravity="center">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </LinearLayout>
 
@@ -262,14 +262,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="31dp">
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/ic_input_black_24dp" />
 
                 <TextView
@@ -278,7 +278,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="登出"
                     android:textColor="#0806b1"
-                    android:textSize="20sp" />
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
@@ -290,8 +290,8 @@
 
                 <ImageButton
                     android:id="@+id/signOutBtn"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
                     android:background="@drawable/ic_keyboard_arrow_right_black_24dp" />
             </LinearLayout>
 
