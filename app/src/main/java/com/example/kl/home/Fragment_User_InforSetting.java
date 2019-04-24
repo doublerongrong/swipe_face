@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.Model.Teacher;
@@ -44,6 +45,8 @@ public class Fragment_User_InforSetting extends Fragment {
     private EditText editOTW2, editOTH21, editOTM21, editOTH22, editOTM22;
     private EditText editOTW3, editOTH31, editOTM31, editOTH32, editOTM32;
     private Button checkBtn;
+    private Button backIBtn;
+
 
     private String editTeacherNameStr, editTeacherEmailStr, editTeacherOfficeStr;
     private String editOTW1Str, editOTH11Str, editOTM11Str, editOTH12Str, editOTM12Str;
@@ -90,8 +93,21 @@ public class Fragment_User_InforSetting extends Fragment {
         editOTM32 = (EditText) view.findViewById(R.id.editOTM32);
 
         checkBtn = (Button) view.findViewById(R.id.checkBtn);
+        backIBtn = (Button) view.findViewById(R.id.backIBtn);
 
         getTeacherId();
+
+        backIBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                upDateInfor(teacherId);
+
+                mCallback.onFragmentSelected(teacherId, "toUserInfor");//fragment傳值
+
+            }
+        });
+
+
         checkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

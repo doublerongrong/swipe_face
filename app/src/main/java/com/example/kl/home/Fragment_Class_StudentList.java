@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.Adapter.StudentListAdapter;
@@ -40,12 +41,13 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
     private StudentListAdapter studentListAdapter;
     private List<Student> studentList;
 
-    private TextView textViewClassYear;
     private TextView textViewClassName;
     private TextView textViewStugentCount;
 
     private String classid;
     private String class_id;
+
+    private ImageButton backIBtn;
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
@@ -82,11 +84,19 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(studentListAdapter);
 
-        textViewClassYear = (TextView) view.findViewById(R.id.textViewClassYear);
         textViewClassName = (TextView) view.findViewById(R.id.textViewClassName);
         textViewStugentCount = (TextView) view.findViewById(R.id.textViewStudentCount);
 
+        backIBtn = (ImageButton) view.findViewById(R.id.backIBtn);
+
         getClassInfor(classid);
+
+        backIBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onFragmentSelected(classid, "toClassListDetail");//fragment傳值
+            }
+        });
 
 
 
@@ -102,7 +112,6 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Class setClass = document.toObject(Class.class);
-                        textViewClassYear.setText(setClass.getClass_year());
                         textViewClassName.setText(setClass.getClass_name());
                         textViewStugentCount.setText(setClass.getStudent_total().toString());
 

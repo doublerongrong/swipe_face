@@ -12,23 +12,67 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:background="#DDDDDD"
-            android:gravity="center"
+            android:layout_height="73dp"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/backIBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:text="取消"
+                    android:textColor="#0806b1"
+                    android:textSize="20sp" />
+
+
+            </LinearLayout>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="編輯個人資料"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:gravity="center"
+                android:text="個人資料"
+                android:textColor="#000000"
+                android:textSize="23sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10">
+
+                <Button
+                    android:id="@+id/checkBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:text="編輯"
+                    android:textColor="#0806b1"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@drawable/shadow"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -38,22 +82,24 @@
                 android:layout_marginLeft="35dp"
                 android:text="姓名"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#000000"/>
 
             <EditText
                 android:id="@+id/editTeacherName"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="載入中"
                 android:textSize="20dp"
-                tools:text="吳濟聰" />
+                tools:text="吳濟聰"
+                android:textColor="#000000"/>
 
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -63,22 +109,24 @@
                 android:layout_marginLeft="35dp"
                 android:text="信箱"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#000000"/>
 
             <EditText
                 android:id="@+id/editTeacherEmail"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="載入中"
                 android:textSize="20dp"
-                tools:text="053792@mail.fju.edu.tw" />
+                tools:text="053792@mail.fju.edu.tw"
+                android:textColor="#000000"/>
 
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="60dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -88,15 +136,17 @@
                 android:layout_marginLeft="35dp"
                 android:text="辦公室"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#000000"/>
 
             <EditText
                 android:id="@+id/editTeacherOffice"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="載入中"
                 android:textSize="20dp"
-                tools:text="SL207" />
+                tools:text="SL207"
+                android:textColor="#000000"/>
 
 
         </LinearLayout>
@@ -117,7 +167,8 @@
                     android:layout_marginLeft="35dp"
                     android:text="Office Time"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="#000000"/>
             </LinearLayout>
 
             <LinearLayout
@@ -134,7 +185,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text="星期"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTW1"
@@ -142,6 +194,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="三"/>
 
                     <EditText
@@ -151,13 +204,15 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginLeft="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="12"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text=" : "
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTM11"
@@ -165,13 +220,15 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="30"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text=" - "
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTH12"
@@ -179,13 +236,15 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
-                        tools:text="13"/>
+                        tools:text="13"
+                        android:textColor="#000000"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text=" : "
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTM12"
@@ -193,6 +252,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="30"/>
                 </LinearLayout>
 
@@ -205,7 +265,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text="星期"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTW2"
@@ -213,6 +274,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="三"/>
 
                     <EditText
@@ -222,13 +284,15 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginLeft="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="12"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text=" : "
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTM21"
@@ -236,13 +300,15 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="30"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text=" - "
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTH22"
@@ -250,13 +316,15 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="13"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text=" : "
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTM22"
@@ -264,6 +332,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="30"/>
                 </LinearLayout>
 
@@ -276,7 +345,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text="星期"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTW3"
@@ -284,6 +354,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="三"/>
 
                     <EditText
@@ -293,13 +364,15 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginLeft="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="12"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text=" : "
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTM31"
@@ -307,13 +380,15 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="30"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text=" - "
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTH32"
@@ -321,13 +396,15 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="13"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:text=" : "
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="#000000"/>
 
                     <EditText
                         android:id="@+id/editOTM32"
@@ -335,6 +412,7 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
+                        android:textColor="#000000"
                         tools:text="30"/>
                 </LinearLayout>
 
@@ -344,21 +422,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/checkBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="確認"
-                android:textSize="20dp" />
-
-
-        </LinearLayout>
 
 
     </LinearLayout>
