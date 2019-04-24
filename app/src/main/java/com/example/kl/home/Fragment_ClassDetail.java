@@ -74,7 +74,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "classId2:" + classId);
         text_class_title = (TextView) view.findViewById(R.id.text_class_title);
-        text_class_id = (TextView) view.findViewById(R.id.text_class_id);
         gridLayout = (GridLayout) view.findViewById(R.id.grid_class_detail);
 
         setClass(new FirebaseCallback() {
@@ -82,7 +81,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
             public void onCallback(Class firestore_class) {
 
                 text_class_title.setText(firestore_class.getClass_name());
-                text_class_id.setText(firestore_class.getClass_id());
 
                 setSingleEvent(gridLayout, firestore_class);
             }
