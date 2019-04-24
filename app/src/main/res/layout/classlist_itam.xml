@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/classlist_item_card"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="95dp"
     android:layout_margin="5dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:text="107上 程式設計(三甲)"
             android:textColor="#000000"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             tools:text="107上 程式設計(三甲)"></TextView>
 
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="學年："
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/class_schoolyear"
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text="TextView"
                     android:textColor="#000000"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     tools:text="107  上"></TextView>
             </LinearLayout>
 
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="課程代碼："
                 tools:text="課程代碼："
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="#000000"/>
 
             <TextView
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="XU6DW7J"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="#000000"/>
         </LinearLayout>
 
