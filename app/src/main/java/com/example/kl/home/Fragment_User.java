@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.Adapter.Detail_BonusListAdapter;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 public class Fragment_User extends Fragment {
 
     private static final String TAG = "Fragment_User";
-    private Button InforSetting;
+    private ImageButton InforSetting;
     private String teacher_email;
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
@@ -41,8 +42,10 @@ public class Fragment_User extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
 
-        InforSetting = (Button)view.findViewById(R.id.settingBtn);
+        InforSetting = (ImageButton)view.findViewById(R.id.settingBtn);
+
         Log.d(TAG,"teacher_id :  " + teacher_email);
+
 
         InforSetting.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,23 +1,19 @@
 package com.example.kl.home.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.GroupDetail;
 import com.example.kl.home.Model.Student;
 import com.example.kl.home.R;
 
-import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import java.util.List;
@@ -27,8 +23,7 @@ public class GroupDetailAdapter extends RecyclerView.Adapter<GroupDetailAdapter.
     public Context context;
     private List<Student> studentList;
     private String TAG = "GroupDetailAdapter";
-    private String studentId;
-    private String student_id;
+
 
     private GroupDetailAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
 
@@ -52,10 +47,12 @@ public class GroupDetailAdapter extends RecyclerView.Adapter<GroupDetailAdapter.
         holder.tvGroupDetailName.setText(String.format("%s\t\t%s\t\t%s", studentList.get(position).getStudent_id(),
                 studentList.get(position).getStudent_department(), studentList.get(position).getStudent_name()));
 
-        student_id = studentList.get(position).getStudent_id();
-        studentId = studentList.get(position).StudentId;
-        holder.btCheckStudent.setOnClickListener(v -> {
+        holder.ibCheckStudent.setOnClickListener(v ->
+        {
+            String student_id = studentList.get(position).getStudent_id();
+            String studentId = studentList.get(position).StudentId;
             mTransPageListener.onTransPageClick(studentId, student_id);
+            Log.d(TAG,"AdapterHolderTransInfo : "+ student_id + studentId);
         });
     }
 
@@ -69,13 +66,13 @@ public class GroupDetailAdapter extends RecyclerView.Adapter<GroupDetailAdapter.
 
         View mView;
         TextView tvGroupDetailName;
-        Button btCheckStudent;
+        ImageButton ibCheckStudent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
             tvGroupDetailName = mView.findViewById(R.id.groupDetailName);
-            btCheckStudent = mView.findViewById(R.id.checkStudent);
+            ibCheckStudent = mView.findViewById(R.id.checkStudent);
 
         }
     }

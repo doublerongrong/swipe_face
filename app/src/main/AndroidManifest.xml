@@ -11,12 +11,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/cryingfrog"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/cryingfrog"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GroupRandomPick"></activity>
+        <activity android:name=".GroupRandomPick"/>
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
         <activity android:name=".CreateClassGroupSt2" />

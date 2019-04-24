@@ -50,7 +50,6 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
 
         holder.class_name.setText(ClassList.get(position).getClass_name());
         holder.class_year.setText(ClassList.get(position).getClass_year());
-        holder.student_total.setText(ClassList.get(position).getStudent_total().toString());
         holder.class_id.setText(ClassList.get(position).getClass_id());
         String classId= ClassList.get(position).classId;
 
@@ -91,7 +90,6 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
 
             class_name = (TextView) mView.findViewById(R.id.class_name);
             class_year = (TextView) mView.findViewById(R.id.class_schoolyear);
-            student_total = (TextView) mView.findViewById(R.id.student_total);
             class_id = (TextView) mView.findViewById(R.id.class_id);
 
         }

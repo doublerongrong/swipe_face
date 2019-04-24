@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,49 +7,62 @@
     android:orientation="vertical"
     tools:context=".GroupPage">
 
-    <android.support.design.widget.NavigationView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="false"
-        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
-        android:tooltipText="小組">
+    <LinearLayout
+        style="@style/Header"
+        android:orientation="horizontal"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/backIBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/title_class"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="小組"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
-            android:textSize="24sp" />
-    </android.support.design.widget.NavigationView>
+            android:id="@+id/className"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="載入中"
+            android:textColor="#000000"
+            style="@style/Header.TextViewSize" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"></LinearLayout>
+
+
+    </LinearLayout>
+
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="8dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/shadow" />
+
     <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fragment_pick_group"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="60dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textViewClassName"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#D7D7D7"
-            android:gravity="center_vertical"
-            android:text="課程名稱："
-            android:textSize="20dp"
-            android:textStyle="bold" />
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/grouplist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="60dp">
+            android:layout_height="match_parent">
 
 
         </android.support.v7.widget.RecyclerView>
@@ -58,9 +71,16 @@
             android:id="@+id/fabPickGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="#c0c0ed"
+            android:clickable="true"
+            android:src="@drawable/ic_add_white_24dp"
+            app:backgroundTint="#0806b1" />
     </FrameLayout>
 
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

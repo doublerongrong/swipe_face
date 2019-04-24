@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.GroupDetail;
@@ -63,7 +64,7 @@ public class GroupDetailSettingAdapter extends RecyclerView.Adapter<GroupDetailS
                     studentList.get(position).getStudent_id(),
                     studentList.get(position).getStudent_department(),
                     studentList.get(position).getStudent_name()));
-        holder.btDeleteStudent.setOnClickListener(v -> {
+        holder.ibDeleteStudent.setOnClickListener(v -> {
             notifyItemChanged(position);
             String student_Id = studentList.get(position).getStudent_id();
             mTransPageListener.onTransPageClick(student_Id,studentList.get(position));
@@ -80,13 +81,13 @@ public class GroupDetailSettingAdapter extends RecyclerView.Adapter<GroupDetailS
 
         View mView;
         public TextView tvGroupDetailName;
-        public Button btDeleteStudent;
+        public ImageButton ibDeleteStudent;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
             tvGroupDetailName = mView.findViewById(R.id.groupDetailName);
-            btDeleteStudent = mView.findViewById(R.id.deleteStudent);
+            ibDeleteStudent = mView.findViewById(R.id.deleteStudent);
 
         }
     }

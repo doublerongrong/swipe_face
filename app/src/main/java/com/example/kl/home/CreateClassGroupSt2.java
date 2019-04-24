@@ -4,9 +4,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +35,8 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
     TextView tvClassNum;
     EditText etGroupNumLow;
     EditText etGroupNumHigh;
-    Button btNextStepButton;
+    ImageButton ibBackIBtn;
+    CardView cvNextStepButton;
     FirebaseFirestore db;
     AttributeCheck attributeCheck = new AttributeCheck();
 
@@ -72,8 +76,8 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
         //init xml
         stCreateclasstime = findViewById(R.id.createclasstime);
         etGroupNumLow = findViewById(R.id.groupNumLow);
-        etGroupNumHigh = findViewById(R.id.groupNumHigh);
-        btNextStepButton = findViewById(R.id.nextStepButton);
+        cvNextStepButton = findViewById(R.id.nextStepButton);
+        ibBackIBtn = findViewById(R.id.backIBtn);
 
 
         custom = new CustomDateTimePicker(this,
@@ -106,7 +110,7 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
 
 
         //Button Click
-        btNextStepButton.setOnClickListener(v -> {
+        cvNextStepButton.setOnClickListener(v -> {
             if (attributeCheck.stringsNotNull(stCreateclasstime.getText().toString()) &&
                     attributeCheck.stringsNotNull(etGroupNumLow.getText().toString()) &&
                     attributeCheck.stringsNotNull(etGroupNumHigh.getText().toString())) {
@@ -115,6 +119,8 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
                 Toast.makeText(this, "請確認是否填寫", Toast.LENGTH_LONG).show();
             }
         });
+
+        ibBackIBtn.setOnClickListener(v -> finish());
 
     }
 

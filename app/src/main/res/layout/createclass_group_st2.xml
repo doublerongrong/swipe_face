@@ -8,148 +8,188 @@
     tools:context="com.example.kl.home.CreateClassGroupSt2">
 
 
-    <android.support.design.widget.NavigationView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="top"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="false"
-        android:orientation="vertical"
-        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
-        android:tooltipText="課程">
+    <LinearLayout
+        style="@style/Header"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/backIBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_chevron_left_black_24dp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/title_class"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:id="@+id/className"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
             android:text="小組設定"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
-            android:textSize="24sp" />
+            android:textColor="#000000"
+            style="@style/Header.TextViewSize" />
 
-    </android.support.design.widget.NavigationView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"></LinearLayout>
 
-    <TextView
-        android:id="@+id/textViewClassName"
+
+    </LinearLayout>
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="課程名稱："
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:background="#D7D7D7"
-        />
+        android:layout_height="6dp"
+        android:background="@drawable/shadow" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="65dp">
-
-    </ListView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:text="      班級成員"-->
-            <!--android:textSize="20sp"-->
-            <!--android:textStyle="bold"-->
-            <!--android:gravity="center_vertical"/>-->
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewClassName"
+            android:layout_width="match_parent"
+            android:layout_height="21dp"
+            android:gravity="center_vertical"
+            android:text="課程名稱："
+            android:textColor="#1a1a1a"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/classNum"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginLeft="30dp"
-            android:gravity="center_horizontal"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="19dp"
+            android:layout_marginTop="5dp"
+            android:text="班級人數"
+            android:textColor="#1a1a1a"
+            android:textSize="14sp" />
     </LinearLayout>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/divider"
+        android:layout_marginTop="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_person_outline_blue_24dp" />
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="19dp"
             android:gravity="center_vertical"
+            android:layout_marginLeft="15dp"
             android:text="每組組員數"
-            android:layout_marginLeft="30dp"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textColor="#000000"
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/groupNumLow"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:gravity="center_horizontal"
+            android:layout_width="110dp"
+            android:layout_height="25dp"
+            android:layout_gravity="bottom"
             android:inputType="number"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:text="－"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-        <EditText
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:gravity="center_horizontal"
-            android:id="@+id/groupNumHigh"
-            android:inputType="number"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="19dp"
             android:gravity="center_vertical"
             android:text="人"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            android:textColor="#000000" />
     </LinearLayout>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/divider"
+        android:layout_marginTop="15dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
+            android:layout_height="19dp"
             android:text="結束時間"
-            android:layout_marginLeft="30dp"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/createclasstime"
-            android:layout_marginLeft="50dp"
-            android:hint="設定時間"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textColor="#000000"
+            android:textSize="14sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_date_range_blue_24dp" />
+            <TextView
+                android:id="@+id/createclasstime"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:layout_marginTop="5dp"
+                android:text="設定時間"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/divider"/>
+
+    <!--<ListView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="456dp" />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/nextStepButton"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_gravity="bottom"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="#0806b1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center"
+                android:text="GO !"
+                android:textColor="#FFFF"
+                android:textSize="18sp" />
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="237dp">
-
-    </ListView>
-
-    <Button
-        android:id="@+id/nextStepButton"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_alignParentBottom="true"
-        android:text="GO"
-        android:textSize="22sp"
-        android:textStyle="bold" />
-
-
 </LinearLayout>
+
+

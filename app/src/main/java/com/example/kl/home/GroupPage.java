@@ -3,11 +3,13 @@ package com.example.kl.home;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.Adapter.GroupPageAdapter;
@@ -28,6 +30,7 @@ public class GroupPage extends AppCompatActivity {
     String class_Id; // classId
     String classId; //classDocId
     public TextView tvClassName;//xml上的年度課程欄位
+    ImageButton ibBackIBtn;
     private Integer classNum;
     private String TAG = "GroupPage";
 
@@ -48,6 +51,9 @@ public class GroupPage extends AppCompatActivity {
         LinearLayoutManager mgr = new LinearLayoutManager(this);
         groupRecycleView.setLayoutManager(mgr);
         groupRecycleView.setAdapter(groupPageAdapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(groupRecycleView.getContext(),
+                mgr.getOrientation());
+        groupRecycleView.addItemDecoration(dividerItemDecoration);
 
         //init Intent Bundle
         Intent Intent = getIntent(); /* 取得傳入的 Intent 物件 */
@@ -59,8 +65,8 @@ public class GroupPage extends AppCompatActivity {
         classId = bundle.getString("classId");
 
         //init xml
-        tvClassName = findViewById(R.id.textViewClassName);
-        tvClassName.setText(classYear+" "+className);
+        tvClassName = findViewById(R.id.className);
+        tvClassName.setText(className);
         View btPickGroup = findViewById(R.id.fabPickGroup);
         btPickGroup.setOnClickListener(v -> {
             Intent intent = new Intent();
@@ -70,6 +76,8 @@ public class GroupPage extends AppCompatActivity {
             intent.putExtras(bundleGroupPick);
             startActivity(intent);
         });
+        ibBackIBtn = findViewById(R.id.backIBtn);
+        ibBackIBtn.setOnClickListener(v -> finish());
 
         //AllGroup Method
 //        if (class_Id != null) {

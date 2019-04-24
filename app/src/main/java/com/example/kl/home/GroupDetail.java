@@ -8,10 +8,12 @@ import android.os.Parcelable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.Adapter.GroupDetailAdapter;
@@ -36,9 +38,11 @@ public class GroupDetail extends AppCompatActivity {
     String groupId;
     String classId;
     TextView tvGroupDetailBonus;
-    Button btGroupDetailSetting;
+    TextView tvGroupDetailSetting;
     String TAG = "GroupDetail";
     String groupDetailAndSetting ;
+    ImageButton ibBackIBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +66,12 @@ public class GroupDetail extends AppCompatActivity {
         // init xml
         tvGroupDetailBonus = findViewById(R.id.textViewGroupBonus);
         tvGroupDetailBonus.setText("回答次數：\t\t" + groupBonus + "\t\t次數");
-        btGroupDetailSetting = findViewById(R.id.groupDetailSetting);
+        tvGroupDetailSetting = findViewById(R.id.groupDetailSetting);
+        ibBackIBtn = findViewById(R.id.backIBtn);
+        ibBackIBtn.setOnClickListener(v -> finish());
 
         //Button Click Intent to DetailSetting
-        btGroupDetailSetting.setOnClickListener(v -> {
+        tvGroupDetailSetting.setOnClickListener(v -> {
             stepSetting();
         });
 
@@ -73,18 +79,24 @@ public class GroupDetail extends AppCompatActivity {
         studentList = new ArrayList<>();
         groupDetailAdapter = new GroupDetailAdapter(this, studentList);
 
-        //init RecycleView
+        //init RecyclerView
         groupDetailRecycleView = findViewById(R.id.groupListDetail);
         groupDetailRecycleView.setHasFixedSize(true);
         LinearLayoutManager mgr = new LinearLayoutManager(this);
         groupDetailRecycleView.setLayoutManager(mgr);
         groupDetailRecycleView.setAdapter(groupDetailAdapter);
+        //init RecyclerView Divider
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(groupDetailRecycleView.getContext(),
+                mgr.getOrientation());
+        groupDetailRecycleView.addItemDecoration(dividerItemDecoration);
 
 //        if (class_Id != null) {
 //            Log.d(TAG, "setAllLave");
 //            setAllGroupDetail();
 //            groupDetailAdapter.notifyDataSetChanged();
 //        }
+
+        //接Adapter的return
         groupDetailAdapter.setOnTransPageClickListener((studentId, student_id) -> {
             Log.d(TAG,"onTransPageClickTEST" + studentId);
 

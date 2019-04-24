@@ -8,27 +8,43 @@
     tools:context="com.example.kl.home.CreateClassGroupSt1">
 
 
-    <android.support.design.widget.NavigationView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="top"
-        android:background="@color/colorPrimary"
-        android:fitsSystemWindows="false"
-        android:orientation="vertical"
-        android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
-        android:tooltipText="課程">
+    <LinearLayout
+        style="@style/Header"
+        android:orientation="horizontal"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/backIBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/title_class"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="小組"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/common_google_signin_btn_text_dark_default"
-            android:textSize="24sp" />
+            android:id="@+id/className"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="小組清單"
+            android:textColor="#000000"
+            android:textSize="23sp" />
 
-    </android.support.design.widget.NavigationView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"></LinearLayout>
+
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textViewClassName"

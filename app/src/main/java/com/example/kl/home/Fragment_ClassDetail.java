@@ -221,7 +221,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                                 Class classG = documentSnapshot.toObject(Class.class);
                                 if (!classG.isGroup_state()) {//判斷是否分組
                                     Intent intent = new Intent();
-                                    intent.setClass(getActivity(), CreateClassGroupSt1.class);
+                                    intent.setClass(getActivity(), CreateClassGroupSt2.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("classId", classId);
                                     bundle.putString("classYear", classG.getClass_year());
