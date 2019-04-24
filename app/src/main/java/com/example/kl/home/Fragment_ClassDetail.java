@@ -30,6 +30,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import permissions.dispatcher.RuntimePermissions;
+
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
 
@@ -46,7 +48,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,7 +74,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "classId2:" + classId);
         text_class_title = (TextView) view.findViewById(R.id.text_class_title);
-        text_class_id = (TextView) view.findViewById(R.id.text_class_id);
         gridLayout = (GridLayout) view.findViewById(R.id.grid_class_detail);
 
         setClass(new FirebaseCallback() {
@@ -81,7 +81,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
             public void onCallback(Class firestore_class) {
 
                 text_class_title.setText(firestore_class.getClass_name());
-                text_class_id.setText(firestore_class.getClass_id());
 
                 setSingleEvent(gridLayout, firestore_class);
             }
@@ -184,7 +183,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                                 bundlecall.putString("class_id", class_id);
                                 bundlecall.putString("class_doc",classId);
                                 i.putExtras(bundlecall);
-                                i.setClass(getActivity(),CallNameRollCall.class);
+                                i.setClass(getActivity(),RollcallSelect.class);
                                 startActivity(i);
                                     });
                             break;

@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="top"
-            android:background="@color/colorPrimary"
+            android:background="#FFF"
             android:fitsSystemWindows="false"
             android:orientation="vertical"
             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
@@ -29,16 +29,15 @@
                 android:layout_gravity="center"
                 android:text="課程"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/common_google_signin_btn_text_dark_default"
-                android:textSize="24sp" />
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
         </android.support.design.widget.NavigationView>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="66dp"
             android:layout_gravity="center"
-            android:background="#D7D7D7"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -47,28 +46,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="課程讀取中..."
+                android:layout_marginLeft="22dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="24sp" />
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/text_title_class_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="課程代碼"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/text_class_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="讀取中..."
-                    android:textSize="18sp" />
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -80,7 +62,8 @@
             android:alignmentMode="alignMargins"
             android:columnCount="3"
             android:columnOrderPreserved="false"
-            android:padding="14dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
             android:rowCount="3">
 
             <!-- ROW 1  -->
@@ -93,37 +76,38 @@
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_rollcall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/function1" />
 
                     <TextView
                         android:id="@+id/text_rollcall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="點名"
+                        android:layout_gravity="center"
                         android:textAlignment="center"
                         android:textColor="#000"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/img_rollcall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_empty_dracula" />
 
                 </LinearLayout>
 
@@ -137,37 +121,39 @@
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="15dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
+                    android:layout_margin="4dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_attendance_list"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="今日出缺席"
-                        android:textAlignment="center"
-                        android:textColor="#000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/img_attendance_list"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_empty_dracula" />
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/function2" />
+
+                    <TextView
+                    android:id="@+id/text_attendance_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="今日出缺席"
+                    android:textAlignment="center"
+                        android:layout_gravity="center"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -181,37 +167,38 @@
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_leave_manage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="假單管理"
-                        android:textAlignment="center"
-                        android:textColor="#000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/img_leave_manage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_empty_dracula" />
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/function3" />
+
+                    <TextView
+                    android:id="@+id/text_leave_manage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="假單管理"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
@@ -226,37 +213,38 @@
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_student_list"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="學生清單"
-                        android:textAlignment="center"
-                        android:textColor="#000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/img_student_list"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_empty_dracula" />
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/function4" />
+
+                    <TextView
+                    android:id="@+id/text_student_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="學生清單"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
@@ -270,37 +258,39 @@
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="15dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_team_list"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="小組清單"
-                        android:textAlignment="center"
-                        android:textColor="#000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/img_team_list"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_empty_dracula" />
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/function5" />
+
+                    <TextView
+                    android:id="@+id/text_team_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小組清單"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
@@ -314,37 +304,39 @@
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_pick_answer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="點人答題"
-                        android:textAlignment="center"
-                        android:textColor="#000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/img_pick_answer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_empty_dracula" />
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/function6" />
+
+                    <TextView
+                    android:id="@+id/text_pick_answer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="點人答題"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                        android:layout_gravity="center"/>
+
 
                 </LinearLayout>
 
@@ -359,37 +351,38 @@
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="15dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_answer_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="提問按鈕"
-                        android:textAlignment="center"
-                        android:textColor="#000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/img_answer_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_empty_dracula" />
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/function7" />
+
+                    <TextView
+                    android:id="@+id/text_answer_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提問按鈕"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                        android:layout_gravity="center"/>
 
                 </LinearLayout>
 
@@ -403,37 +396,39 @@
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="15dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_score_setting"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="計分設定"
-                        android:textAlignment="center"
-                        android:textColor="#000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/img_score_setting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_empty_dracula" />
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/function8" />
+
+                    <TextView
+                    android:id="@+id/text_score_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="計分設定"
+                    android:textAlignment="center"
+                        android:layout_gravity="center"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -447,37 +442,38 @@
                 android:layout_height="0dp"
                 android:layout_rowWeight="1"
                 android:layout_columnWeight="1"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="15dp"
+                app:cardElevation="3dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_margin="16dp"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/text_score_export"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="匯出成績"
-                        android:textAlignment="center"
-                        android:textColor="#000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/img_score_export"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_empty_dracula" />
+                        android:layout_marginBottom="15dp"
+                        android:src="@drawable/function9" />
+
+                    <TextView
+                    android:id="@+id/text_score_export"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="匯出成績"
+                    android:textAlignment="center"
+                        android:layout_gravity="center"
+                    android:textColor="#000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 </LinearLayout>
 
