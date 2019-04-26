@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,7 +74,7 @@ public class Detail_LeaveListAdapter extends RecyclerView.Adapter<Detail_LeaveLi
         View mView;
         public TextView leave_reason;
         public TextView leave_date;
-        public Button chectBtn;
+        public ImageButton chectBtn;
 
         public ViewHolder(@NonNull View itemView) {
 
@@ -82,7 +83,7 @@ public class Detail_LeaveListAdapter extends RecyclerView.Adapter<Detail_LeaveLi
 
             leave_date = (TextView) mView.findViewById(R.id.textViewLeaveDate);
             leave_reason = (TextView) mView.findViewById(R.id.textViewLeaveReason);
-            chectBtn = (Button) mView.findViewById(R.id.checkBtn);
+            chectBtn = (ImageButton) mView.findViewById(R.id.checkBtn);
         }
     }
 

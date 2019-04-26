@@ -86,9 +86,7 @@ public class Fragment_SD_Leave extends Fragment {
                         leaveId = doc.getDocument().getId();
                         Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveId);
 
-                        //listBonus(student_id, class_id, perforDocId);
                         leaveList.add(leave);
-
                         leaveListAdapter.notifyDataSetChanged();
 
                     }

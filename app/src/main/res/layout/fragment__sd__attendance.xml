@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment_SD_Performance">
+    tools:context=".Fragment_SD_Performance"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,18 +13,18 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="56dp"
             android:orientation="horizontal"
-            android:background="#F0F8FF">
+            android:paddingLeft="35dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
                 android:text="目前出席成績 : "
-                android:textSize="24dp"
-                android:textStyle="bold" />
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000000"/>
 
             <TextView
                 android:id="@+id/textViewAttendPoints"
@@ -31,8 +32,9 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="textView "
-                android:textSize="24dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
+                android:textColor="#000000"
                 tools:text="20" />
 
             <TextView
@@ -40,7 +42,8 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text=" 分"
-                android:textSize="24dp"
+                android:textSize="18sp"
+                android:textColor="#000000"
                 android:textStyle="bold" />
 
         </LinearLayout>
