@@ -62,6 +62,7 @@ public class Fragment_PickAnswerDetail extends Fragment {
     private TextView text_student_id;
     private TextView text_student_name;
     private ImageView img_student_photo;
+    private Integer class_answerbonus;
     private CardView card_nextone;
     private CardView card_correct_answer;
 
@@ -83,14 +84,21 @@ public class Fragment_PickAnswerDetail extends Fragment {
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        text_student_department = (TextView) view.findViewById(R.id.text_student_department);
-        text_student_id = (TextView) view.findViewById(R.id.text_student_id);
-        text_student_name = (TextView) view.findViewById(R.id.text_student_name);
-        img_student_photo = (ImageView) view.findViewById(R.id.img_student_photo);
-        card_nextone = (CardView) view.findViewById(R.id.card_nextone);
-        card_correct_answer = (CardView) view.findViewById(R.id.card_correct_answer);
+        text_student_department = view.findViewById(R.id.text_student_department);
+        text_student_id = view.findViewById(R.id.text_student_id);
+        text_student_name = view.findViewById(R.id.text_student_name);
+        img_student_photo = view.findViewById(R.id.img_student_photo);
+        card_nextone = view.findViewById(R.id.card_nextone);
+        card_correct_answer = view.findViewById(R.id.card_correct_answer);
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Leave_photo");
 
+        DocumentReference docRef = db.collection("Class").document(classId);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                class_answerbonus = documentSnapshot.toObject(Class.class).getClass_answerbonus();
+            }
+        });
 
         switch (type) {
             case "random_pick":
@@ -165,7 +173,7 @@ public class Fragment_PickAnswerDetail extends Fragment {
                 aClass = documentSnapshot.toObject(Class.class);
                 Log.d(TAG, "limit0: " + aClass.getStudent_id().size());
                 int limit = (int) Math.round(((aClass.getStudent_id().size()) * 3.) / 10);
-                Log.d(TAG, "limit1: " + ((aClass.getStudent_id().size()) * 3. )/ 10);
+                Log.d(TAG, "limit1: " + ((aClass.getStudent_id().size()) * 3.)/ 10);
                 Log.d(TAG, "limit2: " + limit);
 
                 student_id = new ArrayList<>();
@@ -339,7 +347,7 @@ public class Fragment_PickAnswerDetail extends Fragment {
                                 Log.d(TAG, "PerformanceId:" + PerformanceId);
 
                                 performance = document.toObject(Performance.class);
-                                performance.setPerformance_totalBonus(performance.getPerformance_totalBonus() + 1);
+                                performance.setPerformance_totalBonus(performance.getPerformance_totalBonus() + class_answerbonus);
                                 db.collection("Performance").document(PerformanceId).set(performance);
                                 Log.d(TAG, "come here");
 
