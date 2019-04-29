@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import permissions.dispatcher.NeedsPermission;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     private String teacher_email;
     private String reClassId,reRollcallId,reClassDocId;
     private int fragmentRequest;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//抓現在登入user
 
     // 設置默認進來是tab 顯示的頁面
     private void setDefaultFragment(){
@@ -96,10 +99,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.t_activity_homepage);
+        teacher_email = user.getEmail();
 
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null) {
-            teacher_email = bundle.getString("teacherEmail");
             if(bundle.getString("class_id") != null){
                 reClassId = bundle.getString("class_id");
                 reRollcallId = bundle.getString("rollcall_id");

@@ -16,12 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".SignIn"></activity>
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".UserSignUpSetting"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SignIn" />
+        <activity android:name=".SignUp" />
         <activity android:name=".RollcallSelect" />
         <activity android:name=".PhotoRollcall" />
-        <activity android:name=".QuestionPick"></activity>
+        <activity android:name=".QuestionPick" />
         <activity android:name=".QuestionAnalysis" />
         <activity android:name=".QuestionWait" />
         <activity android:name=".QuestionSt" />

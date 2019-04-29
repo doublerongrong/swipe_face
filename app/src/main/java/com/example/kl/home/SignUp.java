@@ -263,7 +263,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
                                 db.collection("Teacher").add(user).addOnCompleteListener(task1 -> {
                                     Intent i = new Intent();
                                     i.putExtra("teacherEmail",email);
-                                    i.setClass(getApplicationContext(),MainActivity.class);
+                                    i.setClass(getApplicationContext(),UserSignUpSetting.class);
                                     startActivity(i);
                                     finish();
                                 });
