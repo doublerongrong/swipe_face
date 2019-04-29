@@ -18,6 +18,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,6 +40,8 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
     CardView cvNextStepButton;
     FirebaseFirestore db;
     AttributeCheck attributeCheck = new AttributeCheck();
+    Date nowDate;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
 
         //init function
         CustomDateTimePicker custom;
+        nowDate = new Date();
 
         //init Intent Bundle
         Intent Intent = getIntent(); /* 取得傳入的 Intent 物件 */
@@ -75,7 +79,9 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
 
         //init xml
         stCreateclasstime = findViewById(R.id.createclasstime);
+        stCreateclasstime.setText(sdf.format(nowDate));
         etGroupNumLow = findViewById(R.id.groupNumLow);
+        etGroupNumHigh = findViewById(R.id.groupNumHigh);
         cvNextStepButton = findViewById(R.id.nextStepButton);
         ibBackIBtn = findViewById(R.id.backIBtn);
 

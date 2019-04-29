@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.kl.home.Adapter.RollCallListAdapter;
+import com.example.kl.home.Adapter.RollCallListAdapter2;
 import com.example.kl.home.Model.RollCallList;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,7 +32,7 @@ public class Fragment_absence extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "Fragment_absence";
     private RecyclerView mMainList;
-    private RollCallListAdapter rollCallListAdapter;
+    private RollCallListAdapter2 rollCallListAdapter;
     private List<RollCallList> rollCallList;
     private String classId,docId;
     private List<String>absenceList,attendList,lateList;
@@ -171,21 +172,21 @@ public class Fragment_absence extends Fragment {
                                     rollCallList.add(StudentList);
                                     Log.i("rollcallagain",rollCallList.toString());
                                     Log.i("studentList",StudentList.toString());
-                                    RollCallListAdapter rollCallListAdapter = new RollCallListAdapter(getActivity().getApplicationContext(),rollCallList,"缺席");
+                                    RollCallListAdapter2 rollCallListAdapter = new RollCallListAdapter2(getActivity().getApplicationContext(),rollCallList,"缺席");
                                     rollCallListAdapter.notifyDataSetChanged();
                                     mMainList = (RecyclerView)getView().findViewById(R.id.rollacll_list2);
                                     mMainList.setHasFixedSize(true);
                                     mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
                                     mMainList.setAdapter(rollCallListAdapter);
                                     Log.i("setAdapter","work");
-                                    rollCallListAdapter.setOnClickMyButton(new RollCallListAdapter.onClickMyButton() {
+                                    rollCallListAdapter.setOnClickMyButton(new RollCallListAdapter2.onClickMyButton() {
                                         @Override
                                         public void myButton(int id) {
                                             studentIndex = id;
                                             Toast.makeText(getActivity(),Integer.toString(id),Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                                    rollCallListAdapter.setOnTransPageClickListener(new RollCallListAdapter.transPageListener() {
+                                    rollCallListAdapter.setOnTransPageClickListener(new RollCallListAdapter2.transPageListener() {
                                         @Override
                                         public void onTransPageClick() {
                                             singleClick(getView(),absenceId.get(studentIndex),docId);
@@ -243,20 +244,20 @@ public class Fragment_absence extends Fragment {
                                     documentSnapshot2.getString("student_department"),documentSnapshot2.getString("student_name"));
                             absenceId.add(documentSnapshot2.getString("student_id"));
                             rollCallList.add(StudentList);
-                            RollCallListAdapter rollCallListAdapter = new RollCallListAdapter(getActivity().getApplicationContext(),rollCallList,"缺席");
+                            RollCallListAdapter2 rollCallListAdapter = new RollCallListAdapter2(getActivity().getApplicationContext(),rollCallList,"缺席");
                             mMainList = (RecyclerView)getView().findViewById(R.id.rollacll_list2);
                             mMainList.setHasFixedSize(true);
                             mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
                             mMainList.setAdapter(rollCallListAdapter);
                             Log.i("setAdapter","work");
-                            rollCallListAdapter.setOnClickMyButton(new RollCallListAdapter.onClickMyButton() {
+                            rollCallListAdapter.setOnClickMyButton(new RollCallListAdapter2.onClickMyButton() {
                                 @Override
                                 public void myButton(int id) {
                                     studentIndex = id;
                                     Toast.makeText(getActivity(),Integer.toString(id),Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            rollCallListAdapter.setOnTransPageClickListener(new RollCallListAdapter.transPageListener() {
+                            rollCallListAdapter.setOnTransPageClickListener(new RollCallListAdapter2.transPageListener() {
                                 @Override
                                 public void onTransPageClick() {
                                     singleClick(view1,absenceId.get(studentIndex),docId);

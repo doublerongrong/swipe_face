@@ -144,6 +144,7 @@ public class CreateClassSt2 extends AppCompatActivity {
         uploadMap.put("group_numHigh",group_numHigh);
         uploadMap.put("group_numLow",group_numLow);
         uploadMap.put("create_time",date);
+        uploadMap.put("question_state",false);
         Log.d(TAG, "TEST CREAT");
         mFirestore.collection("Class").add(uploadMap).addOnSuccessListener(a -> {
 

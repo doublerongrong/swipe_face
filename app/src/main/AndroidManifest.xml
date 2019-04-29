@@ -16,7 +16,13 @@
         android:roundIcon="@drawable/cryingfrog"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GroupRandomPick"/>
+        <activity android:name=".QuestionPick"></activity>
+        <activity android:name=".QuestionAnalysis" />
+        <activity android:name=".QuestionWait" />
+        <activity android:name=".QuestionSt" />
+        <activity android:name=".GroupRandomPick" />
+        <activity android:name=".RollcallSelect" />
+        <activity android:name=".PhotoRollcall" />
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
         <activity android:name=".CreateClassGroupSt2" />
@@ -28,10 +34,10 @@
         <activity android:name=".CreateClassSt2" />
         <activity android:name=".LeaveRecord" />
         <activity android:name=".CallNameRollCall" />
-        <activity android:name=".RollcallResult"/>
+        <activity android:name=".RollcallResult" />
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
-        <activity android:name=".Activity_StudentDetail"/>
+        <activity android:name=".Activity_StudentDetail" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

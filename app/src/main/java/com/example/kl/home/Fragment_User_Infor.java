@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.Model.Class;
@@ -50,6 +51,7 @@ public class Fragment_User_Infor extends Fragment {
 
     private String teacher_email;
     private String teacherId;
+    private ImageButton backIBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,8 +75,16 @@ public class Fragment_User_Infor extends Fragment {
         ViewTeacherOT2 = (TextView) view.findViewById(R.id.ViewTeacherOT2);
         ViewTeacherOT3 = (TextView) view.findViewById(R.id.ViewTeacherOT3);
         editBtn = (Button) view.findViewById(R.id.editBtn);
+        backIBtn = (ImageButton) view.findViewById(R.id.backIBtn);
 
         setInfor();
+
+        backIBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onFragmentSelected(teacherId, "toUser");//fragment傳值
+            }
+        });
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override

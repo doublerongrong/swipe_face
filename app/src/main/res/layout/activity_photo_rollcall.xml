@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".TrainAndTest"
+    android:background="#ffffff">
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:text="請拍照並上傳照片辨識 !"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="#000000"
+        android:gravity="center"
+        app:fontFamily="@font/asap_medium"/>
+
+    <Button
+        android:id="@+id/buttonPhoto"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_round_button_yellow"
+        android:text="拍照或是再次拍照"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/buttonFinish"
+        android:layout_below="@id/buttonPhoto"
+        android:layout_width="150dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_round_button_yellow"
+        android:text="結束"
+        android:textSize="20sp" />
+
+</RelativeLayout>

@@ -25,6 +25,12 @@ android {
         }
     }
 }
+repositories {
+    maven {
+        jcenter()
+        url "https://www.jitpack.io"
+    }
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -71,5 +77,11 @@ dependencies {
     implementation 'com.github.clans:fab:1.6.4'//懸浮按鈕
 
 
+    implementation('com.github.hotchemi:permissionsdispatcher:3.1.0') {
+        exclude module: 'support-v13'
+    }
+    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.1.0'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'//圓餅圖
 }
 apply plugin: 'com.google.gms.google-services'

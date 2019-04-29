@@ -241,13 +241,7 @@ public class CallNameRollCall extends AppCompatActivity {
                         });
                     }
                 });
-        returnBtn = (ImageButton) findViewById(R.id.imageButtonReturn);
-        returnBtn.setOnClickListener(view -> {
-            Intent i  = new Intent();
-            i.setClass(this,Fragment_ClassDetail.class);
-            startActivity(i);
-            finish();
-        });
+
 
         finishBtn = (Button) findViewById(R.id.finishButton);
         finishBtn.setOnClickListener(view -> {
