@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,7 +40,7 @@ public class CreateClassSt2 extends AppCompatActivity {
 
     private FirebaseFirestore mFirestore;
     private FirebaseAuth mAuth;
-    private String TeacherEmail = "053792@mail.fju.edu.tw";
+    private String TeacherEmail ;
     private ArrayList<String> StudentList;
     private List<String> classList;
     private String class_id;
@@ -84,6 +85,10 @@ public class CreateClassSt2 extends AppCompatActivity {
                 .build();
         mFirestore.setFirestoreSettings(settings);*/
         StudentList = new ArrayList<>();
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        currentFirebaseUser.getEmail(); String[] currentUserIdToStringList = currentFirebaseUser.getEmail().split("@");
+        TeacherEmail = currentUserIdToStringList[0];
 
 
         editTexttotalPoints = (EditText) findViewById(R.id.editTexttotalPoints);

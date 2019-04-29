@@ -62,7 +62,7 @@ public class Fragment_PickAnswerDetail extends Fragment {
     private TextView text_student_id;
     private TextView text_student_name;
     private ImageView img_student_photo;
-    private Integer class_answerbonus;
+    private Integer class_rdanswerbonus;
     private CardView card_nextone;
     private CardView card_correct_answer;
 
@@ -96,7 +96,7 @@ public class Fragment_PickAnswerDetail extends Fragment {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                class_answerbonus = documentSnapshot.toObject(Class.class).getClass_answerbonus();
+                class_rdanswerbonus = documentSnapshot.toObject(Class.class).getClass_rdanswerbonus();
             }
         });
 
@@ -347,7 +347,7 @@ public class Fragment_PickAnswerDetail extends Fragment {
                                 Log.d(TAG, "PerformanceId:" + PerformanceId);
 
                                 performance = document.toObject(Performance.class);
-                                performance.setPerformance_totalBonus(performance.getPerformance_totalBonus() + class_answerbonus);
+                                performance.setPerformance_totalBonus(performance.getPerformance_totalBonus() + class_rdanswerbonus);
                                 db.collection("Performance").document(PerformanceId).set(performance);
                                 Log.d(TAG, "come here");
 
