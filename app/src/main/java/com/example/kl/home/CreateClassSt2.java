@@ -40,7 +40,7 @@ public class CreateClassSt2 extends AppCompatActivity {
 
     private FirebaseFirestore mFirestore;
     private FirebaseAuth mAuth;
-    private String TeacherEmail ;
+    private String teacherEmail ;
     private ArrayList<String> StudentList;
     private List<String> classList;
     private String class_id;
@@ -87,8 +87,7 @@ public class CreateClassSt2 extends AppCompatActivity {
         StudentList = new ArrayList<>();
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-        currentFirebaseUser.getEmail(); String[] currentUserIdToStringList = currentFirebaseUser.getEmail().split("@");
-        TeacherEmail = currentUserIdToStringList[0];
+        teacherEmail = currentFirebaseUser.getEmail();
 
 
         editTexttotalPoints = (EditText) findViewById(R.id.editTexttotalPoints);
@@ -133,7 +132,7 @@ public class CreateClassSt2 extends AppCompatActivity {
         uploadMap.put("class_id", class_id);
         uploadMap.put("class_name", classname);
         uploadMap.put("class_year", classyear);
-        uploadMap.put("teacher_email", TeacherEmail);
+        uploadMap.put("teacher_email", teacherEmail);
         uploadMap.put("class_totalpoints", totalpoints);
         uploadMap.put("class_lateminus", lateminus);
         uploadMap.put("class_absenteeminus", absenteeminus);
@@ -155,7 +154,7 @@ public class CreateClassSt2 extends AppCompatActivity {
 
 
             Log.d(TAG, "TEST CREAT Success");
-            setCalss(class_id, TeacherEmail);//要改抓user
+            setCalss(class_id, teacherEmail);//要改抓user
 
             Intent intent = new Intent();
             intent.setClass(CreateClassSt2.this, MainActivity.class);
