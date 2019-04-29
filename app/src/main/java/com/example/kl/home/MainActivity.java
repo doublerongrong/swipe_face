@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.t_activity_homepage);
+
+        Log.d("FCMToken MAIN", "token "+ FirebaseInstanceId.getInstance().getToken());
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
