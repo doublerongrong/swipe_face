@@ -164,7 +164,7 @@ public class Fragment_attend extends Fragment {
     //dialog修改狀態
     public void singleClick(View v,String student_id,String rollcallId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-        builder.setTitle("修改出席狀況：");
+        builder.setTitle("修改出席狀況");
         String[] cities = {"出席", "缺席", "遲到"};
         if (attendId.contains(student_id)){
             checkedItem = 0;

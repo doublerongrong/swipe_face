@@ -43,8 +43,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:paddingLeft="32.5dp">
+                    android:layout_height="56dp"
+                    android:paddingLeft="25dp">
 
                     <TextView
                         android:id="@+id/textViewAttendSit"
@@ -53,7 +53,7 @@
                         android:gravity="center_vertical"
                         android:text="出席狀況"
                         android:textColor="#000000"
-                        android:textSize="21sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -64,28 +64,27 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="56dp"
                     android:gravity="center_vertical"
-                    android:paddingLeft="65dp">
+                    android:paddingLeft="50dp">
 
                     <LinearLayout
-                        android:layout_width="270dp"
+                        android:layout_width="250dp"
                         android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/textViewAStotal"
-                            android:layout_width="150dp"
+                            android:layout_width="135dp"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="出席佔學期總成績"
                             android:textColor="#000000"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/editTexttotalPoints"
-                            android:layout_width="100dp"
+                            android:layout_width="120dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="8dp"
                             android:layout_marginBottom="5dp"
                             android:enabled="true"
                             android:gravity="center"
@@ -102,7 +101,7 @@
                         android:gravity="center_vertical"
                         android:text="分"
                         android:textColor="#000000"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -114,11 +113,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:paddingLeft="65dp">
+                    android:layout_height="56dp"
+                    android:paddingLeft="50dp">
 
                     <LinearLayout
-                        android:layout_width="270dp"
+                        android:layout_width="250dp"
                         android:layout_height="match_parent">
 
                         <TextView
@@ -128,14 +127,13 @@
                             android:gravity="center_vertical"
                             android:text="遲到 扣"
                             android:textColor="#000000"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
 
                         <EditText
                             android:id="@+id/editTextlateMinus"
-                            android:layout_width="190dp"
+                            android:layout_width="195dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="8dp"
                             android:layout_marginBottom="10dp"
                             android:enabled="true"
                             android:gravity="center"
@@ -152,7 +150,7 @@
                         android:gravity="center_vertical"
                         android:text="分"
                         android:textColor="#000000"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -164,11 +162,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:paddingLeft="65dp">
+                    android:layout_height="56dp"
+                    android:paddingLeft="50dp">
 
                     <LinearLayout
-                        android:layout_width="270dp"
+                        android:layout_width="250dp"
                         android:layout_height="match_parent">
 
                         <TextView
@@ -178,14 +176,13 @@
                             android:gravity="center_vertical"
                             android:text="曠課 扣"
                             android:textColor="#000000"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
 
                         <EditText
                             android:id="@+id/editTextAbsenteeMinus"
-                            android:layout_width="190dp"
+                            android:layout_width="187dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="8dp"
                             android:layout_marginBottom="10dp"
                             android:enabled="true"
                             android:gravity="center"
@@ -203,7 +200,7 @@
                         android:gravity="center_vertical"
                         android:text="分"
                         android:textColor="#000000"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -215,18 +212,17 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:paddingLeft="32.5dp">
+                    android:layout_height="56dp"
+                    android:paddingLeft="25dp">
 
                     <TextView
                         android:id="@+id/textViewEarlywarning"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="預警"
                         android:textColor="#000000"
-                        android:textSize="21dp"
+                        android:textSize="18dp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -237,11 +233,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:paddingLeft="65dp">
+                    android:layout_height="56dp"
+                    android:paddingLeft="50dp">
 
                     <LinearLayout
-                        android:layout_width="270dp"
+                        android:layout_width="250dp"
                         android:layout_height="match_parent">
 
                         <TextView
@@ -251,13 +247,12 @@
                             android:gravity="center_vertical"
                             android:text="累積曠課"
                             android:textColor="#000000"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
                         <EditText
                             android:id="@+id/editTextEWTimes"
-                            android:layout_width="167dp"
+                            android:layout_width="171dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="8dp"
                             android:layout_marginBottom="10dp"
                             android:enabled="true"
                             android:gravity="center"
@@ -274,7 +269,7 @@
                         android:gravity="center_vertical"
                         android:text="次"
                         android:textColor="#000000"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -286,11 +281,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:paddingLeft="65dp">
+                    android:layout_height="56dp"
+                    android:paddingLeft="50dp">
 
                     <LinearLayout
-                        android:layout_width="270dp"
+                        android:layout_width="250dp"
                         android:layout_height="match_parent">
 
                         <TextView
@@ -300,13 +295,12 @@
                             android:gravity="center_vertical"
                             android:text="出席成績低於"
                             android:textColor="#000000"
-                            android:textSize="18dp" />
+                            android:textSize="16dp" />
 
                         <EditText
                             android:id="@+id/editTextEWPoints"
-                            android:layout_width="132dp"
+                            android:layout_width="135dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="8dp"
                             android:layout_marginBottom="10dp"
                             android:enabled="true"
                             android:gravity="center"
@@ -324,7 +318,7 @@
                         android:gravity="center_vertical"
                         android:text="分"
                         android:textColor="#000000"
-                        android:textSize="18dp" />
+                        android:textSize="16dp" />
 
 
                 </LinearLayout>
@@ -336,8 +330,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:paddingLeft="32.5dp">
+                    android:layout_height="56dp"
+                    android:paddingLeft="25dp">
 
                     <TextView
                         android:id="@+id/textView14"
@@ -347,7 +341,7 @@
                         android:gravity="center_vertical"
                         android:text="課堂參與"
                         android:textColor="#000000"
-                        android:textSize="21dp"
+                        android:textSize="18dp"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -358,11 +352,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:paddingLeft="65dp">
+                    android:layout_height="56dp"
+                    android:paddingLeft="50dp">
 
                     <LinearLayout
-                        android:layout_width="270dp"
+                        android:layout_width="250dp"
                         android:layout_height="match_parent">
 
                         <TextView
@@ -372,14 +366,13 @@
                             android:gravity="center_vertical"
                             android:text="點人回答 加"
                             android:textColor="#000000"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
 
                         <EditText
                             android:id="@+id/editTextAnswerBonus"
-                            android:layout_width="142dp"
+                            android:layout_width="147dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="8dp"
                             android:layout_marginBottom="10dp"
                             android:enabled="true"
                             android:gravity="center"
@@ -396,7 +389,7 @@
                         android:gravity="center_vertical"
                         android:text="分"
                         android:textColor="#000000"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -408,11 +401,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
-                    android:paddingLeft="65dp">
+                    android:layout_height="56dp"
+                    android:paddingLeft="50dp">
 
                     <LinearLayout
-                        android:layout_width="270dp"
+                        android:layout_width="250dp"
                         android:layout_height="match_parent">
 
                         <TextView
@@ -422,14 +415,13 @@
                             android:gravity="center_vertical"
                             android:text="隨堂問答 加"
                             android:textColor="#000000"
-                            android:textSize="18sp" />
+                            android:textSize="16sp" />
 
 
                         <EditText
                             android:id="@+id/editTextRDBonus"
-                            android:layout_width="142dp"
+                            android:layout_width="147dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="8dp"
                             android:layout_marginBottom="10dp"
                             android:enabled="true"
                             android:gravity="center"
@@ -446,7 +438,7 @@
                         android:gravity="center_vertical"
                         android:text="分"
                         android:textColor="#000000"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
 
                 </LinearLayout>
@@ -460,16 +452,16 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="57dp">
 
                     <Button
                         android:id="@+id/ButtonSendout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="57dp"
                         android:background="#0806b1"
                         android:text="完成"
                         android:textColor="	#FFFFFF"
-                        android:textSize="22sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
 
     <LinearLayout
@@ -76,8 +77,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="50dp">
+                android:layout_height="56dp"
+                android:paddingLeft="25dp">
 
                 <TextView
                     android:id="@+id/textViewAttendSit"
@@ -87,7 +88,7 @@
                     android:gravity="center_vertical"
                     android:text="出席狀況"
                     android:textColor="#000000"
-                    android:textSize="20dp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -98,17 +99,26 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="75dp">
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
+
+                <TextView
+                    android:id="@+id/textViewAStotal"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="出席佔學期總成績"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/editTexttotalPoints"
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="textView"
+                    android:text="載入中"
                     android:textColor="#000000"
                     android:textSize="18dp"
                     android:textStyle="bold"
@@ -135,8 +145,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="75dp">
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
 
                 <TextView
                     android:id="@+id/textViewlate"
@@ -150,12 +160,12 @@
 
                 <TextView
                     android:id="@+id/editTextlateMinus"
-                    android:layout_width="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="textView"
+                    android:text="載入中"
                     android:textColor="#000000"
                     android:textSize="18dp"
                     android:textStyle="bold"
@@ -181,8 +191,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="75dp">
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
 
                 <TextView
                     android:id="@+id/textViewAbsentee"
@@ -196,12 +206,12 @@
 
                 <TextView
                     android:id="@+id/editTextAbsenteeMinus"
-                    android:layout_width="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="textView"
+                    android:text="載入中"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -227,8 +237,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="50dp">
+                android:layout_height="56dp"
+                android:paddingLeft="25dp">
 
                 <TextView
                     android:id="@+id/textViewEarlywarning"
@@ -238,7 +248,7 @@
                     android:gravity="center_vertical"
                     android:text="預警"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -249,8 +259,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="75dp">
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
 
                 <TextView
                     android:id="@+id/textViewAbsenteeTimes"
@@ -263,12 +273,12 @@
 
                 <TextView
                     android:id="@+id/editTextEWTimes"
-                    android:layout_width="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="textView"
+                    android:text="載入中"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -294,8 +304,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="75dp">
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
 
                 <TextView
                     android:id="@+id/textView12"
@@ -308,12 +318,12 @@
 
                 <TextView
                     android:id="@+id/editTextEWPoints"
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="textView"
+                    android:text="載入中"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -339,8 +349,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="50dp">
+                android:layout_height="56dp"
+                android:paddingLeft="25dp">
 
                 <TextView
                     android:id="@+id/textView14"
@@ -350,7 +360,7 @@
                     android:gravity="center_vertical"
                     android:text="課堂參與"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -361,8 +371,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="75dp">
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
 
                 <TextView
                     android:id="@+id/textView15"
@@ -376,12 +386,12 @@
 
                 <TextView
                     android:id="@+id/editTextAnswerBonus"
-                    android:layout_width="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="textView"
+                    android:text="載入中"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -407,8 +417,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:paddingLeft="75dp">
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
 
                 <TextView
                     android:id="@+id/textView18"
@@ -422,12 +432,12 @@
 
                 <TextView
                     android:id="@+id/editTextRDBonus"
-                    android:layout_width="15dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:text="textView"
+                    android:text="載入中"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold"

@@ -38,13 +38,25 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        String checkColor = leaveList.get(position).getLeave_check();
 
         holder.student_name.setText(leaveList.get(position).getStudent_name());
         holder.leave_reason.setText(leaveList.get(position).getLeave_reason());
         holder.leave_check.setText(leaveList.get(position).getLeave_check());
+        if(checkColor.equals("准假")){
+            holder.leave_check.setTextColor(context.getResources().getColor(R.color.leaveGreen));
+        }
+        else if(checkColor.equals("不准假")){
+                holder.leave_check.setTextColor(context.getResources().getColor(R.color.leaveRed));
+        }
+        else{
+            holder.leave_check.setTextColor(context.getResources().getColor(R.color.leaveBlue));
+        }
         holder.leave_date.setText(leaveList.get(position).getLeave_date());
 
         String leaveId = leaveList.get(position).LeaveId;
+        String checkWay = leaveList.get(position).getCheckWay();
+
         holder.mView.setOnClickListener(v -> {
             Toast.makeText(context,"Id  :  " + leaveId, Toast.LENGTH_SHORT).show();
 
@@ -54,7 +66,7 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
             intent.setClass(context, LeaveRecord.class);
             Bundle bundle = new Bundle();
             bundle.putString("id", leaveId);
-            bundle.putString("ChangePage","Fragment");//
+            bundle.putString("ChangePage",checkWay);//
             intent.putExtras(bundle);
             context.startActivity(intent);
 

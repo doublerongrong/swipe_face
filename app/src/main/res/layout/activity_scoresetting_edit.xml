@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,6 +40,7 @@
             android:text="載入中"
             android:textColor="#000000"
             android:textSize="18sp"
+            android:background="#FFFFFF"
             tools:text="程式設計"/>
 
         <LinearLayout
@@ -71,8 +73,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="50dp">
+        android:layout_height="56dp"
+        android:paddingLeft="25dp">
 
         <TextView
             android:id="@+id/textViewAttendSit"
@@ -82,7 +84,7 @@
             android:gravity="center_vertical"
             android:text="出席狀況"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -93,8 +95,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="75dp">
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
             android:layout_width="270dp"
@@ -119,6 +121,7 @@
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:scrollbars="vertical" />
 
         </LinearLayout>
@@ -132,7 +135,7 @@
             android:gravity="center_vertical"
             android:text="分"
             android:textColor="#000000"
-            android:textSize="20dp" />
+            android:textSize="18sp" />
 
 
     </LinearLayout>
@@ -144,8 +147,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="75dp">
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
             android:layout_width="270dp"
@@ -171,6 +174,7 @@
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:scrollbars="vertical" />
 
         </LinearLayout>
@@ -195,8 +199,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="75dp">
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
             android:layout_width="270dp"
@@ -247,8 +251,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="50dp">
+        android:layout_height="56dp"
+        android:paddingLeft="25dp">
 
         <TextView
             android:id="@+id/textViewEarlywarning"
@@ -258,7 +262,7 @@
             android:gravity="center_vertical"
             android:text="預警"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -269,8 +273,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="75dp">
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
             android:layout_width="270dp"
@@ -295,6 +299,7 @@
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:scrollbars="vertical" />
 
         </LinearLayout>
@@ -319,8 +324,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="75dp">
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
             android:layout_width="270dp"
@@ -369,8 +374,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="50dp">
+        android:layout_height="56dp"
+        android:paddingLeft="25dp">
 
         <TextView
             android:id="@+id/textView14"
@@ -380,7 +385,7 @@
             android:gravity="center_vertical"
             android:text="課堂參與"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -391,8 +396,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="75dp">
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
             android:layout_width="270dp"
@@ -418,6 +423,7 @@
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:scrollbars="vertical" />
 
         </LinearLayout>
@@ -442,8 +448,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingLeft="75dp">
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
             android:layout_width="270dp"
