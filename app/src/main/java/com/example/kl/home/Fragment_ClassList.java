@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,8 @@ import android.widget.Button;
 import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Model.Class;
 import com.example.kl.home.Model.Teacher;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,7 +39,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     private ClassListAdapter classListAdapter;
     private List<Class> classList;
     private String TAG = "FLAG";
-    private String teacher_email = "053792@mail.fju.edu.tw";
+    private String teacher_email;
 
     private Teacher teacher;
     private ArrayList<String> class_id = new ArrayList<String>();
@@ -44,7 +47,8 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private String classId;
-    private Button createClassBtn;
+    private FloatingActionButton fabCreateClass;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//抓現在登入user
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
     @Override
@@ -52,6 +56,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
+        teacher_email = user.getEmail();
         return inflater.inflate(R.layout.fragment_fragment__class_list, container, false);
     }
 
@@ -68,13 +73,17 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(classListAdapter);
 
-        createClassBtn = (Button) view.findViewById(R.id.CreatClassbButton);
+        fabCreateClass = (FloatingActionButton) view.findViewById(R.id.fab_creatClass);
         Log.d(TAG, "Flag1");
 
+        int itemSpace = 10;
+        mMainList.addItemDecoration(new SpacesItemDecoration(itemSpace));
 
 
 
-        db.collection("Class").whereEqualTo("teacher_email", teacher_email).addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        db.collection("Class").whereEqualTo("teacher_email", teacher_email)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 if (e != null) {
@@ -103,7 +112,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
             }
         });
-        createClassBtn.setOnClickListener(new View.OnClickListener() {
+        fabCreateClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -118,15 +127,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
             public void onTransPageClick(String classId2) {
                 Log.d(TAG,"onTransPageClick0" +classId2);
                 mCallback.onFragmentSelected(classId2 , "toClassListDetail");//fragment傳值
-//                Log.d(TAG," classId:"+classId);
-//
-//                fragmentManager = getChildFragmentManager();
-//                Log.d(TAG,"onTransPageClick1");
-//                transaction = fragmentManager.beginTransaction();
-//                Log.d(TAG,"onTransPageClick2");
-//                transaction.replace(R.id.fragment_class_list, new Fragment_ClassDetail());
-//                transaction.addToBackStack(new Fragment_ClassDetail().getClass().getName());
-//                transaction.commit();
+
 
             }
 

@@ -3,7 +3,6 @@ package com.example.kl.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -11,11 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kl.home.Model.Question;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -28,12 +27,18 @@ import static com.example.kl.home.BackHandlerHelper.handleBackPress;
 import com.example.kl.home.Model.Class;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import permissions.dispatcher.RuntimePermissions;
+
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
 
 
     private String TAG = "ClassDetail";
-    private String classId;
+    private String classId,rollcallDocId;
     private Class aclass;
     private Class firestore_class;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -45,7 +50,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,12 +59,14 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         Bundle args = new Bundle();//fragment傳值
         args = getArguments();//fragment傳值
         classId = args.getString("info");
+        if(args.getString("rollcall_id") != null){
+            rollcallDocId = args.getString("rollcall_id");
+            class_id = args.getString("class_id");
+            Log.i("rollcallId",rollcallDocId);
+        }
         Log.d(TAG, "classId:" + classId);//fragment傳值
         Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
         db = FirebaseFirestore.getInstance();
-
-
-
 
 
         return inflater.inflate(R.layout.fragment_fragment_class_detail, container, false);
@@ -69,7 +75,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "classId2:" + classId);
         text_class_title = (TextView) view.findViewById(R.id.text_class_title);
-        text_class_id = (TextView) view.findViewById(R.id.text_class_id);
         gridLayout = (GridLayout) view.findViewById(R.id.grid_class_detail);
 
         setClass(new FirebaseCallback() {
@@ -77,15 +82,34 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
             public void onCallback(Class firestore_class) {
 
                 text_class_title.setText(firestore_class.getClass_name());
-                text_class_id.setText(firestore_class.getClass_id());
 
                 setSingleEvent(gridLayout, firestore_class);
             }
         });
 
 
+
+
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //判斷分組時間和現在時間去改變group_state
+//        Date date = new Date();
+//        DocumentReference docRefGroup = db.collection("Class").document(classId);
+//        docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
+//            Class classG = documentSnapshot.toObject(Class.class);
+//            if(classG.getCreate_time().before(date)){
+//                Map<String, Object> group = new HashMap<>();
+//                group.put("group_state",true);
+//
+//                db.collection("Class")
+//                        .document(classId)
+//                        .update(group);
+//            }});
+    }
 
     private void setClass(FirebaseCallback firebaseCallback) {
         firestore_class = new Class();
@@ -156,20 +180,29 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                                         Class classG = documentSnapshot.toObject(Class.class);
                                         class_id = classG.getClass_id();
                                 Intent i = new Intent();
-                                Log.d("classIdddd",class_id);
-
                                 Bundle bundlecall = new Bundle();
                                 bundlecall.putString("class_id", class_id);
+                                bundlecall.putString("class_doc",classId);
                                 i.putExtras(bundlecall);
-                                i.setClass(getActivity(),CallNameRollCall.class);
+                                i.setClass(getActivity(),RollcallSelect.class);
                                 startActivity(i);
                                     });
-
-
-
                             break;
                         case 1:
                             //intent activity 今日出缺席
+                            if(rollcallDocId != null){
+                                Intent i = new Intent();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("class_id",class_id);
+                                bundle.putString("class_doc",classId);
+                                bundle.putString("classDoc_id",rollcallDocId);
+                                i.putExtras(bundle);
+                                i.setClass(getActivity(),RollcallResult.class);
+                                startActivity(i);
+                            }else{
+                                Toast.makeText(getActivity(),"今天還沒點名喔",Toast.LENGTH_LONG).show();
+                            }
+
 
                             break;
                         case 2:
@@ -183,7 +216,43 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 4:
                             //小組清單
-
+                            DocumentReference docRefGroup = db.collection("Class").document(classId);
+                            docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
+                                Class classG = documentSnapshot.toObject(Class.class);
+                                if (!classG.isGroup_state()&&!classG.isGroup_state_go()) {//判斷是否分組
+                                    Intent intent = new Intent();
+                                    intent.setClass(getActivity(), CreateClassGroupSt2.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("classId", classId);
+                                    bundle.putString("classYear", classG.getClass_year());
+                                    bundle.putString("className", classG.getClass_name());
+                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
+                                    intent.putExtras(bundle);
+                                    getActivity().startActivity(intent);
+                                } else if (!classG.isGroup_state()&&classG.isGroup_state_go()){
+                                    Intent intent = new Intent();
+                                    intent.setClass(getActivity(), CreateClassGroupSt1.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("classId", classId);
+                                    bundle.putString("classYear", classG.getClass_year());
+                                    bundle.putString("className", classG.getClass_name());
+                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
+                                    intent.putExtras(bundle);
+                                    getActivity().startActivity(intent);
+                                }
+                                else {
+                                    Intent intent = new Intent();
+                                    intent.setClass(getActivity(), GroupPage.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("classId", classId);
+                                    bundle.putString("class_Id", classG.getClass_id());
+                                    bundle.putString("classYear", classG.getClass_year());
+                                    bundle.putString("className", classG.getClass_name());
+                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
+                                    intent.putExtras(bundle);
+                                    getActivity().startActivity(intent);
+                                }
+                            });
                             break;
                         case 5:
                             //點人答題
@@ -196,7 +265,48 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
                             break;
                         case 6:
-                            //intent activity 提問按鈕
+                            //提問按鈕
+                            DocumentReference docRefClass = db.collection("Class").document(classId);
+                            docRefClass.get().addOnSuccessListener(documentSnapshot -> {
+                                Class classCheckQuestion = documentSnapshot.toObject(Class.class);
+                                if(!classCheckQuestion.isQuestion_state()){
+                                    Intent intentToQuestion = new Intent();
+                                    intentToQuestion.setClass(getActivity(), QuestionSt.class);
+                                    Bundle bundleToQuestion = new Bundle();
+                                    bundleToQuestion.putString("classId", classId);
+                                    intentToQuestion.putExtras(bundleToQuestion);
+                                    getActivity().startActivity(intentToQuestion);
+                                }
+                                else{
+                                    DocumentReference questionDoc = db.collection("Class").document(classId)
+                                            .collection("Question").document("question");
+                                    questionDoc.get().addOnSuccessListener(documentSnapshot2 -> {
+                                        Question question = documentSnapshot2.toObject(Question.class);
+                                        Date create_time = question.getCreate_time();
+                                        Date nowDate = new Date();
+
+                                        if(create_time.before(nowDate)){
+                                            Intent intentToAnalysis = new Intent();
+                                            intentToAnalysis.setClass(getActivity(), QuestionAnalysis.class);
+                                            Bundle bundleToAnalysis = new Bundle();
+                                            bundleToAnalysis.putString("classId", classId);
+                                            intentToAnalysis.putExtras(bundleToAnalysis);
+                                            getActivity().startActivity(intentToAnalysis);
+                                        }
+                                        else{
+                                            Intent intentToQuestion = new Intent();
+                                            intentToQuestion.setClass(getActivity(), QuestionWait.class);
+                                            Bundle bundleToQuestion = new Bundle();
+                                            bundleToQuestion.putString("classId", classId);
+                                            intentToQuestion.putExtras(bundleToQuestion);
+                                            getActivity().startActivity(intentToQuestion);
+                                        }
+
+                                    });
+                                }
+                            });
+
+
                             break;
                         case 7:
                             //intent activity 計分設定
@@ -209,6 +319,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 8:
                             //intent activity 繪出成績
+
                             break;
 
                     }

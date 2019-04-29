@@ -3,451 +3,489 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="56dp"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#DDDDDD"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
 
-            <LinearLayout
-                android:layout_width="290dp"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/textViewClassName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="25dp"
-                    android:text="editText"
-                    android:textSize="26dp"
-                    android:textStyle="bold"
-                    tools:text="程式設計"/>
+            <Button
+                android:id="@+id/ButtonCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#FFFFFF"
+                android:text="取消"
+                android:textColor="#0806b1"
+                android:textSize="20sp" />
 
-            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewClassName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="載入中"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:background="#FFFFFF"
+            tools:text="程式設計"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/ButtonUpdate"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:text="完成"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
+                android:textColor="#0806b1"
+                android:textSize="18sp" />
         </LinearLayout>
 
 
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@drawable/shadow" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="25dp">
+
+        <TextView
+            android:id="@+id/textViewAttendSit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="出席狀況"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
-
-            <TextView
-                android:id="@+id/textViewAttendSit"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="出席狀況"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#888888" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewAStotal"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="23dp"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="出席佔學期總成績"
-                android:textSize="20dp" />
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/editTexttotalPoints"
-                android:layout_width="45dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/textview_border_creatclass_s2"
+                android:layout_width="117dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
                 android:enabled="true"
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:scrollbars="vertical" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:gravity="center_vertical"
-                android:text="分"
-                android:textSize="20dp" />
-
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#888888" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="分"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewlate"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="23dp"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="遲到"
-                android:textSize="20dp" />
+                android:text="遲到  扣"
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textViewlateminus"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="4dp"
-                android:gravity="center_vertical"
-                android:text="扣"
-                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/editTextlateMinus"
-                android:layout_width="45dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/textview_border_creatclass_s2"
+                android:layout_width="197dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:enabled="true"
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:scrollbars="vertical" />
-
-            <TextView
-                android:id="@+id/textViewlateminusp"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:gravity="center_vertical"
-                android:text="分"
-                android:textSize="20dp" />
-
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#888888" />
+        <TextView
+            android:id="@+id/textViewlateminusp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="分"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewAbsentee"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="23dp"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="曠課"
-                android:textSize="20dp" />
+                android:text="曠課  扣"
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textViewAbsenteeMinus"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="4dp"
-                android:gravity="center_vertical"
-                android:text="扣"
-                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/editTextAbsenteeMinus"
-                android:layout_width="45dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/textview_border_creatclass_s2"
+                android:layout_width="197dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:enabled="true"
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:scrollbars="vertical" />
 
-            <TextView
-                android:id="@+id/textViewAbsenteeMinusp"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:gravity="center_vertical"
-                android:text="分"
-                android:textSize="20dp" />
-
-
         </LinearLayout>
+        >
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#888888" />
+        <TextView
+            android:id="@+id/textViewAbsenteeMinusp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="分"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="25dp">
+
+        <TextView
+            android:id="@+id/textViewEarlywarning"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="預警"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
-
-            <TextView
-                android:id="@+id/textViewEarlywarning"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="預警"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#888888" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewAbsenteeTimes"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="23dp"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="累積曠課"
-                android:textSize="20dp" />
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/editTextEWTimes"
-                android:layout_width="45dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/textview_border_creatclass_s2"
+                android:layout_width="187dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:enabled="true"
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:scrollbars="vertical" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:gravity="center_vertical"
-                android:text="次"
-                android:textSize="20dp" />
-
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#888888" />
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="次"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView12"
-                android:layout_width="wrap_content"
+                android:layout_width="115dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="23dp"
                 android:gravity="center_vertical"
                 android:text="出席成績低於"
-                android:textSize="20dp" />
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/editTextEWPoints"
-                android:layout_width="45dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/textview_border_creatclass_s2"
+                android:layout_width="155dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:enabled="true"
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:scrollbars="vertical" />
 
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:gravity="center_vertical"
-                android:text="分"
-                android:textSize="20dp" />
-
-
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#888888" />
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="分"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="25dp">
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="課堂參與"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="課堂參與"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#888888" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="23dp"
+                android:layout_width="105dp"
+                android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="點人回答"
-                android:textSize="20dp" />
+                android:text="點人回答  加"
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="4dp"
-                android:gravity="center_vertical"
-                android:text="加"
-                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/editTextAnswerBonus"
-                android:layout_width="45dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/textview_border_creatclass_s2"
+                android:layout_width="162dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:enabled="true"
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:scrollbars="vertical" />
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:gravity="center_vertical"
-                android:text="分"
-                android:textSize="20dp" />
-
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="#888888" />
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="分"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#F5F5F5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingLeft="50dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView18"
-                android:layout_width="wrap_content"
+                android:layout_width="105dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="23dp"
                 android:gravity="center_vertical"
-                android:text="隋棠問答"
-                android:textSize="20dp" />
+                android:text="隨堂問答  加"
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="4dp"
-                android:gravity="center_vertical"
-                android:text="加"
-                android:textSize="20dp" />
 
             <EditText
                 android:id="@+id/editTextRDBonus"
-                android:layout_width="45dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="8dp"
-                android:background="@drawable/textview_border_creatclass_s2"
+                android:layout_width="162dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:enabled="true"
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:scrollbars="vertical" />
-
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:gravity="center_vertical"
-                android:text="分"
-                android:textSize="20dp" />
-
-
         </LinearLayout>
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:gravity="center_vertical"
+            android:text="分"
+            android:textColor="#000000"
+            android:textSize="18sp" />
 
 
     </LinearLayout>

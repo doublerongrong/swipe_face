@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.Model.Class;
@@ -26,6 +27,7 @@ public class Activity_ScoreSetting extends AppCompatActivity {
     private TextView textViewanswerBouns;
     private TextView textViewrandomAnswerBonus;
     private Button editBtn;
+    private ImageButton imageCancel;
 
     private String classId;
 
@@ -55,6 +57,7 @@ public class Activity_ScoreSetting extends AppCompatActivity {
         textViewanswerBouns = (TextView) findViewById(R.id.editTextAnswerBonus);
         textViewrandomAnswerBonus = (TextView) findViewById(R.id.editTextRDBonus);
         editBtn = (Button) findViewById(R.id.ButtonEdit);
+        imageCancel = (ImageButton) findViewById(R.id.imageCancel);
 
         DocumentReference docRef = mFirestore.collection("Class").document(classId);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -72,6 +75,13 @@ public class Activity_ScoreSetting extends AppCompatActivity {
                         textViewEWpoints.setText(setClass.getClass_ewtimes().toString());
                         textViewanswerBouns.setText(setClass.getClass_answerbonus().toString());
                         textViewrandomAnswerBonus.setText(setClass.getClass_rdanswerbonus().toString());
+
+                        imageCancel.setOnClickListener(v -> {
+
+                            finish();
+
+
+                        });
 
                         editBtn.setOnClickListener(v -> {
                             Intent intent = new Intent();

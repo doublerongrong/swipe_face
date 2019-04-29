@@ -4,54 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/classlist_item_card"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:layout_margin="5dp"
+    android:layout_height="60dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
-    android:focusable="true"
-    android:orientation="horizontal">
-
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textViewStudentId"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="textView"
-            android:textSize="15dp"
-            tools:text="405401217" />
-
-        <TextView
-            android:id="@+id/textViewStudentDe"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="textView"
-            android:textSize="15dp"
-            tools:text="資訊管理學系" />
-
-        <TextView
-            android:id="@+id/textViewStudentName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="textView"
-            android:textSize="15dp"
-            tools:text="蘇柏綸" />
-
-        <Button
-            android:id="@+id/BtnCheck"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="50dp"
-            android:gravity="center"
-            android:text="查看" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="31dp">
+
+
+            <ImageButton
+                android:id="@+id/searchBtn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_outline_account_circle_24px" />
+
+
+            <TextView
+                android:id="@+id/textViewStudentId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:text="textView"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                tools:text="405401217" />
+
+            <TextView
+                android:id="@+id/textViewStudentDe"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="textView"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                tools:text="資訊管理學系" />
+
+            <TextView
+                android:id="@+id/textViewStudentName"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="textView"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                tools:text="蘇柏綸" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F5F5F5" />
     </LinearLayout>
 
 

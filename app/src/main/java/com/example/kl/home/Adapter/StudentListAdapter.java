@@ -43,7 +43,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
         String studentId = studentList.get(position).StudentId;
         String student_id = studentList.get(position).getStudent_id();
-        holder.checkBtn.setOnClickListener(v -> {
+        holder.mView.setOnClickListener(v -> {
 
 
             notifyItemChanged(position);
@@ -73,12 +73,12 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
             student_id = (TextView) mView.findViewById(R.id.textViewStudentId);
             student_department = (TextView) mView.findViewById(R.id.textViewStudentDe);
             student_name = (TextView) mView.findViewById(R.id.textViewStudentName);
-            checkBtn = (Button) mView.findViewById(R.id.BtnCheck);
+
 
         }
     }
     public interface transPageListener {
-        public void onTransPageClick(String studentId, String student_id, Student student);
+        void onTransPageClick(String studentId, String student_id, Student student);
     }//adapter跳轉fragment並攜帶需要的資料
 
     public void setOnTransPageClickListener(StudentListAdapter.transPageListener transPageListener) {

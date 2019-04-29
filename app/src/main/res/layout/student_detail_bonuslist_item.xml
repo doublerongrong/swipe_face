@@ -4,48 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/classlist_item_card"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_margin="5dp"
+    android:layout_height="58dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal">
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/textViewBonusReason"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="textView "
-            android:textSize="16dp"
-            tools:text="隨堂問答"/>
-
-        <TextView
-            android:id="@+id/textViewBonusTime"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="2018.01.03"
-            android:textSize="16dp"
-            tools:text="2018.01.03"/>
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:text="+1"
-            android:textSize="16dp"
-            />
+            android:layout_height="56dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="35dp">
 
 
+            <TextView
+                android:id="@+id/textViewBonusReason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="載入中 "
+                android:textColor="#000000"
+                android:textSize="16dp"
+                tools:text="隨堂問答" />
+
+            <TextView
+                android:id="@+id/textViewBonusTime"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="載入中"
+                android:textColor="#000000"
+                android:textSize="16dp"
+                tools:text="2018.01.03" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:text="+1"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F5F5F5" />
     </LinearLayout>
 
 

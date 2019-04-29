@@ -37,9 +37,9 @@ public class Detail_BonusListAdapter extends RecyclerView.Adapter<Detail_BonusLi
 
         SimpleDateFormat myFmt2 = new SimpleDateFormat("yyyy/MM/dd");
         String bonusTime = myFmt2.format(bonusList.get(position).getBonus_time());
-        holder.bouns_reason.setText(bonusList.get(position).getBonus_reason());
+        holder.bouns_reason.setText
+        (bonusList.get(position).getBonus_reason());
         holder.bonus_time.setText(bonusTime);
-
 
     }
 

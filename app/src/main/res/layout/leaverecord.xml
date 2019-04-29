@@ -1,209 +1,320 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
+        android:background="#FFFFFF"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_height="56dp"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/backIBtn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
             <LinearLayout
-                android:layout_width="220dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10">
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:background="@drawable/shadow" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textClassName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textSize="30dp"
-                    android:textStyle="bold"
-                    tools:text="程式設計" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="147dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="147dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                    </LinearLayout>
+
+                    <com.example.kl.home.CircleImageView
+                        android:id="@+id/imageViewStudent"
+                        android:layout_width="147dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5" />
+
+                    <LinearLayout
+                        android:layout_width="147dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <LinearLayout
+                            android:layout_width="66dp"
+                            android:layout_height="27dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:background="@drawable/leave_check_layout">
+
+                            <TextView
+                                android:id="@+id/textLeaveCheck"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="載入中"
+                                android:textSize="14sp"
+                                tools:text="核准中" />
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="82dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="21dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textClassName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="載入中"
+                            android:textColor="#000000"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="程式設計" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center">
+
+                        <ImageButton
+
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/ic_baseline_person_24px" />
+
+                        <TextView
+                            android:id="@+id/textStudentName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="載入中"
+                            android:textColor="#000000"
+                            android:textSize="18dp"
+                            tools:text="蘇柏綸" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal">
+
+                    <Button
+                        android:id="@+id/BtnLeaveCheck0"
+                        android:layout_width="114dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/leavebtn_shape_x"
+                        android:text="不准假"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/BtnLeaveCheck1"
+                        android:layout_width="114dp"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="42dp"
+                        android:background="@drawable/leavebtn_shape_o"
+                        android:text="准假"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="46dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="請假類別 : "
-                        android:textSize="18dp"/>
+                        android:textColor="#000000"
+                        android:textSize="18dp" />
 
                     <TextView
                         android:id="@+id/textLeaveReason"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TextView"
+                        android:text="載入中"
+                        android:textColor="#000000"
                         android:textSize="18dp"
-                        android:textStyle="bold"
                         tools:text="事假" />
                 </LinearLayout>
-            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textLeaveCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:text="TextView"
-                android:textSize="22dp"
-                android:textStyle="bold"
-                tools:text="核准中" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="46dp">
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="請假時間 : "
+                        android:textColor="#000000"
+                        android:textSize="18dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+                    <TextView
+                        android:id="@+id/textLeaveDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="載入中"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        tools:text="2018-11-03" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="學生 :  "
-                android:textSize="18dp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textStudentName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                tools:text="蘇柏綸" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="46dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上傳時間 : "
+                        android:textColor="#000000"
+                        android:textSize="18dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="請假時間 : "
-                android:textSize="18dp" />
+                    <TextView
+                        android:id="@+id/textLeaveUploadDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="載入中"
+                        android:textColor="#000000"
+                        android:textSize="18dp"
+                        tools:text="2018-11-01" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textLeaveDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="18dp"
-                tools:text="2018-11-03" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="46dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="請假事由 : "
+                        android:textColor="#000000"
+                        android:textSize="18dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="上傳時間 : "
-                android:textSize="18dp" />
+                    <TextView
+                        android:id="@+id/textLeaveContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="載入中"
+                        android:textColor="#000000"
+                        android:textSize="16dp"
+                        tools:text="與家人出國" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textLeaveUploadDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="18dp"
-                tools:text="2018-11-01" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="46dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="附上證明 :  "
+                        android:textColor="#000000"
+                        android:textSize="18dp" />
+                </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="請假事由 : "
-                android:textSize="18dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
-            <TextView
-                android:id="@+id/textLeaveContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="16dp"
-                tools:text="老師好，我是蘇柏綸，禮拜三的課我要請假!" />
-        </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imageViewLeavePhotot"
+                        android:layout_width="268dp"
+                        android:layout_height="163dp"
+                        android:layout_gravity="center"
+                        tools:src="@tools:sample/backgrounds/scenic" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="附上證明 :  "
-                android:textSize="18dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp">
-
-            <ImageView
-                android:id="@+id/imageViewLeavePhotot"
-                android:layout_width="300dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                tools:src="@tools:sample/backgrounds/scenic" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp">
-
-                <Button
-                    android:id="@+id/BtnLeaveCheck0"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:text="不准假" />
-
-                <Button
-                    android:id="@+id/BtnLeaveCheck1"
-                    android:layout_width="120dp"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="15dp"
-                    android:text="准假" />
 
             </LinearLayout>
-
-
-        </LinearLayout>
-
-
+        </ScrollView>
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

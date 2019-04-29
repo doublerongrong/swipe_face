@@ -1,9 +1,13 @@
 package com.example.kl.home.Model;
 
 
-import java.util.ArrayList;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Class extends ClassId {
+import java.util.ArrayList;
+import java.util.Date;
+
+public class Class extends ClassId implements Parcelable {
     public Class() {
 
     }
@@ -23,6 +27,26 @@ public class Class extends ClassId {
     private Integer class_lateminus; //遲到扣分(出席)
     private Integer class_ewtimes; //預警 次數達到
     private Integer class_ewpoints; //預警 分數低於
+    private ArrayList<String> group_leader = new ArrayList<>();// 小組 組長列表
+    private boolean group_state_go;//小組 分組狀態
+    private boolean group_state;//小組 分組狀態
+    private Integer group_num;//小組數量
+    private Integer group_numHigh;//小組人數上限
+    private Integer group_numLow;//小組人數下限
+    private Date create_time;//小組創立時間
+    private boolean question_state;
+
+    public boolean isQuestion_state() {
+        return question_state;
+    }
+
+    public void setQuestion_state(boolean question_state) {
+        this.question_state = question_state;
+    }
+
+    public static Creator<Class> getCREATOR() {
+        return CREATOR;
+    }
 
     public String getClass_id() {
         return class_id;
@@ -150,5 +174,130 @@ public class Class extends ClassId {
     public void setClass_ewpoints(Integer class_ewpoints) {
         this.class_ewpoints = class_ewpoints;
     }
+
+    public boolean isGroup_state() {
+        return group_state;
+    }
+
+    public void setGroup_state(boolean group_state) {
+        this.group_state = group_state;
+    }
+
+    public Integer getGroup_numLow() {
+        return group_numLow;
+    }
+
+    public void setGroup_numLow(Integer group_numLow) {
+        this.group_numLow = group_numLow;
+    }
+
+    public Integer getGroup_numHigh() {
+        return group_numHigh;
+    }
+
+    public void setGroup_numHigh(Integer group_numHigh) {
+        this.group_numHigh = group_numHigh;
+    }
+
+    public ArrayList<String> getGroup_leader() {
+        return group_leader;
+    }
+
+    public void setGroup_leader(ArrayList<String> group_leader) {
+        this.group_leader = group_leader;
+    }
+
+    public boolean isGroup_state_go() {
+        return group_state_go;
+    }
+
+    public void setGroup_state_go(boolean group_state_go) {
+        this.group_state_go = group_state_go;
+    }
+
+    public Integer getGroup_num() {
+        return group_num;
+    }
+
+    public void setGroup_num(Integer group_num) {
+        this.group_num = group_num;
+    }
+
+    public Date getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(Date create_time) {
+        this.create_time = create_time;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.class_id);
+        dest.writeString(this.class_name);
+        dest.writeValue(this.class_team_total);
+        dest.writeValue(this.student_total);
+        dest.writeString(this.teacher_email);
+        dest.writeString(this.class_year);
+        dest.writeStringList(this.student_id);
+        dest.writeValue(this.class_totalpoints);
+        dest.writeValue(this.class_totalteam);
+        dest.writeValue(this.class_answerbonus);
+        dest.writeValue(this.class_rdanswerbonus);
+        dest.writeValue(this.class_absenteeminus);
+        dest.writeValue(this.class_lateminus);
+        dest.writeValue(this.class_ewtimes);
+        dest.writeValue(this.class_ewpoints);
+        dest.writeStringList(this.group_leader);
+        dest.writeByte(this.group_state_go ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.group_state ? (byte) 1 : (byte) 0);
+        dest.writeValue(this.group_num);
+        dest.writeValue(this.group_numHigh);
+        dest.writeValue(this.group_numLow);
+        dest.writeLong(this.create_time != null ? this.create_time.getTime() : -1);
+    }
+
+    protected Class(Parcel in) {
+        this.class_id = in.readString();
+        this.class_name = in.readString();
+        this.class_team_total = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.student_total = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.teacher_email = in.readString();
+        this.class_year = in.readString();
+        this.student_id = in.createStringArrayList();
+        this.class_totalpoints = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.class_totalteam = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.class_answerbonus = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.class_rdanswerbonus = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.class_absenteeminus = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.class_lateminus = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.class_ewtimes = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.class_ewpoints = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.group_leader = in.createStringArrayList();
+        this.group_state_go = in.readByte() != 0;
+        this.group_state = in.readByte() != 0;
+        this.group_num = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.group_numHigh = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.group_numLow = (Integer) in.readValue(Integer.class.getClassLoader());
+        long tmpCreate_time = in.readLong();
+        this.create_time = tmpCreate_time == -1 ? null : new Date(tmpCreate_time);
+    }
+
+    public static final Parcelable.Creator<Class> CREATOR = new Parcelable.Creator<Class>() {
+        @Override
+        public Class createFromParcel(Parcel source) {
+            return new Class(source);
+        }
+
+        @Override
+        public Class[] newArray(int size) {
+            return new Class[size];
+        }
+    };
 }
 

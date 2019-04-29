@@ -4,24 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rollcalllist_item_card"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_margin="5dp"
+    android:layout_height="60dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    app:cardElevation="2dp">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
         android:orientation="horizontal">
 
 
 
             <LinearLayout
-                android:layout_width="280dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:orientation="horizontal">
@@ -30,50 +32,50 @@
                     android:id="@+id/rollcall_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="17dp"
-                    android:text="405401475" />
+                    android:textSize="16dp"
+                    android:text="405401475"
+                    android:textColor="#000000"/>
 
                 <TextView
                     android:id="@+id/rollcall_department"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_marginLeft="5dp"
-                    android:text="資管系" />
+                    android:text="資管系"
+                    android:textColor="#000000"/>
 
                 <TextView
                     android:id="@+id/rollcall_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_marginLeft="5dp"
-                    android:text="孫新堯" />
+                    android:text="孫新堯"
+                    android:textColor="#000000"/>
 
 
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="130dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
-
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/rollcall_state"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="30dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:text="TextView"
-                    android:textStyle="bold"
                     tools:text="出席"
-                    android:textSize="22dp"/>
+                    android:textSize="16dp"
+                    android:textColor="#82ae65"
+                    android:background="@drawable/attend_button_shape"
+                    style="?android:attr/borderlessButtonStyle"/>
 
 
             </LinearLayout>
