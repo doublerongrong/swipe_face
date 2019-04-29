@@ -49,7 +49,7 @@ public class CallNameRollCall extends AppCompatActivity {
     private RecyclerView mMainList;
     private RollCallAdapter rollCallAdapter;
     private List<RollCallStudent> rollCallList;
-    private CardView attend, absence;
+    private Button attend, absence;
     private Button  finishBtn;
     private ImageButton returnBtn;
     private String classId,classDoc,performanceId,AttendPointString;
@@ -111,7 +111,7 @@ public class CallNameRollCall extends AppCompatActivity {
                             QuerySnapshot querySnapshot1 = task1.isSuccessful() ? task1.getResult(): null;
                             for(DocumentSnapshot documentSnapshot : querySnapshot1.getDocuments()){
                                 RollCallStudent rollCallStudent = new RollCallStudent(documentSnapshot.getString("student_name"),
-                                        documentSnapshot.getString("student_id"),documentSnapshot.getString("student_school"),
+                                        documentSnapshot.getString("student_id"),
                                         documentSnapshot.getString("student_department"),documentSnapshot.getString("image_url"));
                                 studentId.add(documentSnapshot.get("student_id").toString());
                                 rollCallList.add(rollCallStudent);
@@ -119,7 +119,7 @@ public class CallNameRollCall extends AppCompatActivity {
                             rollCallAdapter = new RollCallAdapter(CallNameRollCall.this,rollCallList);
                             mMainList.setAdapter(rollCallAdapter);
 
-                            attend = (CardView)findViewById(R.id.card_attendance);
+                            attend = (Button) findViewById(R.id.card_attendance);
                             attend.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -182,7 +182,7 @@ public class CallNameRollCall extends AppCompatActivity {
 
                                 }
                             });
-                            absence = (CardView)findViewById(R.id.card_absence);
+                            absence = (Button) findViewById(R.id.card_absence);
                             absence.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -254,6 +254,11 @@ public class CallNameRollCall extends AppCompatActivity {
             startActivity(intent);
             finish();
 
+        });
+
+        returnBtn = (ImageButton) findViewById(R.id.backIBtn);
+        returnBtn.setOnClickListener(view -> {
+            finish();
         });
 
 

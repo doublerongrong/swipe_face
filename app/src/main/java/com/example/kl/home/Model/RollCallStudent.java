@@ -2,17 +2,15 @@ package com.example.kl.home.Model;
 
 public class RollCallStudent {
 
-    public RollCallStudent(String student_name, String student_id, String student_school, String student_department, String image_url){
+    public RollCallStudent(String student_name, String student_id, String student_department, String image_url){
         this.student_name  = student_name;
         this.student_id = student_id;
-        this.student_school = student_school;
         this.student_department = student_department;
         this.image_url = image_url;
     }
 
     String student_name;
     String student_id;
-    String student_school;
     String student_department;
     String image_url;
 
@@ -38,14 +36,6 @@ public class RollCallStudent {
 
     public void setStudent_id(String student_id) {
         this.student_id = student_id;
-    }
-
-    public String getStudent_school() {
-        return student_school;
-    }
-
-    public void setStudent_school(String student_school) {
-        this.student_school = student_school;
     }
 
     public String getStudent_department() {
