@@ -36,9 +36,21 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     private String reClassId,reRollcallId,reClassDocId;
     private int fragmentRequest;
     private FirebaseFirestore db;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//抓現在登入user
 
     // 設置默認進來是tab 顯示的頁面
-
+    private void setDefaultFragment(){
+        fragmentManager = getSupportFragmentManager();
+        transaction = fragmentManager.beginTransaction();
+        Fragment_ClassList fragment_classList = new Fragment_ClassList();
+        Bundle args = new Bundle();
+        args.putString("teacher_email", teacher_email);
+        Log.d(TAG,"TEST" + teacher_email);
+        fragment_classList.setArguments(args);
+        transaction.replace(R.id.content,new Fragment_ClassList());
+        transaction.addToBackStack(new Fragment_ClassList().getClass().getName());
+        transaction.commit();
+    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -89,16 +101,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.t_activity_homepage);
+        teacher_email = user.getEmail();
 
-        //init db
-        db = FirebaseFirestore.getInstance();
 
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-//        currentFirebaseUser.getEmail(); String[] currentUserIdToStringList = currentFirebaseUser.getEmail().split("@");
-        teacher_email = currentFirebaseUser.getEmail();
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null) {
-//            teacher_email = bundle.getString("teacherEmail");
             if(bundle.getString("class_id") != null){
                 reClassId = bundle.getString("class_id");
                 reRollcallId = bundle.getString("rollcall_id");
@@ -264,19 +271,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         fragment_leaveList.setArguments(args);
         getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
     }
-    private void setDefaultFragment(){
-        fragmentManager = getSupportFragmentManager();
-        transaction = fragmentManager.beginTransaction();
-        Fragment_ClassList fragment_classList = new Fragment_ClassList();
 
-        Bundle args = new Bundle();
-        args.putString("teacher_email", teacher_email);
-        Log.d(TAG,"TEST" + teacher_email);
-        fragment_classList.setArguments(args);
-        transaction.replace(R.id.content,new Fragment_ClassList());
-        transaction.addToBackStack(new Fragment_ClassList().getClass().getName());
-        transaction.commit();
-    }
 
 
 }
