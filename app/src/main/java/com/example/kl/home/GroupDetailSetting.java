@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,9 +54,11 @@ public class GroupDetailSetting extends AppCompatActivity {
     Integer groupNumLow;
     Integer groupNum;
     LinearLayout linerLGroupDetailSetPlus;
-    Button btGroupDetailSet;
+    TextView tvGroupDetailSet;
     TextView tvGroupInfo;
     String groupDetailAndSetting ;
+    ImageButton ibBackIBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,21 +104,27 @@ public class GroupDetailSetting extends AppCompatActivity {
             customClick(v);
             groupDetailSettingAdapter.notifyDataSetChanged();
         });
-        btGroupDetailSet = findViewById(R.id.groupDetailSetting);
-        btGroupDetailSet.setOnClickListener(v -> {
+        tvGroupDetailSet = findViewById(R.id.groupDetailSetting);
+        tvGroupDetailSet.setOnClickListener(v -> {
             stepFinish();
         });
+        ibBackIBtn = findViewById(R.id.backIBtn);
+        ibBackIBtn.setOnClickListener(v -> finish());
 
         //init Adapter
 //        studentList = new ArrayList<>();
         groupDetailSettingAdapter = new GroupDetailSettingAdapter(this, studentList, groupLeader);
 
-        //init RecycleView
+        //init RecyclerView
         groupDetailSettingRecycleView = findViewById(R.id.groupDetailSettingRecycleView);
         groupDetailSettingRecycleView.setHasFixedSize(true);
         LinearLayoutManager mgr = new LinearLayoutManager(this);
         groupDetailSettingRecycleView.setLayoutManager(mgr);
         groupDetailSettingRecycleView.setAdapter(groupDetailSettingAdapter);
+        //init RecyclerViewDivider
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(groupDetailSettingRecycleView.getContext(),
+                mgr.getOrientation());
+        groupDetailSettingRecycleView.addItemDecoration(dividerItemDecoration);
 
 
         groupDetailSettingAdapter.setOnTransPageClickListener((student_id, student) -> {

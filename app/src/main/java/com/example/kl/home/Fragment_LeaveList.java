@@ -41,6 +41,7 @@ public class Fragment_LeaveList extends Fragment {
     private ArrayAdapter<String> listAdapterLeave;//假單排列選擇
     private String class_id;
     private String teacher_email;
+    private String checkWay; //確認假單批改完後導向
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
@@ -50,18 +51,23 @@ public class Fragment_LeaveList extends Fragment {
                              Bundle savedInstanceState) {
         Bundle args = new Bundle();//fragment傳值
         args = getArguments();//fragment傳值
-        Log.d(TAG,"Bundle "+new Bundle());
 //        Log.d(TAG,"args0: "+args.toString());
         if (args!=null){
             class_id = args.getString("info");
             teacher_email = args.getString("teacher_email");
             Log.d(TAG,"args: "+args.toString());
 
-        }else {
-            class_id = null;
+            if(class_id == null){
+                checkWay = "底部欄";
+            }
+            else{
+                checkWay = "課堂內";
+            }
+
         }
 
         Log.d(TAG, "class_id:" + class_id);//fragment傳值
+        Log.d(TAG, "teacher_email:" + teacher_email);//fragment傳值
 
 
         // Inflate the layout for this fragment
@@ -114,7 +120,8 @@ public class Fragment_LeaveList extends Fragment {
                 leaveList.clear();
                 if(sortWay.equals("未審核")){
                     leaveList.clear();
-                    mFirestore.collection("Leave").whereEqualTo("leave_check","核准中").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    mFirestore.collection("Leave").whereEqualTo("leave_check","核准中")
+                            .whereEqualTo("teacher_email",teacher_email).addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
 
@@ -127,9 +134,12 @@ public class Fragment_LeaveList extends Fragment {
                                 if(doc.getType() == DocumentChange.Type.ADDED){
                                     Log.d(TAG,"here" );
 
+
                                     String leaveRecordId = doc.getDocument().getId();
 
                                     Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveRecordId);
+                                    leave.setCheckWay("底部欄");
+                                    Log.d(TAG,"Check Teamil : " + leave.getTeacher_email());
                                     leaveList.add(leave);
 
                                     leaveListAdapter.notifyDataSetChanged();
@@ -147,7 +157,8 @@ public class Fragment_LeaveList extends Fragment {
                 }
                 else if(sortWay.equals("已審核")){
                     leaveList.clear();
-                    mFirestore.collection("Leave").whereEqualTo("leave_check","准假").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    mFirestore.collection("Leave").whereEqualTo("teacher_email",teacher_email)
+                            .whereEqualTo("leave_check","准假").addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
 
@@ -162,7 +173,9 @@ public class Fragment_LeaveList extends Fragment {
                                     String leaveId = doc.getDocument().getId();
 
                                     Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveId);
+                                    leave.setCheckWay("底部欄");
                                     leaveList.add(leave);
+                                    Log.d(TAG,"確認已審核" + leave.getLeave_check());
 
                                     leaveListAdapter.notifyDataSetChanged();
                                 }
@@ -170,7 +183,8 @@ public class Fragment_LeaveList extends Fragment {
                             }
                         }
                     });
-                    mFirestore.collection("Leave").whereEqualTo("leave_check","不准假").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    mFirestore.collection("Leave").whereEqualTo("teacher_email",teacher_email)
+                            .whereEqualTo("leave_check","不准假").addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
 
@@ -184,6 +198,7 @@ public class Fragment_LeaveList extends Fragment {
                                     String leaveId = doc.getDocument().getId();
 
                                     Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveId);
+                                    leave.setCheckWay("底部欄");
                                     leaveList.add(leave);
 
                                     leaveListAdapter.notifyDataSetChanged();
@@ -195,7 +210,7 @@ public class Fragment_LeaveList extends Fragment {
                 }
                 else if(sortWay.equals("所有假單")){
                     leaveList.clear();
-                    mFirestore.collection("Leave").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    mFirestore.collection("Leave").whereEqualTo("teacher_email",teacher_email).addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
 
@@ -210,6 +225,7 @@ public class Fragment_LeaveList extends Fragment {
                                     String leaveId = doc.getDocument().getId();
 
                                     Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveId);
+                                    leave.setCheckWay("底部欄");
                                     leaveList.add(leave);
 
                                     leaveListAdapter.notifyDataSetChanged();
@@ -252,6 +268,7 @@ public class Fragment_LeaveList extends Fragment {
                                    String leaveRecordId = doc.getDocument().getId();
 
                                    Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveRecordId);
+                                   leave.setCheckWay("課堂內");
                                    leaveList.add(leave);
 
                                    leaveListAdapter.notifyDataSetChanged();
@@ -284,6 +301,7 @@ public class Fragment_LeaveList extends Fragment {
                                    String leaveId = doc.getDocument().getId();
 
                                    Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveId);
+                                   leave.setCheckWay("課堂內");
                                    leaveList.add(leave);
 
                                    leaveListAdapter.notifyDataSetChanged();
@@ -306,6 +324,7 @@ public class Fragment_LeaveList extends Fragment {
                                    String leaveId = doc.getDocument().getId();
 
                                    Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveId);
+                                   leave.setCheckWay("課堂內");
                                    leaveList.add(leave);
 
                                    leaveListAdapter.notifyDataSetChanged();
@@ -332,6 +351,7 @@ public class Fragment_LeaveList extends Fragment {
                                    String leaveId = doc.getDocument().getId();
 
                                    Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveId);
+                                   leave.setCheckWay("課堂內");
                                    leaveList.add(leave);
 
                                    leaveListAdapter.notifyDataSetChanged();

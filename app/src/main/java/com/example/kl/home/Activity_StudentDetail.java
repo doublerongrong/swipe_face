@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ public class Activity_StudentDetail extends AppCompatActivity {
     private TextView textViewStudentName;
     private TextView textViewStudentId;
     private TextView textViewStudentDepartment;
+    private ImageButton backIBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,14 @@ public class Activity_StudentDetail extends AppCompatActivity {
         textViewStudentName = (TextView) findViewById(R.id.textViewStudentName);
         textViewStudentId = (TextView) findViewById(R.id.textViewStudentId);
         textViewStudentDepartment = (TextView) findViewById(R.id.textViewStudentDepartment);
+        backIBtn = (ImageButton) findViewById(R.id.backIBtn);
 
+        backIBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         setStudentInfor(studentId);//設定學生資料
 
         FragmentTabHost tabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);

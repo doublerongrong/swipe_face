@@ -7,8 +7,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="73dp"
+        android:layout_height="56dp"
         android:orientation="horizontal">
+        android:background="#FFFFFF">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,8 +37,8 @@
 
             <ImageButton
 
-                android:layout_width="27dp"
-                android:layout_height="31dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:background="@drawable/ic_filter_list_black_24dp" />
         </LinearLayout>
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">home</string>
+    <string name="app_name">Flass</string>
     <string name="title_home">課程清單</string>
     <string name="title_leave">學生假單</string>
     <string name="title_notification">訊息通知</string>

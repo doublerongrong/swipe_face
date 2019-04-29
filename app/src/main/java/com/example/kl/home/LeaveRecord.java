@@ -1,11 +1,14 @@
 package com.example.kl.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +38,11 @@ import java.util.Map;
 
 public class LeaveRecord extends AppCompatActivity {
 
+//    public Context context;
+//    public LeaveRecord(Context context){
+//        this.context = context;
+//    }
+
     private static final String TAG = "Leavelog";
 
     private TextView class_name;
@@ -47,6 +55,8 @@ public class LeaveRecord extends AppCompatActivity {
     private ImageView leave_photo;
     private Button agreeBtn;
     private Button disagreeBtn;
+    private ImageButton backIBtn;
+    private ImageView imageViewStudent;
 
     private FirebaseFirestore mFirestore;
     private StorageReference mStorageRef;
@@ -54,6 +64,7 @@ public class LeaveRecord extends AppCompatActivity {
     private String performanceId;// 調整出席分數
     private String rollcallId; // 調整List位置
     private int absenseMinus; //加回缺席分數
+    private String teacher_email;
     private String class_id;
     private String student_id;
     private String leave_dateStr;
@@ -66,6 +77,7 @@ public class LeaveRecord extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaverecord);
 
+
         class_name = (TextView) findViewById(R.id.textClassName);
         leave_reason = (TextView) findViewById(R.id.textLeaveReason);
         leave_check = (TextView) findViewById(R.id.textLeaveCheck);
@@ -76,6 +88,8 @@ public class LeaveRecord extends AppCompatActivity {
         leave_photo = (ImageView) findViewById(R.id.imageViewLeavePhotot);
         agreeBtn = (Button) findViewById(R.id.BtnLeaveCheck1);
         disagreeBtn = (Button) findViewById(R.id.BtnLeaveCheck0);
+        backIBtn = (ImageButton) findViewById(R.id.backIBtn);
+        imageViewStudent = (ImageView)findViewById(R.id.imageViewStudent);
 
         casualList = new ArrayList<>();
         funeralList = new ArrayList<>();
@@ -85,6 +99,7 @@ public class LeaveRecord extends AppCompatActivity {
 
         mFirestore = FirebaseFirestore.getInstance();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Leave_photo");
+        StorageReference storageReferenceS = FirebaseStorage.getInstance().getReference().child("student_photo");
         Leave leave = new Leave();
 
         Bundle bundle = getIntent().getExtras();
@@ -107,13 +122,32 @@ public class LeaveRecord extends AppCompatActivity {
                         class_id = leave.getClass_id();
                         student_id = leave.getStudent_id();
                         leave_dateStr = leave.getLeave_date();
+                        teacher_email = leave.getTeacher_email();
 
 
                         String leaveUpdloadDate = myFmt2.format(leave.getLeave_uploaddate());
 
+                        String photoUrlS = leave.getStudent_id();
+                        StorageReference pathS = storageReferenceS.child(photoUrlS);
+                        Log.d("TEST",pathS.toString());
+                        Glide.with(LeaveRecord.this)
+                                .load(pathS)
+                                .into(imageViewStudent);
+
+                        String checkColor = leave.getLeave_check();
+
                         class_name.setText(leave.getClass_name());
                         leave_reason.setText(leave.getLeave_reason());
                         leave_check.setText(leave.getLeave_check());
+//                        if(checkColor.equals("准假")){
+//                            leave_check.setTextColor(context.getResources().getColor(R.color.leaveGreen));
+//                        }
+//                        else if(checkColor.equals("不准假")){
+//                            leave_check.setTextColor(context.getResources().getColor(R.color.leaveRed));
+//                        }
+//                        else{
+//                            leave_check.setTextColor(context.getResources().getColor(R.color.leaveBlue));
+//                        }
                         student_name.setText(leave.getStudent_name());
                         leave_date.setText(leave.getLeave_date());
                         leave_uploaddate.setText(leaveUpdloadDate);
@@ -140,11 +174,19 @@ public class LeaveRecord extends AppCompatActivity {
                     } else {
                         Log.d(TAG, "No such document");
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
             }
         });
+
+        backIBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "TEST BACK Item");
+                finish();
+            }
+        });
+
+
         agreeBtn.setOnClickListener(v -> {
 
             DocumentReference leaveCheckRef = mFirestore.collection("Leave").document(leaveId);
@@ -163,9 +205,24 @@ public class LeaveRecord extends AppCompatActivity {
                             if (ChangePage.equals("Detail")) {
                                 finish();
                             } else {
-                                intent.setClass(LeaveRecord.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                if (ChangePage.equals("課堂內")) {
+                                    intent.setClass(LeaveRecord.this, MainActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("teacher_email", teacher_email);
+                                    bundle.putString("class_id", class_id);
+                                    bundle.putInt("request", 3);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }//修改假單後 導向課堂內假單
+                                else if(ChangePage.equals("底部欄")){
+                                    Log.d(TAG, "RUN class_id = null");
+                                    intent.setClass(LeaveRecord.this, MainActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("teacher_email", teacher_email);
+                                    bundle.putInt("request", 4);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }//修改假單後 導向底部欄假單
                             }
                         }
                     });
@@ -183,9 +240,25 @@ public class LeaveRecord extends AppCompatActivity {
                             if (ChangePage.equals("Detail")) {
                                 finish();
                             } else {
-                                intent.setClass(LeaveRecord.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                if (class_id != null) {
+                                    Log.d(TAG, "TEST RUN class_id != null ");
+                                    intent.setClass(LeaveRecord.this, MainActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("teacher_email", teacher_email);
+                                    bundle.putString("class_id", class_id);
+                                    bundle.putInt("request", 3);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }//修改假單後 導向課堂內假單
+                                else {
+                                    Log.d(TAG, "RUN class_id = null");
+                                    intent.setClass(LeaveRecord.this, MainActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("teacher_email", teacher_email);
+                                    bundle.putInt("request", 4);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }//修改假單後 導向底部欄假單
                             }
                         }
                     });

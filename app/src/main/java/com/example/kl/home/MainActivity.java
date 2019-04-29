@@ -65,10 +65,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
                     transaction.replace(R.id.content,new Fragment_ClassList());
                     transaction.addToBackStack(new Fragment_ClassList().getClass().getName());
                     transaction.commit();
+
                     return true;
                 case R.id.navigation_leave:
-                    transaction.replace(R.id.content,new Fragment_LeaveList());
-                    transaction.addToBackStack(new Fragment_LeaveList().getClass().getName());
+                    Fragment_LeaveList fragment_leave_list = new Fragment_LeaveList();
+                    Bundle argsLeave = new Bundle();
+                    argsLeave.putString("teacher_email", teacher_email);
+                    Log.d(TAG,"TEST" + teacher_email);
+                    fragment_leave_list.setArguments(argsLeave);
+                    transaction.replace(R.id.content,fragment_leave_list);
+                    transaction.addToBackStack(fragment_leave_list.getClass().getName());
                     transaction.commit();
                     return true;
                 case R.id.navigation_user:
@@ -106,8 +112,31 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
             }else{
                 setDefaultFragment();
             }
+            fragmentRequest = bundle.getInt("request");
 
+            if (fragmentRequest == 2) {
+                reClassId = bundle.getString("class_id");
+                reRollcallId = bundle.getString("rollcall_id");
+                reClassDocId = bundle.getString("classDoc_id");
+                gotoClassDetailFragment();
+            }
+            else if(fragmentRequest == 3){
+                String class_id = bundle.getString("class_id");
+                String teacher_email = bundle.getString("teacher_email");
+                gotoClassLeaveListFragment(class_id, teacher_email);
+            } //修改假單後 導向課堂內假單
+
+            else if(fragmentRequest == 4){
+                String teacher_email = bundle.getString("teacher_email");
+                gotoLeaveListFragment(teacher_email);
+            } //修改假單後 導向底部欄假單
+
+
+        }else{
+            setDefaultFragment();
         }
+
+
 
 
 
@@ -196,6 +225,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
             Log.d(TAG, " toUserInforSetting");
             getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_user_inforsetting).commit();
         }//判斷是哪個fragment傳來的請求
+
+        else if (fragmentKey.equals("toUser")) {
+            Fragment_User fragment_user = new Fragment_User();
+            Bundle args = new Bundle();
+            args.putString("info", info);
+            args.putString("teacher_email", teacher_email);
+            fragment_user.setArguments(args);
+            Log.d(TAG, " toUserInforSetting");
+            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_user).commit();
+        }//判斷是哪個fragment傳來的請求
     }//fragment傳值並換頁
 
 
@@ -207,6 +246,24 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         args.putString("rollcall_id",reRollcallId);
         fragment_classDetail.setArguments(args);
         getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_classDetail).commit();
+    }
+
+    public void gotoLeaveListFragment(String teacher_email) {    // 改完假單回到假單介面(底部欄)
+        Fragment_LeaveList fragment_leaveList = new Fragment_LeaveList();
+        Bundle args = new Bundle();
+        args.putString("teacher_email",teacher_email);
+        fragment_leaveList.setArguments(args);
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
+    }
+
+
+    public void gotoClassLeaveListFragment(String class_id, String teacher_email) {    // 改完假單回到假單介面(課堂內)
+        Fragment_LeaveList fragment_leaveList = new Fragment_LeaveList();
+        Bundle args = new Bundle();
+        args.putString("info",class_id);
+        args.putString("teacher_email",teacher_email);
+        fragment_leaveList.setArguments(args);
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
     }
 
 

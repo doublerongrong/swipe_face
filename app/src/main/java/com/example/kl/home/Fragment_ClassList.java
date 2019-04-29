@@ -65,7 +65,6 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
         db = FirebaseFirestore.getInstance();
 
-
         classList = new ArrayList<>();
         classListAdapter = new ClassListAdapter(getActivity().getApplicationContext(),classList);
 
@@ -83,7 +82,8 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
 
 
-        db.collection("Class").whereEqualTo("teacher_email", teacher_email).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("Class").whereEqualTo("teacher_email", teacher_email)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 if (e != null) {

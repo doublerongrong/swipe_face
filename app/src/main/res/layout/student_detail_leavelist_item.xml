@@ -4,46 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/classlist_item_card"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:layout_margin="5dp"
+    android:layout_height="56dp"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/textViewLeaveDate"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:text="textView "
-            android:textSize="16dp"
-            tools:text="2018.01.03"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="35dp">
 
-        <TextView
-            android:id="@+id/textViewLeaveReason"
-            android:layout_width="95dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="2018.01.03"
-            android:textSize="16dp"
-            tools:text="事假"/>
 
-        <Button
-            android:id="@+id/checkBtn"
-            android:layout_width="70dp"
-            android:layout_height="35dp"
-            android:text="查看"/>
+            <TextView
+                android:id="@+id/textViewLeaveDate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:gravity="center_vertical"
+                android:text="載入中 "
+                android:textColor="#000000"
+                android:textSize="16dp"
+                tools:text="2018.01.03" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="72dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="70dp"
+                    android:background="@drawable/leavelist_layout"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/textViewLeaveReason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="載入中"
+                        android:textColor="#c52020"
+                        android:textSize="16dp"
+                        tools:text="事假" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/checkBtn"
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_call_made_gray_24dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F5F5F5" />
 
     </LinearLayout>
 

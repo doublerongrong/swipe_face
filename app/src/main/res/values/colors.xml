@@ -5,4 +5,9 @@
     <color name="colorAccent">#FBB03B</color>
     <color name="Red">#FB3B3B</color>
     <color name="bule">#39CA9C</color>
+    <color name="radiobuttonTrue">#597AC5</color>
+    <color name="radiobuttonFalse">#FFFFFF</color>
+    <color name="leaveBlue">#0806b1</color>
+    <color name="leaveRed">#c52020</color>
+    <color name="leaveGreen">#82ae65</color>
 </resources>

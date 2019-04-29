@@ -21,6 +21,10 @@
         <activity android:name=".SignUp"></activity>
         <activity android:name=".RollcallSelect" />
         <activity android:name=".PhotoRollcall" />
+        <activity android:name=".QuestionPick"></activity>
+        <activity android:name=".QuestionAnalysis" />
+        <activity android:name=".QuestionWait" />
+        <activity android:name=".QuestionSt" />
         <activity android:name=".GroupRandomPick" />
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
