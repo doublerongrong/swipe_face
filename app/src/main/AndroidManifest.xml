@@ -16,7 +16,8 @@
         android:roundIcon="@drawable/cryingfrog"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserSignUpSetting"></activity>
+        <activity android:name=".RandomRollcall"></activity>
+        <activity android:name=".UserSignUpSetting" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />

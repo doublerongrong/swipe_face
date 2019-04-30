@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_weight="6"
             android:gravity="center"
-            android:text="電子唱名"
+            android:text="隨機唱名"
             android:textColor="#000000"
             android:textSize="23sp" />
 
@@ -54,4 +54,5 @@
                 />
         </LinearLayout>
     </LinearLayout>
+
 </android.support.v7.widget.Toolbar>

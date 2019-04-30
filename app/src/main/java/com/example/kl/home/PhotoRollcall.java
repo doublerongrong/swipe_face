@@ -129,7 +129,7 @@ public class PhotoRollcall extends AppCompatActivity {
                     intent.putExtra("class_id", classId);
                     intent.putExtra("class_doc",classDoc);
                     intent.putExtra("classDoc_id",docId);
-                    intent.putExtra("request","1");
+                    intent.putExtra("request","0");
                     startActivity(intent);
                     finish();
                 });

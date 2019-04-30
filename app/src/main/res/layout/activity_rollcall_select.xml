@@ -1,52 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".TrainAndTest"
+    android:orientation="vertical"
     android:background="#ffffff">
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:text="請選擇點名模式"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:textColor="#000000"
-        android:gravity="center"
-        app:fontFamily="@font/asap_medium"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <include
+            layout="@layout/navigation_actionbox_rollcallselect"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
 
-    <Button
-        android:id="@+id/photo_rollcall"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/bg_round_button_yellow"
-        android:text="拍照辨識點名"
-        android:textSize="18sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="325dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp">
 
-    <Button
-        android:id="@+id/callname_rollcall"
-        android:layout_below="@id/photo_rollcall"
-        android:layout_width="150dp"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/bg_round_button_yellow"
-        android:text="電子唱名"
-        android:textSize="20sp" />
+        <ImageButton
+            android:id="@+id/photo_rollcall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/photo_rollcall"
+            android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/random_rollcall"
-        android:layout_below="@id/callname_rollcall"
-        android:layout_width="150dp"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/bg_round_button_yellow"
-        android:text="隨機唱名"
-        android:textSize="20sp" />
+    </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="325dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center">
+
+        <ImageButton
+            android:id="@+id/callname_rollcall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/callname_rollcall"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="325dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center">
+
+        <ImageButton
+            android:id="@+id/random_rollcall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/random_rollcall"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="325dp"
+        android:layout_height="140dp"
+        android:layout_gravity="center">
+
+        <ImageButton
+            android:id="@+id/reRollcall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/re_rollcall"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

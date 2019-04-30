@@ -25,8 +25,6 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@drawable/ic_chevron_left_black_24dp" />
-
-
         </LinearLayout>
 
         <TextView
@@ -34,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_weight="6"
             android:gravity="center"
-            android:text="電子唱名"
+            android:text="點名"
             android:textColor="#000000"
             android:textSize="23sp" />
 
@@ -43,15 +41,6 @@
             android:layout_height="match_parent"
             android:layout_weight="10">
 
-            <Button
-                android:id="@+id/finishButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#ffffff"
-                android:text="結束點名"
-                android:textSize="15sp"
-                android:textColor="#0806b1"
-                />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.Toolbar>

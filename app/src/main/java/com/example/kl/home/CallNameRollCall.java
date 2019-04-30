@@ -158,7 +158,9 @@ public class CallNameRollCall extends AppCompatActivity {
                                         attend.put("rollcall_offical", officalList);
                                         attend.put("rollcall_sick", sickList);
                                         attend.put("rollcall_time",time );
-                                        db.collection("Rollcall").add(attend);
+                                        db.collection("Rollcall").add(attend).addOnCompleteListener(task2 -> {
+                                            mMainList.smoothScrollToPosition(currentPosition + 1);
+                                        });
                                     } else {
                                         Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
                                         query.get().addOnCompleteListener(task1 -> {
@@ -170,7 +172,9 @@ public class CallNameRollCall extends AppCompatActivity {
                                             Map<String, Object> attend = new HashMap<>();
                                             attend.put("rollcall_attend", attendList);
                                             attend.put("rollcall_absence", absenceList);
-                                            db.collection("Rollcall").document(docId).update(attend);
+                                            db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task2 -> {
+                                                mMainList.smoothScrollToPosition(currentPosition + 1);
+                                            });
                                         });
 
                                     }
@@ -221,7 +225,9 @@ public class CallNameRollCall extends AppCompatActivity {
                                         absence.put("rollcall_offical", officalList);
                                         absence.put("rollcall_sick", sickList);
                                         absence.put("rollcall_time", time);
-                                        db.collection("Rollcall").add(absence);
+                                        db.collection("Rollcall").add(absence).addOnCompleteListener(task2 -> {
+                                            mMainList.smoothScrollToPosition(currentPosition + 1);
+                                        });
                                     } else {
                                         Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
                                         query.get().addOnCompleteListener(task1 -> {
@@ -233,7 +239,9 @@ public class CallNameRollCall extends AppCompatActivity {
                                             Map<String, Object> absence = new HashMap<>();
                                             absence.put("rollcall_attend", attendList);
                                             absence.put("rollcall_absence", absenceList);
-                                            db.collection("Rollcall").document(docId).update(absence);
+                                            db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
+                                                mMainList.smoothScrollToPosition(currentPosition + 1);
+                                            });
                                         });
                                     }
                                 }
