@@ -44,7 +44,7 @@ import java.util.Date;
 public class Fragment_PickAnswerDetail extends Fragment {
 
     private FirebaseFirestore db;
-    private String TAG = "PADetail";
+    private String TAG = "Fragment_PickAnswerDetail";
 
     private int random;
     private String classId;
@@ -84,21 +84,34 @@ public class Fragment_PickAnswerDetail extends Fragment {
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        //init db
+        db = FirebaseFirestore.getInstance();
+
+        //init xml
         text_student_department = view.findViewById(R.id.text_student_department);
         text_student_id = view.findViewById(R.id.text_student_id);
         text_student_name = view.findViewById(R.id.text_student_name);
         img_student_photo = view.findViewById(R.id.img_student_photo);
         card_nextone = view.findViewById(R.id.card_nextone);
         card_correct_answer = view.findViewById(R.id.card_correct_answer);
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Leave_photo");
+//        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Leave_photo");
 
-        DocumentReference docRef = db.collection("Class").document(classId);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                class_rdanswerbonus = documentSnapshot.toObject(Class.class).getClass_rdanswerbonus();
+        //query bonus
+        DocumentReference drQueryrdanswerbonus = db.collection("Class").document(classId);
+        drQueryrdanswerbonus.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot dsQueryrdanswerbonus = task.getResult();
+                if (dsQueryrdanswerbonus.exists()) {
+                    class_rdanswerbonus = dsQueryrdanswerbonus.toObject(Class.class).getClass_rdanswerbonus();
+                } else {
+                    Log.d(TAG, "No such document");
+                }
+            } else {
+                Log.d(TAG, "get failed with ", task.getException());
             }
         });
+
 
         switch (type) {
             case "random_pick":
@@ -172,7 +185,16 @@ public class Fragment_PickAnswerDetail extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 aClass = documentSnapshot.toObject(Class.class);
                 Log.d(TAG, "limit0: " + aClass.getStudent_id().size());
-                int limit = (int) Math.round(((aClass.getStudent_id().size()) * 3.) / 10);
+                int limit;
+                if(aClass.getStudent_id().size() >3){
+                    limit = (int) Math.round(((aClass.getStudent_id().size()) * 3.) / 10);
+                }
+                else{
+                    limit = aClass.getStudent_id().size();
+                }
+                //避免學生人數太少
+
+
                 Log.d(TAG, "limit1: " + ((aClass.getStudent_id().size()) * 3.)/ 10);
                 Log.d(TAG, "limit2: " + limit);
 
@@ -234,7 +256,14 @@ public class Fragment_PickAnswerDetail extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 aClass = documentSnapshot.toObject(Class.class);
                 Log.d(TAG, "limit0: " + aClass.getStudent_id().size());
-                int limit = (int) Math.round(((aClass.getStudent_id().size()) * 3.) / 10);
+                int limit;
+                if(aClass.getStudent_id().size() >3){
+                    limit = (int) Math.round(((aClass.getStudent_id().size()) * 3.) / 10);
+                }
+                else{
+                    limit = aClass.getStudent_id().size();
+                }
+                //避免學生人數太少
                 Log.d(TAG, "limit1: " + ((aClass.getStudent_id().size()) * 3. )/ 10);
                 Log.d(TAG, "limit2: " + limit);
 
@@ -356,7 +385,7 @@ public class Fragment_PickAnswerDetail extends Fragment {
                                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                             @Override
                                             public void onSuccess(DocumentReference documentReference) {
-                                                Toast.makeText(getContext(), "該學生已獲得一分", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getContext(), "該學生已獲得"+class_rdanswerbonus+"分", Toast.LENGTH_LONG).show();
                                                 Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                                             }
                                         })
