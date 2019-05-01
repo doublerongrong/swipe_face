@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class RollcallSelect extends AppCompatActivity {
 
-    private ImageButton photo_rollcall, callname_rollcall, random_rollcall,backBtn;
-    private String classId,classDoc;
+    private ImageButton photo_rollcall, callname_rollcall, random_rollcall,re_rollcall, backBtn;
+    private String classId,classDoc,rollcallDocId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,9 @@ public class RollcallSelect extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         classId = bundle.getString("class_id");
         classDoc = bundle.getString("class_doc");
+        if (bundle.getString("classDoc_id") != null){
+            rollcallDocId = bundle.getString("classDoc_id");
+        }
         Log.i("classid:",classId);
         Log.i("classdoc:",classDoc);
 
@@ -46,6 +50,20 @@ public class RollcallSelect extends AppCompatActivity {
             i.putExtra("class_id", classId);
             i.putExtra("class_doc",classDoc);
             startActivity(i);
+        });
+
+        re_rollcall = (ImageButton)findViewById(R.id.reRollcall);
+        re_rollcall.setOnClickListener(view -> {
+            if (rollcallDocId != null){
+                Intent i = new Intent();
+                i.setClass(getApplicationContext(),ReRollcall.class);
+                i.putExtra("class_id", classId);
+                i.putExtra("class_doc",classDoc);
+                i.putExtra("classDoc_id",rollcallDocId);
+                startActivity(i);
+            }else{
+                Toast.makeText(this,"今天還沒點名喔",Toast.LENGTH_LONG).show();
+            }
         });
 
         backBtn = (ImageButton)findViewById(R.id.backIBtn);

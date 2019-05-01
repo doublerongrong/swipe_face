@@ -174,19 +174,29 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                     switch (finalI) {
                         case 0:
                             //intent activity
-
-                            DocumentReference docRef = db.collection("Class").document(classId);
-                            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                                        Class classG = documentSnapshot.toObject(Class.class);
-                                        class_id = classG.getClass_id();
+                            if(rollcallDocId != null) {
                                 Intent i = new Intent();
-                                Bundle bundlecall = new Bundle();
-                                bundlecall.putString("class_id", class_id);
-                                bundlecall.putString("class_doc",classId);
-                                i.putExtras(bundlecall);
-                                i.setClass(getActivity(),RollcallSelect.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("class_id", class_id);
+                                bundle.putString("class_doc", classId);
+                                bundle.putString("classDoc_id", rollcallDocId);
+                                i.putExtras(bundle);
+                                i.setClass(getActivity(), RollcallSelect.class);
                                 startActivity(i);
-                                    });
+                            }else {
+                                DocumentReference docRef = db.collection("Class").document(classId);
+                                docRef.get().addOnSuccessListener(documentSnapshot -> {
+                                    Class classG = documentSnapshot.toObject(Class.class);
+                                    class_id = classG.getClass_id();
+                                    Intent i = new Intent();
+                                    Bundle bundlecall = new Bundle();
+                                    bundlecall.putString("class_id", class_id);
+                                    bundlecall.putString("class_doc", classId);
+                                    i.putExtras(bundlecall);
+                                    i.setClass(getActivity(), RollcallSelect.class);
+                                    startActivity(i);
+                                });
+                            }
                             break;
                         case 1:
                             //intent activity 今日出缺席

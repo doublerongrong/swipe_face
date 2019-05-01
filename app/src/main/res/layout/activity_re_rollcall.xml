@@ -51,7 +51,7 @@
             android:gravity="center"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="結束點名"
+            android:text="結束補點"
             android:fontFamily="sans-serif-medium"
             android:textColor="#ffffff"
             android:textSize="18dp"
