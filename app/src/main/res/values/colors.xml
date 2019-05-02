@@ -10,4 +10,9 @@
     <color name="leaveBlue">#0806b1</color>
     <color name="leaveRed">#c52020</color>
     <color name="leaveGreen">#82ae65</color>
+    <color name="attendance">#82ae65</color>
+    <color name="absense">#c52020</color>
+    <color name="late">#d27265</color>
+    <color name="leave">#4f3cac</color>
+
 </resources>

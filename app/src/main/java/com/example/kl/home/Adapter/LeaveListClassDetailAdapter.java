@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,13 @@ import com.example.kl.home.R;
 
 import java.util.List;
 
-public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.ViewHolder> {
+public class LeaveListClassDetailAdapter extends RecyclerView.Adapter<LeaveListClassDetailAdapter.ViewHolder> {
 
     public Context context;
 
     public List<Leave> leaveList;
 
-    public LeaveListAdapter(Context context, List<Leave> leaveList) {
+    public LeaveListClassDetailAdapter(Context context, List<Leave> leaveList) {
         this.leaveList = leaveList;
         this.context = context;
 
@@ -33,7 +34,7 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.leavelist_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.leavelist_classdetail_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -42,7 +43,7 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
 
         String checkColor = leaveList.get(position).getLeave_check();
 
-        holder.class_name.setText(leaveList.get(position).getClass_name());
+        holder.student_id.setText(leaveList.get(position).getStudent_id());
         holder.student_name.setText(leaveList.get(position).getStudent_name());
         holder.leave_reason.setText(leaveList.get(position).getLeave_reason());
         holder.leave_check.setText(leaveList.get(position).getLeave_check());
@@ -90,7 +91,7 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
         public TextView leave_reason;
         public Button leave_check;
         public TextView leave_date;
-        public TextView class_name;
+        public TextView student_id;
 
         public ViewHolder(@NonNull View itemView) {
 
@@ -101,7 +102,7 @@ public class LeaveListAdapter extends RecyclerView.Adapter<LeaveListAdapter.View
             leave_reason = (TextView) mView.findViewById(R.id.leaveReason);
             leave_check = (Button) mView.findViewById(R.id.leaveCheck);
             leave_date = (TextView) mView.findViewById(R.id.leaveDate);
-            class_name = (TextView) mView.findViewById(R.id.className);
+            student_id = (TextView) mView.findViewById(R.id.studentId);
 
         }
     }

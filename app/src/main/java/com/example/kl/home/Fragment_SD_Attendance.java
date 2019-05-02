@@ -125,12 +125,16 @@ public class Fragment_SD_Attendance extends Fragment {
             stateList.add("遲到");
         } else if (rollcall.getRollcall_casual().contains(student_id)) {
             attendance.setAttendance_status("請假");
+            stateList.add("請假");
         } else if (rollcall.getRollcall_funeral().contains(student_id)) {
             attendance.setAttendance_status("請假");
+            stateList.add("請假");
         } else if (rollcall.getRollcall_offical().contains(student_id)) {
             attendance.setAttendance_status("請假");
+            stateList.add("請假");
         } else if (rollcall.getRollcall_sick().contains(student_id)) {
             attendance.setAttendance_status("請假");
+            stateList.add("請假");
         }
 
     }
@@ -220,7 +224,11 @@ public class Fragment_SD_Attendance extends Fragment {
                 Log.d(TAG, "onTransPageClickTEST  " + rollcallList);
                 Log.d(TAG, "onTransPageClickTEST  " + stateList);
 
-                singleClick(view, rollcallList.get(classIndex), stateList.get(classIndex));
+                if (stateList.get(classIndex).equals("請假")) {
+                    Toast.makeText(getActivity(), "請至請假紀錄修改及查看", Toast.LENGTH_SHORT).show();
+                } else {
+                    singleClick(view, rollcallList.get(classIndex), stateList.get(classIndex));
+                }
 
             }
 
