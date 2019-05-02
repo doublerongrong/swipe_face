@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    tools:context=".QuestionSt">
+    <LinearLayout
+        style="@style/Header"
+        android:orientation="horizontal"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/backIBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="建立題目"
+            android:textColor="#000000"
+            style="@style/Header.TextViewSize" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"></LinearLayout>
+
+
+    </LinearLayout>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/question_a"
+            android:onClick="onSelect"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:button="@null"
+            android:text="A"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/radiobutton_selector"
+            android:gravity="center_vertical|center"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"/>
+        <RadioButton
+            android:id="@+id/question_b"
+            android:onClick="onSelect"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:button="@null"
+            android:text="B"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/radiobutton_selector"
+            android:gravity="center_vertical|center"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"/>
+
+        <RadioButton
+            android:id="@+id/question_c"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:button="@null"
+            android:onClick="onSelect"
+            android:text="C"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/radiobutton_selector"
+            android:gravity="center_vertical|center"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"/>
+
+        <RadioButton
+            android:id="@+id/question_d"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:button="@null"
+            android:onClick="onSelect"
+            android:text="D"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/radiobutton_selector"
+            android:gravity="center_vertical|center"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/divider"/>
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="設定回答時間"
+            android:layout_gravity="center_horizontal|center"
+            android:textSize="14sp"
+            android:textColor="#000000"/>
+        <EditText
+            android:id="@+id/question_min"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:textSize="14sp"
+            android:textColor="#000000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="分"
+            android:textSize="14sp"
+            android:textColor="#000000"
+            android:layout_gravity="center_horizontal|center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/nextStepButton"
+            android:onClick="onSelect"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_gravity="bottom"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="#0806b1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center"
+                android:text="提問"
+                android:textColor="#FFFF"
+                android:textSize="18sp" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

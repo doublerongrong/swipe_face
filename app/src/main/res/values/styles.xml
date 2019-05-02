@@ -15,6 +15,15 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Header">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+    </style>
+
+    <style name="Header.TextViewSize">
+        <item name="android:textSize">18dp</item>
+    </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

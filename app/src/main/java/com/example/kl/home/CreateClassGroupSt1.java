@@ -2,13 +2,18 @@ package com.example.kl.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kl.home.Model.Class;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -20,11 +25,16 @@ public class CreateClassGroupSt1 extends AppCompatActivity {
     String classId;//classDocId
     String classYear;//class學年
     String className;//課程名
+    Integer groupNumHigh;
+    Integer groupNumLow;
     Date classCreateTime;//課程建立時間
     Integer classNum;//課程學生數
     TextView tvClassName;
-    TextView tvClassGroupInfo;
-    Button btNextStepButton;
+    TextView tvGroupNumHigh;
+    TextView tvGroupNumLow;
+    TextView tvClassNum;
+    TextView tvCreateClassTime;
+    CardView cvNextStepButton;
     FirebaseFirestore db;
     boolean group_state_go;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -37,63 +47,47 @@ public class CreateClassGroupSt1 extends AppCompatActivity {
         //init DB
         db = FirebaseFirestore.getInstance();
 
+        //init xml
+        cvNextStepButton = findViewById(R.id.nextStepButton);
+
         //init Intent Bundle
         Intent Intent = getIntent(); /* 取得傳入的 Intent 物件 */
         Bundle bundle = Intent.getExtras();
         assert bundle != null;
         classId = bundle.getString("classId");
-        Log.d(TAG,"classId : "+classId);
+        Log.d(TAG, "classId : " + classId);
 
-        //init xml
-        btNextStepButton = findViewById(R.id.nextStepButton);
-
-        if(!classId.isEmpty()) {
+        if (!classId.isEmpty()) {
             DocumentReference docRef = db.collection("Class").document(classId);
             docRef.get().addOnSuccessListener(documentSnapshot -> {
                 Class aClass = documentSnapshot.toObject(Class.class);
                 className = aClass.getClass_name();
                 classYear = aClass.getClass_year();
                 classNum = aClass.getStudent_id().size();
-                classCreateTime =  aClass.getCreate_time();
-                group_state_go = aClass.isGroup_state_go();
-
+                classCreateTime = aClass.getCreate_time();
+                groupNumHigh = aClass.getGroup_numHigh();
+                groupNumLow = aClass.getGroup_numLow();
                 //init xml
-                tvClassGroupInfo = findViewById(R.id.classGroupInfo);
                 tvClassName = findViewById(R.id.textViewClassName);
-                tvClassName.setText(classYear+"\t"+className);
+                tvClassName.setText(classYear + "\t" + className);
+                tvGroupNumHigh = findViewById(R.id.groupNumHigh);
+                tvGroupNumHigh.setText(groupNumHigh.toString());
+                tvGroupNumLow = findViewById(R.id.groupNumLow);
+                tvGroupNumLow.setText(groupNumLow.toString());
+                tvClassNum = findViewById(R.id.classNum);
+                tvClassNum.setText("班級成員\t:\t\t" +classNum.toString() + "人");
+                tvCreateClassTime = findViewById(R.id.createclasstime);
+                tvCreateClassTime.setText(sdf.format(classCreateTime));
 
-                if(group_state_go){
-                    tvClassGroupInfo.setText("已開始分組\n"+"結束時間 : "+sdf.format(classCreateTime));
 
-                    //Button Click
-                    btNextStepButton.setOnClickListener(v -> {
-                        Toast.makeText(CreateClassGroupSt1.this, "已開始分組",
-                                Toast.LENGTH_SHORT).show();
-                    });
+                cvNextStepButton.setOnClickListener(v -> {
+                    Toast.makeText(CreateClassGroupSt1.this, "已開始分組",
+                            Toast.LENGTH_SHORT).show();
 
-                }
-                else{
-                    tvClassGroupInfo.setText("尚未分組");
+                });
 
-                    //Button Click
-                    btNextStepButton.setOnClickListener(v -> {
-                        Intent intent = new Intent();
-                        intent.setClass(this, CreateClassGroupSt2.class);
-                        Bundle bundleGroup = new Bundle();
-                        bundleGroup.putString("classId", classId);
-                        bundleGroup.putString("classYear", classYear);
-                        bundleGroup.putString("className", className);
-                        bundleGroup.putInt("classNum", classNum);
-                        intent.putExtras(bundleGroup);
-                        startActivity(intent);
-                    });
-                }
 
             });
         }
-
-
-
-
     }
 }

@@ -15,6 +15,7 @@ import com.example.kl.home.Model.Student;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -124,10 +125,24 @@ public class GroupRandomPick extends AppCompatActivity {
                                 card_correct_answer.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        groupBFBonus = (Integer.valueOf(group.getGroup_bonus()));
-                                        groupAFBonus = groupBFBonus +1;
-                                        setPoint(groupId,groupAFBonus);
-                                        setRandomPick();
+                                        Task<DocumentSnapshot> dofClass = db.collection("Class")
+                                                .document(classId)
+                                                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if(task.isSuccessful()){
+                                                            DocumentSnapshot documentSnapshotclass = task.getResult();
+                                                            if(documentSnapshotclass.exists()){
+                                                                int performanceRDBonus = documentSnapshotclass.toObject(Class.class).getClass_rdanswerbonus();
+                                                                groupBFBonus = (Integer.valueOf(group.getGroup_bonus()));
+                                                                groupAFBonus = groupBFBonus +performanceRDBonus;
+                                                                setPoint(groupId,groupAFBonus);
+                                                                setRandomPick();
+                                                            }
+                                                        }
+                                                    }
+                                                });
+
 
                                     }
                                 });

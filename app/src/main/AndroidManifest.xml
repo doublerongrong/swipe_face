@@ -11,13 +11,23 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/cryingfrog"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/cryingfrog"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RollcallSelect"></activity>
+        <activity android:name=".ReRollcall"></activity>
+        <activity android:name=".RandomRollcall" />
+        <activity android:name=".UserSignUpSetting" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SignIn" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".RollcallSelect" />
         <activity android:name=".PhotoRollcall" />
+        <activity android:name=".QuestionPick" />
+        <activity android:name=".QuestionAnalysis" />
+        <activity android:name=".QuestionWait" />
+        <activity android:name=".QuestionSt" />
         <activity android:name=".GroupRandomPick" />
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
@@ -34,8 +44,7 @@
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
         <activity android:name=".Activity_StudentDetail" />
-        <activity android:name=".Fragment_LeaveListClassN" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

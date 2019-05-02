@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,7 +40,7 @@ public class CreateClassSt2 extends AppCompatActivity {
 
     private FirebaseFirestore mFirestore;
     private FirebaseAuth mAuth;
-    private String TeacherEmail = "053792@mail.fju.edu.tw";
+    private String teacherEmail ;
     private ArrayList<String> StudentList;
     private List<String> classList;
     private String class_id;
@@ -85,6 +86,9 @@ public class CreateClassSt2 extends AppCompatActivity {
         mFirestore.setFirestoreSettings(settings);*/
         StudentList = new ArrayList<>();
 
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        teacherEmail = currentFirebaseUser.getEmail();
+
 
         editTexttotalPoints = (EditText) findViewById(R.id.editTexttotalPoints);
         editTextlateMinus = (EditText) findViewById(R.id.editTextlateMinus);
@@ -128,7 +132,7 @@ public class CreateClassSt2 extends AppCompatActivity {
         uploadMap.put("class_id", class_id);
         uploadMap.put("class_name", classname);
         uploadMap.put("class_year", classyear);
-        uploadMap.put("teacher_email", TeacherEmail);
+        uploadMap.put("teacher_email", teacherEmail);
         uploadMap.put("class_totalpoints", totalpoints);
         uploadMap.put("class_lateminus", lateminus);
         uploadMap.put("class_absenteeminus", absenteeminus);
@@ -144,12 +148,13 @@ public class CreateClassSt2 extends AppCompatActivity {
         uploadMap.put("group_numHigh",group_numHigh);
         uploadMap.put("group_numLow",group_numLow);
         uploadMap.put("create_time",date);
+        uploadMap.put("question_state",false);
         Log.d(TAG, "TEST CREAT");
         mFirestore.collection("Class").add(uploadMap).addOnSuccessListener(a -> {
 
 
             Log.d(TAG, "TEST CREAT Success");
-            setCalss(class_id, TeacherEmail);//要改抓user
+            setCalss(class_id, teacherEmail);//要改抓user
 
             Intent intent = new Intent();
             intent.setClass(CreateClassSt2.this, MainActivity.class);

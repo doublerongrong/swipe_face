@@ -4,9 +4,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,9 +36,12 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
     TextView tvClassNum;
     EditText etGroupNumLow;
     EditText etGroupNumHigh;
-    Button btNextStepButton;
+    ImageButton ibBackIBtn;
+    CardView cvNextStepButton;
     FirebaseFirestore db;
     AttributeCheck attributeCheck = new AttributeCheck();
+    Date nowDate;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,7 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
 
         //init function
         CustomDateTimePicker custom;
+        nowDate = new Date();
 
         //init Intent Bundle
         Intent Intent = getIntent(); /* 取得傳入的 Intent 物件 */
@@ -71,9 +79,11 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
 
         //init xml
         stCreateclasstime = findViewById(R.id.createclasstime);
+        stCreateclasstime.setText(sdf.format(nowDate));
         etGroupNumLow = findViewById(R.id.groupNumLow);
         etGroupNumHigh = findViewById(R.id.groupNumHigh);
-        btNextStepButton = findViewById(R.id.nextStepButton);
+        cvNextStepButton = findViewById(R.id.nextStepButton);
+        ibBackIBtn = findViewById(R.id.backIBtn);
 
 
         custom = new CustomDateTimePicker(this,
@@ -106,7 +116,7 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
 
 
         //Button Click
-        btNextStepButton.setOnClickListener(v -> {
+        cvNextStepButton.setOnClickListener(v -> {
             if (attributeCheck.stringsNotNull(stCreateclasstime.getText().toString()) &&
                     attributeCheck.stringsNotNull(etGroupNumLow.getText().toString()) &&
                     attributeCheck.stringsNotNull(etGroupNumHigh.getText().toString())) {
@@ -115,6 +125,8 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
                 Toast.makeText(this, "請確認是否填寫", Toast.LENGTH_LONG).show();
             }
         });
+
+        ibBackIBtn.setOnClickListener(v -> finish());
 
     }
 

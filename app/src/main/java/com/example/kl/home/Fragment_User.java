@@ -47,11 +47,8 @@ public class Fragment_User extends Fragment {
         Log.d(TAG,"teacher_id :  " + teacher_email);
 
 
-        InforSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallback.onFragmentSelected(teacher_email, "toUserInfor");//fragment傳值
-            }
+        InforSetting.setOnClickListener(v -> {
+            mCallback.onFragmentSelected(teacher_email, "toUserInfor");//fragment傳值
         });
 
 

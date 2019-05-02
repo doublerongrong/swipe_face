@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">home</string>
+    <string name="app_name">Flass</string>
     <string name="title_home">課程清單</string>
     <string name="title_leave">學生假單</string>
     <string name="title_notification">訊息通知</string>
@@ -16,8 +16,8 @@
     <string name="teacher">老師</string>
     <string name="student">學生</string>
     <string name="search_student">搜尋學生</string>
-    <string name="signin_email">請輸入Email</string>
-    <string name="signin_password">請輸入密碼</string>
+    <string name="signin_email">電子信箱</string>
+    <string name="signin_password">密碼</string>
     <string name="signin">Sign In</string>
     <string name="signup_">Sign Up</string>
     <string name="or">───────OR───────</string>
@@ -26,6 +26,8 @@
     <string name="plz_input_pw">請輸入密碼</string>
     <string name="login_success">登入成功</string>
     <string name="updateState">修改出席狀況</string>
+    <string name="login">Log In</string>
+    <string name="forgetpassword"><u>Forget password?</u></string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

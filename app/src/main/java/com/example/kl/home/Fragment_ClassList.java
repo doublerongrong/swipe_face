@@ -19,6 +19,8 @@ import android.widget.Button;
 import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Model.Class;
 import com.example.kl.home.Model.Teacher;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -37,7 +39,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     private ClassListAdapter classListAdapter;
     private List<Class> classList;
     private String TAG = "FLAG";
-    private String teacher_email = "053792@mail.fju.edu.tw";
+    private String teacher_email;
 
     private Teacher teacher;
     private ArrayList<String> class_id = new ArrayList<String>();
@@ -46,6 +48,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     private FragmentManager fragmentManager;
     private String classId;
     private FloatingActionButton fabCreateClass;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//抓現在登入user
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
     @Override
@@ -53,6 +56,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
+        teacher_email = user.getEmail();
         return inflater.inflate(R.layout.fragment_fragment__class_list, container, false);
     }
 
@@ -78,7 +82,8 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
 
 
-        db.collection("Class").whereEqualTo("teacher_email", teacher_email).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("Class").whereEqualTo("teacher_email", teacher_email)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 if (e != null) {

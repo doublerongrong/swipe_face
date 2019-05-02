@@ -52,7 +52,7 @@ public class PhotoRollcall extends AppCompatActivity {
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result,classMember;
     private List<String> attendList, absenceList,casualList,funeralList,lateList,officalList,sickList;
-    String url = "http://192.168.43.172:8080/ProjectApi/api/FaceApi/RetrievePhoto";
+    String url = "http://172.20.10.8:8080/ProjectApi/api/FaceApi/RetrievePhoto";
     OkHttpClient client = new OkHttpClient();
     private static Context mContext;
     ResponseBody responseBody;
@@ -129,7 +129,7 @@ public class PhotoRollcall extends AppCompatActivity {
                     intent.putExtra("class_id", classId);
                     intent.putExtra("class_doc",classDoc);
                     intent.putExtra("classDoc_id",docId);
-                    intent.putExtra("request","1");
+                    intent.putExtra("request","0");
                     startActivity(intent);
                     finish();
                 });

@@ -48,7 +48,6 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
 
         holder.rollcall_name.setText(StudentList.get(position).getStudent_name());
         holder.rollcall_id.setText(StudentList.get(position).getStudent_id());
-        holder.rollcall_school.setText(StudentList.get(position).getStudent_school());
         holder.rollcall_department.setText(StudentList.get(position).getStudent_department());
         StorageReference gsReference = FirebaseStorage.getInstance().getReferenceFromUrl(StudentList.get(position).getImage_url());
         Glide.with(holder.rollcall_image.getContext())
@@ -68,7 +67,6 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
         public ImageView rollcall_image;
         public TextView rollcall_name;
         public TextView rollcall_id;
-        public TextView rollcall_school;
         public TextView rollcall_department;
 
         public ViewHolder(View itemView) {
@@ -78,7 +76,6 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
             rollcall_image = (ImageView) mView.findViewById(R.id.rollcall_image);
             rollcall_name = (TextView) mView.findViewById(R.id.rollcall_name);
             rollcall_id = (TextView) mView.findViewById(R.id.rollcall_id);
-            rollcall_school = (TextView) mView.findViewById(R.id.rollcall_school);
             rollcall_department = (TextView) mView.findViewById(R.id.rollcall_department);
 
 

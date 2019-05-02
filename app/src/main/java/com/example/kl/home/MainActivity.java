@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import permissions.dispatcher.NeedsPermission;
@@ -29,15 +32,23 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
 
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
-    private String teacher_email = "053792@mail.fju.edu.tw";
+    private String teacher_email;
     private String reClassId,reRollcallId,reClassDocId;
     private int fragmentRequest;
+    private FirebaseFirestore db;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//抓現在登入user
 
     // 設置默認進來是tab 顯示的頁面
     private void setDefaultFragment(){
         fragmentManager = getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
+        Fragment_ClassList fragment_classList = new Fragment_ClassList();
+        Bundle args = new Bundle();
+        args.putString("teacher_email", teacher_email);
+        Log.d(TAG,"TEST" + teacher_email);
+        fragment_classList.setArguments(args);
         transaction.replace(R.id.content,new Fragment_ClassList());
+        transaction.addToBackStack(new Fragment_ClassList().getClass().getName());
         transaction.commit();
     }
 
@@ -51,6 +62,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    Fragment_ClassList fragment_classList = new Fragment_ClassList();
+                    Bundle args = new Bundle();
+                    args.putString("teacher_email", teacher_email);
+                    Log.d(TAG,"TEST" + teacher_email);
+                    fragment_classList.setArguments(args);
                     transaction.replace(R.id.content,new Fragment_ClassList());
                     transaction.addToBackStack(new Fragment_ClassList().getClass().getName());
                     transaction.commit();
@@ -67,10 +83,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
                     return true;
                 case R.id.navigation_user:
                     Fragment_User fragment_user = new Fragment_User();
-                    Bundle args = new Bundle();
-                    args.putString("teacher_email", teacher_email);
+                    Bundle args2 = new Bundle();
+                    args2.putString("teacher_email", teacher_email);
                     Log.d(TAG,"TEST" + teacher_email);
-                    fragment_user.setArguments(args);
+                    fragment_user.setArguments(args2);
                     transaction.replace(R.id.content,fragment_user);
                     transaction.addToBackStack(fragment_user.getClass().getName());
                     transaction.commit();
@@ -84,9 +100,23 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.t_activity_homepage);
+        teacher_email = user.getEmail();
+
 
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null) {
+            if(bundle.getString("class_id") != null){
+                reClassId = bundle.getString("class_id");
+                reRollcallId = bundle.getString("rollcall_id");
+                reClassDocId = bundle.getString("classDoc_id");
+                fragmentRequest = bundle.getInt("request");
+
+                if (fragmentRequest == 2) {
+                    gotoClassDetailFragment();
+                }
+            }else{
+                setDefaultFragment();
+            }
             fragmentRequest = bundle.getInt("request");
 
             if (fragmentRequest == 2) {
@@ -110,6 +140,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         }else{
             setDefaultFragment();
         }
+
+
+
 
 
 
