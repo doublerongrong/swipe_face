@@ -71,10 +71,10 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="30dp"
                 android:text="TextView"
-                tools:text="缺席"
+                tools:text="遲到"
                 android:textSize="16dp"
-                android:textColor="#c52020"
-                android:background="@drawable/absence_button_shape"
+                android:textColor="#d27265"
+                android:background="@drawable/late_button_shape"
                 style="?android:attr/borderlessButtonStyle"/>
 
 
