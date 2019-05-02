@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.kl.home.Model.Leave;
@@ -37,11 +38,6 @@ import java.util.List;
 import java.util.Map;
 
 public class LeaveRecord extends AppCompatActivity {
-
-//    public Context context;
-//    public LeaveRecord(Context context){
-//        this.context = context;
-//    }
 
     private static final String TAG = "Leavelog";
 
@@ -71,12 +67,13 @@ public class LeaveRecord extends AppCompatActivity {
     private int currentScore;
     private List<String> casualList, funeralList, officalList, sickList, absenceList;
     private String leaveReasonStr; //此區為調整分數及出席用
+    private String leaveCheckStr;//審核情況
+    String ChangePage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaverecord);
-
 
         class_name = (TextView) findViewById(R.id.textClassName);
         leave_reason = (TextView) findViewById(R.id.textLeaveReason);
@@ -89,7 +86,7 @@ public class LeaveRecord extends AppCompatActivity {
         agreeBtn = (Button) findViewById(R.id.BtnLeaveCheck1);
         disagreeBtn = (Button) findViewById(R.id.BtnLeaveCheck0);
         backIBtn = (ImageButton) findViewById(R.id.backIBtn);
-        imageViewStudent = (ImageView)findViewById(R.id.imageViewStudent);
+        imageViewStudent = (ImageView) findViewById(R.id.imageViewStudent);
 
         casualList = new ArrayList<>();
         funeralList = new ArrayList<>();
@@ -100,11 +97,12 @@ public class LeaveRecord extends AppCompatActivity {
         mFirestore = FirebaseFirestore.getInstance();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Leave_photo");
         StorageReference storageReferenceS = FirebaseStorage.getInstance().getReference().child("student_photo");
-        Leave leave = new Leave();
 
         Bundle bundle = getIntent().getExtras();
         String leaveId = bundle.getString("id");
-        String ChangePage = bundle.getString("ChangePage");
+        ChangePage = bundle.getString("ChangePage");
+        Log.d(TAG, "Check leaveId : " + leaveId);
+        Log.d(TAG, "Check ChangePage : " + ChangePage);
 
 
         DocumentReference docRef = mFirestore.collection("Leave").document(leaveId);
@@ -123,13 +121,13 @@ public class LeaveRecord extends AppCompatActivity {
                         student_id = leave.getStudent_id();
                         leave_dateStr = leave.getLeave_date();
                         teacher_email = leave.getTeacher_email();
-
+                        leaveCheckStr = leave.getLeave_check();
 
                         String leaveUpdloadDate = myFmt2.format(leave.getLeave_uploaddate());
 
                         String photoUrlS = leave.getStudent_id();
                         StorageReference pathS = storageReferenceS.child(photoUrlS);
-                        Log.d("TEST",pathS.toString());
+                        Log.d("TEST", pathS.toString());
                         Glide.with(LeaveRecord.this)
                                 .load(pathS)
                                 .into(imageViewStudent);
@@ -139,15 +137,7 @@ public class LeaveRecord extends AppCompatActivity {
                         class_name.setText(leave.getClass_name());
                         leave_reason.setText(leave.getLeave_reason());
                         leave_check.setText(leave.getLeave_check());
-//                        if(checkColor.equals("准假")){
-//                            leave_check.setTextColor(context.getResources().getColor(R.color.leaveGreen));
-//                        }
-//                        else if(checkColor.equals("不准假")){
-//                            leave_check.setTextColor(context.getResources().getColor(R.color.leaveRed));
-//                        }
-//                        else{
-//                            leave_check.setTextColor(context.getResources().getColor(R.color.leaveBlue));
-//                        }
+
                         student_name.setText(leave.getStudent_name());
                         leave_date.setText(leave.getLeave_date());
                         leave_uploaddate.setText(leaveUpdloadDate);
@@ -186,85 +176,26 @@ public class LeaveRecord extends AppCompatActivity {
             }
         });
 
-
         agreeBtn.setOnClickListener(v -> {
-
-            DocumentReference leaveCheckRef = mFirestore.collection("Leave").document(leaveId);
-            leaveCheckRef
-                    .update("leave_check", "准假")
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "DocumentSnapshot successfully updated!");
-                            Log.d(TAG, "After Click p " + performanceId);
-                            Log.d(TAG, "After Click r " + rollcallId);
-                            Log.d(TAG, "After Click m " + absenseMinus);
-                            changeList();
-
-                            Intent intent = new Intent();
-                            if (ChangePage.equals("Detail")) {
-                                finish();
-                            } else {
-                                if (ChangePage.equals("課堂內")) {
-                                    intent.setClass(LeaveRecord.this, MainActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("teacher_email", teacher_email);
-                                    bundle.putString("class_id", class_id);
-                                    bundle.putInt("request", 3);
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                }//修改假單後 導向課堂內假單
-                                else if(ChangePage.equals("底部欄")){
-                                    Log.d(TAG, "RUN class_id = null");
-                                    intent.setClass(LeaveRecord.this, MainActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("teacher_email", teacher_email);
-                                    bundle.putInt("request", 4);
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                }//修改假單後 導向底部欄假單
-                            }
-                        }
-                    });
+            if (leaveCheckStr.equals("未審核")) {
+                notChectToApprove(leaveId);
+            } else if (leaveCheckStr.equals("准假")) {
+                Toast.makeText(this, "此假單已批改為准假", Toast.LENGTH_SHORT).show();
+            } else if (leaveCheckStr.equals("不准假")) {
+                notChectToApprove(leaveId); //不准假 等同 未審核(成績、紀錄)
+            }
 
         });
         disagreeBtn.setOnClickListener(c -> {
-            DocumentReference leaveCheckRef = mFirestore.collection("Leave").document(leaveId);
-            leaveCheckRef
-                    .update("leave_check", "不准假")
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "DocumentSnapshot successfully updated!");
-                            Intent intent = new Intent();
-                            if (ChangePage.equals("Detail")) {
-                                finish();
-                            } else {
-                                if (class_id != null) {
-                                    Log.d(TAG, "TEST RUN class_id != null ");
-                                    intent.setClass(LeaveRecord.this, MainActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("teacher_email", teacher_email);
-                                    bundle.putString("class_id", class_id);
-                                    bundle.putInt("request", 3);
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                }//修改假單後 導向課堂內假單
-                                else {
-                                    Log.d(TAG, "RUN class_id = null");
-                                    intent.setClass(LeaveRecord.this, MainActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("teacher_email", teacher_email);
-                                    bundle.putInt("request", 4);
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                }//修改假單後 導向底部欄假單
-                            }
-                        }
-                    });
-
+            if (leaveCheckStr.equals("未審核")) {
+                notCheckToNotAllow(leaveId);
+            } else if (leaveCheckStr.equals("准假")) { //checking
+                Log.d(TAG,"LEAVE CAHNGE TEST : " + "准假改不准假");
+                allowToNotAllow(leaveId);
+            } else if (leaveCheckStr.equals("不准假")) {
+                Toast.makeText(this, "此假單已批改為不准假", Toast.LENGTH_SHORT).show();
+            }
         });
-
     }
 
     public void getScore() {
@@ -311,6 +242,36 @@ public class LeaveRecord extends AppCompatActivity {
         });
     }//加回缺席分數
 
+    public void minusScore() {
+        DocumentReference docRef = mFirestore.collection("Performance").document(performanceId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "進入perFormance DB");
+                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "表現id" + performanceId);
+                        Performance performance = document.toObject(Performance.class);
+                        currentScore = performance.getPerformance_totalAttendance();
+                        //currentScore = document.get("performance_totalAttendance");
+                        currentScore -= absenseMinus;
+
+                        Map<String, Object> attend = new HashMap<>();
+                        attend.put("performance_totalAttendance", currentScore);
+                        mFirestore.collection("Performance").document(performanceId).update(attend);
+
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+    }//扣除缺席分數
+
+
     public void getRollcallId() {
         Query query = mFirestore.collection("Rollcall").
                 whereEqualTo("class_id", class_id);
@@ -322,7 +283,7 @@ public class LeaveRecord extends AppCompatActivity {
             for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
 
                 Rollcall rollcall = documentSnapshot.toObject(Rollcall.class);
-                rollcallId = documentSnapshot.getId();
+//                rollcallId = documentSnapshot.getId();
                 String checkDate = myFmt2.format(rollcall.getRollcall_time());
 
                 Log.d(TAG, "In Function getRollcall 點名時間" + checkDate);
@@ -472,7 +433,7 @@ public class LeaveRecord extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "TEST DB" + rollcallId);
                         absenceList = (ArrayList) document.get("rollcall_absence");
-                        sickList = (ArrayList) document.get("rollcall_sickl");
+                        sickList = (ArrayList) document.get("rollcall_sick");
                         if (!sickList.contains(student_id)) {
 
                             sickList.add(student_id);
@@ -500,6 +461,80 @@ public class LeaveRecord extends AppCompatActivity {
         });
     }
 
+    public void addAbsense() {
+        DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "進入Rollcall DB");
+                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "學生id : " + student_id);
+                        Log.d(TAG, "TEST DB" + rollcallId);
+                        absenceList = (ArrayList) document.get("rollcall_absence");
+                        casualList = (ArrayList) document.get("rollcall_casual");
+                        sickList = (ArrayList) document.get("rollcall_sick");
+                        officalList = (ArrayList) document.get("rollcall_offical");
+                        funeralList = (ArrayList) document.get("rollcall_funeral");
+                        Log.d(TAG,"LEAVE CAHNGE TEST :  absenceList " + absenceList);
+                        Log.d(TAG,"LEAVE CAHNGE TEST :  casualList " + casualList);
+                        Log.d(TAG,"LEAVE CAHNGE TEST :  sickList " + sickList);
+                        Log.d(TAG,"LEAVE CAHNGE TEST :  officalList " + officalList);
+                        Log.d(TAG,"LEAVE CAHNGE TEST :  funeralList " + funeralList);
+                        if (!absenceList.contains(student_id)) {
+                            absenceList.add(student_id);
+                        }
+                        if (casualList.contains(student_id)) {
+                            for (int i = 0; i < casualList.size(); i++) {
+                                if (casualList.get(i).equals(student_id)) {
+                                    casualList.remove(i);
+                                    i--;
+                                }
+                            }
+                        }
+                        if (sickList.contains(student_id)) {
+                            for (int i = 0; i < sickList.size(); i++) {
+                                if (sickList.get(i).equals(student_id)) {
+                                    sickList.remove(i);
+                                    i--;
+                                }
+                            }
+                        }
+                        if (officalList.contains(student_id)) {
+                            for (int i = 0; i < officalList.size(); i++) {
+                                if (officalList.get(i).equals(student_id)) {
+                                    officalList.remove(i);
+                                    i--;
+                                }
+                            }
+                        }
+                        if (funeralList.contains(student_id)) {
+                            for (int i = 0; i < funeralList.size(); i++) {
+                                if (funeralList.get(i).equals(student_id)) {
+                                    funeralList.remove(i);
+                                    i--;
+                                }
+                            }
+                        }
+                        Map<String, Object> attend = new HashMap<>();
+                        attend.put("rollcall_casual", casualList);
+                        attend.put("rollcall_sick", sickList);
+                        attend.put("rollcall_officall", officalList);
+                        attend.put("rollcall_funeral", funeralList);
+                        attend.put("rollcall_absence", absenceList);
+                        mFirestore.collection("Rollcall").document(rollcallId).update(attend);
+                        minusScore();
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+    }
+
     private void changeList() {
         if (leaveReasonStr.equals("事假")) {
             Log.d(TAG, "事假確認");
@@ -517,7 +552,117 @@ public class LeaveRecord extends AppCompatActivity {
         setScore();
     }
 
+    public void notChectToApprove(String leaveId) {
+        DocumentReference leaveCheckRef = mFirestore.collection("Leave").document(leaveId);
+        leaveCheckRef
+                .update("leave_check", "准假")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        Log.d(TAG, "After Click p " + performanceId);
+                        Log.d(TAG, "After Click r " + rollcallId);
+                        Log.d(TAG, "After Click m " + absenseMinus);
+                        changeList();
 
+                        Intent intent = new Intent();
+                        if (ChangePage.equals("Detail")) {
+                            finish();
+                        } else {
+                            if (ChangePage.equals("課堂中")) {
+                                intent.setClass(LeaveRecord.this, Fragment_LeaveListClassN.class);
+                                intent.putExtra("teacher_email", teacher_email);
+                                intent.putExtra("info", class_id);
+                                startActivity(intent);
+                                finish();
+
+                            }//修改假單後 導向課堂內假單
+                            else if (ChangePage.equals("底部欄")) {
+                                Log.d(TAG, "RUN class_id = null");
+                                intent.setClass(LeaveRecord.this, MainActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("teacher_email", teacher_email);
+                                bundle.putInt("request", 4);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }//修改假單後 導向底部欄假單
+                        }
+                    }
+                });
+
+    }
+
+    public void notCheckToNotAllow(String leaveId) {
+        DocumentReference leaveCheckRef = mFirestore.collection("Leave").document(leaveId);
+        leaveCheckRef
+                .update("leave_check", "不准假")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        Intent intent = new Intent();
+                        if (ChangePage.equals("Detail")) {
+                            finish();
+                        } else {
+                            if (ChangePage.equals("課堂中")) {
+                                intent.setClass(LeaveRecord.this, Fragment_LeaveListClassN.class);
+                                intent.putExtra("teacher_email", teacher_email);
+                                intent.putExtra("info", class_id);
+                                startActivity(intent);
+                                finish();
+
+                            }//修改假單後 導向課堂內假單
+                            else if (ChangePage.equals("底部欄")) {
+                                Log.d(TAG, "RUN class_id = null");
+                                intent.setClass(LeaveRecord.this, MainActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("teacher_email", teacher_email);
+                                bundle.putInt("request", 4);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                                finish();
+                            }//修改假單後 導向底部欄假單
+                        }
+                    }
+                });
+    }
+
+    public void allowToNotAllow(String leaveId) {
+        DocumentReference leaveCheckRef = mFirestore.collection("Leave").document(leaveId);
+        leaveCheckRef
+                .update("leave_check", "不准假")
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "跑 Function前");
+                        addAbsense();
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        Intent intent = new Intent();
+                        if (ChangePage.equals("Detail")) {
+                            finish();
+                        } else {
+                            if (ChangePage.equals("課堂中")) {
+                                intent.setClass(LeaveRecord.this, Fragment_LeaveListClassN.class);
+                                intent.putExtra("teacher_email", teacher_email);
+                                intent.putExtra("info", class_id);
+                                startActivity(intent);
+                                finish();
+
+                            }//修改假單後 導向課堂內假單
+                            else if (ChangePage.equals("底部欄")) {
+                                Log.d(TAG, "RUN class_id = null");
+                                intent.setClass(LeaveRecord.this, MainActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("teacher_email", teacher_email);
+                                bundle.putInt("request", 4);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                                finish();
+                            }//修改假單後 導向底部欄假單
+                        }
+                    }
+                });
+    }
 }
 
 

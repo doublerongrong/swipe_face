@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.kl.home.Adapter.Detail_BonusListAdapter;
 import com.example.kl.home.Model.Bonus;
+import com.example.kl.home.Model.Class;
 import com.example.kl.home.Model.Performance;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -39,6 +40,9 @@ public class Fragment_SD_Performance extends Fragment {
     private RecyclerView mMainList;
     private Detail_BonusListAdapter bonusListAdapter;
     private List<Bonus> bonusList;
+
+    private String answerBouns;
+    private String RDanswerBonus;
 
 
     @Override
@@ -73,6 +77,7 @@ public class Fragment_SD_Performance extends Fragment {
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(bonusListAdapter);
 
+        getPoints(class_id);
         setInfor(student_id, class_id);
 
     }
@@ -118,6 +123,10 @@ public class Fragment_SD_Performance extends Fragment {
 
                     if(doc.getType() == DocumentChange.Type.ADDED){
                         Bonus bonus = doc.getDocument().toObject(Bonus.class);
+
+                        bonus.setAnswerBonus(answerBouns);
+                        bonus.setRDanswerBonus(RDanswerBonus);
+
                         bonusList.add(bonus);
 
                         bonusListAdapter.notifyDataSetChanged();
@@ -127,6 +136,34 @@ public class Fragment_SD_Performance extends Fragment {
             }
         });
     }
+
+    private void getPoints( String class_id){
+        mFirestore.collection("Class")
+                .whereEqualTo("class_id", class_id).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.d(TAG, "error" + e.getMessage());
+                }
+                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                        Log.d(TAG, "here");
+                        Class aClass = doc.getDocument().toObject(Class.class);
+
+                        answerBouns = Integer.toString(aClass.getClass_answerbonus());
+                        RDanswerBonus = Integer.toString(aClass.getClass_rdanswerbonus());
+
+
+                    }
+
+                }
+            }
+
+        });
+    }
+
+
 
 
 }
