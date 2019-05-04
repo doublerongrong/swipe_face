@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kl.home.Adapter.StudentListAdapter;
 import com.example.kl.home.Model.Class;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -43,16 +45,17 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
     private RecyclerView mMainList;
     private FirebaseFirestore mFirestore;
     private StudentListAdapter studentListAdapter;
-    private List<Student> studentList;
+    private List<Student> studentList,classMember;
 
     private TextView textViewClassName;
     private TextView textViewStugentCount;
+    private SearchView searchView;
 
     private String classid;
     private String class_id;
+    private String studentId;
 
-    private ImageButton backIBtn,serchBtn;
-    SearchManager searchManager;
+    private ImageButton backIBtn;
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
@@ -79,6 +82,7 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
 
         db = FirebaseFirestore.getInstance();
 
+        classMember = new ArrayList<>();
         studentList = new ArrayList<>();
         studentListAdapter = new StudentListAdapter(view.getContext(), studentList);
 
@@ -91,9 +95,15 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
 
         textViewClassName = (TextView) view.findViewById(R.id.textViewClassName);
         textViewStugentCount = (TextView) view.findViewById(R.id.textViewStudentCount);
+        searchView = (SearchView) view.findViewById(R.id.search_view);
+        searchView.setIconifiedByDefault(false);
 
         backIBtn = (ImageButton) view.findViewById(R.id.backIBtn);
-        serchBtn = (ImageButton) view.findViewById(R.id.searchBtn);
+
+        DocumentReference docRef2 = db.collection("Class").document(classid);
+        docRef2.get().addOnSuccessListener(documentSnapshot -> {
+            classMember = (ArrayList) documentSnapshot.get("student_id");
+                });
 
         getClassInfor(classid);
 
@@ -104,10 +114,44 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
             }
         });
 
-        serchBtn.setOnClickListener(view1 -> {
 
-           // searchManager.startSearch();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getActivity(), "搜尋結果為：" + query, Toast.LENGTH_SHORT).show();
+                if (classMember.contains(query)){
+                    Query query1 = db.collection("Student")
+                            .whereEqualTo("student_id", query);
+                    query1.get().addOnCompleteListener(task -> {
+                        QuerySnapshot querySnapshot1 = task.isSuccessful() ? task.getResult() : null;
+                        Log.i("query", "work");
+                        for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
+                            studentId = documentSnapshot2.getId();
+                            Intent intent = new Intent();
+                            Bundle bundle = new Bundle();
+                            intent.setClass(getActivity(), Activity_StudentDetail.class);
+                            bundle.putString("PassStudentId", studentId);
+                            bundle.putString("PassStudent_id", query);
+                            bundle.putString("PassClass_id", class_id);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+                    });
+                }else{
+                    Toast.makeText(getActivity(),"無此學生或是學號輸入錯誤",Toast.LENGTH_SHORT).show();
+                }
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("當文字改變時", "改變的文字 ：" + newText);
+                return false;
+            }
         });
+
 
 
 
@@ -200,21 +244,6 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
-        // 顯示完成鈕
-        searchView.setSubmitButtonEnabled(true);
-
-        return true;
-    }
 
 
 }
