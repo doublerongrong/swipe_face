@@ -44,6 +44,7 @@ public class GroupDetail extends AppCompatActivity {
     ImageButton ibBackIBtn;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,7 +162,8 @@ public class GroupDetail extends AppCompatActivity {
                     Group group = document.toObject(Group.class);
                     List<String> groupStudentListStr = group.getStudent_id();
                     for (String student : groupStudentListStr) {
-                        db.collection("Student").whereEqualTo("student_id", student).addSnapshotListener((documentSnapshots, e) -> {
+                        db.collection("Student").whereEqualTo("student_id", student)
+                                .addSnapshotListener((documentSnapshots, e) -> {
                             if (e != null) {
                             }
                             for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {

@@ -16,7 +16,9 @@
         android:roundIcon="@drawable/cryingfrog"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserSignUpSetting"></activity>
+        <activity android:name=".CreateClassGroupSt1"></activity>
+        <activity android:name=".Export" />
+        <activity android:name=".UserSignUpSetting" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />
@@ -30,7 +32,7 @@
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
         <activity android:name=".CreateClassGroupSt2" />
-        <activity android:name=".CreateClassGroupSt1" />
+        <activity android:name=".CreateClassGroupSt3" />
         <activity android:name=".GroupPage" />
         <activity android:name=".Activity_PickAnswer" />
         <activity android:name=".TrainAndTest" />

@@ -11,7 +11,8 @@
     <LinearLayout
         style="@style/Header"
         android:background="#FFFFFF"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:elevation="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,10 +45,6 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@drawable/shadow" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,6 +105,7 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:gravity="center"
             android:inputType="number"
             android:textSize="14sp"
             android:textColor="#000000"/>
@@ -124,6 +122,7 @@
             android:layout_width="57dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:gravity="center"
             android:inputType="number"
             android:textColor="#000000"
             android:textSize="14sp" />
@@ -203,7 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center"
-                android:text="GO !"
+                android:text="開始分組"
                 android:textColor="#FFFF"
                 android:textSize="18sp" />
         </android.support.v7.widget.CardView>

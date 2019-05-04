@@ -12,27 +12,42 @@
         android:background="@color/common_google_signin_btn_text_dark_default"
         android:orientation="vertical">
 
-        <android.support.design.widget.NavigationView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="top"
-            android:background="@color/colorPrimary"
-            android:fitsSystemWindows="false"
-            android:orientation="vertical"
-            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
-            android:tooltipText="課程">
+        <LinearLayout
+            style="@style/Header"
+            android:orientation="horizontal"
+            android:background="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/backIBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/title_class"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:gravity="center"
                 android:text="點人答題"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/common_google_signin_btn_text_dark_default"
-                android:textSize="24sp" />
+                android:textColor="#000000"
+                style="@style/Header.TextViewSize" />
 
-        </android.support.design.widget.NavigationView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10"></LinearLayout>
+
+
+        </LinearLayout>
 
 
         <FrameLayout
@@ -50,49 +65,39 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="120dp"
+                    android:layout_marginTop="25dp"
                     android:layout_marginBottom="40dp"
-                    android:text="清選擇點人模式"
+                    android:text="請選擇點人模式"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="253dp"
-                    app:srcCompat="@drawable/question" />
+                <ImageButton
+                    android:id="@+id/ib_pa_random_pick"
+                    android:layout_width="330dp"
+                    android:layout_height="130dp"
+                    android:background="@drawable/pick_random"
+                    android:text="隨機選取"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+                <ImageButton
+                    android:id="@+id/ib_pa_low_attendence"
+                    android:layout_width="330dp"
+                    android:layout_height="130dp"
+                    android:background="@drawable/pick_lowattence"
+                    android:text="隨機選取"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="50dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/ib_pa_low_interaction"
+                    android:layout_width="330dp"
+                    android:layout_height="130dp"
+                    android:background="@drawable/pick_lowinteract"
+                    android:text="隨機選取"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
 
-                    <Button
-                        android:id="@+id/btn_pa_random_pick"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0"
-                        android:text="隨機點人" />
 
-                    <Button
-                        android:id="@+id/btn_pa_low_attendence"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0"
-                        android:text="低出席率" />
-
-                    <Button
-                        android:id="@+id/btn_pa_low_interaction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:layout_weight="0"
-                        android:text="互動率低" />
-                </LinearLayout>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

@@ -30,7 +30,7 @@ public class GroupPage extends AppCompatActivity {
     String class_Id; // classId
     String classId; //classDocId
     public TextView tvClassName;//xml上的年度課程欄位
-    ImageButton ibBackIBtn;
+//    ImageButton ibBackIBtn;
     private Integer classNum;
     private String TAG = "GroupPage";
 
@@ -51,9 +51,7 @@ public class GroupPage extends AppCompatActivity {
         LinearLayoutManager mgr = new LinearLayoutManager(this);
         groupRecycleView.setLayoutManager(mgr);
         groupRecycleView.setAdapter(groupPageAdapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(groupRecycleView.getContext(),
-                mgr.getOrientation());
-        groupRecycleView.addItemDecoration(dividerItemDecoration);
+
 
         //init Intent Bundle
         Intent Intent = getIntent(); /* 取得傳入的 Intent 物件 */
@@ -63,9 +61,10 @@ public class GroupPage extends AppCompatActivity {
         className = bundle.getString("className");
         classNum = bundle.getInt("classStuNum");
         classId = bundle.getString("classId");
+        Log.d(TAG, "classId\t: " + classId+"\tclassYear:\t"+classYear+"\tclassName:\t"+className+"\tclassStuNum\t"+classNum.toString());
 
         //init xml
-        tvClassName = findViewById(R.id.className);
+        tvClassName = findViewById(R.id.title_class);
         tvClassName.setText(className);
         View btPickGroup = findViewById(R.id.fabPickGroup);
         btPickGroup.setOnClickListener(v -> {
@@ -76,8 +75,8 @@ public class GroupPage extends AppCompatActivity {
             intent.putExtras(bundleGroupPick);
             startActivity(intent);
         });
-        ibBackIBtn = findViewById(R.id.backIBtn);
-        ibBackIBtn.setOnClickListener(v -> finish());
+//        ibBackIBtn = findViewById(R.id.backIBtn);
+//        ibBackIBtn.setOnClickListener(v -> finish());
 
         //AllGroup Method
 //        if (class_Id != null) {
