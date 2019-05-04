@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="510dp"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/navigation_actionbox_randomrollcall"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rollcall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="340dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/card_attendance"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:background="@drawable/rollcall_attend"
+            android:text="出席"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:fontFamily="sans-serif-medium">
+        </Button>
+
+        <Button
+            android:id="@+id/card_absence"
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rollcall_absence"
+            android:text="缺席"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:fontFamily="sans-serif-medium">
+
+        </Button>
+
+    </LinearLayout>
+</LinearLayout>

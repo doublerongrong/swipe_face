@@ -36,10 +36,18 @@ public class Detail_BonusListAdapter extends RecyclerView.Adapter<Detail_BonusLi
     public void onBindViewHolder(@NonNull Detail_BonusListAdapter.ViewHolder holder, int position) {
 
         SimpleDateFormat myFmt2 = new SimpleDateFormat("yyyy/MM/dd");
+        String bonusType = bonusList.get(position).getBonus_reason();
+
         String bonusTime = myFmt2.format(bonusList.get(position).getBonus_time());
-        holder.bouns_reason.setText
-        (bonusList.get(position).getBonus_reason());
+        holder.bouns_reason.setText(bonusList.get(position).getBonus_reason());
         holder.bonus_time.setText(bonusTime);
+
+        if(bonusType.equals("點人答題")){
+            holder.plusBonus.setText(bonusList.get(position).getRDanswerBonus());
+        }
+        else if(bonusType.equals("回答問題")){
+            holder.plusBonus.setText(bonusList.get(position).getAnswerBonus());
+        }
 
     }
 
@@ -53,6 +61,7 @@ public class Detail_BonusListAdapter extends RecyclerView.Adapter<Detail_BonusLi
         View mView;
         public TextView bouns_reason;
         public TextView bonus_time;
+        public TextView plusBonus;
 
         public ViewHolder(@NonNull View itemView) {
 
@@ -61,6 +70,7 @@ public class Detail_BonusListAdapter extends RecyclerView.Adapter<Detail_BonusLi
 
             bouns_reason = (TextView) mView.findViewById(R.id.textViewBonusReason);
             bonus_time = (TextView) mView.findViewById(R.id.textViewBonusTime);
+            plusBonus = (TextView) mView.findViewById(R.id.plusBonus);
         }
     }
 

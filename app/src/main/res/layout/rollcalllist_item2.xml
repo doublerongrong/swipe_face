@@ -73,7 +73,7 @@
                 android:text="TextView"
                 tools:text="缺席"
                 android:textSize="16dp"
-                android:textColor="#d27265"
+                android:textColor="#c52020"
                 android:background="@drawable/absence_button_shape"
                 style="?android:attr/borderlessButtonStyle"/>
 

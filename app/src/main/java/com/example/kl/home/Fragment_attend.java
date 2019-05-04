@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.kl.home.Adapter.Detail_AttendListAdapter;
 import com.example.kl.home.Adapter.RollCallListAdapter;
+import com.example.kl.home.Adapter.RollCallListAdapter3;
 import com.example.kl.home.Model.RollCallList;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,7 +37,8 @@ public class Fragment_attend extends Fragment {
     private static final String TAG = "Fragment_attend";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView mMainList,mMainList2;
-    private RollCallListAdapter rollCallListAdapter,rollCallListAdapter2;
+    private RollCallListAdapter rollCallListAdapter;
+    private RollCallListAdapter3 rollCallListAdapter2;
     private List<RollCallList> rollCallList,rollCallList2;
     private String classId,docId;
     private List<String>attendList,lateList,absenceList;
@@ -129,21 +131,21 @@ public class Fragment_attend extends Fragment {
                             lateId.add(documentSnapshot2.getString("student_id"));
                             rollCallList2.add(StudentList);
 
-                            RollCallListAdapter rollCallListAdapter2 = new RollCallListAdapter(getActivity().getApplicationContext(),rollCallList2,"遲到");
+                            RollCallListAdapter3 rollCallListAdapter2 = new RollCallListAdapter3(getActivity().getApplicationContext(),rollCallList2,"遲到");
                             rollCallListAdapter2.notifyDataSetChanged();
                             mMainList2 = (RecyclerView)getView().findViewById(R.id.rollcall_list2);
                             mMainList2.setHasFixedSize(true);
                             mMainList2.setLayoutManager(new LinearLayoutManager(getActivity()));
                             mMainList2.setAdapter(rollCallListAdapter2);
                             Log.i("setAdapter","work");
-                            rollCallListAdapter2.setOnClickMyButton(new RollCallListAdapter.onClickMyButton() {
+                            rollCallListAdapter2.setOnClickMyButton(new RollCallListAdapter3.onClickMyButton() {
                                 @Override
                                 public void myButton(int id) {
                                     studentIndex = id;
                                     Toast.makeText(getActivity(),Integer.toString(id),Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            rollCallListAdapter2.setOnTransPageClickListener(new RollCallListAdapter.transPageListener() {
+                            rollCallListAdapter2.setOnTransPageClickListener(new RollCallListAdapter3.transPageListener() {
                                 @Override
                                 public void onTransPageClick() {
                                     singleClick(view1,lateId.get(studentIndex),docId);
@@ -315,7 +317,7 @@ public class Fragment_attend extends Fragment {
                                         rollCallList2.add(StudentList);
 
                                         Log.i("studentList",StudentList.toString());
-                                        RollCallListAdapter rollCallListAdapter2 = new RollCallListAdapter(getActivity().getApplicationContext(),rollCallList2,"遲到");
+                                        RollCallListAdapter3 rollCallListAdapter2 = new RollCallListAdapter3(getActivity().getApplicationContext(),rollCallList2,"遲到");
                                         rollCallListAdapter2.notifyDataSetChanged();
 
                                         mMainList2 = (RecyclerView)getView().findViewById(R.id.rollcall_list2);
@@ -416,7 +418,7 @@ public class Fragment_attend extends Fragment {
                             lateId.add(documentSnapshot2.getString("student_id"));
                             rollCallList2.add(StudentList);
 
-                            RollCallListAdapter rollCallListAdapter2 = new RollCallListAdapter(getActivity().getApplicationContext(),rollCallList2,"遲到");
+                            RollCallListAdapter3 rollCallListAdapter2 = new RollCallListAdapter3(getActivity().getApplicationContext(),rollCallList2,"遲到");
                             rollCallListAdapter2.notifyDataSetChanged();
 
                             mMainList2 = (RecyclerView)getView().findViewById(R.id.rollcall_list2);
@@ -424,14 +426,14 @@ public class Fragment_attend extends Fragment {
                             mMainList2.setLayoutManager(new LinearLayoutManager(getActivity()));
                             mMainList2.setAdapter(rollCallListAdapter2);
                             Log.i("setAdapter","work");
-                            rollCallListAdapter2.setOnClickMyButton(new RollCallListAdapter.onClickMyButton() {
+                            rollCallListAdapter2.setOnClickMyButton(new RollCallListAdapter3.onClickMyButton() {
                                 @Override
                                 public void myButton(int id) {
                                     studentIndex = id;
                                     Toast.makeText(getActivity(),Integer.toString(id),Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            rollCallListAdapter2.setOnTransPageClickListener(new RollCallListAdapter.transPageListener() {
+                            rollCallListAdapter2.setOnTransPageClickListener(new RollCallListAdapter3.transPageListener() {
                                 @Override
                                 public void onTransPageClick() {
                                     singleClick(view1,lateId.get(studentIndex),docId);

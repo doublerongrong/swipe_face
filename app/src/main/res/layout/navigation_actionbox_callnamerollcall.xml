@@ -52,15 +52,6 @@
                 android:textSize="15sp"
                 android:textColor="#0806b1"
                 />
-
         </LinearLayout>
-
-
-
     </LinearLayout>
-
-
-
-
-
 </android.support.v7.widget.Toolbar>

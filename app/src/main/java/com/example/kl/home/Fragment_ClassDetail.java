@@ -3,6 +3,7 @@ package com.example.kl.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -14,6 +15,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kl.home.Model.Performance;
 import com.example.kl.home.Model.Question;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -41,6 +43,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     private TextView text_class_id;
     private TextView text_class_title;
     private String class_id;
+    private String teacher_email;
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
@@ -54,6 +57,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         Bundle args = new Bundle();//fragment傳值
         args = getArguments();//fragment傳值
         classId = args.getString("info");
+
         if(args.getString("rollcall_id") != null){
             rollcallDocId = args.getString("rollcall_id");
             class_id = args.getString("class_id");
@@ -62,6 +66,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         Log.d(TAG, "classId:" + classId);//fragment傳值
         Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
         db = FirebaseFirestore.getInstance();
+        getTeacher_email(classId);
 
 
         return inflater.inflate(R.layout.fragment_fragment_class_detail, container, false);
@@ -88,9 +93,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                 setSingleEvent(gridLayout, firestore_class);
             }
         });
-
-
-
 
 
     }
@@ -163,6 +165,24 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         }
     }
 
+    public void getTeacher_email(String classId){
+        DocumentReference docRef = db.collection("Class").document(classId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Class aClass = document.toObject(Class.class);
+                        teacher_email = aClass.getTeacher_email();
+                        class_id = aClass.getClass_id();
+
+                    }
+                }
+            }
+        });
+    }
+
     // we are setting onClickListener for each element 處理選項
     private void setSingleEvent(GridLayout gridLayout, Class firestore_class) {
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
@@ -176,19 +196,29 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                     switch (finalI) {
                         case 0:
                             //intent activity
-
-                            DocumentReference docRef = db.collection("Class").document(classId);
-                            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                                        Class classG = documentSnapshot.toObject(Class.class);
-                                        class_id = classG.getClass_id();
+                            if(rollcallDocId != null) {
                                 Intent i = new Intent();
-                                Bundle bundlecall = new Bundle();
-                                bundlecall.putString("class_id", class_id);
-                                bundlecall.putString("class_doc",classId);
-                                i.putExtras(bundlecall);
-                                i.setClass(getActivity(),RollcallSelect.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("class_id", class_id);
+                                bundle.putString("class_doc", classId);
+                                bundle.putString("classDoc_id", rollcallDocId);
+                                i.putExtras(bundle);
+                                i.setClass(getActivity(), RollcallSelect.class);
                                 startActivity(i);
-                                    });
+                            }else {
+                                DocumentReference docRef = db.collection("Class").document(classId);
+                                docRef.get().addOnSuccessListener(documentSnapshot -> {
+                                    Class classG = documentSnapshot.toObject(Class.class);
+                                    class_id = classG.getClass_id();
+                                    Intent i = new Intent();
+                                    Bundle bundlecall = new Bundle();
+                                    bundlecall.putString("class_id", class_id);
+                                    bundlecall.putString("class_doc", classId);
+                                    i.putExtras(bundlecall);
+                                    i.setClass(getActivity(), RollcallSelect.class);
+                                    startActivity(i);
+                                });
+                            }
                             break;
                         case 1:
                             //intent activity 今日出缺席
@@ -209,8 +239,16 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 2:
                             //假單管理
-                            mCallback.onFragmentSelected(firestore_class.getClass_id(), "toLeaveManage");//fragment傳值
 
+//                            mCallback.onFragmentSelected(firestore_class.getClass_id(), "toLeaveManage");//fragment傳值
+                            Intent i = new Intent();
+                            Bundle bundleleave = new Bundle();
+                            bundleleave.putString("info",class_id);
+                            bundleleave.putString("teacher_email",teacher_email);
+                            Log.d(TAG,"LeaveListN set bundle" + bundleleave.toString());
+                            i.putExtras(bundleleave);
+                            i.setClass(getActivity(),Fragment_LeaveListClassN.class);
+                            startActivity(i);
                             break;
                         case 3:
                             //學生清單
@@ -358,6 +396,8 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
             });
         }
     }
+
+
 
 
 }

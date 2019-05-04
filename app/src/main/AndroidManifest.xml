@@ -16,9 +16,11 @@
         android:roundIcon="@drawable/cryingfrog"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ReRollcall"></activity>
+        <activity android:name=".RandomRollcall" />
+        <activity android:name=".UserSignUpSetting" />
         <activity android:name=".CreateClassGroupSt1"></activity>
         <activity android:name=".Export" />
-        <activity android:name=".UserSignUpSetting" />
         <activity android:name=".MainActivity" />
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />
@@ -43,7 +45,6 @@
         <activity android:name=".RollcallResult" />
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
-        <activity android:name=".Activity_StudentDetail" />
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,6 +52,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Searchable -->
+        <activity
+            android:name=".Activity_StudentDetail"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"
+                />
+        </activity>
+
+        <!-- Points to searchable activity so the whole app can invoke search. -->
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".Activity_StudentDetail" />
 
         <meta-data
             android:name="preloaded_fonts"
