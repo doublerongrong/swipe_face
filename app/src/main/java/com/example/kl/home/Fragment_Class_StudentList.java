@@ -1,5 +1,6 @@
 package com.example.kl.home;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -47,7 +51,8 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
     private String classid;
     private String class_id;
 
-    private ImageButton backIBtn;
+    private ImageButton backIBtn,serchBtn;
+    SearchManager searchManager;
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
@@ -88,6 +93,7 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
         textViewStugentCount = (TextView) view.findViewById(R.id.textViewStudentCount);
 
         backIBtn = (ImageButton) view.findViewById(R.id.backIBtn);
+        serchBtn = (ImageButton) view.findViewById(R.id.searchBtn);
 
         getClassInfor(classid);
 
@@ -96,6 +102,11 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
             public void onClick(View v) {
                 mCallback.onFragmentSelected(classid, "toClassListDetail");//fragment傳值
             }
+        });
+
+        serchBtn.setOnClickListener(view1 -> {
+
+           // searchManager.startSearch();
         });
 
 
@@ -186,6 +197,23 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
             } catch (ClassCastException e) {
                 throw new ClassCastException(context.toString() + "Mush implement OnFragmentSelectedListener ");
             }
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+        // 顯示完成鈕
+        searchView.setSubmitButtonEnabled(true);
+
+        return true;
     }
 
 
