@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.kl.home.Model.Class;
 import com.google.firebase.firestore.DocumentReference;
@@ -45,6 +46,7 @@ public class ReRollcall extends AppCompatActivity {
     private String classId, classDoc, rollcallDocId, docId;
     private String perId,perf;
     String name, id, email, department, school;
+    private ImageButton backBtn;
     private Button finishBtn, photoBtn;
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result, classMember;
@@ -75,6 +77,7 @@ public class ReRollcall extends AppCompatActivity {
 
         finishBtn = (Button) findViewById(R.id.buttonFinish);
         photoBtn = (Button) findViewById(R.id.buttonPhoto);
+        backBtn = (ImageButton)findViewById(R.id.backIBtn);
         classMember = new ArrayList<>();
         result = new ArrayList<>();
         attendList = new ArrayList<>();
@@ -235,6 +238,10 @@ public class ReRollcall extends AppCompatActivity {
                 finish();
             });
 
+        });
+
+        backBtn.setOnClickListener(view -> {
+            finish();
         });
     }
 

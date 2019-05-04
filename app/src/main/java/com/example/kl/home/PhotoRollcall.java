@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kl.home.Model.RollCallStudent;
@@ -48,6 +50,7 @@ public class PhotoRollcall extends AppCompatActivity {
 
     private String classId,classDoc,docId;
     String name,id,email,department,school;
+    private ImageButton backBtn;
     private Button finishBtn,photoBtn;
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result,classMember;
@@ -76,6 +79,7 @@ public class PhotoRollcall extends AppCompatActivity {
 
         finishBtn = (Button)findViewById(R.id.buttonFinish);
         photoBtn = (Button)findViewById(R.id.buttonPhoto);
+        backBtn = (ImageButton) findViewById(R.id.backIBtn);
         classMember = new ArrayList<>();
         result = new ArrayList<>();
         attendList = new ArrayList<>();
@@ -135,6 +139,10 @@ public class PhotoRollcall extends AppCompatActivity {
                 });
             });
 
+        });
+
+        backBtn.setOnClickListener(view -> {
+            finish();
         });
     }
 
