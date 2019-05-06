@@ -3,10 +3,15 @@ package com.example.kl.home;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,14 +54,15 @@ import static com.example.kl.home.RollcallResult.getmContext;
 @RuntimePermissions
 public class PhotoRollcall extends AppCompatActivity {
 
+    private final String TAG = "PhotoRollcall";
     private String classId,classDoc,docId;
     String name,id,email,department,school;
     private ImageButton backBtn;
-    private Button finishBtn,photoBtn;
+    private Button finishBtn,photoBtn,btPick;
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result,classMember;
     private List<String> attendList, absenceList,casualList,funeralList,lateList,officalList,sickList;
-    String url = "http://172.20.10.8:8080/ProjectApi/api/FaceApi/RetrievePhoto";
+    String url = "http://140.136.7.27:8080/ProjectApi/api/FaceApi/RetrievePhoto";
     OkHttpClient client = new OkHttpClient();
     private static Context mContext;
     ResponseBody responseBody;
@@ -80,6 +87,7 @@ public class PhotoRollcall extends AppCompatActivity {
         finishBtn = (Button)findViewById(R.id.buttonFinish);
         photoBtn = (Button)findViewById(R.id.buttonPhoto);
         backBtn = (ImageButton) findViewById(R.id.backIBtn);
+        btPick = findViewById(R.id.buttonPick);
         classMember = new ArrayList<>();
         result = new ArrayList<>();
         attendList = new ArrayList<>();
@@ -100,16 +108,19 @@ public class PhotoRollcall extends AppCompatActivity {
         });
 
         photoBtn.setOnClickListener(v ->{
-            Matisse.from(PhotoRollcall.this)
-                    .choose(MimeType.ofAll())//图片类型
-                    .countable(false)//true:选中后显示数字;false:选中后显示对号
-                    .maxSelectable(9)//可选的最大数
-                    .capture(true)//选择照片时，是否显示拍照
-                    .captureStrategy(new CaptureStrategy(true, "com.example.kl.home.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
-                    .imageEngine(new MyGlideEngine())//图片加载引擎
-                    .theme(R.style.Matisse_Zhihu)
-                    .forResult(REQUEST_CODE_CHOOSE = 9);//REQUEST_CODE_CHOOSE自定
-            Log.i("Create Android", "Test選圖");
+//            Matisse.from(PhotoRollcall.this)
+//                    .choose(MimeType.ofAll())//图片类型
+//                    .countable(false)//true:选中后显示数字;false:选中后显示对号
+//                    .maxSelectable(9)//可选的最大数
+//                    .capture(true)//选择照片时，是否显示拍照
+//                    .captureStrategy(new CaptureStrategy(true, "com.example.kl.home.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+//                    .imageEngine(new MyGlideEngine())//图片加载引擎
+//                    .theme(R.style.Matisse_Zhihu)
+//                    .forResult(REQUEST_CODE_CHOOSE = 9);//REQUEST_CODE_CHOOSE自定
+//            Log.i("Create Android", "Test選圖");
+            Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+            startActivityForResult(intent, 0);
+
         });
 
         finishBtn.setOnClickListener(view -> {
@@ -141,31 +152,60 @@ public class PhotoRollcall extends AppCompatActivity {
 
         });
 
+        btPick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickPhoto();
+            }
+        });
+
         backBtn.setOnClickListener(view -> {
             finish();
         });
     }
 
+    private void pickPhoto() {
+        Matisse.from(PhotoRollcall.this)
+                .choose(MimeType.ofAll())//图片类型
+                .countable(false)//true:选中后显示数字;false:选中后显示对号
+                .maxSelectable(9)//可选的最大数
+                .capture(false)//选择照片时，是否显示拍照
+                .imageEngine(new MyGlideEngine())//图片加载引擎
+                .theme(R.style.Matisse_Zhihu)
+                .forResult(REQUEST_CODE_CHOOSE = 9);//REQUEST_CODE_CHOOSE自定
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK && requestCode == 9) {
+        if (resultCode == RESULT_OK && requestCode == 0) {
             Log.i("Create Android", "Test4");
             Log.d("Matisse", "Uris: " + Matisse.obtainResult(data));
             Log.d("Matisse", "Paths: " + Matisse.obtainPathResult(data));
             Log.e("Matisse", "Use the selected photos with original: " + String.valueOf(Matisse.obtainOriginalState(data)));
-            result = Matisse.obtainPathResult(data);
-            retrieveFile(result);
+//            result = Matisse.obtainPathResult(data);
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+            Uri tempUri = getImageUri(getApplicationContext(), photo);
+            Log.d("TEST",tempUri.getPath()+tempUri.toString());
+            // CALL THIS METHOD TO GET THE ACTUAL PATH
+            File finalFile = new File(getRealPathFromURI(tempUri));
+            Log.d(TAG,finalFile.getAbsolutePath());
+//            retrieveFile(finalFile);
             Log.i("Create Android", "Test5");
 
+        }
+        if(resultCode ==RESULT_OK && requestCode == 9){
+            result = Matisse.obtainPathResult(data);
+            retrieveFile(result);
         }
     }
 
     public void retrieveFile(List<String> img) {
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);//setType一定要Multipart
-        for (int i = 0; i <img.size() ; i++) {//用迴圈去RUN多選照片
-            File file=new File(img.get(i));
-            if (file !=null) {
+        for (int i = 0; i < img.size(); i++) {//用迴圈去RUN多選照片
+            File file = new File(img.get(i));
+            if (file != null) {
                 builder.addFormDataPart("photos", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
             }//前面是para  中間是抓圖片名字 後面是創一個要求
         }
@@ -275,6 +315,27 @@ public class PhotoRollcall extends AppCompatActivity {
 
     public static Context getmContext(){
         return mContext;
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        String path = "";
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
     }
 
     @Override

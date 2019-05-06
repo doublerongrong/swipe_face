@@ -21,6 +21,7 @@
         <activity android:name=".UserSignUpSetting" />
         <activity android:name=".CreateClassGroupSt1"></activity>
         <activity android:name=".Export" />
+        <activity android:name=".Fragment_LeaveListClassN"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />
@@ -56,7 +57,8 @@
         <activity
             android:name=".Activity_StudentDetail"
             android:theme="@style/Theme.AppCompat.Light"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

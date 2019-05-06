@@ -94,7 +94,7 @@ public class Export extends AppCompatActivity {
     private void sendEmail(String type) {
 
         String email = etEmail.getText().toString().trim();
-        String url = "http://192.168.11.3:8080/ProjectApi/api/Export/";
+        String url = "http://192.168.0.108:8080/ProjectApi/api/Export/";
 
         Log.d(TAG,"type: "+type);
         if ("".equals(email)) {
