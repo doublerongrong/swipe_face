@@ -130,7 +130,7 @@
             android:id="@+id/question_min"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:gravity="center"
             android:inputType="number"
             android:textSize="14sp"
             android:textColor="#000000"/>
@@ -150,7 +150,6 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/nextStepButton"
-            android:onClick="onSelect"
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:layout_gravity="bottom"

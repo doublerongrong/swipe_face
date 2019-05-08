@@ -28,12 +28,11 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/className"
+            android:id="@+id/title_class"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="6"
             android:gravity="center"
-            android:text="載入中"
             android:textColor="#000000"
             style="@style/Header.TextViewSize" />
 
@@ -45,18 +44,15 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shadow" />
+
 
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fragment_pick_group"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
 
         <android.support.v7.widget.RecyclerView
@@ -78,7 +74,7 @@
             android:layout_marginBottom="16dp"
             android:background="#c0c0ed"
             android:clickable="true"
-            android:src="@drawable/ic_add_white_24dp"
+            android:src="@drawable/outline_group_pick24px"
             app:backgroundTint="#0806b1" />
     </FrameLayout>
 

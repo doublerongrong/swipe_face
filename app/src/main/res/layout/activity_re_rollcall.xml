@@ -6,22 +6,52 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical">
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:text="請拍照並上傳照片辨識 !"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:textColor="#000000"
-        android:gravity="center"
-        app:fontFamily="@font/asap_medium"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="vertical">
+        <include
+            layout="@layout/navigation_actionbox_re_rollcall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="263dp"
+        android:layout_height="182dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/rollcall"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="312dp"
+        android:layout_height="81dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#000000"
+            android:lineSpacingExtra="14sp"
+            android:gravity="center_horizontal"
+            android:text="想多拍幾張照片可點選 「拍照」 繼續上傳照片要結束時記得按 「結束點名」 哦"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center">
 
         <Button
@@ -46,6 +76,27 @@
         android:layout_gravity="center">
 
         <Button
+            android:id="@+id/buttonPick"
+            android:layout_width="300dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="選擇相片"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#0806b1"
+            android:textSize="18dp"
+            android:textStyle="normal"
+            android:background="@drawable/rollcall_fin"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center">
+
+        <Button
             android:id="@+id/buttonFinish"
             android:layout_width="300dp"
             android:gravity="center"
@@ -53,10 +104,10 @@
             android:layout_weight="1"
             android:text="結束補點"
             android:fontFamily="sans-serif-medium"
-            android:textColor="#ffffff"
+            android:textColor="#0806b1"
             android:textSize="18dp"
             android:textStyle="normal"
-            android:background="@drawable/login_button"/>
+            android:background="@drawable/rollcall_fin"/>
 
     </LinearLayout>
 
