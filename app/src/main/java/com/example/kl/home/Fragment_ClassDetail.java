@@ -20,6 +20,7 @@ import com.example.kl.home.Model.Question;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,7 +49,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     private TextView text_class_id;
     private TextView text_class_title;
     private String class_id;
-    private String teacher_email;
+    private String teacher_email = (FirebaseAuth.getInstance().getCurrentUser()).toString();
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
