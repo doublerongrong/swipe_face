@@ -8,7 +8,7 @@
     <LinearLayout
         style="@style/Header"
         android:orientation="horizontal"
-        android:elevation="10dp"
+        android:elevation="5dp"
         android:background="#FFF">
 
         <LinearLayout
@@ -26,7 +26,7 @@
             android:gravity="center"
             android:text="課程清單"
             android:textColor="#000000"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="" />
 
         <LinearLayout
