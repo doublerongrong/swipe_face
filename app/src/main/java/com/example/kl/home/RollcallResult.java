@@ -51,6 +51,7 @@ import okhttp3.Response;
 
 public class RollcallResult extends AppCompatActivity implements ViewPager.OnPageChangeListener,
         TabLayout.OnTabSelectedListener{
+    private final String TAG = "RollcallResult";
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private String request,classId,docId,classDocId,className;
@@ -66,8 +67,8 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
     private List<String> scoreList,scoreList1,scoreList2,absTimeList,absTimeList1,absTimeList2;
     private int lateMinus,absenteeMinus;
     private String perId,perf,absenceTimes,attendEmail,absenceEmail,lateEmail;
-    private String score_url = "http://192.168.1.10:8080/ProjectApi/api/Warning/points";
-    private String absence_url = "http://192.168.1.10:8080/ProjectApi/api/Warning/times";
+    private String score_url = "http://"+system.ip+":8080/ProjectApi/api/Warning/points";
+    private String absence_url = "http://"+system.ip+":8080/ProjectApi/api/Warning/times";
     int score,abTimes,ewpoint,ewatimes;
     private String attId,absId,latId;
     int b ;
@@ -78,6 +79,8 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rollcall_result);
+
+        Log.d(TAG,"score_url: absence_url "+score_url+absence_url);
 
         Bundle bundle = this.getIntent().getExtras();
         classId = bundle.getString("class_id");

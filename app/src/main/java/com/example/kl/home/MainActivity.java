@@ -102,6 +102,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         setContentView(R.layout.t_activity_homepage);
         teacher_email = user.getEmail();
 
+        system system1 = new system();
+//        IP
+//        system1.setIp();
 
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null) {
@@ -140,8 +143,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         }else{
             setDefaultFragment();
         }
-
-
 
 
 
