@@ -174,6 +174,9 @@ public class CallNameRollCall extends AppCompatActivity {
                                             attend.put("rollcall_absence", absenceList);
                                             db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task2 -> {
                                                 mMainList.smoothScrollToPosition(currentPosition + 1);
+                                                if (currentPosition == (classMember.size() - 1)){
+                                                    Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                                }
                                             });
                                         });
 
@@ -241,6 +244,9 @@ public class CallNameRollCall extends AppCompatActivity {
                                             absence.put("rollcall_absence", absenceList);
                                             db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
                                                 mMainList.smoothScrollToPosition(currentPosition + 1);
+                                                if (currentPosition == (classMember.size() - 1)){
+                                                    Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                                }
                                             });
                                         });
                                     }
