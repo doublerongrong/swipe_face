@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="41dp"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="25dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="280dp"
         android:layout_height="55dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="17dp"
         android:layout_gravity="center">
 
         <EditText
@@ -56,7 +56,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="280dp"
         android:layout_height="50dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="17dp"
         android:layout_gravity="center">
 
         <EditText
@@ -73,7 +73,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="280dp"
         android:layout_height="50dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="17dp"
         android:layout_gravity="center">
 
         <EditText
@@ -90,7 +90,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="280dp"
         android:layout_height="50dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="17dp"
         android:layout_gravity="center">
 
         <EditText
@@ -107,7 +107,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="280dp"
         android:layout_height="50dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="17dp"
         android:layout_gravity="center">
 
         <EditText
@@ -124,7 +124,7 @@
 
     <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp">
 
@@ -133,10 +133,11 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/login_button"
+            android:fontFamily="sans-serif-medium"
             android:text="Sign Up"
+            android:textAllCaps="false"
             android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif-medium"/>
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>
 
