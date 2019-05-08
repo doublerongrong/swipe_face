@@ -9,7 +9,8 @@
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    app:cardElevation="2dp">
 
 
     <LinearLayout

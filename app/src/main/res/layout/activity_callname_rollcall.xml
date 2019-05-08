@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -11,10 +12,55 @@
         android:layout_height="510dp"
         android:orientation="vertical">
 
-            <include
-                layout="@layout/navigation_actionbox_callnamerollcall"
+        <LinearLayout
+            style="@style/Header"
+            android:orientation="horizontal"
+            android:background="#FFFFFF"
+            android:elevation="5dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/backIBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="6"
+                android:gravity="center"
+                android:text="電子唱名"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                style="@style/Header.TextViewSize" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10">
+
+                <Button
+                    android:id="@+id/finishButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:text="結束點名"
+                    android:textSize="16sp"
+                    android:textColor="#0806b1"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rollcall"
@@ -24,30 +70,33 @@
         </android.support.v7.widget.RecyclerView>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="340dp"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_gravity="center">
+        android:gravity="center">
 
             <Button
                 android:id="@+id/card_attendance"
-                android:layout_width="160dp"
-                android:layout_height="70dp"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/rollcall_attend"
                 android:text="出席"
                 android:textColor="#ffffff"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:fontFamily="sans-serif-medium">
             </Button>
 
             <Button
                 android:id="@+id/card_absence"
-                android:layout_width="160dp"
-                android:layout_height="70dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/rollcall_absence"
                 android:text="缺席"
                 android:textColor="#ffffff"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:fontFamily="sans-serif-medium">
 
             </Button>
