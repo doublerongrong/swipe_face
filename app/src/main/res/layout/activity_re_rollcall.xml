@@ -76,6 +76,27 @@
         android:layout_gravity="center">
 
         <Button
+            android:id="@+id/buttonPick"
+            android:layout_width="300dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="選擇相片"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#0806b1"
+            android:textSize="18dp"
+            android:textStyle="normal"
+            android:background="@drawable/rollcall_fin"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center">
+
+        <Button
             android:id="@+id/buttonFinish"
             android:layout_width="300dp"
             android:gravity="center"

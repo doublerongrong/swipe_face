@@ -95,6 +95,16 @@ public class QuestionAnalysis extends AppCompatActivity {
                         B = question.getB();
                         C = question.getC();
                         D = question.getD();
+                        if(A.size()==0){
+                            cvPickA.setEnabled(false);
+                        }
+                        if (B.size()==0){
+                            cvPickB.setEnabled(false);
+                        }if (C.size()==0){
+                            cvPickC.setEnabled(false);
+                        }if (D.size()==0){
+                            cvPickD.setEnabled(false);
+                        }
                         tvChoiceA.setText(A.size()+"\t位");
                         tvChoiceB.setText(B.size()+"\t位");
                         tvChoiceC.setText(C.size()+"\t位");
@@ -108,7 +118,7 @@ public class QuestionAnalysis extends AppCompatActivity {
                 // 设置 pieChart 图表Item文本属性
                 mChart.setDrawEntryLabels(true);              //设置pieChart是否只显示饼图上百分比不显示文字（true：下面属性才有效果）
                 mChart.setEntryLabelColor(Color.BLACK);       //设置pieChart图表文本字体颜色
-                mChart.setEntryLabelTextSize(30f);            //设置pieChart图表文本字体大小
+                mChart.setEntryLabelTextSize(25f);            //设置pieChart图表文本字体大小
 
                 mChart.setRotationEnabled(true);              //设置pieChart图表是否可以手动旋转
                 mChart.setHighlightPerTapEnabled(true);       //设置piecahrt图表点击Item高亮是否可用
@@ -208,7 +218,7 @@ public class QuestionAnalysis extends AppCompatActivity {
 
         //饼状图数据集 PieDataSet
         PieDataSet pieDataSet = new PieDataSet(pieEntryList, "");
-        pieDataSet.setSliceSpace(3f);           //设置饼状Item之间的间隙
+        pieDataSet.setSliceSpace(10f);           //设置饼状Item之间的间隙
         pieDataSet.setSelectionShift(10f);      //设置饼状Item被选中时变化的距离
         pieDataSet.setColors(colors);           //为DataSet中的数据匹配上颜色集(饼图Item颜色)
 

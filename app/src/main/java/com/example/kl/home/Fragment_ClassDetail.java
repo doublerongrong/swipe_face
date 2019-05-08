@@ -20,6 +20,7 @@ import com.example.kl.home.Model.Question;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,19 +28,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import static com.example.kl.home.BackHandlerHelper.handleBackPress;
 
 import com.example.kl.home.Model.Class;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import permissions.dispatcher.RuntimePermissions;
 
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
 
 
     private String TAG = "ClassDetail";
+    private String url = "http://192.168.0.108:8080/Export/StudentGrade/";
     private String classId,rollcallDocId;
     private Class aclass;
     private Class firestore_class;
@@ -48,7 +45,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     private TextView text_class_id;
     private TextView text_class_title;
     private String class_id;
-    private String teacher_email;
+    private String teacher_email = (FirebaseAuth.getInstance().getCurrentUser()).toString();
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
@@ -66,7 +63,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         if(args.getString("rollcall_id") != null){
             rollcallDocId = args.getString("rollcall_id");
             class_id = args.getString("class_id");
-            Log.i("rollcallId",rollcallDocId);
+            Log.d(TAG,"rollcallId : "+rollcallDocId+"\tclass_id : "+class_id);
         }
         Log.d(TAG, "classId:" + classId);//fragment傳值
         Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
@@ -81,6 +78,13 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         Log.d(TAG, "classId2:" + classId);
         text_class_title = (TextView) view.findViewById(R.id.text_class_title);
         gridLayout = (GridLayout) view.findViewById(R.id.grid_class_detail);
+
+        DocumentReference docRef = db.collection("Class").document(classId);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            class_id = documentSnapshot.toObject(Class.class).getClass_id();
+            Log.d(TAG,"class_id : "+class_id);
+        });
+
 
         setClass(new FirebaseCallback() {
             @Override
@@ -258,37 +262,37 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
                                 Class classG = documentSnapshot.toObject(Class.class);
                                 if (!classG.isGroup_state()&&!classG.isGroup_state_go()) {//判斷是否分組
-                                    Intent intent = new Intent();
-                                    intent.setClass(getActivity(), CreateClassGroupSt2.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("classId", classId);
-                                    bundle.putString("classYear", classG.getClass_year());
-                                    bundle.putString("className", classG.getClass_name());
-                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
-                                    intent.putExtras(bundle);
-                                    getActivity().startActivity(intent);
+                                    Intent intentToCreateClassGroupSt1 = new Intent();
+                                    intentToCreateClassGroupSt1.setClass(getActivity(), CreateClassGroupSt1.class);
+                                    Bundle bundleToCreateClassGroupSt1 = new Bundle();
+                                    bundleToCreateClassGroupSt1.putString("classId", classId);
+                                    bundleToCreateClassGroupSt1.putString("classYear", classG.getClass_year());
+                                    bundleToCreateClassGroupSt1.putString("className", classG.getClass_name());
+                                    bundleToCreateClassGroupSt1.putInt("classStuNum", classG.getStudent_id().size());
+                                    intentToCreateClassGroupSt1.putExtras(bundleToCreateClassGroupSt1);
+                                    getActivity().startActivity(intentToCreateClassGroupSt1);
                                 } else if (!classG.isGroup_state()&&classG.isGroup_state_go()){
-                                    Intent intent = new Intent();
-                                    intent.setClass(getActivity(), CreateClassGroupSt1.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("classId", classId);
-                                    bundle.putString("classYear", classG.getClass_year());
-                                    bundle.putString("className", classG.getClass_name());
-                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
-                                    intent.putExtras(bundle);
-                                    getActivity().startActivity(intent);
+                                    Intent intentToCreateClassGroupSt3 = new Intent();
+                                    intentToCreateClassGroupSt3.setClass(getActivity(), CreateClassGroupSt3.class);
+                                    Bundle bundleToCreateClassGroupSt3 = new Bundle();
+                                    bundleToCreateClassGroupSt3.putString("classId", classId);
+                                    bundleToCreateClassGroupSt3.putString("classYear", classG.getClass_year());
+                                    bundleToCreateClassGroupSt3.putString("className", classG.getClass_name());
+                                    bundleToCreateClassGroupSt3.putInt("classStuNum", classG.getStudent_id().size());
+                                    intentToCreateClassGroupSt3.putExtras(bundleToCreateClassGroupSt3);
+                                    getActivity().startActivity(intentToCreateClassGroupSt3);
                                 }
                                 else {
-                                    Intent intent = new Intent();
-                                    intent.setClass(getActivity(), GroupPage.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("classId", classId);
-                                    bundle.putString("class_Id", classG.getClass_id());
-                                    bundle.putString("classYear", classG.getClass_year());
-                                    bundle.putString("className", classG.getClass_name());
-                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
-                                    intent.putExtras(bundle);
-                                    getActivity().startActivity(intent);
+                                    Intent intentToGroupPage = new Intent();
+                                    intentToGroupPage.setClass(getActivity(), GroupPage.class);
+                                    Bundle bundleToGroupPage = new Bundle();
+                                    bundleToGroupPage.putString("classId", classId);
+                                    bundleToGroupPage.putString("class_Id", classG.getClass_id());
+                                    bundleToGroupPage.putString("classYear", classG.getClass_year());
+                                    bundleToGroupPage.putString("className", classG.getClass_name());
+                                    bundleToGroupPage.putInt("classStuNum", classG.getStudent_id().size());
+                                    intentToGroupPage.putExtras(bundleToGroupPage);
+                                    getActivity().startActivity(intentToGroupPage);
                                 }
                             });
                             break;
@@ -357,7 +361,36 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 8:
                             //intent activity 繪出成績
-
+                            Intent intentToExport = new Intent();
+                            intentToExport.setClass(getActivity(), Export.class);
+                            Bundle bundleToExport = new Bundle();
+                            bundleToExport.putString("classId", classId);
+                            bundleToExport.putString("class_id",class_id);
+                            intentToExport.putExtras(bundleToExport);
+                            getActivity().startActivity(intentToExport);
+//                            OkHttpClient client = new OkHttpClient();
+//                            LayoutInflater lf = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                            @SuppressLint("InflateParams")
+//                            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_export_excel, null);
+//                            final EditText etShow = vg.findViewById(R.id.et_name);
+//                            new AlertDialog.Builder(getActivity())
+//                                    .setView(vg)
+//                                    .setPositiveButton("確定", (dialog, which) -> {
+//                                        final String email = etShow.getText().toString().trim();
+//                                        if ("".equals(email)) {
+//                                            Toast.makeText(getActivity(), "請輸入信箱", Toast.LENGTH_SHORT).show();
+//                                            Log.d(TAG, "Dialog取消");
+//                                        } else {
+//                                            String urlToApi = url+"\\"+class_id+"\\"+email;
+//                                            RequestBody reqbody = RequestBody.create(null, new byte[0]);
+//                                            Request.Builder formBody = new Request.Builder()
+//                                                    .url(urlToApi).method("POST",reqbody).header("Content-Length", "0");
+//                                            client.newCall(formBody.build());
+//                                            Log.d(TAG,"PostTest");
+//
+//                                        }
+//                                    })
+//                                    .setNegativeButton("取消", null).show();
                             break;
 
                     }

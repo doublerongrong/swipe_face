@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".GroupDetail">
-
+    tools:context=".CreateClassGroupSt1">
     <LinearLayout
         style="@style/Header"
         android:orientation="horizontal"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:elevation="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:gravity="center"
             android:text="小組"
             android:textColor="#000000"
-            android:textSize="18sp" />
+            style="@style/Header.TextViewSize" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,54 +43,47 @@
 
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:background="#f7f9fd"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/group_st"/>
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="8">
-
-            <TextView
-                android:id="@+id/textViewGroupBonus"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_marginLeft="31dp"
-                android:gravity="center_vertical"
-                android:text="第幾組 回答次數:"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
-
-            <TextView
-                android:id="@+id/groupDetailSetting"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:background="#f7f9fd"
-                android:clickable="true"
-                android:gravity="right|center_vertical"
-                android:text="編輯"
-                android:textColor="#0806b1"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-
+            android:textColor="#b1b1b1"
+            android:text="尚未分組"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"/>
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/groupListDetail"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/nextStepButton"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="#0806b1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center"
+                android:text="開始分組"
+                android:textColor="#FFFF"
+                android:textSize="18sp" />
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>

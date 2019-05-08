@@ -60,8 +60,73 @@ public class QuestionSt extends AppCompatActivity {
         cvNextStep = findViewById(R.id.nextStepButton);
         backIBtn =findViewById(R.id.backIBtn);
         backIBtn.setOnClickListener(v -> finish());
+        cvNextStep.setOnClickListener(v -> {
+            nextStep();
+        });
 
     }
+
+    private void nextStep() {
+        String endTime = etQuestionMin.getText().toString().trim();
+        Log.d(TAG,"selection : "+selection);
+        if(selection != -1 && !"".equals(endTime)){
+            Log.d(TAG,"QuestionSetting");
+            String Answer = null;
+            switch (selection){
+                case 1 :
+                    Answer = "A";
+                    break;
+                case 2 :
+                    Answer = "B";
+                    break;
+                case 3 :
+                    Answer = "C";
+                    break;
+                case 4 :
+                    Answer = "D";
+                    break;
+            }
+            Date nowDate = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(nowDate);
+            calendar.add(Calendar.MINUTE,Integer.valueOf(endTime));
+            Date setDate = calendar.getTime();
+            Map<String, Object> questionSet = new HashMap<>();
+            questionSet.put("create_time", setDate);
+            questionSet.put("Answer", Answer);
+            questionSet.put("A", A);
+            questionSet.put("B", B);
+            questionSet.put("C", C);
+            questionSet.put("D", D);
+
+            db.collection("Class")
+                    .document(classId)
+                    .collection("Question")
+                    .document("question")
+                    .set(questionSet);
+
+            Map<String, Object> classQuestionSet = new HashMap<>();
+            classQuestionSet.put("question_state", true);
+
+            db.collection("Class")
+                    .document(classId)
+                    .update(classQuestionSet);
+
+            Intent intent = new Intent();
+            intent.setClass(QuestionSt.this, QuestionWait.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            Bundle bundle = new Bundle();
+            bundle.putString("classId", classId);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Toast.makeText(this, "請確認是否填寫", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
     public void onSelect(View view){
         switch(view.getId()){
             case R.id.question_a:
@@ -79,65 +144,6 @@ public class QuestionSt extends AppCompatActivity {
             case R.id.question_d:
                 selection = 4;
                 Log.d(TAG,"selection : "+selection);
-                break;
-            case R.id.nextStepButton:
-                Log.d(TAG,"selection : "+selection);
-                if(selection != -1 && etQuestionMin.getText()!=null){
-                    String Answer = null;
-                    switch (selection){
-                        case 1 :
-                            Answer = "A";
-                            break;
-                        case 2 :
-                            Answer = "B";
-                            break;
-                        case 3 :
-                            Answer = "C";
-                            break;
-                        case 4 :
-                            Answer = "D";
-                            break;
-                    }
-                    String endTimeToString = etQuestionMin.getText().toString();
-                    Date nowDate = new Date();
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(nowDate);
-                    calendar.add(Calendar.MINUTE,Integer.valueOf(endTimeToString));
-                    Date setDate = calendar.getTime();
-                    Map<String, Object> questionSet = new HashMap<>();
-                    questionSet.put("create_time", setDate);
-                    questionSet.put("Answer", Answer);
-                    questionSet.put("A", A);
-                    questionSet.put("B", B);
-                    questionSet.put("C", C);
-                    questionSet.put("D", D);
-
-                    db.collection("Class")
-                            .document(classId)
-                            .collection("Question")
-                            .document("question")
-                            .set(questionSet);
-
-                    Map<String, Object> classQuestionSet = new HashMap<>();
-                    classQuestionSet.put("question_state", true);
-
-                    db.collection("Class")
-                            .document(classId)
-                            .update(classQuestionSet);
-
-                    Intent intent = new Intent();
-                    intent.setClass(QuestionSt.this, QuestionWait.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("classId", classId);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    finish();
-                }
-                else{
-                    Toast.makeText(this, "請確認是否填寫", Toast.LENGTH_LONG).show();
-                }
-
                 break;
         }
     }

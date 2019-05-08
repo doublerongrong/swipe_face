@@ -2,9 +2,11 @@ package com.example.kl.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -43,15 +45,17 @@ import okhttp3.ResponseBody;
 
 public class ReRollcall extends AppCompatActivity {
 
+    private final String TAG = "ReRollcall";
     private String classId, classDoc, rollcallDocId, docId;
     private String perId,perf;
     String name, id, email, department, school;
     private ImageButton backBtn;
     private Button finishBtn, photoBtn;
+    private Button btPick;
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result, classMember;
     private List<String> attendList, absenceList,lateList,oriAttend,oriAbsence,oriLate;
-    String url = "http://172.20.10.8:8080/ProjectApi/api/FaceApi/RetrievePhoto";
+    String url = "http://"+system.ip+":8080/ProjectApi/api/FaceApi/RetrievePhoto";
     OkHttpClient client = new OkHttpClient();
     private static Context mContext;
     ResponseBody responseBody;
@@ -67,6 +71,7 @@ public class ReRollcall extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_re_rollcall);
 
+        Log.d(TAG,"url: "+url);
         Bundle bundle = this.getIntent().getExtras();
         classId = bundle.getString("class_id");
         classDoc = bundle.getString("class_doc");
@@ -78,6 +83,7 @@ public class ReRollcall extends AppCompatActivity {
         finishBtn = (Button) findViewById(R.id.buttonFinish);
         photoBtn = (Button) findViewById(R.id.buttonPhoto);
         backBtn = (ImageButton)findViewById(R.id.backIBtn);
+        btPick = findViewById(R.id.buttonPick);
         classMember = new ArrayList<>();
         result = new ArrayList<>();
         attendList = new ArrayList<>();
@@ -122,12 +128,26 @@ public class ReRollcall extends AppCompatActivity {
 
 
         photoBtn.setOnClickListener(v -> {
+//            Matisse.from(ReRollcall.this)
+//                    .choose(MimeType.ofAll())//图片类型
+//                    .countable(false)//true:选中后显示数字;false:选中后显示对号
+//                    .maxSelectable(9)//可选的最大数
+//                    .capture(true)//选择照片时，是否显示拍照
+//                    .captureStrategy(new CaptureStrategy(true, "com.example.kl.home.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+//                    .imageEngine(new MyGlideEngine())//图片加载引擎
+//                    .theme(R.style.Matisse_Zhihu)
+//                    .forResult(REQUEST_CODE_CHOOSE = 9);//REQUEST_CODE_CHOOSE自定
+//            Log.i("Create Android", "Test選圖");
+            Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+            startActivityForResult(intent, 0);
+        });
+
+        btPick.setOnClickListener(v -> {
             Matisse.from(ReRollcall.this)
                     .choose(MimeType.ofAll())//图片类型
                     .countable(false)//true:选中后显示数字;false:选中后显示对号
                     .maxSelectable(9)//可选的最大数
-                    .capture(true)//选择照片时，是否显示拍照
-                    .captureStrategy(new CaptureStrategy(true, "com.example.kl.home.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
+                    .capture(false)//选择照片时，是否显示拍照
                     .imageEngine(new MyGlideEngine())//图片加载引擎
                     .theme(R.style.Matisse_Zhihu)
                     .forResult(REQUEST_CODE_CHOOSE = 9);//REQUEST_CODE_CHOOSE自定

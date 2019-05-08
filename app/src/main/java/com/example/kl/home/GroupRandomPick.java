@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.kl.home.Model.Class;
@@ -40,8 +41,8 @@ public class GroupRandomPick extends AppCompatActivity {
     private TextView tvGroupNum;
     TextView tvGroupLeader;
     TextView tvDepartAndGrade;
-    private CardView card_nextone;
-    private CardView card_correct_answer;
+    private Button btNextGroup;
+    private Button btAdd;
     GroupNumberForCh groupNumberForCh = new GroupNumberForCh();
 
 
@@ -61,8 +62,8 @@ public class GroupRandomPick extends AppCompatActivity {
         tvGroupNum = findViewById(R.id.tvgroupnum);
         tvGroupLeader = findViewById(R.id.tvgroupleader);
         tvDepartAndGrade = findViewById(R.id.tvdepartandgrade);
-        card_nextone =findViewById(R.id.card_nextone);
-        card_correct_answer = findViewById(R.id.card_correct_answer);
+        btNextGroup =findViewById(R.id.btNextGroup);
+        btAdd = findViewById(R.id.btAdd);
 
         //init method
         setRandomPick();
@@ -117,12 +118,12 @@ public class GroupRandomPick extends AppCompatActivity {
                                                 } else {
                                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                                 }
-                                                tvGroupLeader.setText(student.getStudent_name());
+                                                tvGroupLeader.setText("組長\t\t"+student.getStudent_name());
                                                 tvGroupNum.setText(groupNumberForCh.transNum(group.getGroup_num()));
-                                                tvDepartAndGrade.setText(student.getStudent_department());
+                                                tvDepartAndGrade.setText(student.getStudent_department()+"\t"+group.getGroup_leader().toString());
                                             }
                                         });
-                                card_correct_answer.setOnClickListener(new View.OnClickListener() {
+                                btAdd.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         Task<DocumentSnapshot> dofClass = db.collection("Class")
@@ -147,7 +148,8 @@ public class GroupRandomPick extends AppCompatActivity {
                                     }
                                 });
 
-                                card_nextone.setOnClickListener(new View.OnClickListener() {
+                                btNextGroup
+                                        .setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
                                         setRandomPick();

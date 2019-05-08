@@ -19,6 +19,9 @@
         <activity android:name=".ReRollcall"></activity>
         <activity android:name=".RandomRollcall" />
         <activity android:name=".UserSignUpSetting" />
+        <activity android:name=".CreateClassGroupSt1"></activity>
+        <activity android:name=".Export" />
+        <activity android:name=".Fragment_LeaveListClassN"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />
@@ -32,7 +35,7 @@
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
         <activity android:name=".CreateClassGroupSt2" />
-        <activity android:name=".CreateClassGroupSt1" />
+        <activity android:name=".CreateClassGroupSt3" />
         <activity android:name=".GroupPage" />
         <activity android:name=".Activity_PickAnswer" />
         <activity android:name=".TrainAndTest" />
@@ -43,6 +46,8 @@
         <activity android:name=".RollcallResult" />
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
+        <activity android:name=".Activity_StudentDetail" />
+        <activity android:name=".Fragment_LeaveListClassN" />
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +59,8 @@
         <activity
             android:name=".Activity_StudentDetail"
             android:theme="@style/Theme.AppCompat.Light"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

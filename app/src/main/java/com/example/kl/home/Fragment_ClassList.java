@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.kl.home.Adapter.ClassListAdapter;
 import com.example.kl.home.Model.Class;
@@ -47,6 +49,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private String classId;
+    private ImageView imNoData;
     private FloatingActionButton fabCreateClass;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//抓現在登入user
     OnFragmentSelectedListener mCallback;//Fragment傳值
@@ -64,6 +67,8 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
 
         db = FirebaseFirestore.getInstance();
+
+        imNoData = (ImageView) view.findViewById(R.id.imNoData);
 
         classList = new ArrayList<>();
         classListAdapter = new ClassListAdapter(getActivity().getApplicationContext(),classList);
@@ -108,6 +113,14 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
 
                     }
+                }
+                if (classList.isEmpty()) {
+                    mMainList.setVisibility(View.GONE);
+                    imNoData.setVisibility(View.VISIBLE);
+                }
+                else {
+                    mMainList.setVisibility(View.VISIBLE);
+                    imNoData.setVisibility(View.GONE);
                 }
 
             }
