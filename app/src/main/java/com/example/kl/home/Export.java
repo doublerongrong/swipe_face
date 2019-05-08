@@ -50,6 +50,7 @@ public class Export extends AppCompatActivity {
         classId = bundle.getString("classId");
         class_id = bundle.getString("class_id");
         Log.d(TAG, "bundle : classId" + classId + " class_id : " + class_id);
+        system system1 =new system();
 
         etEmail = findViewById(R.id.etEmail);
         ibStuScore = findViewById(R.id.ibStuScore);
@@ -86,7 +87,7 @@ public class Export extends AppCompatActivity {
         });
         backIBtn = findViewById(R.id.backIBtn);
         backIBtn.setOnClickListener(v -> finish());
-
+        Log.d(TAG,"IP:"+ system.ip);
 
 
     }
@@ -94,7 +95,8 @@ public class Export extends AppCompatActivity {
     private void sendEmail(String type) {
 
         String email = etEmail.getText().toString().trim();
-        String url = "http://192.168.0.108:8080/ProjectApi/api/Export/";
+        String url = "http://"+system.ip+":8080/ProjectApi/api/Export/";
+        Log.d(TAG,"url: "+url);
 
         Log.d(TAG,"type: "+type);
         if ("".equals(email)) {

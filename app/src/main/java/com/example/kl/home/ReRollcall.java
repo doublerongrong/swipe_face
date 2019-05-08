@@ -45,6 +45,7 @@ import okhttp3.ResponseBody;
 
 public class ReRollcall extends AppCompatActivity {
 
+    private final String TAG = "ReRollcall";
     private String classId, classDoc, rollcallDocId, docId;
     private String perId,perf;
     String name, id, email, department, school;
@@ -54,7 +55,7 @@ public class ReRollcall extends AppCompatActivity {
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result, classMember;
     private List<String> attendList, absenceList,lateList,oriAttend,oriAbsence,oriLate;
-    String url = "http://172.20.10.8:8080/ProjectApi/api/FaceApi/RetrievePhoto";
+    String url = "http://"+system.ip+":8080/ProjectApi/api/FaceApi/RetrievePhoto";
     OkHttpClient client = new OkHttpClient();
     private static Context mContext;
     ResponseBody responseBody;
@@ -70,6 +71,7 @@ public class ReRollcall extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_re_rollcall);
 
+        Log.d(TAG,"url: "+url);
         Bundle bundle = this.getIntent().getExtras();
         classId = bundle.getString("class_id");
         classDoc = bundle.getString("class_doc");
