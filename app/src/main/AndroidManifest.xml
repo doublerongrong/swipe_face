@@ -46,8 +46,6 @@
         <activity android:name=".RollcallResult" />
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
-        <activity android:name=".Activity_StudentDetail" />
-        <activity android:name=".Fragment_LeaveListClassN" />
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
