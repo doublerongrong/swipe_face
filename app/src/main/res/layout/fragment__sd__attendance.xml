@@ -48,6 +48,11 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F5F5F5" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/student_detail_Attendlist"
             android:layout_width="match_parent"

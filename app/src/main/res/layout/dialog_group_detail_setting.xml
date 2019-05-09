@@ -8,19 +8,18 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:background="#fff"
         android:gravity="center"
-        android:text="請輸入學號"
-        android:textSize="20sp"
+        android:text="請輸入學生學號"
+        android:textSize="18sp"
+        android:textColor="#000000"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/et_name"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
         android:textSize="18sp"
