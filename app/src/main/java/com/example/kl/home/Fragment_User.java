@@ -1,10 +1,12 @@
 package com.example.kl.home;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.kl.home.Adapter.Detail_BonusListAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ public class Fragment_User extends Fragment {
     private static final String TAG = "Fragment_User";
     private ImageButton InforSetting;
     private String teacher_email;
+    private CardView logout;
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
 
@@ -43,12 +47,21 @@ public class Fragment_User extends Fragment {
 
 
         InforSetting = (ImageButton)view.findViewById(R.id.settingBtn);
+        logout = (CardView)view.findViewById(R.id.logout);
 
         Log.d(TAG,"teacher_id :  " + teacher_email);
 
 
         InforSetting.setOnClickListener(v -> {
             mCallback.onFragmentSelected(teacher_email, "toUserInfor");//fragment傳值
+        });
+
+        logout.setOnClickListener(view1 -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent i = new Intent();
+            i.setClass(getActivity(),WelcomePage.class);
+            startActivity(i);
+
         });
 
 

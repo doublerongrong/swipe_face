@@ -14,13 +14,14 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="3dp"
-        app:cardElevation="3dp"
+        app:cardElevation="0dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <LinearLayout
                 android:layout_width="300dp"
@@ -32,18 +33,20 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:gravity="right"
+                    android:layout_marginTop="15dp"
                     android:text="Material Design"
                     android:textColor="@android:color/black"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/rollcall_id"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:gravity="left"
+                    android:layout_marginTop="15dp"
                     android:text="Material Design"
                     android:textColor="@android:color/black"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
 
 
             </LinearLayout>
@@ -57,9 +60,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:layout_marginTop="15dp"
                     android:text="Material Design"
                     android:textColor="@android:color/black"
-                    android:textSize="28sp" />
+                    android:textSize="20sp" />
 
 
             </LinearLayout>

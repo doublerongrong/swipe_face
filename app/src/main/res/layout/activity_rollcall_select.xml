@@ -7,21 +7,50 @@
     tools:context=".TrainAndTest"
     android:orientation="vertical"
     android:background="#ffffff">
-    
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
-        <include
-            layout="@layout/navigation_actionbox_rollcallselect"
+        style="@style/Header"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:elevation="10dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/backIBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="點名"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            style="@style/Header.TextViewSize" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"></LinearLayout>
+
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="325dp"
-        android:layout_height="140dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_marginTop="15dp"
+      >
 
         <ImageButton
             android:id="@+id/photo_rollcall"
@@ -34,24 +63,25 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="325dp"
-        android:layout_height="140dp"
-        android:layout_gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+      >
 
         <ImageButton
             android:id="@+id/callname_rollcall"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:background="@drawable/callname_rollcall"
-            android:textSize="20sp" />
+            android:background="@drawable/callname_rollcall"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="325dp"
-        android:layout_height="140dp"
-        android:layout_gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+      >
 
         <ImageButton
             android:id="@+id/random_rollcall"
@@ -63,8 +93,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="325dp"
-        android:layout_height="140dp"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
         android:layout_gravity="center">
 
         <ImageButton

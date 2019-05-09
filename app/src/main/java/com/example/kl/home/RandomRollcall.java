@@ -174,7 +174,12 @@ public class RandomRollcall extends AppCompatActivity {
                                     Map<String, Object> attend = new HashMap<>();
                                     attend.put("rollcall_attend", attendList);
                                     attend.put("rollcall_absence", absenceList);
-                                    db.collection("Rollcall").document(docId).update(attend);
+                                    db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task2 -> {
+                                        mMainList.smoothScrollToPosition(currentPosition + 1);
+                                        if (currentPosition == (classMember.size() - 1)){
+                                            Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 });
 
                             }
@@ -237,7 +242,12 @@ public class RandomRollcall extends AppCompatActivity {
                                     Map<String, Object> absence = new HashMap<>();
                                     absence.put("rollcall_attend", attendList);
                                     absence.put("rollcall_absence", absenceList);
-                                    db.collection("Rollcall").document(docId).update(absence);
+                                    db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
+                                        mMainList.smoothScrollToPosition(currentPosition + 1);
+                                        if (currentPosition == (classMember.size() - 1)){
+                                            Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 });
                             }
                         }
