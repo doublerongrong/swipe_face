@@ -1,6 +1,8 @@
 package com.example.kl.home;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,10 +59,30 @@ public class Fragment_User extends Fragment {
         });
 
         logout.setOnClickListener(view1 -> {
-            FirebaseAuth.getInstance().signOut();
-            Intent i = new Intent();
-            i.setClass(getActivity(),WelcomePage.class);
-            startActivity(i);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+            builder.setTitle("確定要登出此帳號嗎 ?");
+            builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent i = new Intent();
+                    i.setClass(getActivity(), WelcomePage.class);
+                    startActivity(i);
+                    getActivity().finish();
+                }
+
+            });
+
+            //设置反面按钮
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
 
         });
 
