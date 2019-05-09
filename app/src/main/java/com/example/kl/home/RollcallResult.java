@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.kl.home.Model.Class;
 import com.example.kl.home.Model.RollCallList;
@@ -55,7 +56,7 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private String request,classId,docId,classDocId,className;
-    private Button finishBtn;
+    private ImageButton finishBtn;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     OkHttpClient client = new OkHttpClient();
 
@@ -95,7 +96,7 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout)findViewById(R.id.tabLayout);
-        finishBtn = (Button)findViewById(R.id.finishButton);
+        finishBtn = (ImageButton)findViewById(R.id.finishButton);
         attendList = new ArrayList<>();
         absenceList = new ArrayList<>();
         lateList = new ArrayList<>();

@@ -75,19 +75,6 @@
         android:gravity="center">
 
             <Button
-                android:id="@+id/card_attendance"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/rollcall_attend"
-                android:text="出席"
-                android:textColor="#ffffff"
-                android:textSize="18dp"
-                android:fontFamily="sans-serif-medium">
-            </Button>
-
-            <Button
                 android:id="@+id/card_absence"
                 android:layout_width="150dp"
                 android:layout_height="60dp"
@@ -100,6 +87,20 @@
                 android:fontFamily="sans-serif-medium">
 
             </Button>
+
+
+        <Button
+            android:id="@+id/card_attendance"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rollcall_attend"
+            android:text="出席"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:fontFamily="sans-serif-medium">
+        </Button>
 
     </LinearLayout>
 </LinearLayout>

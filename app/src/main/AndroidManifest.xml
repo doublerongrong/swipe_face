@@ -21,6 +21,7 @@
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />
         <activity android:name=".RollcallSelect" />
+        <activity android:name=".RandomRollcall"></activity>
         <activity android:name=".PhotoRollcall" />
         <activity android:name=".QuestionPick" />
         <activity android:name=".QuestionAnalysis" />
@@ -41,6 +42,7 @@
         <activity android:name=".RollcallResult" />
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
+        <activity android:name=".Fragment_LeaveListClassN" />
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
