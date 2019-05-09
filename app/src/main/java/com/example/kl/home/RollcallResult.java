@@ -9,24 +9,16 @@ import android.support.design.widget.TabLayout;
 
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 
 
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.kl.home.Model.Class;
-import com.example.kl.home.Model.RollCallList;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -43,7 +35,6 @@ import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -67,8 +58,8 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
     private List<String> scoreList,scoreList1,scoreList2,absTimeList,absTimeList1,absTimeList2;
     private int lateMinus,absenteeMinus;
     private String perId,perf,absenceTimes,attendEmail,absenceEmail,lateEmail;
-    private String score_url = "http://"+system.ip+":8080/ProjectApi/api/Warning/points";
-    private String absence_url = "http://"+system.ip+":8080/ProjectApi/api/Warning/times";
+    private String score_url = "http://"+ FlassSetting.ip+":8080/ProjectApi/api/Warning/points";
+    private String absence_url = "http://"+ FlassSetting.ip+":8080/ProjectApi/api/Warning/times";
     int score,abTimes,ewpoint,ewatimes;
     private String attId,absId,latId;
     int b ;
