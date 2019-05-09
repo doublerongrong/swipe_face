@@ -149,6 +149,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
                         //Toast.makeText(this,"密碼確認有誤",Toast.LENGTH_SHORT).show();
                         //Drawable d = getResources().getDrawable(R.drawable.baseline_cancel_24px);
                         //d.setBounds(0, 0, 10, 30); //必须设置大小，否则不显示
+
                         editTextPassword2.setError("密碼確認錯誤");
                         check = 0;
                         return ;

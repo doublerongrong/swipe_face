@@ -8,12 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class Activity_PickAnswer extends AppCompatActivity  {
 
     private String classId;
-    private Button btn_pa_random_pick , btn_pa_low_attendence , btn_pa_low_interaction;
+    private ImageButton ib_pa_random_pick , ib_pa_low_attendence , ib_pa_low_interaction;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -32,11 +33,11 @@ public class Activity_PickAnswer extends AppCompatActivity  {
         Toast.makeText(Activity_PickAnswer.this, "Now : " + classId,
                 Toast.LENGTH_SHORT).show();
         Log.d(TAG,"Now:" +classId );
-        btn_pa_random_pick = (Button) findViewById(R.id.btn_pa_random_pick);
-        btn_pa_low_attendence = (Button) findViewById(R.id.btn_pa_low_attendence);
-        btn_pa_low_interaction = (Button) findViewById(R.id.btn_pa_low_interaction);
+        ib_pa_random_pick =  findViewById(R.id.ib_pa_random_pick);
+        ib_pa_low_attendence = findViewById(R.id.ib_pa_low_attendence);
+        ib_pa_low_interaction = findViewById(R.id.ib_pa_low_interaction);
 
-        btn_pa_random_pick.setOnClickListener(new View.OnClickListener() {
+        ib_pa_random_pick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment_PickAnswerDetail fragment_pickAnswerDetail = new Fragment_PickAnswerDetail();
@@ -50,7 +51,7 @@ public class Activity_PickAnswer extends AppCompatActivity  {
         });
 
 
-        btn_pa_low_attendence.setOnClickListener(new View.OnClickListener() {
+        ib_pa_low_attendence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment_PickAnswerDetail fragment_pickAnswerDetail = new Fragment_PickAnswerDetail();
@@ -65,7 +66,7 @@ public class Activity_PickAnswer extends AppCompatActivity  {
 
 
 
-        btn_pa_low_interaction.setOnClickListener(new View.OnClickListener() {
+        ib_pa_low_interaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Fragment_PickAnswerDetail fragment_pickAnswerDetail = new Fragment_PickAnswerDetail();

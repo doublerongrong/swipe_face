@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -17,11 +17,12 @@
 
     <style name="Header">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:elevation" tools:ignore="NewApi">5dp</item>
     </style>
 
     <style name="Header.TextViewSize">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 
@@ -31,6 +32,13 @@
 
     <style name="MineCustomTabText" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Theme.SearchView" parent="Base.Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search_black_24dp</item>
+        <item name="closeIcon">@drawable/ic_close_black_24dp</item>
+        ·<item name="queryHint">搜尋學生學號</item>
+        <!--<item name="queryBackground">@drawable/background</item>-->
     </style>
 
 

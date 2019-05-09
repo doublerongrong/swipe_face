@@ -35,26 +35,43 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class RollcallResult extends AppCompatActivity implements ViewPager.OnPageChangeListener,
         TabLayout.OnTabSelectedListener{
+    private final String TAG = "RollcallResult";
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private String request,classId,docId,classDocId;
+    private String request,classId,docId,classDocId,className;
     private Button finishBtn;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    OkHttpClient client = new OkHttpClient();
 
     private Fragment_attend fragmentAttend = new Fragment_attend();
     private Fragment_absence fragmentAbsence = new Fragment_absence();
     private  Fragment_ClassDetail fragmentClassDetail = new Fragment_ClassDetail();
     private static Context mContext;
     private List<String> attendList,lateList,absenceList,oriAttend,oriLate,oriAbsence;
+    private List<String> scoreList,scoreList1,scoreList2,absTimeList,absTimeList1,absTimeList2;
     private int lateMinus,absenteeMinus;
-    private String perId,perf;
-    int score,j,k,l,n;
+    private String perId,perf,absenceTimes,attendEmail,absenceEmail,lateEmail;
+    private String score_url = "http://"+system.ip+":8080/ProjectApi/api/Warning/points";
+    private String absence_url = "http://"+system.ip+":8080/ProjectApi/api/Warning/times";
+    int score,abTimes,ewpoint,ewatimes;
+    private String attId,absId,latId;
+    int b ;
 
 
 
@@ -62,6 +79,8 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rollcall_result);
+
+        Log.d(TAG,"score_url: absence_url "+score_url+absence_url);
 
         Bundle bundle = this.getIntent().getExtras();
         classId = bundle.getString("class_id");
@@ -80,6 +99,12 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
         attendList = new ArrayList<>();
         absenceList = new ArrayList<>();
         lateList = new ArrayList<>();
+        scoreList1 = new ArrayList<>();
+        scoreList = new ArrayList<>();
+        scoreList2 = new ArrayList<>();
+        absTimeList1 = new ArrayList<>();
+        absTimeList = new ArrayList<>();
+        absTimeList2 = new ArrayList<>();
         oriAttend = new ArrayList<>();
         oriLate = new ArrayList<>();
         oriAbsence = new ArrayList<>();
@@ -95,6 +120,9 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
                         Class aClass = documentSnapshots.getDocuments().get(0).toObject(Class.class);
                         lateMinus = aClass.getClass_lateminus();
                         absenteeMinus = aClass.getClass_absenteeminus();
+                        className = aClass.getClass_name();
+                        ewatimes = aClass.getClass_ewtimes();
+                        ewpoint = aClass.getClass_ewpoints();
                     }
                 });
 
@@ -108,8 +136,7 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
 
             if (request != null){
                 if(!oriAbsence.isEmpty()){
-                    for ( int i = 0; i < oriAbsence.size(); i++) {
-                        n = i;
+                    for ( int n = 0; n < oriAbsence.size(); n++) {
                         Query query = db.collection("Performance")
                                 .whereEqualTo("class_id", classId)
                                 .whereEqualTo("student_id", oriAbsence.get(n));
@@ -118,12 +145,16 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
                             Log.i("query123", "work");
                             for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
                                 perf = documentSnapshot2.get("performance_totalAttendance").toString();
+                                absenceTimes = documentSnapshot2.get("performance_absenceTimes").toString();
                                 Log.i("perf",perf);
                                 perId = documentSnapshot2.getId();
                                 score = Integer.parseInt(perf);
+                                abTimes = Integer.parseInt(absenceTimes);
+                                abTimes += 1;
                                 score -= absenteeMinus;
                                 DocumentReference ChangePointRef = db.collection("Performance").document(perId);
                                 ChangePointRef.update("performance_totalAttendance", score);
+                                ChangePointRef.update("performance_absenceTimes",abTimes);
                             }
                         });
                     }
@@ -150,8 +181,8 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
 
 
                 if(!lateList.isEmpty()){
-                    for ( int i = 0; i < lateList.size(); i++) {
-                        j = i;
+                    for ( int j = 0; j < lateList.size(); j++) {
+                        latId = lateList.get(j);
                         Query query = db.collection("Performance")
                                 .whereEqualTo("class_id", classId)
                                 .whereEqualTo("student_id", lateList.get(j));
@@ -160,27 +191,66 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
                             Log.i("query", "work");
                             for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
                                 perf = documentSnapshot2.get("performance_totalAttendance").toString();
+                                absenceTimes = documentSnapshot2.get("performance_absenceTimes").toString();
                                 perId = documentSnapshot2.getId();
                                 score = Integer.parseInt(perf);
-                                if (oriAttend.contains(lateList.get(j))){
+                                abTimes = Integer.parseInt(absenceTimes);
+                                scoreList1.add(perf);
+                                absTimeList1.add(absenceTimes);
+                                if (oriAttend.contains(latId)){
                                     score -= lateMinus;
                                 }
-                                if(oriLate.contains(lateList.get(j))){
+                                if(oriLate.contains(latId)){
                                     score = score;
                                 }
-                                if(oriAbsence.contains(lateList.get(j))) {
+                                if(oriAbsence.contains(latId)) {
                                     score -= (lateMinus - absenteeMinus);
+                                    abTimes -= 1;
                                 }
                                 DocumentReference ChangePointRef = db.collection("Performance").document(perId);
                                 ChangePointRef.update("performance_totalAttendance", score);
+                                ChangePointRef.update("performance_absenceTimes",abTimes);
+                            }
+                            if (absTimeList1.size() == lateList.size()) {
+                                //寄缺席預警信
+                                for (int a = 0; a < absTimeList1.size(); a++) {
+                                    if (Integer.parseInt(absTimeList1.get(a)) >= ewatimes) {
+                                        Query query1 = db.collection("Student")
+                                                .whereEqualTo("student_id", lateList.get(a));
+                                        query1.get().addOnCompleteListener(task2 -> {
+                                            QuerySnapshot querySnapshot2 = task2.isSuccessful() ? task2.getResult() : null;
+                                            Log.i("query123", "work");
+                                            for (DocumentSnapshot documentSnapshot3 : querySnapshot2.getDocuments()) {
+                                                lateEmail = documentSnapshot3.getString("student_email");
+                                                sendAbsenceWarningEmail(lateEmail, className);
+                                            }
+                                        });
+                                    }
+                                }
+                                for (int a = 0; a < scoreList1.size(); a++) {
+                                    //寄分數預警信
+                                    if (Integer.parseInt(scoreList1.get(a)) < ewpoint) {
+                                        Query query1 = db.collection("Student")
+                                                .whereEqualTo("student_id", lateList.get(a));
+                                        query1.get().addOnCompleteListener(task2 -> {
+                                            QuerySnapshot querySnapshot2 = task2.isSuccessful() ? task2.getResult() : null;
+                                            Log.i("query123", "work");
+                                            for (DocumentSnapshot documentSnapshot3 : querySnapshot2.getDocuments()) {
+                                                lateEmail = documentSnapshot3.getString("student_email");
+                                                sendPointsWarningEmail(lateEmail, className);
+                                            }
+                                        });
+                                    }
+                                }
                             }
                         });
                     }
                 }
 
                 if(!absenceList.isEmpty()){
-                    for ( int i = 0; i < absenceList.size(); i++) {
-                        k = i;
+                    for ( int k = 0; k < absenceList.size(); k++) {
+                        absId = absenceList.get(k);
+                        Log.i("absId",absId);
                         Query query = db.collection("Performance")
                                 .whereEqualTo("class_id", classId)
                                 .whereEqualTo("student_id", absenceList.get(k));
@@ -189,30 +259,74 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
                             Log.i("query123", "work");
                             for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
                                 perf = documentSnapshot2.get("performance_totalAttendance").toString();
+                                absenceTimes = documentSnapshot2.get("performance_absenceTimes").toString();
                                 Log.i("perf",perf);
                                 perId = documentSnapshot2.getId();
                                 score = Integer.parseInt(perf);
-                                if (oriAttend.contains(absenceList.get(k))){
+                                abTimes = Integer.parseInt(absenceTimes);
+                                scoreList.add(perf);
+                                absTimeList.add(absenceTimes);
+                                if (oriAttend.contains(absId)){
                                     Log.i("absence","work1");
                                     score -= absenteeMinus;
+                                    abTimes += 1;
                                 }
-                                if (oriLate.contains(absenceList.get(k))){
+                                if (oriLate.contains(absId)){
                                     Log.i("absence","work2");
                                     score -= (absenteeMinus-lateMinus);
+                                    abTimes += 1;
                                 }
-                                if (oriAbsence.contains(absenceList.get(k))) {
+                                if (oriAbsence.contains(absId)) {
                                     Log.i("absence","work3");
                                     score = score;
                                 }
                                 DocumentReference ChangePointRef = db.collection("Performance").document(perId);
-                                ChangePointRef.update("performance_totalAttendance", score);
+                                Map<String,Object> performance = new HashMap<>();
+                                performance.put("performance_totalAttendance", score);
+                                performance.put("performance_absenceTimes",abTimes);
+                                ChangePointRef.update(performance);
                             }
+                            if (absTimeList.size() == absenceList.size()){
+                                //寄缺席預警信
+                                for (int a=0;a<absTimeList.size();a++){
+                                    if (Integer.parseInt(absTimeList.get(a)) >= ewatimes){
+                                        Log.i("stu_id",absenceList.get(a));
+                                        Query query1 = db.collection("Student")
+                                                .whereEqualTo("student_id",absenceList.get(a));
+                                        query1.get().addOnCompleteListener(task2 -> {
+                                            QuerySnapshot querySnapshot2 = task2.isSuccessful() ? task2.getResult() : null;
+                                            Log.i("query123", "work");
+                                            for (DocumentSnapshot documentSnapshot3 : querySnapshot2.getDocuments()) {
+                                                absenceEmail = documentSnapshot3.getString("student_email");
+                                                sendAbsenceWarningEmail(absenceEmail,className);
+                                            }
+                                        });
+                                    }
+                                }
+                                for (int a=0;a<scoreList.size();a++){
+                                    //寄分數預警信
+                                    if (Integer.parseInt(scoreList.get(a)) < ewpoint){
+                                        Query query1 = db.collection("Student")
+                                                .whereEqualTo("student_id", absenceList.get(a));
+                                        query1.get().addOnCompleteListener(task2 -> {
+                                            QuerySnapshot querySnapshot2 = task2.isSuccessful() ? task2.getResult() : null;
+                                            Log.i("query123", "work");
+                                            for (DocumentSnapshot documentSnapshot3 : querySnapshot2.getDocuments()) {
+                                                absenceEmail = documentSnapshot3.getString("student_email");
+                                                sendPointsWarningEmail(absenceEmail,className);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+
                         });
                     }
+
                 }
                 if(!attendList.isEmpty()){
-                    for ( int i = 0; i < attendList.size(); i++) {
-                        l = i;
+                    for ( int l = 0; l < attendList.size(); l++) {
+                        attId = attendList.get(l);
                         Query query = db.collection("Performance")
                                 .whereEqualTo("class_id", classId)
                                 .whereEqualTo("student_id", attendList.get(l));
@@ -221,19 +335,58 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
                             Log.i("query", "work");
                             for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
                                 perf = documentSnapshot2.get("performance_totalAttendance").toString();
+                                absenceTimes = documentSnapshot2.get("performance_absenceTimes").toString();
                                 perId = documentSnapshot2.getId();
                                 score = Integer.parseInt(perf);
-                                if (oriAttend.contains(attendList.get(l))){
+                                abTimes = Integer.parseInt(absenceTimes);
+                                scoreList2.add(perf);
+                                absTimeList2.add(absenceTimes);
+                                if (oriAttend.contains(attId)){
                                     score = score;
                                 }
-                                if (oriLate.contains(attendList.get(l))){
+                                if (oriLate.contains(attId)){
                                     score += lateMinus;
                                 }
-                                if (oriAbsence.contains(attendList.get(l))) {
+                                if (oriAbsence.contains(attId)) {
                                     score += absenteeMinus;
+                                    abTimes -= 1;
                                 }
                                 DocumentReference ChangePointRef = db.collection("Performance").document(perId);
                                 ChangePointRef.update("performance_totalAttendance", score);
+                                ChangePointRef.update("performance_absenceTimes",abTimes);
+
+                                if (absTimeList2.size() == attendList.size()) {
+                                    //寄缺席預警信
+                                    for (int a = 0; a < absTimeList2.size(); a++) {
+                                        if (Integer.parseInt(absTimeList2.get(a)) >= ewatimes) {
+                                            Query query1 = db.collection("Student")
+                                                    .whereEqualTo("student_id", attendList.get(a));
+                                            query1.get().addOnCompleteListener(task2 -> {
+                                                QuerySnapshot querySnapshot2 = task2.isSuccessful() ? task2.getResult() : null;
+                                                Log.i("query123", "work");
+                                                for (DocumentSnapshot documentSnapshot3 : querySnapshot2.getDocuments()) {
+                                                    attendEmail = documentSnapshot3.getString("student_email");
+                                                    sendAbsenceWarningEmail(attendEmail, className);
+                                                }
+                                            });
+                                        }
+                                    }
+                                    for (int a = 0; a < scoreList2.size(); a++) {
+                                        //寄分數預警信
+                                        if (Integer.parseInt(scoreList2.get(a)) < ewpoint) {
+                                            Query query1 = db.collection("Student")
+                                                    .whereEqualTo("student_id", attendList.get(a));
+                                            query1.get().addOnCompleteListener(task2 -> {
+                                                QuerySnapshot querySnapshot2 = task2.isSuccessful() ? task2.getResult() : null;
+                                                Log.i("query123", "work");
+                                                for (DocumentSnapshot documentSnapshot3 : querySnapshot2.getDocuments()) {
+                                                    attendEmail = documentSnapshot3.getString("student_email");
+                                                    sendPointsWarningEmail(attendEmail, className);
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
                             }
                         });
                     }
@@ -328,5 +481,52 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
 
     public static Context getmContext(){
         return mContext;
+    }
+
+    public void sendAbsenceWarningEmail (String email,String className){
+
+        RequestBody reqbody = RequestBody.create(null, new byte[0]);
+        String url = absence_url + "/" + email + "/" + className;
+        Log.i("email",email);
+        Request.Builder formBody = new Request.Builder().url(url).method("POST", reqbody).header("Content-Length", "0");
+
+        //MultipartBody requestBody = builder.build();//建立要求
+        client.newCall(formBody.build()).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i("Create Android", "Test失敗");
+
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.i("Create Android", "Test成功");
+
+            }
+
+        });
+    }
+
+    public void sendPointsWarningEmail (String email,String className){
+
+        RequestBody reqbody = RequestBody.create(null, new byte[0]);
+        String url = score_url + "/" + email + "/" + className;
+        Request.Builder formBody = new Request.Builder().url(url).method("POST", reqbody).header("Content-Length", "0");
+        //MultipartBody requestBody = builder.build();//建立要求
+
+        client.newCall(formBody.build()).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i("Create Android", "Test失敗");
+
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.i("Create Android", "Test成功");
+
+            }
+
+        });
     }
 }

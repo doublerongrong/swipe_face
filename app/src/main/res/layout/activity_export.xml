@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Export">
+
+    <LinearLayout
+        style="@style/Header"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/backIBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/Header.TextViewSize"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="匯出成績"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"></LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/edittext_round"
+            android:hint="請輸入電子信箱"
+            android:paddingLeft="20dp" />
+
+        <ImageButton
+            android:id="@+id/ibStuScore"
+            android:layout_width="330dp"
+            android:layout_height="120dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/export_stuscore"
+             />
+
+        <ImageButton
+            android:id="@+id/ibStuList"
+            android:layout_width="330dp"
+            android:layout_height="120dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/export_stulist" />
+
+        <ImageButton
+            android:id="@+id/ibGroupScore"
+            android:layout_width="330dp"
+            android:layout_height="120dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/export_groupscore" />
+
+        <ImageButton
+            android:id="@+id/ibGroupList"
+            android:layout_width="330dp"
+            android:layout_height="120dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/export_grouplist" />
+
+    </LinearLayout>
+</LinearLayout>

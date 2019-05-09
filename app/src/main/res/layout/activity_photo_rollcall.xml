@@ -1,41 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context=".TrainAndTest"
-    android:background="#ffffff">
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:text="請拍照並上傳照片辨識 !"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:textColor="#000000"
-        android:gravity="center"
-        app:fontFamily="@font/asap_medium"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/buttonPhoto"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/bg_round_button_yellow"
-        android:text="拍照或是再次拍照"
-        android:textSize="18sp" />
+    <LinearLayout
+        style="@style/Header"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:elevation="5dp">
 
-    <Button
-        android:id="@+id/buttonFinish"
-        android:layout_below="@id/buttonPhoto"
-        android:layout_width="150dp"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/bg_round_button_yellow"
-        android:text="結束"
-        android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
 
-</RelativeLayout>
+            <ImageButton
+                android:id="@+id/backIBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="拍照點名"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            style="@style/Header.TextViewSize" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"></LinearLayout>
+
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="263dp"
+        android:layout_height="182dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/rollcall"/>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="312dp"
+        android:layout_height="81dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:textStyle="normal"
+            android:textColor="#000000"
+            android:lineSpacingExtra="14sp"
+            android:gravity="center_horizontal"
+            android:text="想多拍幾張照片可點選 「拍照」 繼續上傳照片要結束時記得按 「結束點名」 哦"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/buttonPhoto"
+            android:layout_width="300dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="拍照"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:textStyle="normal"
+            android:background="@drawable/login_button"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/buttonPick"
+            android:layout_width="300dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="選擇相片"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            android:textStyle="normal"
+            android:background="@drawable/login_button"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/buttonFinish"
+            android:layout_width="300dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="結束點名"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#0806b1"
+            android:textSize="18dp"
+            android:textStyle="normal"
+            android:background="@drawable/rollcall_fin"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

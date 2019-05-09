@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import permissions.dispatcher.NeedsPermission;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     private String teacher_email;
     private String reClassId,reRollcallId,reClassDocId;
     private int fragmentRequest;
+    private FirebaseFirestore db;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//抓現在登入user
 
     // 設置默認進來是tab 顯示的頁面
@@ -71,10 +73,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
 
                     return true;
                 case R.id.navigation_leave:
-                    Fragment_LeaveList fragment_leave_list = new Fragment_LeaveList();
+                    Fragment_LeaveListN fragment_leave_list = new Fragment_LeaveListN();
                     Bundle argsLeave = new Bundle();
                     argsLeave.putString("teacher_email", teacher_email);
-                    Log.d(TAG,"TEST" + teacher_email);
                     fragment_leave_list.setArguments(argsLeave);
                     transaction.replace(R.id.content,fragment_leave_list);
                     transaction.addToBackStack(fragment_leave_list.getClass().getName());
@@ -101,6 +102,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         setContentView(R.layout.t_activity_homepage);
         teacher_email = user.getEmail();
 
+        system system1 = new system();
+//        IP
+//        system1.setIp();
+
         Bundle bundle = this.getIntent().getExtras();
         if(bundle != null) {
             if(bundle.getString("class_id") != null){
@@ -123,11 +128,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
                 reClassDocId = bundle.getString("classDoc_id");
                 gotoClassDetailFragment();
             }
-            else if(fragmentRequest == 3){
-                String class_id = bundle.getString("class_id");
-                String teacher_email = bundle.getString("teacher_email");
-                gotoClassLeaveListFragment(class_id, teacher_email);
-            } //修改假單後 導向課堂內假單
+//            else if(fragmentRequest == 3){
+//                String class_id = bundle.getString("class_id");
+//                String teacher_email = bundle.getString("teacher_email");
+//                gotoClassLeaveListFragment(class_id, teacher_email);
+//            } //修改假單後 導向課堂內假單
 
             else if(fragmentRequest == 4){
                 String teacher_email = bundle.getString("teacher_email");
@@ -138,8 +143,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         }else{
             setDefaultFragment();
         }
-
-
 
 
 
@@ -192,15 +195,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
             getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragmentClassDetail).commit();
         }//判斷是哪個fragment傳來的請求
 
-        else if (fragmentKey.equals("toLeaveManage")) {
-            Fragment_LeaveList fragment_leaveList = new Fragment_LeaveList();
-            Bundle args = new Bundle();
-            args.putString("info", info);
-            args.putString("teacher_email", teacher_email);
-            fragment_leaveList.setArguments(args);
-            Log.d(TAG, " toLeaveManage");
-            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
-        }//判斷是哪個fragment傳來的請求
+//        else if (fragmentKey.equals("toLeaveManage")) {
+//            Fragment_LeaveListClassN fragment_leaveList = new Fragment_LeaveListClassN();
+//            Bundle args = new Bundle();
+//            args.putString("info", info);
+//            args.putString("teacher_email", teacher_email);
+//            fragment_leaveList.setArguments(args);
+//            Log.d(TAG, " toLeaveManage");
+//            getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
+//        }//判斷是哪個fragment傳來的請求
         else if (fragmentKey.equals("toClassStudentList")) {
             Fragment_Class_StudentList fragment_Class_StudentList = new Fragment_Class_StudentList();
             Bundle args = new Bundle();
@@ -252,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     }
 
     public void gotoLeaveListFragment(String teacher_email) {    // 改完假單回到假單介面(底部欄)
-        Fragment_LeaveList fragment_leaveList = new Fragment_LeaveList();
+        Fragment_LeaveListN fragment_leaveList = new Fragment_LeaveListN();
         Bundle args = new Bundle();
         args.putString("teacher_email",teacher_email);
         fragment_leaveList.setArguments(args);
@@ -260,14 +263,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     }
 
 
-    public void gotoClassLeaveListFragment(String class_id, String teacher_email) {    // 改完假單回到假單介面(課堂內)
-        Fragment_LeaveList fragment_leaveList = new Fragment_LeaveList();
-        Bundle args = new Bundle();
-        args.putString("info",class_id);
-        args.putString("teacher_email",teacher_email);
-        fragment_leaveList.setArguments(args);
-        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
-    }
+//    public void gotoClassLeaveListFragment(String class_id, String teacher_email) {    // 改完假單回到假單介面(課堂內)
+//        Fragment_LeaveListN fragment_leaveList = new Fragment_LeaveListN();
+//        Bundle args = new Bundle();
+//        args.putString("info",class_id);
+//        args.putString("teacher_email",teacher_email);
+//        fragment_leaveList.setArguments(args);
+//        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
+//    }
 
 
 

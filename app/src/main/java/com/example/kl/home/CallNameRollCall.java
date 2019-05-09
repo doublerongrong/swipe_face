@@ -49,7 +49,7 @@ public class CallNameRollCall extends AppCompatActivity {
     private RecyclerView mMainList;
     private RollCallAdapter rollCallAdapter;
     private List<RollCallStudent> rollCallList;
-    private CardView attend, absence;
+    private Button attend, absence;
     private Button  finishBtn;
     private ImageButton returnBtn;
     private String classId,classDoc,performanceId,AttendPointString;
@@ -111,7 +111,7 @@ public class CallNameRollCall extends AppCompatActivity {
                             QuerySnapshot querySnapshot1 = task1.isSuccessful() ? task1.getResult(): null;
                             for(DocumentSnapshot documentSnapshot : querySnapshot1.getDocuments()){
                                 RollCallStudent rollCallStudent = new RollCallStudent(documentSnapshot.getString("student_name"),
-                                        documentSnapshot.getString("student_id"),documentSnapshot.getString("student_school"),
+                                        documentSnapshot.getString("student_id"),
                                         documentSnapshot.getString("student_department"),documentSnapshot.getString("image_url"));
                                 studentId.add(documentSnapshot.get("student_id").toString());
                                 rollCallList.add(rollCallStudent);
@@ -119,7 +119,7 @@ public class CallNameRollCall extends AppCompatActivity {
                             rollCallAdapter = new RollCallAdapter(CallNameRollCall.this,rollCallList);
                             mMainList.setAdapter(rollCallAdapter);
 
-                            attend = (CardView)findViewById(R.id.card_attendance);
+                            attend = (Button) findViewById(R.id.card_attendance);
                             attend.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -158,7 +158,9 @@ public class CallNameRollCall extends AppCompatActivity {
                                         attend.put("rollcall_offical", officalList);
                                         attend.put("rollcall_sick", sickList);
                                         attend.put("rollcall_time",time );
-                                        db.collection("Rollcall").add(attend);
+                                        db.collection("Rollcall").add(attend).addOnCompleteListener(task2 -> {
+                                            mMainList.smoothScrollToPosition(currentPosition + 1);
+                                        });
                                     } else {
                                         Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
                                         query.get().addOnCompleteListener(task1 -> {
@@ -170,7 +172,12 @@ public class CallNameRollCall extends AppCompatActivity {
                                             Map<String, Object> attend = new HashMap<>();
                                             attend.put("rollcall_attend", attendList);
                                             attend.put("rollcall_absence", absenceList);
-                                            db.collection("Rollcall").document(docId).update(attend);
+                                            db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task2 -> {
+                                                mMainList.smoothScrollToPosition(currentPosition + 1);
+                                                if (currentPosition == (classMember.size() - 1)){
+                                                    Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                         });
 
                                     }
@@ -182,7 +189,7 @@ public class CallNameRollCall extends AppCompatActivity {
 
                                 }
                             });
-                            absence = (CardView)findViewById(R.id.card_absence);
+                            absence = (Button) findViewById(R.id.card_absence);
                             absence.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -221,7 +228,9 @@ public class CallNameRollCall extends AppCompatActivity {
                                         absence.put("rollcall_offical", officalList);
                                         absence.put("rollcall_sick", sickList);
                                         absence.put("rollcall_time", time);
-                                        db.collection("Rollcall").add(absence);
+                                        db.collection("Rollcall").add(absence).addOnCompleteListener(task2 -> {
+                                            mMainList.smoothScrollToPosition(currentPosition + 1);
+                                        });
                                     } else {
                                         Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
                                         query.get().addOnCompleteListener(task1 -> {
@@ -233,7 +242,12 @@ public class CallNameRollCall extends AppCompatActivity {
                                             Map<String, Object> absence = new HashMap<>();
                                             absence.put("rollcall_attend", attendList);
                                             absence.put("rollcall_absence", absenceList);
-                                            db.collection("Rollcall").document(docId).update(absence);
+                                            db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
+                                                mMainList.smoothScrollToPosition(currentPosition + 1);
+                                                if (currentPosition == (classMember.size() - 1)){
+                                                    Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                         });
                                     }
                                 }
@@ -254,6 +268,11 @@ public class CallNameRollCall extends AppCompatActivity {
             startActivity(intent);
             finish();
 
+        });
+
+        returnBtn = (ImageButton) findViewById(R.id.backIBtn);
+        returnBtn.setOnClickListener(view -> {
+            finish();
         });
 
 

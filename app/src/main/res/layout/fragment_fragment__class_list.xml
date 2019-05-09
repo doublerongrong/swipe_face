@@ -6,10 +6,10 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:orientation="horizontal">
-        android:background="#FFFFFF">
+        style="@style/Header"
+        android:orientation="horizontal"
+        android:elevation="5dp"
+        android:background="#FFF">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:gravity="center"
             android:text="課程清單"
             android:textColor="#000000"
-            android:textSize="23sp"
+            android:textSize="18sp"
             android:textStyle="" />
 
         <LinearLayout
@@ -47,10 +47,6 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@drawable/shadow" />
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -83,7 +79,15 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/class_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:id="@+id/imNoData"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="150dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/no_create_class"
+                android:visibility="invisible" />
 
         </LinearLayout>
 

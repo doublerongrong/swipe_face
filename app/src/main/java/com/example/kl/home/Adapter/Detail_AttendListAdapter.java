@@ -62,12 +62,31 @@ public class Detail_AttendListAdapter extends RecyclerView.Adapter<Detail_Attend
         sdFormat.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
         Date attendanceDate = AttendanceList.get(position).getAttendance_time();
 
-//        rollcallId = AttendanceList.get(position).getRollcallId();
-//        student_id = AttendanceList.get(position).getStudent_id();
+        String attendanceCheck = AttendanceList.get(position).getAttendance_status();
+
+
 
         holder.textViewAttendDate.setText(sdFormat.format(attendanceDate));
-        holder.textViewAttendance.setText(AttendanceList.get(position).getAttendance_status());
-
+        if(attendanceCheck.equals("出席")){
+            holder.checkAttendBtn.setText(attendanceCheck);
+            holder.checkAttendBtn.setTextColor(context.getResources().getColor(R.color.attendance));
+            holder.checkAttendBtn.setBackground(context.getResources().getDrawable(R.drawable.sd_attendence_attand));
+        }
+        if(attendanceCheck.equals("缺席")){
+            holder.checkAttendBtn.setText(attendanceCheck);
+            holder.checkAttendBtn.setTextColor(context.getResources().getColor(R.color.absense));
+            holder.checkAttendBtn.setBackground(context.getResources().getDrawable(R.drawable.sd_attendance_absense));
+        }
+        if(attendanceCheck.equals("遲到")){
+            holder.checkAttendBtn.setText(attendanceCheck);
+            holder.checkAttendBtn.setTextColor(context.getResources().getColor(R.color.late));
+            holder.checkAttendBtn.setBackground(context.getResources().getDrawable(R.drawable.sd_atendance_late));
+        }
+        if(attendanceCheck.equals("請假")){
+            holder.checkAttendBtn.setText(attendanceCheck);
+            holder.checkAttendBtn.setTextColor(context.getResources().getColor(R.color.leave));
+            holder.checkAttendBtn.setBackground(context.getResources().getDrawable(R.drawable.sd_attendance_leave));
+        }
         holder.checkAttendBtn.setTag(position);
         holder.checkAttendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +112,6 @@ public class Detail_AttendListAdapter extends RecyclerView.Adapter<Detail_Attend
     public class ViewHolder extends RecyclerView.ViewHolder {
         View mView;
         public TextView textViewAttendDate;
-        public TextView textViewAttendance;
         public Button checkAttendBtn;
 
 
@@ -102,7 +120,6 @@ public class Detail_AttendListAdapter extends RecyclerView.Adapter<Detail_Attend
             mView = itemView;
 
             textViewAttendDate = (TextView) mView.findViewById(R.id.textViewAttendDate);
-            textViewAttendance = (TextView) mView.findViewById(R.id.textViewAttendance);
             checkAttendBtn = (Button) mView.findViewById(R.id.checkAttendBtn);
 
         }

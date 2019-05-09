@@ -30,7 +30,7 @@
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
         <activity android:name=".CreateClassGroupSt2" />
-        <activity android:name=".CreateClassGroupSt1" />
+        <activity android:name=".CreateClassGroupSt3" />
         <activity android:name=".GroupPage" />
         <activity android:name=".Activity_PickAnswer" />
         <activity android:name=".TrainAndTest" />
@@ -41,7 +41,6 @@
         <activity android:name=".RollcallResult" />
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
-        <activity android:name=".Activity_StudentDetail" />
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,6 +55,29 @@
             </intent-filter>
         </service>
 
+        <!-- Searchable -->
+        <activity
+            android:name=".Activity_StudentDetail"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:launchMode="singleTop"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"
+                />
+        </activity>
+
+        <!-- Points to searchable activity so the whole app can invoke search. -->
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".Activity_StudentDetail" />
 
         <meta-data
             android:name="preloaded_fonts"

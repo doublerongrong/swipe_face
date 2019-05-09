@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,7 +40,7 @@ public class QuestionPick extends AppCompatActivity {
     private TextView tvStudent_id;
     private TextView tvStudentName;
     private ImageView ivStudentPhoto;
-    private CardView cvNextone;
+    private Button cvNextone;
     private CardView cvCorrectAnswer;
     private Student student;
     private ImageView backIBtn;
@@ -88,6 +89,7 @@ public class QuestionPick extends AppCompatActivity {
             B = question.getB();
             C = question.getC();
             D = question.getD();
+
             if(type.equals("A")){
                 random = (int) (Math.random() * A.size());
                 db.collection("Student")

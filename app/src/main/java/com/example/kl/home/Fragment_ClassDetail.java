@@ -3,6 +3,7 @@ package com.example.kl.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -14,10 +15,12 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kl.home.Model.Performance;
 import com.example.kl.home.Model.Question;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,19 +28,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import static com.example.kl.home.BackHandlerHelper.handleBackPress;
 
 import com.example.kl.home.Model.Class;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import permissions.dispatcher.RuntimePermissions;
 
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {
 
 
     private String TAG = "ClassDetail";
+    private String url = "http://192.168.0.108:8080/Export/StudentGrade/";
     private String classId,rollcallDocId;
     private Class aclass;
     private Class firestore_class;
@@ -46,6 +45,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     private TextView text_class_id;
     private TextView text_class_title;
     private String class_id;
+    private String teacher_email = (FirebaseAuth.getInstance().getCurrentUser()).toString();
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
@@ -59,14 +59,16 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         Bundle args = new Bundle();//fragment傳值
         args = getArguments();//fragment傳值
         classId = args.getString("info");
+
         if(args.getString("rollcall_id") != null){
             rollcallDocId = args.getString("rollcall_id");
             class_id = args.getString("class_id");
-            Log.i("rollcallId",rollcallDocId);
+            Log.d(TAG,"rollcallId : "+rollcallDocId+"\tclass_id : "+class_id);
         }
         Log.d(TAG, "classId:" + classId);//fragment傳值
         Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
         db = FirebaseFirestore.getInstance();
+        getTeacher_email(classId);
 
 
         return inflater.inflate(R.layout.fragment_fragment_class_detail, container, false);
@@ -77,6 +79,13 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         text_class_title = (TextView) view.findViewById(R.id.text_class_title);
         gridLayout = (GridLayout) view.findViewById(R.id.grid_class_detail);
 
+        DocumentReference docRef = db.collection("Class").document(classId);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            class_id = documentSnapshot.toObject(Class.class).getClass_id();
+            Log.d(TAG,"class_id : "+class_id);
+        });
+
+
         setClass(new FirebaseCallback() {
             @Override
             public void onCallback(Class firestore_class) {
@@ -86,9 +95,6 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                 setSingleEvent(gridLayout, firestore_class);
             }
         });
-
-
-
 
 
     }
@@ -161,6 +167,24 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         }
     }
 
+    public void getTeacher_email(String classId){
+        DocumentReference docRef = db.collection("Class").document(classId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Class aClass = document.toObject(Class.class);
+                        teacher_email = aClass.getTeacher_email();
+                        class_id = aClass.getClass_id();
+
+                    }
+                }
+            }
+        });
+    }
+
     // we are setting onClickListener for each element 處理選項
     private void setSingleEvent(GridLayout gridLayout, Class firestore_class) {
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
@@ -174,19 +198,29 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                     switch (finalI) {
                         case 0:
                             //intent activity
-
-                            DocumentReference docRef = db.collection("Class").document(classId);
-                            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                                        Class classG = documentSnapshot.toObject(Class.class);
-                                        class_id = classG.getClass_id();
+                            if(rollcallDocId != null) {
                                 Intent i = new Intent();
-                                Bundle bundlecall = new Bundle();
-                                bundlecall.putString("class_id", class_id);
-                                bundlecall.putString("class_doc",classId);
-                                i.putExtras(bundlecall);
-                                i.setClass(getActivity(),RollcallSelect.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("class_id", class_id);
+                                bundle.putString("class_doc", classId);
+                                bundle.putString("classDoc_id", rollcallDocId);
+                                i.putExtras(bundle);
+                                i.setClass(getActivity(), RollcallSelect.class);
                                 startActivity(i);
-                                    });
+                            }else {
+                                DocumentReference docRef = db.collection("Class").document(classId);
+                                docRef.get().addOnSuccessListener(documentSnapshot -> {
+                                    Class classG = documentSnapshot.toObject(Class.class);
+                                    class_id = classG.getClass_id();
+                                    Intent i = new Intent();
+                                    Bundle bundlecall = new Bundle();
+                                    bundlecall.putString("class_id", class_id);
+                                    bundlecall.putString("class_doc", classId);
+                                    i.putExtras(bundlecall);
+                                    i.setClass(getActivity(), RollcallSelect.class);
+                                    startActivity(i);
+                                });
+                            }
                             break;
                         case 1:
                             //intent activity 今日出缺席
@@ -207,8 +241,16 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 2:
                             //假單管理
-                            mCallback.onFragmentSelected(firestore_class.getClass_id(), "toLeaveManage");//fragment傳值
 
+//                            mCallback.onFragmentSelected(firestore_class.getClass_id(), "toLeaveManage");//fragment傳值
+                            Intent i = new Intent();
+                            Bundle bundleleave = new Bundle();
+                            bundleleave.putString("info",class_id);
+                            bundleleave.putString("teacher_email",teacher_email);
+                            Log.d(TAG,"LeaveListN set bundle" + bundleleave.toString());
+                            i.putExtras(bundleleave);
+                            i.setClass(getActivity(),Fragment_LeaveListClassN.class);
+                            startActivity(i);
                             break;
                         case 3:
                             //學生清單
@@ -220,37 +262,37 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
                                 Class classG = documentSnapshot.toObject(Class.class);
                                 if (!classG.isGroup_state()&&!classG.isGroup_state_go()) {//判斷是否分組
-                                    Intent intent = new Intent();
-                                    intent.setClass(getActivity(), CreateClassGroupSt2.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("classId", classId);
-                                    bundle.putString("classYear", classG.getClass_year());
-                                    bundle.putString("className", classG.getClass_name());
-                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
-                                    intent.putExtras(bundle);
-                                    getActivity().startActivity(intent);
+                                    Intent intentToCreateClassGroupSt1 = new Intent();
+                                    intentToCreateClassGroupSt1.setClass(getActivity(), CreateClassGroupSt1.class);
+                                    Bundle bundleToCreateClassGroupSt1 = new Bundle();
+                                    bundleToCreateClassGroupSt1.putString("classId", classId);
+                                    bundleToCreateClassGroupSt1.putString("classYear", classG.getClass_year());
+                                    bundleToCreateClassGroupSt1.putString("className", classG.getClass_name());
+                                    bundleToCreateClassGroupSt1.putInt("classStuNum", classG.getStudent_id().size());
+                                    intentToCreateClassGroupSt1.putExtras(bundleToCreateClassGroupSt1);
+                                    getActivity().startActivity(intentToCreateClassGroupSt1);
                                 } else if (!classG.isGroup_state()&&classG.isGroup_state_go()){
-                                    Intent intent = new Intent();
-                                    intent.setClass(getActivity(), CreateClassGroupSt1.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("classId", classId);
-                                    bundle.putString("classYear", classG.getClass_year());
-                                    bundle.putString("className", classG.getClass_name());
-                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
-                                    intent.putExtras(bundle);
-                                    getActivity().startActivity(intent);
+                                    Intent intentToCreateClassGroupSt3 = new Intent();
+                                    intentToCreateClassGroupSt3.setClass(getActivity(), CreateClassGroupSt3.class);
+                                    Bundle bundleToCreateClassGroupSt3 = new Bundle();
+                                    bundleToCreateClassGroupSt3.putString("classId", classId);
+                                    bundleToCreateClassGroupSt3.putString("classYear", classG.getClass_year());
+                                    bundleToCreateClassGroupSt3.putString("className", classG.getClass_name());
+                                    bundleToCreateClassGroupSt3.putInt("classStuNum", classG.getStudent_id().size());
+                                    intentToCreateClassGroupSt3.putExtras(bundleToCreateClassGroupSt3);
+                                    getActivity().startActivity(intentToCreateClassGroupSt3);
                                 }
                                 else {
-                                    Intent intent = new Intent();
-                                    intent.setClass(getActivity(), GroupPage.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("classId", classId);
-                                    bundle.putString("class_Id", classG.getClass_id());
-                                    bundle.putString("classYear", classG.getClass_year());
-                                    bundle.putString("className", classG.getClass_name());
-                                    bundle.putInt("classStuNum", classG.getStudent_id().size());
-                                    intent.putExtras(bundle);
-                                    getActivity().startActivity(intent);
+                                    Intent intentToGroupPage = new Intent();
+                                    intentToGroupPage.setClass(getActivity(), GroupPage.class);
+                                    Bundle bundleToGroupPage = new Bundle();
+                                    bundleToGroupPage.putString("classId", classId);
+                                    bundleToGroupPage.putString("class_Id", classG.getClass_id());
+                                    bundleToGroupPage.putString("classYear", classG.getClass_year());
+                                    bundleToGroupPage.putString("className", classG.getClass_name());
+                                    bundleToGroupPage.putInt("classStuNum", classG.getStudent_id().size());
+                                    intentToGroupPage.putExtras(bundleToGroupPage);
+                                    getActivity().startActivity(intentToGroupPage);
                                 }
                             });
                             break;
@@ -319,7 +361,36 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                             break;
                         case 8:
                             //intent activity 繪出成績
-
+                            Intent intentToExport = new Intent();
+                            intentToExport.setClass(getActivity(), Export.class);
+                            Bundle bundleToExport = new Bundle();
+                            bundleToExport.putString("classId", classId);
+                            bundleToExport.putString("class_id",class_id);
+                            intentToExport.putExtras(bundleToExport);
+                            getActivity().startActivity(intentToExport);
+//                            OkHttpClient client = new OkHttpClient();
+//                            LayoutInflater lf = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                            @SuppressLint("InflateParams")
+//                            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_export_excel, null);
+//                            final EditText etShow = vg.findViewById(R.id.et_name);
+//                            new AlertDialog.Builder(getActivity())
+//                                    .setView(vg)
+//                                    .setPositiveButton("確定", (dialog, which) -> {
+//                                        final String email = etShow.getText().toString().trim();
+//                                        if ("".equals(email)) {
+//                                            Toast.makeText(getActivity(), "請輸入信箱", Toast.LENGTH_SHORT).show();
+//                                            Log.d(TAG, "Dialog取消");
+//                                        } else {
+//                                            String urlToApi = url+"\\"+class_id+"\\"+email;
+//                                            RequestBody reqbody = RequestBody.create(null, new byte[0]);
+//                                            Request.Builder formBody = new Request.Builder()
+//                                                    .url(urlToApi).method("POST",reqbody).header("Content-Length", "0");
+//                                            client.newCall(formBody.build());
+//                                            Log.d(TAG,"PostTest");
+//
+//                                        }
+//                                    })
+//                                    .setNegativeButton("取消", null).show();
                             break;
 
                     }
@@ -327,6 +398,8 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
             });
         }
     }
+
+
 
 
 }

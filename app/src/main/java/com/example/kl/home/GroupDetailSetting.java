@@ -1,5 +1,6 @@
 package com.example.kl.home;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -182,7 +183,8 @@ public class GroupDetailSetting extends AppCompatActivity {
 
     public void customClick(View v) {
         LayoutInflater lf = (LayoutInflater) GroupDetailSetting.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_group_detail_setting, null);
+        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_group_detail_setting,null);
+
         ArrayList<String> checkNumberList = new ArrayList<>();
         for(int i =0 ;i<studentList.size();i++){
             checkNumberList.add(studentList.get(i).getStudent_id());
