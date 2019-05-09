@@ -11,21 +11,17 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/cryingfrog"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/cryingfrog"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReRollcall"></activity>
-        <activity android:name=".RandomRollcall" />
-        <activity android:name=".UserSignUpSetting" />
-        <activity android:name=".CreateClassGroupSt1"></activity>
-        <activity android:name=".Export" />
-        <activity android:name=".Fragment_LeaveListClassN"/>
+        <activity android:name=".UserSignUpSetting"></activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />
         <activity android:name=".RollcallSelect" />
+        <activity android:name=".RandomRollcall"></activity>
         <activity android:name=".PhotoRollcall" />
         <activity android:name=".QuestionPick" />
         <activity android:name=".QuestionAnalysis" />
@@ -46,6 +42,7 @@
         <activity android:name=".RollcallResult" />
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
+        <activity android:name=".Fragment_LeaveListClassN" />
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,6 +50,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
         <!-- Searchable -->
         <activity
             android:name=".Activity_StudentDetail"
