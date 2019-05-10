@@ -8,7 +8,8 @@
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,7 +46,7 @@
                 <LinearLayout
                     android:layout_width="72dp"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="70dp"
+                    android:layout_marginLeft="50dp"
                     android:background="@drawable/leavelist_layout"
                     android:gravity="center">
 
@@ -61,8 +62,8 @@
 
                 <ImageButton
                     android:id="@+id/checkBtn"
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/ic_call_made_gray_24dp" />
             </LinearLayout>

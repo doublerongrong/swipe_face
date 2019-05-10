@@ -11,11 +11,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/cryingfrog"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/cryingfrog"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity android:name=".UserSignUpSetting"></activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".SignIn" />
@@ -30,6 +31,7 @@
         <activity android:name=".GroupRandomPick" />
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
+        <activity android:name=".CreateClassGroupSt1"/>
         <activity android:name=".CreateClassGroupSt2" />
         <activity android:name=".CreateClassGroupSt3" />
         <activity android:name=".GroupPage" />
@@ -58,23 +60,8 @@
         </service>
 
         <!-- Searchable -->
-        <activity
-            android:name=".Activity_StudentDetail"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:launchMode="singleTop"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
+        <activity android:name=".Activity_StudentDetail"/>
 
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable"
-                />
-        </activity>
 
         <!-- Points to searchable activity so the whole app can invoke search. -->
         <meta-data

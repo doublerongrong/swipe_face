@@ -6,23 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
-import java.io.File;
 import java.io.IOException;
-
-import it.sephiroth.android.library.easing.Expo;
 
 
 public class Export extends AppCompatActivity {
@@ -50,7 +44,7 @@ public class Export extends AppCompatActivity {
         classId = bundle.getString("classId");
         class_id = bundle.getString("class_id");
         Log.d(TAG, "bundle : classId" + classId + " class_id : " + class_id);
-        system system1 =new system();
+        FlassSetting system1 =new FlassSetting();
 
         etEmail = findViewById(R.id.etEmail);
         ibStuScore = findViewById(R.id.ibStuScore);
@@ -87,7 +81,7 @@ public class Export extends AppCompatActivity {
         });
         backIBtn = findViewById(R.id.backIBtn);
         backIBtn.setOnClickListener(v -> finish());
-        Log.d(TAG,"IP:"+ system.ip);
+        Log.d(TAG,"IP:"+ FlassSetting.ip);
 
 
     }
@@ -95,7 +89,7 @@ public class Export extends AppCompatActivity {
     private void sendEmail(String type) {
 
         String email = etEmail.getText().toString().trim();
-        String url = "http://"+system.ip+":8080/ProjectApi/api/Export/";
+        String url = "http://"+ FlassSetting.ip+":8080/ProjectApi/api/Export/";
         Log.d(TAG,"url: "+url);
 
         Log.d(TAG,"type: "+type);

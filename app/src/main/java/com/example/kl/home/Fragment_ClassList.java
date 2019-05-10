@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
     private List<Class> classList;
     private String TAG = "FLAG";
     private String teacher_email;
-
+    private ImageButton ibSelectYear;//選擇正在進行中or已結束
     private Teacher teacher;
     private ArrayList<String> class_id = new ArrayList<String>();
 
@@ -68,12 +69,13 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
         db = FirebaseFirestore.getInstance();
 
-        imNoData = (ImageView) view.findViewById(R.id.imNoData);
+        imNoData = view.findViewById(R.id.imNoData);
+        ibSelectYear = view.findViewById(R.id.ibSelectYear);
 
         classList = new ArrayList<>();
         classListAdapter = new ClassListAdapter(getActivity().getApplicationContext(),classList);
 
-        mMainList = (RecyclerView)getView().findViewById(R.id.class_list);
+        mMainList = getView().findViewById(R.id.class_list);
         mMainList.setHasFixedSize(true);
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(classListAdapter);
@@ -109,9 +111,6 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
                         classList.add(aClass);
                         classListAdapter.notifyDataSetChanged();
 
-
-
-
                     }
                 }
                 if (classList.isEmpty()) {
@@ -125,13 +124,10 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
             }
         });
-        fabCreateClass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), CreateClassSt1.class);
-                startActivity(intent);
-            }
+        fabCreateClass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), CreateClassSt1.class);
+            startActivity(intent);
         });
 
         classListAdapter.setOnTransPageClickListener(new ClassListAdapter.transPageListener() {

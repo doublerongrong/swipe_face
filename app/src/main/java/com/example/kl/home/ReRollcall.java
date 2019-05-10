@@ -6,7 +6,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
@@ -20,7 +19,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +53,7 @@ public class ReRollcall extends AppCompatActivity {
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result, classMember;
     private List<String> attendList, absenceList,lateList,oriAttend,oriAbsence,oriLate;
-    String url = "http://"+system.ip+":8080/ProjectApi/api/FaceApi/RetrievePhoto";
+    String url = "http://"+ FlassSetting.ip+":8080/ProjectApi/api/FaceApi/RetrievePhoto";
     OkHttpClient client = new OkHttpClient();
     private static Context mContext;
     ResponseBody responseBody;

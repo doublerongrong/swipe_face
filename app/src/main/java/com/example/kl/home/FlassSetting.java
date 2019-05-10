@@ -9,11 +9,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class system {
-    final String TAG = "system";
+public class FlassSetting {
+    final String TAG = "FlassSetting";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    static String ip="140.136.7.27";
+    //ip address
+    static String ip="140.136.155.123";
 
     void setIp(){
         DocumentReference docRef = db.collection("System").document("system");

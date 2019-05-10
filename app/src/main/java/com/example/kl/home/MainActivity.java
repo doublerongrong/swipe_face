@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         setContentView(R.layout.t_activity_homepage);
         teacher_email = user.getEmail();
 
-        system system1 = new system();
+//        FlassSetting flassSetting = new FlassSetting();
 //        IP
 //        system1.setIp();
 

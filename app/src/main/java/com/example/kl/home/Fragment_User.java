@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class Fragment_User extends Fragment {
 
     private static final String TAG = "Fragment_User";
-    private ImageButton InforSetting;
+    private CardView InforSetting;
     private String teacher_email;
     private CardView logout;
 
@@ -48,7 +48,7 @@ public class Fragment_User extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
 
-        InforSetting = (ImageButton)view.findViewById(R.id.settingBtn);
+        InforSetting = view.findViewById(R.id.settingBtn);
         logout = (CardView)view.findViewById(R.id.logout);
 
         Log.d(TAG,"teacher_id :  " + teacher_email);
