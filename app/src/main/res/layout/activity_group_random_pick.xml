@@ -9,10 +9,49 @@
     tools:context=".GroupRandomPick">
 
     <LinearLayout
+        style="@style/Header"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:elevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/backIBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/ic_chevron_left_black_24dp" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:gravity="center"
+            android:text="隨機抽組"
+            android:textColor="#000000"
+            style="@style/Header.TextViewSize" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"></LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="329dp"
-        android:layout_marginTop="200dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="100dp"
         android:orientation="vertical">
+
 
         <TextView
             android:id="@+id/tvgroupnum"
@@ -20,7 +59,7 @@
             android:layout_height="80dp"
             android:gravity="center_horizontal|center_vertical"
             android:textColor="#c52020"
-            android:textSize="40dp"
+            android:textSize="38dp"
             android:textStyle="bold" />
 
         <TextView
@@ -29,7 +68,7 @@
             android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
             android:text=""
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#000" />
 
@@ -39,7 +78,7 @@
             android:layout_height="60dp"
             android:gravity="center_horizontal|center_vertical"
             android:text=""
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="normal"
             android:textColor="#000000"
 
@@ -49,13 +88,14 @@
 
     <LinearLayout
         android:layout_width="340dp"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="110dp"
         android:layout_gravity="center">
 
         <Button
             android:id="@+id/btAdd"
             android:layout_width="160dp"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:background="@drawable/rollcall_attend"
             android:text="加分"
             android:textColor="#ffffff"
@@ -66,13 +106,13 @@
         <Button
             android:id="@+id/btNextGroup"
             android:layout_width="160dp"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:background="@drawable/rollcall_absence"
+            android:fontFamily="sans-serif-medium"
             android:text="下一組"
             android:textColor="#ffffff"
-            android:textSize="20dp"
-            android:fontFamily="sans-serif-medium">
+            android:textSize="20dp">
 
         </Button>
 

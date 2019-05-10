@@ -16,18 +16,13 @@
         android:roundIcon="@drawable/cryingfrog"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:networkSecurityConfig="@xml/network_security_config"
-        >
-        <activity android:name=".ReRollcall"></activity>
-        <activity android:name=".RandomRollcall" />
-        <activity android:name=".UserSignUpSetting" />
-        <activity android:name=".CreateClassGroupSt1"></activity>
-        <activity android:name=".Export" />
-        <activity android:name=".Fragment_LeaveListClassN"/>
+        android:networkSecurityConfig="@xml/network_security_config">
+        <activity android:name=".UserSignUpSetting"></activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />
         <activity android:name=".RollcallSelect" />
+        <activity android:name=".RandomRollcall"></activity>
         <activity android:name=".PhotoRollcall" />
         <activity android:name=".QuestionPick" />
         <activity android:name=".QuestionAnalysis" />
@@ -36,6 +31,7 @@
         <activity android:name=".GroupRandomPick" />
         <activity android:name=".GroupDetailSetting" />
         <activity android:name=".GroupDetail" />
+        <activity android:name=".CreateClassGroupSt1"/>
         <activity android:name=".CreateClassGroupSt2" />
         <activity android:name=".CreateClassGroupSt3" />
         <activity android:name=".GroupPage" />
@@ -48,6 +44,7 @@
         <activity android:name=".RollcallResult" />
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
+        <activity android:name=".Fragment_LeaveListClassN" />
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,24 +52,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- Searchable -->
-        <activity
-            android:name=".Activity_StudentDetail"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:launchMode="singleTop"
-            >
+        <service
+            android:name=".MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
+        </service>
 
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable"
-                />
-        </activity>
+        <!-- Searchable -->
+        <activity android:name=".Activity_StudentDetail"/>
+
 
         <!-- Points to searchable activity so the whole app can invoke search. -->
         <meta-data

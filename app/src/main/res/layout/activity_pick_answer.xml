@@ -65,15 +65,14 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="35dp"
                     android:layout_marginBottom="40dp"
                     android:text="請選擇點人模式"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp" />
 
                 <ImageButton
                     android:id="@+id/ib_pa_random_pick"
-                    android:layout_width="330dp"
+                    android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:background="@drawable/pick_random"
                     android:text="隨機選取"
@@ -81,7 +80,7 @@
                     android:textSize="18sp"/>
                 <ImageButton
                     android:id="@+id/ib_pa_low_attendence"
-                    android:layout_width="330dp"
+                    android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:background="@drawable/pick_lowattence"
                     android:text="隨機選取"
@@ -90,7 +89,7 @@
 
                 <ImageButton
                     android:id="@+id/ib_pa_low_interaction"
-                    android:layout_width="330dp"
+                    android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:background="@drawable/pick_lowinteract"
                     android:text="隨機選取"
