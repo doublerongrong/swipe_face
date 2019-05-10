@@ -14,7 +14,7 @@ public class FlassSetting {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     //ip address
-    static String ip="140.136.7.27";
+    static String ip="140.136.155.123";
 
     void setIp(){
         DocumentReference docRef = db.collection("System").document("system");

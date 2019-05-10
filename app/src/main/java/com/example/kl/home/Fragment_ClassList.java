@@ -111,9 +111,6 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
                         classList.add(aClass);
                         classListAdapter.notifyDataSetChanged();
 
-
-
-
                     }
                 }
                 if (classList.isEmpty()) {
@@ -127,13 +124,10 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
             }
         });
-        fabCreateClass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), CreateClassSt1.class);
-                startActivity(intent);
-            }
+        fabCreateClass.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), CreateClassSt1.class);
+            startActivity(intent);
         });
 
         classListAdapter.setOnTransPageClickListener(new ClassListAdapter.transPageListener() {
