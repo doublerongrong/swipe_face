@@ -259,14 +259,32 @@ public class CallNameRollCall extends AppCompatActivity {
 
         finishBtn = (Button) findViewById(R.id.finishButton);
         finishBtn.setOnClickListener(view -> {
-            Intent intent = new Intent();
-            intent.setClass(getApplicationContext(), RollcallResult.class);
-            intent.putExtra("class_id", classId);
-            intent.putExtra("class_doc",classDoc);
-            intent.putExtra("classDoc_id",docId);
-            intent.putExtra("request","1");
-            startActivity(intent);
-            finish();
+            for (int i=0;i<classMember.size();i++){
+                if (!absenceList.contains(classMember.get(i)) && !attendList.contains(classMember.get(i))){
+                    attendList.add(classMember.get(i));
+                }
+            }
+            Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
+            query1.get().addOnCompleteListener(task1 -> {
+                QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
+
+                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                    docId = documentSnapshot.getId();
+                }
+                Map<String, Object> attend = new HashMap<>();
+                attend.put("rollcall_attend", attendList);
+                db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
+                    Intent intent = new Intent();
+                    intent.setClass(getApplicationContext(), RollcallResult.class);
+                    intent.putExtra("class_id", classId);
+                    intent.putExtra("class_doc", classDoc);
+                    intent.putExtra("classDoc_id", docId);
+                    intent.putExtra("request", "1");
+                    startActivity(intent);
+                    finish();
+
+                });
+            });
 
         });
 
