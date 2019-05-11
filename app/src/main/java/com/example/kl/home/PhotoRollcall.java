@@ -263,10 +263,10 @@ public class PhotoRollcall extends AppCompatActivity {
                         //ToastUtils.show(getmContext(), "辨識成功 !");
                     }
                 }else{
-                    if (!absenceList.contains(id)) {
-                        absenceList.add(id);
-                        //ToastUtils.show(getmContext(), "辨識失敗 !");
-                    }
+                    //有BUG 先註解
+//                    if (!absenceList.contains(id)) {
+//                        absenceList.add(id);
+//                    }
                 }
 
                 //ToastUtils.show(getmContext(),"名字:"+name+"\n"+"學號: "+id+"\n"+"email:"+email+"\n"+"系所:"+department+"\n"+"學校:"+school);
