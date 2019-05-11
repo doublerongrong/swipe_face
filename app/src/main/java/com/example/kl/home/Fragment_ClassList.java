@@ -70,7 +70,6 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         db = FirebaseFirestore.getInstance();
 
         imNoData = view.findViewById(R.id.imNoData);
-        ibSelectYear = view.findViewById(R.id.ibSelectYear);
 
         classList = new ArrayList<>();
         classListAdapter = new ClassListAdapter(getActivity().getApplicationContext(),classList);

@@ -1,19 +1,24 @@
 package com.example.kl.home;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,6 +57,8 @@ public class PhotoRollcall extends AppCompatActivity {
     private final String TAG = "PhotoRollcall";
     private String classId,classDoc,docId;
     String name,id,email,department,school;
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
     private ImageButton backBtn;
     private Button finishBtn,photoBtn,btPick;
     private int REQUEST_CODE_CHOOSE = 9;
@@ -204,6 +211,15 @@ public class PhotoRollcall extends AppCompatActivity {
                 builder.addFormDataPart("photos", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
             }//前面是para  中間是抓圖片名字 後面是創一個要求
         }
+        LayoutInflater lf = (LayoutInflater) PhotoRollcall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_photo_rollcall,null);
+        img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+        ad = (AnimationDrawable)img_pgbar.getDrawable();
+        ad.start();
+        android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(PhotoRollcall.this);
+        builder1.setView(vg);
+        AlertDialog dialog = builder1.create();
+        dialog.show();
 
         MultipartBody requestBody = builder.build();//建立要求
 
@@ -222,6 +238,7 @@ public class PhotoRollcall extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 Log.i("Create Android", "Test成功");
                 parseJsonWithJsonObject(response);
+                dialog.dismiss();
 
             }
 

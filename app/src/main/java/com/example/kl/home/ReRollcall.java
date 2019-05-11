@@ -1,13 +1,18 @@
 package com.example.kl.home;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.kl.home.Model.Class;
 import com.google.firebase.firestore.DocumentReference;
@@ -50,6 +55,8 @@ public class ReRollcall extends AppCompatActivity {
     private ImageButton backBtn;
     private Button finishBtn, photoBtn;
     private Button btPick;
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result, classMember;
     private List<String> attendList, absenceList,lateList,oriAttend,oriAbsence,oriLate;
@@ -286,6 +293,15 @@ public class ReRollcall extends AppCompatActivity {
                 builder.addFormDataPart("photos", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
             }//前面是para  中間是抓圖片名字 後面是創一個要求
         }
+        LayoutInflater lf = (LayoutInflater) ReRollcall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_photo_rollcall,null);
+        img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+        ad = (AnimationDrawable)img_pgbar.getDrawable();
+        ad.start();
+        android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(ReRollcall.this);
+        builder1.setView(vg);
+        AlertDialog dialog = builder1.create();
+        dialog.show();
 
         MultipartBody requestBody = builder.build();//建立要求
 
@@ -305,6 +321,7 @@ public class ReRollcall extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 Log.i("Create Android", "Test成功");
                 parseJsonWithJsonObject(response);
+                dialog.dismiss();
 
             }
 
