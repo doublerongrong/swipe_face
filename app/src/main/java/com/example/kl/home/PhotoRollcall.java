@@ -100,6 +100,7 @@ public class PhotoRollcall extends AppCompatActivity {
         officalList = new ArrayList<>();
         sickList = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
+        mContext = getApplicationContext();
 
         Query query = db.collection("Class").whereEqualTo("class_id",classId);
         query.get().addOnCompleteListener(task -> {
@@ -279,13 +280,7 @@ public class PhotoRollcall extends AppCompatActivity {
                         Log.i("attend",id);
                         //ToastUtils.show(getmContext(), "辨識成功 !");
                     }
-                }else{
-                    //有BUG 先註解
-//                    if (!absenceList.contains(id)) {
-//                        absenceList.add(id);
-//                    }
                 }
-
                 //ToastUtils.show(getmContext(),"名字:"+name+"\n"+"學號: "+id+"\n"+"email:"+email+"\n"+"系所:"+department+"\n"+"學校:"+school);
                 //heroList.add(hero);
             }

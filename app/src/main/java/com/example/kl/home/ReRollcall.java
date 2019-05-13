@@ -42,6 +42,7 @@ import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -59,8 +60,11 @@ public class ReRollcall extends AppCompatActivity {
     private AnimationDrawable ad;
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result, classMember;
+    private List<String> scoreList,scoreList1,scoreList2,absTimeList,absTimeList1,absTimeList2;
     private List<String> attendList, absenceList,lateList,oriAttend,oriAbsence,oriLate;
     String url = "http://"+ FlassSetting.ip+":8080/ProjectApi/api/FaceApi/RetrievePhoto";
+    private String score_url = "http://"+ FlassSetting.ip+":8080/ProjectApi/api/Warning/points";
+    private String absence_url = "http://"+ FlassSetting.ip+":8080/ProjectApi/api/Warning/times";
     OkHttpClient client = new OkHttpClient();
     private static Context mContext;
     ResponseBody responseBody;
@@ -68,7 +72,8 @@ public class ReRollcall extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private int count = 0;
     int score,j,k,l,n;
-    private int lateMinus,absenteeMinus;
+    private int lateMinus,absenteeMinus,abTimes,ewpoint,ewatimes;
+    private String attId,absId,latId,absenceTimes,className,attendEmail,absenceEmail,lateEmail;
     private Date time;
 
     @Override
@@ -97,7 +102,14 @@ public class ReRollcall extends AppCompatActivity {
         oriAttend = new ArrayList<>();
         oriAbsence = new ArrayList<>();
         oriLate = new ArrayList<>();
+        scoreList1 = new ArrayList<>();
+        scoreList = new ArrayList<>();
+        scoreList2 = new ArrayList<>();
+        absTimeList1 = new ArrayList<>();
+        absTimeList = new ArrayList<>();
+        absTimeList2 = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
+        mContext = getApplicationContext();
 
         //獲取老師設定分數
         db.collection("Class").whereEqualTo("class_id", classId).
@@ -110,6 +122,9 @@ public class ReRollcall extends AppCompatActivity {
                         Class aClass = documentSnapshots.getDocuments().get(0).toObject(Class.class);
                         lateMinus = aClass.getClass_lateminus();
                         absenteeMinus = aClass.getClass_absenteeminus();
+                        className = aClass.getClass_name();
+                        ewatimes = aClass.getClass_ewtimes();
+                        ewpoint = aClass.getClass_ewpoints();
                     }
                 });
 
@@ -129,6 +144,7 @@ public class ReRollcall extends AppCompatActivity {
             lateList = oriLate;
             absenceList = oriAbsence;
             attendList = oriAttend;
+            Log.i("ori",oriLate.toString());
         });
 
 
@@ -160,108 +176,99 @@ public class ReRollcall extends AppCompatActivity {
         });
 
         finishBtn.setOnClickListener(view -> {
-            if(!lateList.isEmpty()){
-                for ( int i = 0; i < lateList.size(); i++) {
-                    j = i;
-                    Query query1 = db.collection("Performance")
-                            .whereEqualTo("class_id", classId)
-                            .whereEqualTo("student_id", lateList.get(j));
-                    query1.get().addOnCompleteListener(task -> {
-                        QuerySnapshot querySnapshot1 = task.isSuccessful() ? task.getResult() : null;
-                        Log.i("query", "work");
-                        for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
-                            perf = documentSnapshot2.get("performance_totalAttendance").toString();
-                            perId = documentSnapshot2.getId();
-                            score = Integer.parseInt(perf);
-                            if (oriAttend.contains(lateList.get(j))){
-                                score -= lateMinus;
+            DocumentReference docRef3 = db.collection("Rollcall").document(rollcallDocId);
+            docRef3.get().addOnSuccessListener(documentSnapshot -> {
+                oriLate = (ArrayList) documentSnapshot.get("rollcall_late");
+                oriAbsence = (ArrayList) documentSnapshot.get("rollcall_absence");
+                oriAttend = (ArrayList) documentSnapshot.get("rollcall_attend");
+                Log.i("oriL", oriLate.toString());
+                if (!lateList.isEmpty()) {
+                    for (int j = 0; j < lateList.size(); j++) {
+                        latId = lateList.get(j);
+                        Query query2 = db.collection("Performance")
+                                .whereEqualTo("class_id", classId)
+                                .whereEqualTo("student_id", lateList.get(j));
+                        query2.get().addOnCompleteListener(task -> {
+                            QuerySnapshot querySnapshot1 = task.isSuccessful() ? task.getResult() : null;
+                            Log.i("query", "work");
+                            for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
+                                perf = documentSnapshot2.get("performance_totalAttendance").toString();
+                                absenceTimes = documentSnapshot2.get("performance_absenceTimes").toString();
+                                perId = documentSnapshot2.getId();
+                                score = Integer.parseInt(perf);
+                                abTimes = Integer.parseInt(absenceTimes);
+                                scoreList1.add(perf);
+                                absTimeList1.add(absenceTimes);
+                                if (oriAttend.contains(latId)) {
+                                    Log.i("score", "1");
+                                    score -= lateMinus;
+                                }
+                                if (oriLate.contains(latId)) {
+                                    Log.i("score", "2");
+                                    score = score;
+                                }
+                                if (oriAbsence.contains(latId)) {
+                                    Log.i("score", "3");
+                                    score -= (lateMinus - absenteeMinus);
+                                    abTimes -= 1;
+                                }
+                                DocumentReference ChangePointRef = db.collection("Performance").document(perId);
+                                Log.i("score", String.valueOf(score));
+                                Log.i("abtimes", String.valueOf(abTimes));
+                                ChangePointRef.update("performance_totalAttendance", score);
+                                ChangePointRef.update("performance_absenceTimes", abTimes);
                             }
-                            if(oriLate.contains(lateList.get(j))){
-                                score = score;
+                            if (absTimeList1.size() == lateList.size()) {
+                                //寄缺席預警信
+                                for (int a = 0; a < absTimeList1.size(); a++) {
+                                    if (Integer.parseInt(absTimeList1.get(a)) >= ewatimes) {
+                                        Query query1 = db.collection("Student")
+                                                .whereEqualTo("student_id", lateList.get(a));
+                                        query1.get().addOnCompleteListener(task2 -> {
+                                            QuerySnapshot querySnapshot2 = task2.isSuccessful() ? task2.getResult() : null;
+                                            Log.i("query123", "work");
+                                            for (DocumentSnapshot documentSnapshot3 : querySnapshot2.getDocuments()) {
+                                                lateEmail = documentSnapshot3.getString("student_email");
+                                                sendAbsenceWarningEmail(lateEmail, className);
+                                            }
+                                        });
+                                    }
+                                }
+                                for (int a = 0; a < scoreList1.size(); a++) {
+                                    //寄分數預警信
+                                    if (Integer.parseInt(scoreList1.get(a)) < ewpoint) {
+                                        Query query1 = db.collection("Student")
+                                                .whereEqualTo("student_id", lateList.get(a));
+                                        query1.get().addOnCompleteListener(task2 -> {
+                                            QuerySnapshot querySnapshot2 = task2.isSuccessful() ? task2.getResult() : null;
+                                            Log.i("query123", "work");
+                                            for (DocumentSnapshot documentSnapshot3 : querySnapshot2.getDocuments()) {
+                                                lateEmail = documentSnapshot3.getString("student_email");
+                                                sendPointsWarningEmail(lateEmail, className);
+                                            }
+                                        });
+                                    }
+                                }
                             }
-                            if(oriAbsence.contains(lateList.get(j))) {
-                                score -= (lateMinus - absenteeMinus);
-                            }
-                            DocumentReference ChangePointRef = db.collection("Performance").document(perId);
-                            ChangePointRef.update("performance_totalAttendance", score);
-                        }
+                        });
+                    }
+                    Map<String, Object> attend = new HashMap<>();
+                    attend.put("rollcall_absence", absenceList);
+                    attend.put("rollcall_attend", attendList);
+                    attend.put("rollcall_late", lateList);
+                    db.collection("Rollcall").document(rollcallDocId).update(attend).addOnCompleteListener(task -> {
+                        Intent intent = new Intent();
+                        intent.setClass(getApplicationContext(), RollcallResult.class);
+                        intent.putExtra("class_id", classId);
+                        intent.putExtra("class_doc", classDoc);
+                        intent.putExtra("classDoc_id", rollcallDocId);
+                        startActivity(intent);
+                        finish();
                     });
                 }
-            }
-
-            if(!absenceList.isEmpty()){
-                for ( int i = 0; i < absenceList.size(); i++) {
-                    k = i;
-                    Query query1 = db.collection("Performance")
-                            .whereEqualTo("class_id", classId)
-                            .whereEqualTo("student_id", absenceList.get(k));
-                    query1.get().addOnCompleteListener(task -> {
-                        QuerySnapshot querySnapshot1 = task.isSuccessful() ? task.getResult() : null;
-                        Log.i("query123", "work");
-                        for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
-                            perf = documentSnapshot2.get("performance_totalAttendance").toString();
-                            Log.i("perf",perf);
-                            perId = documentSnapshot2.getId();
-                            score = Integer.parseInt(perf);
-                            if (oriAttend.contains(absenceList.get(k))){
-                                Log.i("absence","work1");
-                                score -= absenteeMinus;
-                            }
-                            if (oriLate.contains(absenceList.get(k))){
-                                Log.i("absence","work2");
-                                score -= (absenteeMinus-lateMinus);
-                            }
-                            if (oriAbsence.contains(absenceList.get(k))) {
-                                Log.i("absence","work3");
-                                score = score;
-                            }
-                            DocumentReference ChangePointRef = db.collection("Performance").document(perId);
-                            ChangePointRef.update("performance_totalAttendance", score);
-                        }
-                    });
-                }
-            }
-            if(!attendList.isEmpty()){
-                for ( int i = 0; i < attendList.size(); i++) {
-                    l = i;
-                    Query query1 = db.collection("Performance")
-                            .whereEqualTo("class_id", classId)
-                            .whereEqualTo("student_id", attendList.get(l));
-                    query1.get().addOnCompleteListener(task -> {
-                        QuerySnapshot querySnapshot1 = task.isSuccessful() ? task.getResult() : null;
-                        Log.i("query", "work");
-                        for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
-                            perf = documentSnapshot2.get("performance_totalAttendance").toString();
-                            perId = documentSnapshot2.getId();
-                            score = Integer.parseInt(perf);
-                            if (oriAttend.contains(attendList.get(l))){
-                                score = score;
-                            }
-                            if (oriLate.contains(attendList.get(l))){
-                                score += lateMinus;
-                            }
-                            if (oriAbsence.contains(attendList.get(l))) {
-                                score += absenteeMinus;
-                            }
-                            DocumentReference ChangePointRef = db.collection("Performance").document(perId);
-                            ChangePointRef.update("performance_totalAttendance", score);
-                        }
-                    });
-                }
-            }
-            Map<String, Object> attend = new HashMap<>();
-            attend.put("rollcall_absence", absenceList);
-            attend.put("rollcall_attend",attendList);
-            attend.put("rollcall_late",lateList);
-            db.collection("Rollcall").document(rollcallDocId).update(attend).addOnCompleteListener(task -> {
-                Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), RollcallResult.class);
-                intent.putExtra("class_id", classId);
-                intent.putExtra("class_doc", classDoc);
-                intent.putExtra("classDoc_id", rollcallDocId);
-                startActivity(intent);
-                finish();
             });
+
+
 
         });
 
@@ -382,4 +389,51 @@ public class ReRollcall extends AppCompatActivity {
     public static Context getmContext() {
         return mContext;
     }
+
+        public void sendAbsenceWarningEmail (String email,String className){
+
+            RequestBody reqbody = RequestBody.create(null, new byte[0]);
+            String url = absence_url + "/" + email + "/" + className;
+            Log.i("email",email);
+            Request.Builder formBody = new Request.Builder().url(url).method("POST", reqbody).header("Content-Length", "0");
+
+            //MultipartBody requestBody = builder.build();//建立要求
+            client.newCall(formBody.build()).enqueue(new Callback() {
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.i("Create Android", "Test失敗");
+
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.i("Create Android", "Test成功");
+
+                }
+
+            });
+        }
+
+        public void sendPointsWarningEmail (String email,String className){
+
+            RequestBody reqbody = RequestBody.create(null, new byte[0]);
+            String url = score_url + "/" + email + "/" + className;
+            Request.Builder formBody = new Request.Builder().url(url).method("POST", reqbody).header("Content-Length", "0");
+            //MultipartBody requestBody = builder.build();//建立要求
+
+            client.newCall(formBody.build()).enqueue(new Callback() {
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.i("Create Android", "Test失敗");
+
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.i("Create Android", "Test成功");
+
+                }
+
+            });
+        }
 }
