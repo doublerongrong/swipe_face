@@ -66,7 +66,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
             Log.d(TAG,"rollcallId : "+rollcallDocId+"\tclass_id : "+class_id);
         }
         Log.d(TAG, "classId:" + classId);//fragment傳值
-        Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
         db = FirebaseFirestore.getInstance();
         getTeacher_email(classId);
 
@@ -193,8 +193,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getContext(), "Clicked at index " + finalI,
-                            Toast.LENGTH_SHORT).show();
+                   Log.d(TAG,"index "+finalI);
                     switch (finalI) {
                         case 0:
                             //intent activity

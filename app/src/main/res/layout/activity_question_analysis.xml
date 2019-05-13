@@ -43,190 +43,203 @@
 
 
     </LinearLayout>
-    <com.github.mikephil.charting.charts.PieChart
-        android:layout_gravity="center"
-        android:id="@+id/chart"
-        android:layout_width="300dp"
-        android:layout_height="300dp" />
-    <ImageView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/divider"/>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cvPickA"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:onClick="onSelect"
-            android:clickable="true"
-            android:focusable="true">
-            <LinearLayout
+            android:layout_height="match_parent"
+
+            android:orientation="vertical">
+            <com.github.mikephil.charting.charts.PieChart
+                android:layout_gravity="center"
+                android:id="@+id/chart"
+                android:layout_width="300dp"
+                android:layout_height="300dp" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/divider"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cvPickA"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:text="A"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical|center"
-                    />
-                <TextView
-                    android:id="@+id/textA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="6"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical"/>
-            </LinearLayout>
+                android:onClick="onSelect"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:text="A"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical|center"
+                        />
+                    <TextView
+                        android:id="@+id/textA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="6"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"/>
+                </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/divider"/>
-    <android.support.v7.widget.CardView
-        android:id="@+id/cvPickB"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:onClick="onSelect"
-        android:clickable="true"
-        android:focusable="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:text="B"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_vertical|center"
-                />
-            <TextView
-                android:id="@+id/textB"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="6"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_vertical"/>
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/divider"/>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/cvPickC"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:onClick="onSelect"
-        android:clickable="true"
-        android:focusable="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:text="C"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_vertical|center"
-                />
-            <TextView
-                android:id="@+id/textC"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="6"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_vertical"/>
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/divider"/>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/cvPickD"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:onClick="onSelect"
-        android:clickable="true"
-        android:focusable="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:text="D"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_vertical|center"
-                />
-            <TextView
-                android:id="@+id/textD"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="6"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:gravity="center_vertical"/>
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/divider"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/nextStepButton"
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:layout_gravity="bottom"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardBackgroundColor="#0806b1">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center"
-                android:text="提問"
-                android:textColor="#FFFF"
-                android:textSize="18sp" />
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+                android:background="@drawable/divider"/>
+            <android.support.v7.widget.CardView
+                android:id="@+id/cvPickB"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:onClick="onSelect"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:text="B"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical|center"
+                        />
+                    <TextView
+                        android:id="@+id/textB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="6"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/divider"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cvPickC"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:onClick="onSelect"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:text="C"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical|center"
+                        />
+                    <TextView
+                        android:id="@+id/textC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="6"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/divider"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cvPickD"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:onClick="onSelect"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:text="D"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical|center"
+                        />
+                    <TextView
+                        android:id="@+id/textD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="6"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:gravity="center_vertical"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/divider"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                >
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/nextStepButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="bottom"
+                    app:cardBackgroundColor="#0806b1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center"
+                        android:text="提問"
+                        android:textColor="#FFFF"
+                        android:textSize="18sp" />
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </LinearLayout>
