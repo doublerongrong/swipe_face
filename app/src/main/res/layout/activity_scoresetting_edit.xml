@@ -122,7 +122,8 @@
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:textSize="18sp"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:singleLine="true"/>
 
         </LinearLayout>
 
@@ -175,7 +176,8 @@
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:textSize="18sp"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:singleLine="true"/>
 
         </LinearLayout>
 
@@ -226,7 +228,8 @@
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:singleLine="true"/>
 
         </LinearLayout>
         >
@@ -300,7 +303,8 @@
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:textSize="18sp"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:singleLine="true"/>
 
         </LinearLayout>
 
@@ -350,7 +354,8 @@
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:singleLine="true"/>
 
         </LinearLayout>
 
@@ -424,7 +429,8 @@
                 android:inputType="textMultiLine"
                 android:maxLines="1"
                 android:textSize="18sp"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:singleLine="true"/>
 
         </LinearLayout>
 
@@ -475,7 +481,8 @@
                 android:gravity="center"
                 android:inputType="textMultiLine"
                 android:maxLines="1"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:singleLine="true"/>
         </LinearLayout>
         <TextView
             android:id="@+id/textView19"

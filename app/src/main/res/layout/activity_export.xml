@@ -59,7 +59,9 @@
             android:layout_marginRight="50dp"
             android:background="@drawable/edittext_round"
             android:hint="請輸入電子信箱"
-            android:paddingLeft="20dp" />
+            android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
+            android:singleLine="true"/>
 
         <ImageButton
             android:id="@+id/ibStuScore"

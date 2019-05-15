@@ -22,7 +22,8 @@
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
         android:gravity="center_vertical"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:singleLine="true"/>
 
 
 

@@ -92,7 +92,8 @@
                 android:text="載入中"
                 android:textSize="20dp"
                 tools:text="吳濟聰"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:singleLine="true"/>
 
 
         </LinearLayout>
@@ -119,7 +120,8 @@
                 android:text="載入中"
                 android:textSize="20dp"
                 tools:text="053792@mail.fju.edu.tw"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:singleLine="true"/>
 
 
         </LinearLayout>
@@ -146,7 +148,8 @@
                 android:text="載入中"
                 android:textSize="20dp"
                 tools:text="SL207"
-                android:textColor="#000000"/>
+                android:textColor="#000000"
+                android:singleLine="true"/>
 
 
         </LinearLayout>
@@ -195,7 +198,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="三"/>
+                        tools:text="三"
+                        android:singleLine="true"/>
 
                     <EditText
                         android:id="@+id/editOTH11"
@@ -205,7 +209,8 @@
                         android:layout_marginLeft="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="12"/>
+                        tools:text="12"
+                        android:singleLine="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -221,7 +226,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="30"/>
+                        tools:text="30"
+                        android:singleLine="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -237,7 +243,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         tools:text="13"
-                        android:textColor="#000000"/>
+                        android:textColor="#000000"
+                        android:singleLine="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -253,7 +260,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="30"/>
+                        tools:text="30"
+                        android:singleLine="true"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -275,7 +283,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="三"/>
+                        tools:text="三"
+                        android:singleLine="true"/>
 
                     <EditText
                         android:id="@+id/editOTH21"
@@ -285,7 +294,8 @@
                         android:layout_marginLeft="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="12"/>
+                        tools:text="12"
+                        android:singleLine="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -301,7 +311,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="30"/>
+                        tools:text="30"
+                        android:singleLine="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -317,7 +328,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="13"/>
+                        tools:text="13"
+                        android:singleLine="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -333,7 +345,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="30"/>
+                        tools:text="30"
+                        android:singleLine="true"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -355,7 +368,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="三"/>
+                        tools:text="三"
+                        android:singleLine="true"/>
 
                     <EditText
                         android:id="@+id/editOTH31"
@@ -365,7 +379,8 @@
                         android:layout_marginLeft="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="12"/>
+                        tools:text="12"
+                        android:singleLine="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -381,7 +396,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="30"/>
+                        tools:text="30"
+                        android:singleLine="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -397,7 +413,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="13"/>
+                        tools:text="13"
+                        android:singleLine="true"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -413,7 +430,8 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_horizontal"
                         android:textColor="#000000"
-                        tools:text="30"/>
+                        tools:text="30"
+                        android:singleLine="true"/>
                 </LinearLayout>
 
 

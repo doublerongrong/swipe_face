@@ -110,7 +110,8 @@
                             android:gravity="center"
                             android:inputType="textMultiLine"
                             android:maxLines="1"
-                            android:scrollbars="vertical" />
+                            android:scrollbars="vertical"
+                            android:singleLine="true"/>
                     </LinearLayout>
 
                     <TextView
@@ -159,7 +160,8 @@
                             android:gravity="center"
                             android:inputType="textMultiLine"
                             android:maxLines="1"
-                            android:scrollbars="vertical" />
+                            android:scrollbars="vertical"
+                            android:singleLine="true"/>
                     </LinearLayout>
 
                     <TextView
@@ -208,7 +210,8 @@
                             android:gravity="center"
                             android:inputType="textMultiLine"
                             android:maxLines="1"
-                            android:scrollbars="vertical" />
+                            android:scrollbars="vertical"
+                            android:singleLine="true"/>
 
                     </LinearLayout>
 
@@ -278,7 +281,8 @@
                             android:gravity="center"
                             android:inputType="textMultiLine"
                             android:maxLines="1"
-                            android:scrollbars="vertical" />
+                            android:scrollbars="vertical"
+                            android:singleLine="true"/>
                     </LinearLayout>
 
                     <TextView
@@ -326,7 +330,8 @@
                             android:gravity="center"
                             android:inputType="textMultiLine"
                             android:maxLines="1"
-                            android:scrollbars="vertical" />
+                            android:scrollbars="vertical"
+                            android:singleLine="true"/>
 
                     </LinearLayout>
 
@@ -398,7 +403,8 @@
                             android:gravity="center"
                             android:inputType="textMultiLine"
                             android:maxLines="1"
-                            android:scrollbars="vertical" />
+                            android:scrollbars="vertical"
+                            android:singleLine="true"/>
                     </LinearLayout>
 
                     <TextView
@@ -447,7 +453,8 @@
                             android:gravity="center"
                             android:inputType="textMultiLine"
                             android:maxLines="1"
-                            android:scrollbars="vertical" />
+                            android:scrollbars="vertical"
+                            android:singleLine="true"/>
                     </LinearLayout>
 
                     <TextView
