@@ -28,7 +28,7 @@ android {
 repositories {
     maven {
         jcenter()
-        url "https://www.jitpack.io"
+        url "https://jitpack.io"
     }
 }
 
