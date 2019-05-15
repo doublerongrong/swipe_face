@@ -20,6 +20,7 @@
         <activity android:name=".ReRollcall"/>
         <activity android:name=".UserSignUpSetting"></activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".Export"/>
         <activity android:name=".SignIn" />
         <activity android:name=".SignUp" />
         <activity android:name=".RollcallSelect" />
