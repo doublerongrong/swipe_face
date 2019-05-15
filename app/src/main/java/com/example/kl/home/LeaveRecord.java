@@ -585,6 +585,7 @@ public class LeaveRecord extends AppCompatActivity {
                                 bundle.putInt("request", 4);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
+                                finish();
                             }//修改假單後 導向底部欄假單
                         }
                     }

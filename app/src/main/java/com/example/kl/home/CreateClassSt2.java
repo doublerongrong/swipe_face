@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +39,7 @@ public class CreateClassSt2 extends AppCompatActivity {
     private EditText editTextanswerBouns;
     private EditText editTextrandomAnswerBonus;
     private Button sendoutBtn;
+    private ImageButton backIBtn;
 
     private FirebaseFirestore mFirestore;
     private FirebaseAuth mAuth;
@@ -98,6 +101,15 @@ public class CreateClassSt2 extends AppCompatActivity {
         editTextanswerBouns = (EditText) findViewById(R.id.editTextAnswerBonus);
         editTextrandomAnswerBonus = (EditText) findViewById(R.id.editTextRDBonus);
         sendoutBtn = (Button) findViewById(R.id.ButtonSendout);
+        backIBtn = (ImageButton) findViewById(R.id.backIBtn);
+
+        backIBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         sendoutBtn.setOnClickListener(v -> {
 
             create();
