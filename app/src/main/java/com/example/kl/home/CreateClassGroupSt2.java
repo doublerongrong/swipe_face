@@ -1,13 +1,19 @@
 package com.example.kl.home;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +42,8 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
     CardView cvNextStepButton;
     FirebaseFirestore db;
     AttributeCheck attributeCheck = new AttributeCheck();
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
     Date nowDate;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
@@ -125,6 +133,16 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
 
     //設定小組設定
     private void setGroupSet() {
+        //讀取dialog
+        LayoutInflater lf = (LayoutInflater) CreateClassGroupSt2.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_create_class_groupst2,null);
+        img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+        ad = (AnimationDrawable)img_pgbar.getDrawable();
+        ad.start();
+        android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(CreateClassGroupSt2.this);
+        builder1.setView(vg);
+        AlertDialog dialog = builder1.create();
+        dialog.show();
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         try {
             ts = Timestamp.valueOf(stCreateclasstime.getText().toString());
@@ -140,7 +158,10 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
 
         db.collection("Class")
                 .document(classId)
-                .update(group);
+                .update(group).addOnCompleteListener(task -> {
+                    dialog.dismiss();
+            finish();
+        });
 
         Intent intentToCreateClassGroupSt3 = new Intent();
         intentToCreateClassGroupSt3.setClass(CreateClassGroupSt2.this, CreateClassGroupSt3.class);
@@ -151,6 +172,6 @@ public class CreateClassGroupSt2 extends AppCompatActivity {
         bundleToCreateClassGroupSt3.putInt("classStuNum", classStuNum);
         intentToCreateClassGroupSt3.putExtras(bundleToCreateClassGroupSt3);
         startActivity(intentToCreateClassGroupSt3);
-        finish();
+
     }
 }

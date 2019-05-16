@@ -1,12 +1,20 @@
 package com.example.kl.home;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +45,9 @@ public class CreateClassSt2 extends AppCompatActivity {
     private EditText editTextanswerBouns;
     private EditText editTextrandomAnswerBonus;
     private Button sendoutBtn;
+    private ImageButton backIBtn;
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
 
     private FirebaseFirestore mFirestore;
     private FirebaseAuth mAuth;
@@ -98,6 +109,15 @@ public class CreateClassSt2 extends AppCompatActivity {
         editTextanswerBouns = (EditText) findViewById(R.id.editTextAnswerBonus);
         editTextrandomAnswerBonus = (EditText) findViewById(R.id.editTextRDBonus);
         sendoutBtn = (Button) findViewById(R.id.ButtonSendout);
+        backIBtn = (ImageButton) findViewById(R.id.backIBtn);
+
+        backIBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         sendoutBtn.setOnClickListener(v -> {
 
             create();
@@ -116,6 +136,17 @@ public class CreateClassSt2 extends AppCompatActivity {
         for(int i = 0; i < 10; i++){
             class_id += classidOri.charAt(i);
         }
+
+        //讀取dialog
+        LayoutInflater lf = (LayoutInflater) CreateClassSt2.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_create_classst2,null);
+        img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+        ad = (AnimationDrawable)img_pgbar.getDrawable();
+        ad.start();
+        android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(CreateClassSt2.this);
+        builder1.setView(vg);
+        AlertDialog dialog = builder1.create();
+        dialog.show();
 
 
         Integer totalpoints = Integer.parseInt(editTexttotalPoints.getText().toString().trim());
@@ -152,7 +183,7 @@ public class CreateClassSt2 extends AppCompatActivity {
         Log.d(TAG, "TEST CREAT");
         mFirestore.collection("Class").add(uploadMap).addOnSuccessListener(a -> {
 
-
+            dialog.dismiss();
             Log.d(TAG, "TEST CREAT Success");
             setCalss(class_id, teacherEmail);//要改抓user
 
@@ -164,6 +195,7 @@ public class CreateClassSt2 extends AppCompatActivity {
             Toast.makeText(CreateClassSt2.this, "創建成功!", Toast.LENGTH_SHORT).show();
 
         }).addOnFailureListener(e -> {
+            dialog.dismiss();
             String error = e.getMessage();
             Toast.makeText(CreateClassSt2.this, "上傳失敗", Toast.LENGTH_SHORT).show();
 

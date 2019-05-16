@@ -152,14 +152,13 @@ public class LeaveRecord extends AppCompatActivity {
                         Log.d(TAG, "After Function p : " + performanceId);
                         Log.d(TAG, "After Function r : " + rollcallId);
                         Log.d(TAG, "After Function m : " + absenseMinus);
-
-
-                        StorageReference path = storageReference.child(photoUrl);
-                        Log.d("TEST", path.toString());
-                        Glide.with(LeaveRecord.this)
-                                .load(path)
-                                .into(leave_photo);
-
+                        if (photoUrl != null) {
+                            StorageReference path = storageReference.child(photoUrl);
+                            Log.d("TEST", path.toString());
+                            Glide.with(LeaveRecord.this)
+                                    .load(path)
+                                    .into(leave_photo);
+                        }
 
                     } else {
                         Log.d(TAG, "No such document");
@@ -190,7 +189,7 @@ public class LeaveRecord extends AppCompatActivity {
             if (leaveCheckStr.equals("未審核")) {
                 notCheckToNotAllow(leaveId);
             } else if (leaveCheckStr.equals("准假")) { //checking
-                Log.d(TAG,"LEAVE CAHNGE TEST : " + "准假改不准假");
+                Log.d(TAG, "LEAVE CAHNGE TEST : " + "准假改不准假");
                 allowToNotAllow(leaveId);
             } else if (leaveCheckStr.equals("不准假")) {
                 Toast.makeText(this, "此假單已批改為不准假", Toast.LENGTH_SHORT).show();
@@ -250,8 +249,8 @@ public class LeaveRecord extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "進入perFormance DB");
-                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "表現id" + performanceId);
+                        Log.d(TAG, "LEAVE CAHNGE TEST : " + "進入perFormance DB");
+                        Log.d(TAG, "LEAVE CAHNGE TEST : " + "表現id" + performanceId);
                         Performance performance = document.toObject(Performance.class);
                         currentScore = performance.getPerformance_totalAttendance();
                         //currentScore = document.get("performance_totalAttendance");
@@ -469,19 +468,19 @@ public class LeaveRecord extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "進入Rollcall DB");
-                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "學生id : " + student_id);
+                        Log.d(TAG, "LEAVE CAHNGE TEST : " + "進入Rollcall DB");
+                        Log.d(TAG, "LEAVE CAHNGE TEST : " + "學生id : " + student_id);
                         Log.d(TAG, "TEST DB" + rollcallId);
                         absenceList = (ArrayList) document.get("rollcall_absence");
                         casualList = (ArrayList) document.get("rollcall_casual");
                         sickList = (ArrayList) document.get("rollcall_sick");
                         officalList = (ArrayList) document.get("rollcall_offical");
                         funeralList = (ArrayList) document.get("rollcall_funeral");
-                        Log.d(TAG,"LEAVE CAHNGE TEST :  absenceList " + absenceList);
-                        Log.d(TAG,"LEAVE CAHNGE TEST :  casualList " + casualList);
-                        Log.d(TAG,"LEAVE CAHNGE TEST :  sickList " + sickList);
-                        Log.d(TAG,"LEAVE CAHNGE TEST :  officalList " + officalList);
-                        Log.d(TAG,"LEAVE CAHNGE TEST :  funeralList " + funeralList);
+                        Log.d(TAG, "LEAVE CAHNGE TEST :  absenceList " + absenceList);
+                        Log.d(TAG, "LEAVE CAHNGE TEST :  casualList " + casualList);
+                        Log.d(TAG, "LEAVE CAHNGE TEST :  sickList " + sickList);
+                        Log.d(TAG, "LEAVE CAHNGE TEST :  officalList " + officalList);
+                        Log.d(TAG, "LEAVE CAHNGE TEST :  funeralList " + funeralList);
                         if (!absenceList.contains(student_id)) {
                             absenceList.add(student_id);
                         }
@@ -570,6 +569,7 @@ public class LeaveRecord extends AppCompatActivity {
                             finish();
                         } else {
                             if (ChangePage.equals("課堂中")) {
+                                Log.d(TAG, "ChangePage:"+ChangePage);
                                 intent.setClass(LeaveRecord.this, Fragment_LeaveListClassN.class);
                                 intent.putExtra("teacher_email", teacher_email);
                                 intent.putExtra("info", class_id);
@@ -578,13 +578,14 @@ public class LeaveRecord extends AppCompatActivity {
 
                             }//修改假單後 導向課堂內假單
                             else if (ChangePage.equals("底部欄")) {
-                                Log.d(TAG, "RUN class_id = null");
+                                Log.d(TAG, "ChangePage:"+ChangePage);
                                 intent.setClass(LeaveRecord.this, MainActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("teacher_email", teacher_email);
                                 bundle.putInt("request", 4);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
+                                finish();
                             }//修改假單後 導向底部欄假單
                         }
                     }
@@ -634,7 +635,7 @@ public class LeaveRecord extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(TAG,"LEAVE CAHNGE TEST : " + "跑 Function前");
+                        Log.d(TAG, "LEAVE CAHNGE TEST : " + "跑 Function前");
                         addAbsense();
                         Log.d(TAG, "DocumentSnapshot successfully updated!");
                         Intent intent = new Intent();
