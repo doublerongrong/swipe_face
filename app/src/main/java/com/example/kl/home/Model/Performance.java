@@ -7,9 +7,18 @@ public class Performance {
     private String student_id;
     private int performance_totalAttendance;
     private int performance_totalBonus;
+    private int performance_absenceTimes;
 //    private Bonus bonus;
 //    private ArrayList<Bonus> bonusList;
 
+
+    public int getPerformance_absenceTimes() {
+        return performance_absenceTimes;
+    }
+
+    public void setPerformance_absenceTimes(int performance_absenceTimes) {
+        this.performance_absenceTimes = performance_absenceTimes;
+    }
 
     public Performance() {
     }

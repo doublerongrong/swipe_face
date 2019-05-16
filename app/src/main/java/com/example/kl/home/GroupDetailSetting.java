@@ -57,7 +57,6 @@ public class GroupDetailSetting extends AppCompatActivity {
     LinearLayout linerLGroupDetailSetPlus;
     TextView tvGroupDetailSet;
     TextView tvGroupInfo;
-    String groupDetailAndSetting ;
     ImageButton ibBackIBtn;
 
 

@@ -100,7 +100,6 @@ public class GroupDetail extends AppCompatActivity {
         //接Adapter的return
         groupDetailAdapter.setOnTransPageClickListener((studentId, student_id) -> {
             Log.d(TAG,"onTransPageClickTEST" + studentId);
-
             Intent intentToStu = new Intent();
             Bundle bundleToStu = new Bundle();
             intentToStu.setClass(GroupDetail.this, Activity_StudentDetail.class);
