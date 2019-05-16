@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +61,8 @@ public class GroupDetailSetting extends AppCompatActivity {
     TextView tvGroupInfo;
     String groupDetailAndSetting ;
     ImageButton ibBackIBtn;
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
 
 
     @Override
@@ -141,6 +145,17 @@ public class GroupDetailSetting extends AppCompatActivity {
     }
 
     private void stepFinish() {
+        //讀取dialog
+        LayoutInflater lf = (LayoutInflater) GroupDetailSetting.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_score_setting_edit,null);
+        img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+        ad = (AnimationDrawable)img_pgbar.getDrawable();
+        ad.start();
+        android.app.AlertDialog.Builder builder1 = new android.app.AlertDialog.Builder(GroupDetailSetting.this);
+        builder1.setView(vg);
+        android.app.AlertDialog dialog = builder1.create();
+        dialog.show();
+
         if(studentList.size() >= groupNumLow && studentList.size() <= groupNumHigh){
             ArrayList<String> newStudentList = new ArrayList<>();
             for (int i = 0; i < studentList.size(); i++) {
@@ -154,6 +169,8 @@ public class GroupDetailSetting extends AppCompatActivity {
                     .document(classId).collection("Group")
                     .document(groupId).update(group)
                     .addOnSuccessListener(aVoid -> {
+                        dialog.dismiss();
+                        finish();
                         Log.d(TAG, "DocumentSnapshot successfully written!");
                         groupDetailSettingAdapter.notifyDataSetChanged();
                     })
@@ -173,7 +190,7 @@ public class GroupDetailSetting extends AppCompatActivity {
 
             intent.putExtras(bundle1);
             startActivity(intent);
-            finish();
+
         }
         else{
             Toast.makeText(GroupDetailSetting.this, "人數不符合規定",

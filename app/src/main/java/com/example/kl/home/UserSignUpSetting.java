@@ -1,7 +1,9 @@
 package com.example.kl.home;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kl.home.Model.Teacher;
@@ -48,6 +51,8 @@ public class UserSignUpSetting extends AppCompatActivity {
     private EditText editOTW3, editOTH31, editOTM31, editOTH32, editOTM32;
     private Button finishBtn;
     private Button skipBtn;
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
 
 
     private String editTeacherNameStr, editTeacherEmailStr, editTeacherOfficeStr;
@@ -224,6 +229,16 @@ public class UserSignUpSetting extends AppCompatActivity {
     }
 
     private void upDateInfor(String teacherId) {
+        //讀取dialog
+        LayoutInflater lf = (LayoutInflater) UserSignUpSetting.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_user_signup_setting,null);
+        img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+        ad = (AnimationDrawable)img_pgbar.getDrawable();
+        ad.start();
+        android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(UserSignUpSetting.this);
+        builder1.setView(vg);
+        AlertDialog dialog = builder1.create();
+        dialog.show();
         DocumentReference docRef = mFirestore.collection("Teacher").document(teacherId);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -282,7 +297,9 @@ public class UserSignUpSetting extends AppCompatActivity {
                     attend.put("teacher_email", editTeacherEmailStr);
                     attend.put("teacher_office", editTeacherOfficeStr);
                     attend.put("teacher_officetime", updateOfficeTime);
-                    mFirestore.collection("Teacher").document(teacherId).update(attend);
+                    mFirestore.collection("Teacher").document(teacherId).update(attend).addOnCompleteListener(task1 -> {
+                        dialog.dismiss();
+                    });
 
 
 
