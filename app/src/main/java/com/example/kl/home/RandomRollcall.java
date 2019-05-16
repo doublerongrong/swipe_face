@@ -1,6 +1,9 @@
 package com.example.kl.home;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +15,12 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kl.home.Adapter.Detail_AttendListAdapter;
@@ -61,6 +67,8 @@ public class RandomRollcall extends AppCompatActivity {
     private int AttendPoints,absenteeMinus;
     private String docId ;
     private Date time ;
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,6 +272,16 @@ public class RandomRollcall extends AppCompatActivity {
                         attendList.add(classMember.get(i));
                     }
                 }
+            //讀取dialog
+            LayoutInflater lf = (LayoutInflater) RandomRollcall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_photo_rollcall2,null);
+            img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+            ad = (AnimationDrawable)img_pgbar.getDrawable();
+            ad.start();
+            android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(RandomRollcall.this);
+            builder1.setView(vg);
+            AlertDialog dialog = builder1.create();
+            dialog.show();
                     Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
                     query1.get().addOnCompleteListener(task1 -> {
                         QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
@@ -274,6 +292,7 @@ public class RandomRollcall extends AppCompatActivity {
                         Map<String, Object> attend = new HashMap<>();
                         attend.put("rollcall_attend", attendList);
                         db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
+                            dialog.dismiss();
                     Intent intent = new Intent();
                     intent.setClass(getApplicationContext(), RollcallResult.class);
                     intent.putExtra("class_id", classId);

@@ -1,6 +1,9 @@
 package com.example.kl.home;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +15,12 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kl.home.Adapter.Detail_AttendListAdapter;
@@ -45,6 +51,8 @@ import java.util.Map;
 public class CallNameRollCall extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
     private static final String TAG = "CallNameRollCall";
     private RecyclerView mMainList;
     private RollCallAdapter rollCallAdapter;
@@ -259,6 +267,16 @@ public class CallNameRollCall extends AppCompatActivity {
 
         finishBtn = (Button) findViewById(R.id.finishButton);
         finishBtn.setOnClickListener(view -> {
+            //讀取dialog
+            LayoutInflater lf = (LayoutInflater) CallNameRollCall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_callname_rollcall,null);
+            img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+            ad = (AnimationDrawable)img_pgbar.getDrawable();
+            ad.start();
+            android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(CallNameRollCall.this);
+            builder1.setView(vg);
+            AlertDialog dialog = builder1.create();
+            dialog.show();
             for (int i=0;i<classMember.size();i++){
                 if (!absenceList.contains(classMember.get(i)) && !attendList.contains(classMember.get(i))){
                     attendList.add(classMember.get(i));
@@ -274,6 +292,7 @@ public class CallNameRollCall extends AppCompatActivity {
                 Map<String, Object> attend = new HashMap<>();
                 attend.put("rollcall_attend", attendList);
                 db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
+                    dialog.dismiss();
                     Intent intent = new Intent();
                     intent.setClass(getApplicationContext(), RollcallResult.class);
                     intent.putExtra("class_id", classId);
