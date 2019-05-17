@@ -176,6 +176,16 @@ public class ReRollcall extends AppCompatActivity {
         });
 
         finishBtn.setOnClickListener(view -> {
+            //讀取dialog
+            LayoutInflater lf = (LayoutInflater) ReRollcall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_photo_rollcall2,null);
+            img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+            ad = (AnimationDrawable)img_pgbar.getDrawable();
+            ad.start();
+            android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(ReRollcall.this);
+            builder1.setView(vg);
+            AlertDialog dialog = builder1.create();
+            dialog.show();
             DocumentReference docRef3 = db.collection("Rollcall").document(rollcallDocId);
             docRef3.get().addOnSuccessListener(documentSnapshot -> {
                 oriLate = (ArrayList) documentSnapshot.get("rollcall_late");
@@ -257,6 +267,7 @@ public class ReRollcall extends AppCompatActivity {
                     attend.put("rollcall_attend", attendList);
                     attend.put("rollcall_late", lateList);
                     db.collection("Rollcall").document(rollcallDocId).update(attend).addOnCompleteListener(task -> {
+                        dialog.dismiss();
                         Intent intent = new Intent();
                         intent.setClass(getApplicationContext(), RollcallResult.class);
                         intent.putExtra("class_id", classId);

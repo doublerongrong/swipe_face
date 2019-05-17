@@ -132,6 +132,16 @@ public class PhotoRollcall extends AppCompatActivity {
                     absenceList.add(classMember.get(i));
                 }
             }
+            //讀取dialog
+            LayoutInflater lf = (LayoutInflater) PhotoRollcall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_photo_rollcall2,null);
+            img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+            ad = (AnimationDrawable)img_pgbar.getDrawable();
+            ad.start();
+            android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(PhotoRollcall.this);
+            builder1.setView(vg);
+            AlertDialog dialog = builder1.create();
+            dialog.show();
             Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
             query1.get().addOnCompleteListener(task1 -> {
                 QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
@@ -142,6 +152,7 @@ public class PhotoRollcall extends AppCompatActivity {
                 Map<String, Object> attend = new HashMap<>();
                 attend.put("rollcall_absence", absenceList);
                 db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
+                    dialog.dismiss();
                     Intent intent = new Intent();
                     intent.setClass(getApplicationContext(), RollcallResult.class);
                     intent.putExtra("class_id", classId);

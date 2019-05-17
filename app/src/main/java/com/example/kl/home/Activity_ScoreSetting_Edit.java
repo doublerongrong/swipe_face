@@ -1,12 +1,18 @@
 package com.example.kl.home;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kl.home.Model.Class;
@@ -29,6 +35,8 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
     private EditText editTextrandomAnswerBonus;
     private Button updateBtn;
     private Button ButtonCancel;
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
 
     private String classId;
 
@@ -118,6 +126,17 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
         Integer answerbonus = Integer.parseInt(editTextrandomAnswerBonus.getText().toString().trim());
         Integer randomanserbonus = Integer.parseInt(editTextrandomAnswerBonus.getText().toString().trim());
 
+        //讀取dialog
+        LayoutInflater lf = (LayoutInflater) Activity_ScoreSetting_Edit.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_score_setting_edit,null);
+        img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+        ad = (AnimationDrawable)img_pgbar.getDrawable();
+        ad.start();
+        android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(Activity_ScoreSetting_Edit.this);
+        builder1.setView(vg);
+        AlertDialog dialog = builder1.create();
+        dialog.show();
+
         DocumentReference leaveCheckRef = mFirestore.collection("Class").document(classId);
         leaveCheckRef
                 .update("class_totalpoints", totalpoints, "class_lateminus", lateminus,
@@ -127,6 +146,7 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        dialog.dismiss();
                         finish();
                     }
                 });

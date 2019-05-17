@@ -1,17 +1,23 @@
 package com.example.kl.home;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.kl.home.Model.Class;
@@ -48,6 +54,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
     private EditText editTextPassword2;
     private EditText editTextKey;
     private ImageButton backBtn;
+    private ImageView img_pgbar;
+    private AnimationDrawable ad;
 
     private boolean checkKey;
 
@@ -56,8 +64,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
 
-    private List<String> class_id,teacher_officetime;
-    private String teacher_office,teacher_registrationToken;
+    private List<String> class_id,teacher_officetime,teacher_registrationToken;
+    private String teacher_office,str_teacher_registrationToken;
 
     private int check = 0, request;
 
@@ -268,12 +276,25 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
 
         if (check == 1) {
 
+            //讀取dialog
+            LayoutInflater lf = (LayoutInflater) SignUp.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_sign_up,null);
+            img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+            ad = (AnimationDrawable)img_pgbar.getDrawable();
+            ad.start();
+            android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(SignUp.this);
+            builder1.setView(vg);
+            AlertDialog dialog = builder1.create();
+            dialog.show();
+
             firebaseAuth.createUserWithEmailAndPassword(email, password1)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                teacher_registrationToken = FirebaseInstanceId.getInstance().getToken();
+                                str_teacher_registrationToken = FirebaseInstanceId.getInstance().getToken();
+                                teacher_registrationToken = new ArrayList<>();
+                                teacher_registrationToken.add(str_teacher_registrationToken);
                                 Map<String, Object> user = new HashMap<>();
                                 user.put("class_id",class_id);
                                 user.put("teacher_email", email);
@@ -284,12 +305,14 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
 
 
                                 db.collection("Teacher").add(user).addOnCompleteListener(task1 -> {
-                                    Intent i = new Intent();
-                                    i.putExtra("teacherEmail",email);
-                                    i.setClass(getApplicationContext(),UserSignUpSetting.class);
-                                    startActivity(i);
+                                    dialog.dismiss();
                                     finish();
                                 });
+
+                                Intent i = new Intent();
+                                i.putExtra("teacherEmail",email);
+                                i.setClass(getApplicationContext(),UserSignUpSetting.class);
+                                startActivity(i);
 
                                 //user is successfully registered and logged in
                                 //we will start the profile activity here
