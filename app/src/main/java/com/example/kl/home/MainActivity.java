@@ -12,16 +12,26 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.util.ArrayList;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity implements OnFragmentSelectedListener {
-    private static final String TAG = "BACKFLAG";
+    private static final String TAG = "MainActivity this";
 
     private TextView mTextMessage;
     private Fragment_ClassList fragment_classList;
@@ -32,21 +42,23 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private String teacher_email;
-    private String reClassId,reRollcallId,reClassDocId;
+    private String reClassId, reRollcallId, reClassDocId;
     private int fragmentRequest;
     private FirebaseFirestore db;
+    private String teacherId;
+    private ArrayList<String> teacher_registrationToken;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();//抓現在登入user
 
     // 設置默認進來是tab 顯示的頁面
-    private void setDefaultFragment(){
+    private void setDefaultFragment() {
         fragmentManager = getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
         Fragment_ClassList fragment_classList = new Fragment_ClassList();
         Bundle args = new Bundle();
         args.putString("teacher_email", teacher_email);
-        Log.d(TAG,"TEST" + teacher_email);
+        Log.d(TAG, "TEST" + teacher_email);
         fragment_classList.setArguments(args);
-        transaction.replace(R.id.content,new Fragment_ClassList());
+        transaction.replace(R.id.content, new Fragment_ClassList());
         transaction.addToBackStack(new Fragment_ClassList().getClass().getName());
         transaction.commit();
     }
@@ -64,9 +76,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
                     Fragment_ClassList fragment_classList = new Fragment_ClassList();
                     Bundle args = new Bundle();
                     args.putString("teacher_email", teacher_email);
-                    Log.d(TAG,"TEST" + teacher_email);
+                    Log.d(TAG, "TEST" + teacher_email);
                     fragment_classList.setArguments(args);
-                    transaction.replace(R.id.content,new Fragment_ClassList());
+                    transaction.replace(R.id.content, new Fragment_ClassList());
                     transaction.addToBackStack(new Fragment_ClassList().getClass().getName());
                     transaction.commit();
 
@@ -76,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
                     Bundle argsLeave = new Bundle();
                     argsLeave.putString("teacher_email", teacher_email);
                     fragment_leave_list.setArguments(argsLeave);
-                    transaction.replace(R.id.content,fragment_leave_list);
+                    transaction.replace(R.id.content, fragment_leave_list);
                     transaction.addToBackStack(fragment_leave_list.getClass().getName());
                     transaction.commit();
                     return true;
@@ -84,9 +96,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
                     Fragment_User fragment_user = new Fragment_User();
                     Bundle args2 = new Bundle();
                     args2.putString("teacher_email", teacher_email);
-                    Log.d(TAG,"TEST" + teacher_email);
+                    Log.d(TAG, "TEST" + teacher_email);
                     fragment_user.setArguments(args2);
-                    transaction.replace(R.id.content,fragment_user);
+                    transaction.replace(R.id.content, fragment_user);
                     transaction.addToBackStack(fragment_user.getClass().getName());
                     transaction.commit();
                     return true;
@@ -100,14 +112,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.t_activity_homepage);
         teacher_email = user.getEmail();
-
+        Log.d(TAG, "token Main:" + FirebaseInstanceId.getInstance().getToken());
+        db = FirebaseFirestore.getInstance();
+        setRegistrationToken(teacher_email);
 //        FlassSetting flassSetting = new FlassSetting();
 //        IP
 //        system1.setIp();
 
         Bundle bundle = this.getIntent().getExtras();
-        if(bundle != null) {
-            if(bundle.getString("class_id") != null){
+        if (bundle != null) {
+            if (bundle.getString("class_id") != null) {
                 reClassId = bundle.getString("class_id");
                 reRollcallId = bundle.getString("rollcall_id");
                 reClassDocId = bundle.getString("classDoc_id");
@@ -116,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
                 if (fragmentRequest == 2) {
                     gotoClassDetailFragment();
                 }
-            }else{
+            } else {
                 setDefaultFragment();
             }
             fragmentRequest = bundle.getInt("request");
@@ -133,17 +147,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
 //                gotoClassLeaveListFragment(class_id, teacher_email);
 //            } //修改假單後 導向課堂內假單
 
-            else if(fragmentRequest == 4){
+            else if (fragmentRequest == 4) {
                 String teacher_email = bundle.getString("teacher_email");
                 gotoLeaveListFragment(teacher_email);
             } //修改假單後 導向底部欄假單
 
 
-        }else{
+        } else {
             setDefaultFragment();
         }
-
-
 
 
         mTextMessage = (TextView) findViewById(R.id.message);
@@ -159,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void AllPermissions() {
     }
+
     //Permission
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -184,8 +197,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     }//fragment退回鍵
 
     @Override
-    public void onFragmentSelected(String info ,String fragmentKey) {
-        if(fragmentKey.equals("toClassListDetail")) {
+    public void onFragmentSelected(String info, String fragmentKey) {
+        if (fragmentKey.equals("toClassListDetail")) {
             Fragment_ClassDetail fragmentClassDetail = new Fragment_ClassDetail();
             Bundle args = new Bundle();
             args.putString("info", info);
@@ -247,8 +260,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
         Fragment_ClassDetail fragment_classDetail = new Fragment_ClassDetail();
         Bundle args = new Bundle();
         args.putString("info", reClassDocId);
-        args.putString("class_id",reClassId);
-        args.putString("rollcall_id",reRollcallId);
+        args.putString("class_id", reClassId);
+        args.putString("rollcall_id", reRollcallId);
         fragment_classDetail.setArguments(args);
         getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_classDetail).commit();
     }
@@ -256,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
     public void gotoLeaveListFragment(String teacher_email) {    // 改完假單回到假單介面(底部欄)
         Fragment_LeaveListN fragment_leaveList = new Fragment_LeaveListN();
         Bundle args = new Bundle();
-        args.putString("teacher_email",teacher_email);
+        args.putString("teacher_email", teacher_email);
         fragment_leaveList.setArguments(args);
         getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
     }
@@ -271,6 +284,52 @@ public class MainActivity extends AppCompatActivity implements OnFragmentSelecte
 //        getSupportFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.content, fragment_leaveList).commit();
 //    }
 
+    private void setRegistrationToken(String teacher_email) {
+        teacher_registrationToken = new ArrayList<>();
+        db.collection("Teacher").whereEqualTo("teacher_email", teacher_email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QueryDocumentSnapshot document = (QueryDocumentSnapshot) task.getResult().getDocuments().get(0);
+                            teacherId = document.getId();
+                            teacher_registrationToken = (ArrayList<String>) document.getData().get("teacher_registrationToken");
+                            String str_teacher_registrationToken =FirebaseInstanceId.getInstance().getToken();
+                            Log.d(TAG, "teacher_registrationToken:" + teacher_registrationToken);
+                            if(!teacher_registrationToken.contains(str_teacher_registrationToken)) {
+                                teacher_registrationToken.add(str_teacher_registrationToken);
+                                DocumentReference teacherRef = db.collection("Teacher").document(teacherId);
+
+                                teacherRef
+                                        .update("teacher_registrationToken", teacher_registrationToken)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error updating document", e);
+                                            }
+                                        });
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d(TAG, document.getId() + " => " + document.getData());
+//                            }
+                            }
+                            else {
+                                Log.d(TAG,"The token already exist!");
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+    }
 
 
 }

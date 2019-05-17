@@ -569,6 +569,7 @@ public class LeaveRecord extends AppCompatActivity {
                             finish();
                         } else {
                             if (ChangePage.equals("課堂中")) {
+                                Log.d(TAG, "ChangePage:"+ChangePage);
                                 intent.setClass(LeaveRecord.this, Fragment_LeaveListClassN.class);
                                 intent.putExtra("teacher_email", teacher_email);
                                 intent.putExtra("info", class_id);
@@ -577,7 +578,7 @@ public class LeaveRecord extends AppCompatActivity {
 
                             }//修改假單後 導向課堂內假單
                             else if (ChangePage.equals("底部欄")) {
-                                Log.d(TAG, "RUN class_id = null");
+                                Log.d(TAG, "ChangePage:"+ChangePage);
                                 intent.setClass(LeaveRecord.this, MainActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("teacher_email", teacher_email);
