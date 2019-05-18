@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class Activity_PickAnswer extends AppCompatActivity  {
 
     private String classId;
-    private ImageButton ib_pa_random_pick , ib_pa_low_attendence , ib_pa_low_interaction;
+    private ImageButton ib_pa_random_pick , ib_pa_low_attendence , ib_pa_low_interaction ,backIBtn;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction transaction;
@@ -36,6 +36,9 @@ public class Activity_PickAnswer extends AppCompatActivity  {
         ib_pa_random_pick =  findViewById(R.id.ib_pa_random_pick);
         ib_pa_low_attendence = findViewById(R.id.ib_pa_low_attendence);
         ib_pa_low_interaction = findViewById(R.id.ib_pa_low_interaction);
+
+        backIBtn = findViewById(R.id.backIBtn);
+        backIBtn.setOnClickListener(v -> finish());
 
         ib_pa_random_pick.setOnClickListener(new View.OnClickListener() {
             @Override
