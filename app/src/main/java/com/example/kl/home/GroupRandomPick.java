@@ -8,7 +8,9 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kl.home.Model.Class;
 import com.example.kl.home.Model.Group;
@@ -45,6 +47,8 @@ public class GroupRandomPick extends AppCompatActivity {
     private Button btAdd;
     GroupNumberForCh groupNumberForCh = new GroupNumberForCh();
 
+    private ImageButton backIBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,8 @@ public class GroupRandomPick extends AppCompatActivity {
         tvDepartAndGrade = findViewById(R.id.tvdepartandgrade);
         btNextGroup =findViewById(R.id.btNextGroup);
         btAdd = findViewById(R.id.btAdd);
+        backIBtn = findViewById(R.id.backIBtn);
+        backIBtn.setOnClickListener(v -> finish());
 
         //init method
         setRandomPick();
@@ -142,10 +148,13 @@ public class GroupRandomPick extends AppCompatActivity {
                                                             }
                                                         }
                                                     }
+
                                                 });
 
 
                                     }
+
+
                                 });
 
                                 btNextGroup
@@ -175,6 +184,7 @@ public class GroupRandomPick extends AppCompatActivity {
                     Log.d(TAG, "DocumentSnapshot successfully written!");
                 })
                 .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
+        ToastUtils.show(this,  "已加分!");
     }
 
 }

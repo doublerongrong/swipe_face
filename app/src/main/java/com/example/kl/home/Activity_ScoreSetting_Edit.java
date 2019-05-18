@@ -81,7 +81,7 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
                         editTextlateMinus.setText(setClass.getClass_lateminus().toString());
                         editTextabsenteeMinus.setText(setClass.getClass_absenteeminus().toString());
                         editTextEWtimes.setText(setClass.getClass_ewtimes().toString());
-                        editTextEWpoints.setText(setClass.getClass_ewtimes().toString());
+                        editTextEWpoints.setText(setClass.getClass_ewpoints().toString());
                         editTextanswerBouns.setText(setClass.getClass_answerbonus().toString());
                         editTextrandomAnswerBonus.setText(setClass.getClass_rdanswerbonus().toString());
 

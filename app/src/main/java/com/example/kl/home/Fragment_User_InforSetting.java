@@ -233,16 +233,6 @@ public class Fragment_User_InforSetting extends Fragment {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    //讀取dialog
-                    LayoutInflater lf = (LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_user_inforsetting,null);
-                    img_pgbar = (ImageView) vg.findViewById(R.id.img_pgbar);
-                    ad = (AnimationDrawable)img_pgbar.getDrawable();
-                    ad.start();
-                    android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity().getApplicationContext());
-                    builder1.setView(vg);
-                    AlertDialog dialog = builder1.create();
-                    dialog.show();
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
 
@@ -298,7 +288,6 @@ public class Fragment_User_InforSetting extends Fragment {
                     attend.put("teacher_office", editTeacherOfficeStr);
                     attend.put("teacher_officetime", updateOfficeTime);
                     mFirestore.collection("Teacher").document(teacherId).update(attend).addOnCompleteListener(task1 -> {
-                        dialog.dismiss();
                     });
 
 

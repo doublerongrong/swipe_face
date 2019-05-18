@@ -148,20 +148,21 @@ public class PhotoRollcall extends AppCompatActivity {
 
                 for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
                     docId = documentSnapshot.getId();
+                    Map<String, Object> attend = new HashMap<>();
+                    attend.put("rollcall_absence", absenceList);
+                    db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
+                        dialog.dismiss();
+                        Intent intent = new Intent();
+                        intent.setClass(getApplicationContext(), RollcallResult.class);
+                        intent.putExtra("class_id", classId);
+                        intent.putExtra("class_doc",classDoc);
+                        intent.putExtra("classDoc_id",docId);
+                        intent.putExtra("request","0");
+                        startActivity(intent);
+                        finish();
+                    });
                 }
-                Map<String, Object> attend = new HashMap<>();
-                attend.put("rollcall_absence", absenceList);
-                db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
-                    dialog.dismiss();
-                    Intent intent = new Intent();
-                    intent.setClass(getApplicationContext(), RollcallResult.class);
-                    intent.putExtra("class_id", classId);
-                    intent.putExtra("class_doc",classDoc);
-                    intent.putExtra("classDoc_id",docId);
-                    intent.putExtra("request","0");
-                    startActivity(intent);
-                    finish();
-                });
+
             });
 
         });
@@ -273,17 +274,14 @@ public class PhotoRollcall extends AppCompatActivity {
                         obj.getString("student_department"),
                         obj.getString("student_school")
                 );*/
-                name = obj.getString("student_name");
                 id = obj.getString("student_id");
-                email = obj.getString("student_email");
-                department =obj.getString("student_department");
-                school = obj.getString("student_school");
+                name = obj.getString("student_name");
 
-                Log.i("name",name);
+
+
                 Log.i("id",id);
-                Log.i("email",email);
-                Log.i("department",department);
-                Log.i("school",school);
+                Log.i("name",name);
+
 
                 if (classMember.contains(id)) {
                     if (!attendList.contains(id)) {
@@ -291,43 +289,75 @@ public class PhotoRollcall extends AppCompatActivity {
                         Log.i("attend",id);
                         //ToastUtils.show(getmContext(), "辨識成功 !");
                     }
+                    if (count == 0) {
+                        time = new Date();
+                        Map<String, Object> attend = new HashMap<>();
+                        attend.put("class_id", classId);
+                        attend.put("rollcall_attend", attendList);
+                        attend.put("rollcall_absence", absenceList);
+                        attend.put("rollcall_casual", casualList);
+                        attend.put("rollcall_funeral", funeralList);
+                        attend.put("rollcall_late", lateList);
+                        attend.put("rollcall_offical", officalList);
+                        attend.put("rollcall_sick", sickList);
+                        attend.put("rollcall_time", time);
+                        db.collection("Rollcall").add(attend);
+                        count += 1;
+                        //adapter = new HeroAdapter(heroList, getmContext());
+                        //get_recyclerview().setAdapter(adapter);
+                    }else{
+                        Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
+                        query.get().addOnCompleteListener(task1 -> {
+                            QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
+
+                            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                docId = documentSnapshot.getId();
+                            }
+                            Map<String, Object> attend = new HashMap<>();
+                            attend.put("rollcall_attend", attendList);
+                            attend.put("rollcall_absence", absenceList);
+                            db.collection("Rollcall").document(docId).update(attend);
+                        });
+                    }
                 }
-                if (id == null){
+                if (id.equals("null")){
+                    Log.i("count",String.valueOf(count));
+                    if (count == 0) {
+                        time = new Date();
+                        Map<String, Object> attend = new HashMap<>();
+                        attend.put("class_id", classId);
+                        attend.put("rollcall_attend", attendList);
+                        attend.put("rollcall_absence", absenceList);
+                        attend.put("rollcall_casual", casualList);
+                        attend.put("rollcall_funeral", funeralList);
+                        attend.put("rollcall_late", lateList);
+                        attend.put("rollcall_offical", officalList);
+                        attend.put("rollcall_sick", sickList);
+                        attend.put("rollcall_time", time);
+                        db.collection("Rollcall").add(attend);
+                        count += 1;
+                        //adapter = new HeroAdapter(heroList, getmContext());
+                        //get_recyclerview().setAdapter(adapter);
+                    }else{
+                        Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
+                        query.get().addOnCompleteListener(task1 -> {
+                            QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
+
+                            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                docId = documentSnapshot.getId();
+                            }
+                            Map<String, Object> attend = new HashMap<>();
+                            attend.put("rollcall_attend", attendList);
+                            attend.put("rollcall_absence", absenceList);
+                            db.collection("Rollcall").document(docId).update(attend);
+                        });
+                    }
                     continue;
                 }
                 //ToastUtils.show(getmContext(),"名字:"+name+"\n"+"學號: "+id+"\n"+"email:"+email+"\n"+"系所:"+department+"\n"+"學校:"+school);
                 //heroList.add(hero);
             }
-            if (count == 0) {
-                time = new Date();
-                Map<String, Object> attend = new HashMap<>();
-                attend.put("class_id", classId);
-                attend.put("rollcall_attend", attendList);
-                attend.put("rollcall_absence", absenceList);
-                attend.put("rollcall_casual", casualList);
-                attend.put("rollcall_funeral", funeralList);
-                attend.put("rollcall_late", lateList);
-                attend.put("rollcall_offical", officalList);
-                attend.put("rollcall_sick", sickList);
-                attend.put("rollcall_time", time);
-                db.collection("Rollcall").add(attend);
-                count += 1;
-                //adapter = new HeroAdapter(heroList, getmContext());
-                //get_recyclerview().setAdapter(adapter);
-            }else{
-                Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
-                query.get().addOnCompleteListener(task1 -> {
-                    QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
 
-                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                        docId = documentSnapshot.getId();
-                    }
-                    Map<String, Object> attend = new HashMap<>();
-                    attend.put("rollcall_attend", attendList);
-                    attend.put("rollcall_absence", absenceList);
-                    db.collection("Rollcall").document(docId).update(attend);
-                });
-            }
 
         } catch (JSONException e) {
             e.printStackTrace();
