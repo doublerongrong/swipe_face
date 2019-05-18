@@ -361,17 +361,14 @@ public class ReRollcall extends AppCompatActivity {
                         obj.getString("student_department"),
                         obj.getString("student_school")
                 );*/
-                name = obj.getString("student_name");
-                id = obj.getString("student_id");
-                email = obj.getString("student_email");
-                department = obj.getString("student_department");
-                school = obj.getString("student_school");
 
-                Log.i("name", name);
+                id = obj.getString("student_id");
+                name = obj.getString("student_name");
+
+
+
                 Log.i("id", id);
-                Log.i("email", email);
-                Log.i("department", department);
-                Log.i("school", school);
+                Log.i("name", name);
 
                 if (classMember.contains(id)) {
                     if (!attendList.contains(id) && absenceList.contains(id)) {
@@ -386,7 +383,7 @@ public class ReRollcall extends AppCompatActivity {
                         }
                     }
                 }
-                if (id == null){
+                if (id.equals("null")){
                     continue;
                 }
 
