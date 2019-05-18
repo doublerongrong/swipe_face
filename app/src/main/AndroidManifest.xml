@@ -47,6 +47,7 @@
         <activity android:name=".Activity_ScoreSetting" />
         <activity android:name=".Activity_ScoreSetting_Edit" />
         <activity android:name=".Fragment_LeaveListClassN" />
+        <activity android:name=".Export"/>
         <activity android:name=".WelcomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -36,12 +36,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="6"
+            android:background="#FFFFFF"
             android:gravity="center"
             android:text="載入中"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:background="#FFFFFF"
-            tools:text="程式設計"/>
+            tools:text="程式設計" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,7 +61,6 @@
         </LinearLayout>
 
 
-
     </LinearLayout>
 
 
@@ -70,432 +69,444 @@
         android:layout_height="6dp"
         android:background="@drawable/shadow" />
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="25dp">
-
-        <TextView
-            android:id="@+id/textViewAttendSit"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="出席狀況"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="50dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="270dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textViewAStotal"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="出席佔學期總成績"
-                android:textColor="#000000"
-                android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/editTexttotalPoints"
-                android:layout_width="117dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:enabled="true"
-                android:gravity="center"
-                android:inputType="textMultiLine"
-                android:maxLines="1"
-                android:textSize="18sp"
-                android:scrollbars="vertical"
-                android:singleLine="true"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="25dp">
+
+                <TextView
+                    android:id="@+id/textViewAttendSit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="出席狀況"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
+
+                <LinearLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewAStotal"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="出席佔學期總成績"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editTexttotalPoints"
+                        android:layout_width="117dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:inputType="textMultiLine"
+                        android:maxLines="1"
+                        android:scrollbars="vertical"
+                        android:singleLine="true"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:text="分"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
+
+                <LinearLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewlate"
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="遲到  扣"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+
+                    <EditText
+                        android:id="@+id/editTextlateMinus"
+                        android:layout_width="197dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:inputType="textMultiLine"
+                        android:maxLines="1"
+                        android:scrollbars="vertical"
+                        android:singleLine="true"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewlateminusp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:text="分"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
+
+                <LinearLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewAbsentee"
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="曠課  扣"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+
+                    <EditText
+                        android:id="@+id/editTextAbsenteeMinus"
+                        android:layout_width="197dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:inputType="textMultiLine"
+                        android:maxLines="1"
+                        android:scrollbars="vertical"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+                >
+
+                <TextView
+                    android:id="@+id/textViewAbsenteeMinusp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:text="分"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="25dp">
+
+                <TextView
+                    android:id="@+id/textViewEarlywarning"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="預警"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
+
+                <LinearLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewAbsenteeTimes"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="累積曠課"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editTextEWTimes"
+                        android:layout_width="187dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:inputType="textMultiLine"
+                        android:maxLines="1"
+                        android:scrollbars="vertical"
+                        android:singleLine="true"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:text="次"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
+
+                <LinearLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="115dp"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:text="出席成績低於"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editTextEWPoints"
+                        android:layout_width="155dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:inputType="textMultiLine"
+                        android:maxLines="1"
+                        android:scrollbars="vertical"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:text="分"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="25dp">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="課堂參與"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
+
+                <LinearLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="105dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="點人回答  加"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+
+                    <EditText
+                        android:id="@+id/editTextAnswerBonus"
+                        android:layout_width="162dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:inputType="textMultiLine"
+                        android:maxLines="1"
+                        android:scrollbars="vertical"
+                        android:singleLine="true"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:text="分"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#F5F5F5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:paddingLeft="50dp">
+
+                <LinearLayout
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="105dp"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:text="隨堂問答  加"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+
+                    <EditText
+                        android:id="@+id/editTextRDBonus"
+                        android:layout_width="162dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:enabled="true"
+                        android:gravity="center"
+                        android:inputType="textMultiLine"
+                        android:maxLines="1"
+                        android:scrollbars="vertical"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:text="分"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
 
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:text="分"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="50dp">
-
-        <LinearLayout
-            android:layout_width="270dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewlate"
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="遲到  扣"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-
-            <EditText
-                android:id="@+id/editTextlateMinus"
-                android:layout_width="197dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:enabled="true"
-                android:gravity="center"
-                android:inputType="textMultiLine"
-                android:maxLines="1"
-                android:textSize="18sp"
-                android:scrollbars="vertical"
-                android:singleLine="true"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textViewlateminusp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:text="分"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="50dp">
-
-        <LinearLayout
-            android:layout_width="270dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewAbsentee"
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="曠課  扣"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-
-            <EditText
-                android:id="@+id/editTextAbsenteeMinus"
-                android:layout_width="197dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:enabled="true"
-                android:gravity="center"
-                android:inputType="textMultiLine"
-                android:maxLines="1"
-                android:scrollbars="vertical"
-                android:singleLine="true"/>
-
-        </LinearLayout>
-        >
-
-        <TextView
-            android:id="@+id/textViewAbsenteeMinusp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:text="分"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="25dp">
-
-        <TextView
-            android:id="@+id/textViewEarlywarning"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="預警"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="50dp">
-
-        <LinearLayout
-            android:layout_width="270dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textViewAbsenteeTimes"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="累積曠課"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/editTextEWTimes"
-                android:layout_width="187dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:enabled="true"
-                android:gravity="center"
-                android:inputType="textMultiLine"
-                android:maxLines="1"
-                android:textSize="18sp"
-                android:scrollbars="vertical"
-                android:singleLine="true"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:text="次"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="50dp">
-
-        <LinearLayout
-            android:layout_width="270dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="115dp"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:text="出席成績低於"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/editTextEWPoints"
-                android:layout_width="155dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:enabled="true"
-                android:gravity="center"
-                android:inputType="textMultiLine"
-                android:maxLines="1"
-                android:scrollbars="vertical"
-                android:singleLine="true"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:text="分"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="25dp">
-
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="課堂參與"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="50dp">
-
-        <LinearLayout
-            android:layout_width="270dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="105dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="點人回答  加"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-
-            <EditText
-                android:id="@+id/editTextAnswerBonus"
-                android:layout_width="162dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:enabled="true"
-                android:gravity="center"
-                android:inputType="textMultiLine"
-                android:maxLines="1"
-                android:textSize="18sp"
-                android:scrollbars="vertical"
-                android:singleLine="true"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:text="分"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#F5F5F5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingLeft="50dp">
-
-        <LinearLayout
-            android:layout_width="270dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="105dp"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:text="隨堂問答  加"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-
-            <EditText
-                android:id="@+id/editTextRDBonus"
-                android:layout_width="162dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:enabled="true"
-                android:gravity="center"
-                android:inputType="textMultiLine"
-                android:maxLines="1"
-                android:scrollbars="vertical"
-                android:singleLine="true"/>
-        </LinearLayout>
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:text="分"
-            android:textColor="#000000"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
-
-
+    </ScrollView>
 </LinearLayout>

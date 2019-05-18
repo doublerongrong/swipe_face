@@ -66,7 +66,7 @@ public class GroupDetail extends AppCompatActivity {
 
         // init xml
         tvGroupDetailBonus = findViewById(R.id.textViewGroupBonus);
-        tvGroupDetailBonus.setText("回答次數：\t\t" + groupBonus + "\t\t次數");
+        tvGroupDetailBonus.setText("回答分數：\t\t" + groupBonus + "\t\t分");
         tvGroupDetailSetting = findViewById(R.id.groupDetailSetting);
         ibBackIBtn = findViewById(R.id.backIBtn);
         ibBackIBtn.setOnClickListener(v -> finish());
@@ -100,7 +100,6 @@ public class GroupDetail extends AppCompatActivity {
         //接Adapter的return
         groupDetailAdapter.setOnTransPageClickListener((studentId, student_id) -> {
             Log.d(TAG,"onTransPageClickTEST" + studentId);
-
             Intent intentToStu = new Intent();
             Bundle bundleToStu = new Bundle();
             intentToStu.setClass(GroupDetail.this, Activity_StudentDetail.class);

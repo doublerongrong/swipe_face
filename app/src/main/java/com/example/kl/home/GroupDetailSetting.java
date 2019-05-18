@@ -99,7 +99,7 @@ public class GroupDetailSetting extends AppCompatActivity {
                 groupNumHigh = aClass.getGroup_numHigh();
                 groupNumLow = aClass.getGroup_numLow();
                 tvGroupInfo = findViewById(R.id.textViewGroupInfo);
-                tvGroupInfo.setText(groupNumberForCh.transNum(groupNum)+"\t\t人數\t"+groupNumLow+"~"+groupNumHigh);
+                tvGroupInfo.setText(groupNumberForCh.transNum(groupNum)+"\t\t人數\t"+groupNumLow+"~"+groupNumHigh+"人");
             });
         }
 

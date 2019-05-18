@@ -30,7 +30,7 @@ public class GroupPage extends AppCompatActivity {
     String class_Id; // classId
     String classId; //classDocId
     public TextView tvClassName;//xml上的年度課程欄位
-//    ImageButton ibBackIBtn;
+    ImageButton backIBtn;
     private Integer classNum;
     private String TAG = "GroupPage";
 
@@ -75,6 +75,8 @@ public class GroupPage extends AppCompatActivity {
             intent.putExtras(bundleGroupPick);
             startActivity(intent);
         });
+        backIBtn = findViewById(R.id.backIBtn);
+        backIBtn.setOnClickListener(v -> finish());
 //        ibBackIBtn = findViewById(R.id.backIBtn);
 //        ibBackIBtn.setOnClickListener(v -> finish());
 
