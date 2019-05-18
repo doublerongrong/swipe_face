@@ -98,7 +98,7 @@ public class GroupDetailSetting extends AppCompatActivity {
                 groupNumHigh = aClass.getGroup_numHigh();
                 groupNumLow = aClass.getGroup_numLow();
                 tvGroupInfo = findViewById(R.id.textViewGroupInfo);
-                tvGroupInfo.setText(groupNumberForCh.transNum(groupNum)+"\t\t人數\t"+groupNumLow+"~"+groupNumHigh);
+                tvGroupInfo.setText(groupNumberForCh.transNum(groupNum)+"\t\t人數\t"+groupNumLow+"~"+groupNumHigh+"人");
             });
         }
 
@@ -145,15 +145,15 @@ public class GroupDetailSetting extends AppCompatActivity {
 
     private void stepFinish() {
         //讀取dialog
-        LayoutInflater lf = (LayoutInflater) GroupDetailSetting.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_score_setting_edit,null);
-        img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
-        ad = (AnimationDrawable)img_pgbar.getDrawable();
-        ad.start();
-        android.app.AlertDialog.Builder builder1 = new android.app.AlertDialog.Builder(GroupDetailSetting.this);
-        builder1.setView(vg);
-        android.app.AlertDialog dialog = builder1.create();
-        dialog.show();
+//        LayoutInflater lf = (LayoutInflater) GroupDetailSetting.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_score_setting_edit,null);
+//        img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
+//        ad = (AnimationDrawable)img_pgbar.getDrawable();
+//        ad.start();
+//        android.app.AlertDialog.Builder builder1 = new android.app.AlertDialog.Builder(GroupDetailSetting.this);
+//        builder1.setView(vg);
+//        android.app.AlertDialog dialog = builder1.create();
+//        dialog.show();
 
         if(studentList.size() >= groupNumLow && studentList.size() <= groupNumHigh){
             ArrayList<String> newStudentList = new ArrayList<>();
@@ -168,8 +168,8 @@ public class GroupDetailSetting extends AppCompatActivity {
                     .document(classId).collection("Group")
                     .document(groupId).update(group)
                     .addOnSuccessListener(aVoid -> {
-                        dialog.dismiss();
-                        finish();
+//                        dialog.dismiss();
+//                        finish();
                         Log.d(TAG, "DocumentSnapshot successfully written!");
                         groupDetailSettingAdapter.notifyDataSetChanged();
                     })
