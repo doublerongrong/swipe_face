@@ -292,6 +292,9 @@ public class PhotoRollcall extends AppCompatActivity {
                         //ToastUtils.show(getmContext(), "辨識成功 !");
                     }
                 }
+                if (id == null){
+                    continue;
+                }
                 //ToastUtils.show(getmContext(),"名字:"+name+"\n"+"學號: "+id+"\n"+"email:"+email+"\n"+"系所:"+department+"\n"+"學校:"+school);
                 //heroList.add(hero);
             }

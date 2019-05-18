@@ -20,11 +20,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.kl.home.Model.Class;
+import com.example.kl.home.Model.Group;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 
@@ -33,8 +40,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.opencensus.tags.Tag;
+
 
 public class SignUp extends AppCompatActivity implements View.OnClickListener{
+
+    private String TAG = "SignUP";
 
     private Button buttonRegister;
     private EditText editTextName;
@@ -45,6 +56,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
     private ImageButton backBtn;
     private ImageView img_pgbar;
     private AnimationDrawable ad;
+
+    private boolean checkKey;
 
     private ProgressDialog progressDialog;
 
@@ -192,6 +205,8 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
         String password2 = editTextPassword2.getText().toString().trim();
         String key = editTextKey.getText().toString().trim();
 
+        checkKey = checkKey(key);
+
 
         if(TextUtils.isEmpty(name)) {
             //name1 is empty
@@ -242,7 +257,14 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
             //stopping the function execution further
             check = 0;
             return;
-        }else{
+        }else if(!checkKey){
+            //key is empty
+            Toast.makeText(this, "金鑰錯誤", Toast.LENGTH_SHORT).show();
+            //stopping the function execution further
+            check = 0;
+            return;
+        }
+        else{
             check = 1;
         }
 
@@ -307,6 +329,26 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
 
 
 
+    }
+
+    public boolean checkKey(String inputKey){
+
+        DocumentReference docRef = db.collection("Key").document("cpnhxzbsng5llLcffznZ");
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                List<String> keysList = (ArrayList) documentSnapshot.get("Keys");
+                Log.d(TAG,keysList.toString());
+
+                if(keysList.contains(inputKey)){
+                    checkKey = true;
+                }
+                else{
+                    checkKey = false;
+                }
+            }
+        });
+        return checkKey;
     }
 
 
