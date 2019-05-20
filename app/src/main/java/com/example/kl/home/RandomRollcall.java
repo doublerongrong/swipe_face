@@ -199,65 +199,62 @@ public class RandomRollcall extends AppCompatActivity {
 
                         }
                     });
-                    absence = (Button) findViewById(R.id.card_absence);
-                    absence.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(RandomRollcall.this,"缺席",Toast.LENGTH_SHORT).show();
-                            count += 1;
-                            if (mMainList != null && mMainList.getChildCount() > 0) {
-                                try {
-                                    currentPosition = ((RecyclerView.LayoutParams) mMainList.getChildAt(0).getLayoutParams()).getViewAdapterPosition();
-                                    Log.i("currentPosition---->", String.valueOf(currentPosition));
-                                } catch (Exception e) {
+                    absence = findViewById(R.id.card_absence);
+                    absence.setOnClickListener(view -> {
+                        Toast.makeText(RandomRollcall.this,"缺席",Toast.LENGTH_SHORT).show();
+                        count += 1;
+                        if (mMainList != null && mMainList.getChildCount() > 0) {
+                            try {
+                                currentPosition = ((RecyclerView.LayoutParams) mMainList.getChildAt(0).getLayoutParams()).getViewAdapterPosition();
+                                Log.i("currentPosition---->", String.valueOf(currentPosition));
+                            } catch (Exception e) {
 
+                            }
+                        }
+                        if (!absenceList.contains(studentId.get(currentPosition))) {
+
+                            absenceList.add(studentId.get(currentPosition));
+                        }
+                        if (attendList.contains(studentId.get(currentPosition))) {
+                            for (int i1 = 0; i1 < attendList.size(); i1++) {
+                                if (attendList.get(i1).equals(studentId.get(currentPosition))) {
+                                    attendList.remove(i1);
+                                    i1--;
                                 }
                             }
-                            if (!absenceList.contains(studentId.get(currentPosition))) {
+                        }
+                        Log.i("absenceList", absenceList.toString());
+                        if (count == 1) {
+                            time = new Date();
+                            Map<String, Object> absence = new HashMap<>();
+                            absence.put("class_id", classId);
+                            absence.put("rollcall_attend", attendList);
+                            absence.put("rollcall_absence", absenceList);
+                            absence.put("rollcall_casual", casualList);
+                            absence.put("rollcall_funeral", funeralList);
+                            absence.put("rollcall_late", lateList);
+                            absence.put("rollcall_offical", officalList);
+                            absence.put("rollcall_sick", sickList);
+                            absence.put("rollcall_time", time);
+                            db.collection("Rollcall").add(absence);
+                        } else {
+                            Query query2 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
+                            query2.get().addOnCompleteListener(task11 -> {
+                                QuerySnapshot querySnapshot2 = task11.isSuccessful() ? task11.getResult() : null;
 
-                                absenceList.add(studentId.get(currentPosition));
-                            }
-                            if (attendList.contains(studentId.get(currentPosition))) {
-                                for (int i = 0; i < attendList.size(); i++) {
-                                    if (attendList.get(i).equals(studentId.get(currentPosition))) {
-                                        attendList.remove(i);
-                                        i--;
-                                    }
+                                for (DocumentSnapshot documentSnapshot : querySnapshot2.getDocuments()) {
+                                    docId = documentSnapshot.getId();
                                 }
-                            }
-                            Log.i("absenceList", absenceList.toString());
-                            if (count == 1) {
-                                time = new Date();
                                 Map<String, Object> absence = new HashMap<>();
-                                absence.put("class_id", classId);
                                 absence.put("rollcall_attend", attendList);
                                 absence.put("rollcall_absence", absenceList);
-                                absence.put("rollcall_casual", casualList);
-                                absence.put("rollcall_funeral", funeralList);
-                                absence.put("rollcall_late", lateList);
-                                absence.put("rollcall_offical", officalList);
-                                absence.put("rollcall_sick", sickList);
-                                absence.put("rollcall_time", time);
-                                db.collection("Rollcall").add(absence);
-                            } else {
-                                Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
-                                query.get().addOnCompleteListener(task1 -> {
-                                    QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
-
-                                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                                        docId = documentSnapshot.getId();
+                                db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
+                                    mMainList.smoothScrollToPosition(currentPosition + 1);
+                                    if (currentPosition == (classMember.size() - 1)){
+                                        Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
                                     }
-                                    Map<String, Object> absence = new HashMap<>();
-                                    absence.put("rollcall_attend", attendList);
-                                    absence.put("rollcall_absence", absenceList);
-                                    db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
-                                        mMainList.smoothScrollToPosition(currentPosition + 1);
-                                        if (currentPosition == (classMember.size() - 1)){
-                                            Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
                                 });
-                            }
+                            });
                         }
                     });
                 });

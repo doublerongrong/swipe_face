@@ -72,7 +72,7 @@ public class Activity_ScoreSetting extends AppCompatActivity {
                         textViewlateMinus.setText(setClass.getClass_lateminus().toString());
                         textViewabsenteeMinus.setText(setClass.getClass_absenteeminus().toString());
                         textViewEWtimes.setText(setClass.getClass_ewtimes().toString());
-                        textViewEWpoints.setText(setClass.getClass_ewtimes().toString());
+                        textViewEWpoints.setText(setClass.getClass_ewpoints().toString());
                         textViewanswerBouns.setText(setClass.getClass_answerbonus().toString());
                         textViewrandomAnswerBonus.setText(setClass.getClass_rdanswerbonus().toString());
 

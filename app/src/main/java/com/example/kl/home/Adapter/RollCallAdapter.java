@@ -54,7 +54,6 @@ public class RollCallAdapter extends RecyclerView.Adapter<RollCallAdapter.ViewHo
                 .load(gsReference)
                 .apply(new RequestOptions().override(1200,1000).fitCenter())
                 .into(holder.rollcall_image);
-
     }
 
     @Override
