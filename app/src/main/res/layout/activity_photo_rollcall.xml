@@ -7,6 +7,11 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/rollcall" />
+
     <LinearLayout
         style="@style/Header"
         android:orientation="horizontal"
@@ -51,11 +56,6 @@
         android:layout_height="182dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/rollcall"/>
 
     </LinearLayout>
     

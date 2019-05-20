@@ -48,6 +48,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class RandomRollcall extends AppCompatActivity {
 
@@ -115,7 +116,7 @@ public class RandomRollcall extends AppCompatActivity {
             for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
                 classMember = (ArrayList)documentSnapshot.get("student_id");
             }
-            classMemberRandom = getRandom(classMember,classMember.size());
+            classMemberRandom = getRandomList(classMember,classMember.size());
             Log.i("Random",classMemberRandom.toString());
             for (int i=0;i<classMemberRandom.size();i++){
                 Query query1 = db.collection("Student").whereEqualTo("student_id",classMemberRandom.get(i));
@@ -184,7 +185,7 @@ public class RandomRollcall extends AppCompatActivity {
                                     attend.put("rollcall_absence", absenceList);
                                     db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task2 -> {
                                         mMainList.smoothScrollToPosition(currentPosition + 1);
-                                        if (currentPosition == (classMember.size() - 1)){
+                                        if (currentPosition == (classMemberRandom.size() - 1)){
                                             Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
                                         }
                                     });
@@ -199,62 +200,65 @@ public class RandomRollcall extends AppCompatActivity {
 
                         }
                     });
-                    absence = findViewById(R.id.card_absence);
-                    absence.setOnClickListener(view -> {
-                        Toast.makeText(RandomRollcall.this,"缺席",Toast.LENGTH_SHORT).show();
-                        count += 1;
-                        if (mMainList != null && mMainList.getChildCount() > 0) {
-                            try {
-                                currentPosition = ((RecyclerView.LayoutParams) mMainList.getChildAt(0).getLayoutParams()).getViewAdapterPosition();
-                                Log.i("currentPosition---->", String.valueOf(currentPosition));
-                            } catch (Exception e) {
+                    absence = (Button) findViewById(R.id.card_absence);
+                    absence.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(RandomRollcall.this,"缺席",Toast.LENGTH_SHORT).show();
+                            count += 1;
+                            if (mMainList != null && mMainList.getChildCount() > 0) {
+                                try {
+                                    currentPosition = ((RecyclerView.LayoutParams) mMainList.getChildAt(0).getLayoutParams()).getViewAdapterPosition();
+                                    Log.i("currentPosition---->", String.valueOf(currentPosition));
+                                } catch (Exception e) {
 
-                            }
-                        }
-                        if (!absenceList.contains(studentId.get(currentPosition))) {
-
-                            absenceList.add(studentId.get(currentPosition));
-                        }
-                        if (attendList.contains(studentId.get(currentPosition))) {
-                            for (int i1 = 0; i1 < attendList.size(); i1++) {
-                                if (attendList.get(i1).equals(studentId.get(currentPosition))) {
-                                    attendList.remove(i1);
-                                    i1--;
                                 }
                             }
-                        }
-                        Log.i("absenceList", absenceList.toString());
-                        if (count == 1) {
-                            time = new Date();
-                            Map<String, Object> absence = new HashMap<>();
-                            absence.put("class_id", classId);
-                            absence.put("rollcall_attend", attendList);
-                            absence.put("rollcall_absence", absenceList);
-                            absence.put("rollcall_casual", casualList);
-                            absence.put("rollcall_funeral", funeralList);
-                            absence.put("rollcall_late", lateList);
-                            absence.put("rollcall_offical", officalList);
-                            absence.put("rollcall_sick", sickList);
-                            absence.put("rollcall_time", time);
-                            db.collection("Rollcall").add(absence);
-                        } else {
-                            Query query2 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
-                            query2.get().addOnCompleteListener(task11 -> {
-                                QuerySnapshot querySnapshot2 = task11.isSuccessful() ? task11.getResult() : null;
+                            if (!absenceList.contains(studentId.get(currentPosition))) {
 
-                                for (DocumentSnapshot documentSnapshot : querySnapshot2.getDocuments()) {
-                                    docId = documentSnapshot.getId();
+                                absenceList.add(studentId.get(currentPosition));
+                            }
+                            if (attendList.contains(studentId.get(currentPosition))) {
+                                for (int i = 0; i < attendList.size(); i++) {
+                                    if (attendList.get(i).equals(studentId.get(currentPosition))) {
+                                        attendList.remove(i);
+                                        i--;
+                                    }
                                 }
+                            }
+                            Log.i("absenceList", absenceList.toString());
+                            if (count == 1) {
+                                time = new Date();
                                 Map<String, Object> absence = new HashMap<>();
+                                absence.put("class_id", classId);
                                 absence.put("rollcall_attend", attendList);
                                 absence.put("rollcall_absence", absenceList);
-                                db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
-                                    mMainList.smoothScrollToPosition(currentPosition + 1);
-                                    if (currentPosition == (classMember.size() - 1)){
-                                        Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                absence.put("rollcall_casual", casualList);
+                                absence.put("rollcall_funeral", funeralList);
+                                absence.put("rollcall_late", lateList);
+                                absence.put("rollcall_offical", officalList);
+                                absence.put("rollcall_sick", sickList);
+                                absence.put("rollcall_time", time);
+                                db.collection("Rollcall").add(absence);
+                            } else {
+                                Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
+                                query.get().addOnCompleteListener(task1 -> {
+                                    QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
+
+                                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                                        docId = documentSnapshot.getId();
                                     }
+                                    Map<String, Object> absence = new HashMap<>();
+                                    absence.put("rollcall_attend", attendList);
+                                    absence.put("rollcall_absence", absenceList);
+                                    db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
+                                        mMainList.smoothScrollToPosition(currentPosition + 1);
+                                        if (currentPosition == (classMemberRandom.size() - 1)){
+                                            Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 });
-                            });
+                            }
                         }
                     });
                 });
@@ -264,11 +268,6 @@ public class RandomRollcall extends AppCompatActivity {
 
         finishBtn = (Button) findViewById(R.id.finishButton);
         finishBtn.setOnClickListener(view -> {
-            for (int i=0;i<classMember.size();i++){
-                    if (!absenceList.contains(classMember.get(i)) && !attendList.contains(classMember.get(i))){
-                        attendList.add(classMember.get(i));
-                    }
-                }
             //讀取dialog
             LayoutInflater lf = (LayoutInflater) RandomRollcall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_photo_rollcall2,null);
@@ -279,6 +278,11 @@ public class RandomRollcall extends AppCompatActivity {
             builder1.setView(vg);
             AlertDialog dialog = builder1.create();
             dialog.show();
+            for (int i=0;i<classMember.size();i++){
+                    if (!absenceList.contains(classMember.get(i)) && !attendList.contains(classMember.get(i))){
+                        attendList.add(classMember.get(i));
+                    }
+                }
                     Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
                     query1.get().addOnCompleteListener(task1 -> {
                         QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
@@ -318,34 +322,34 @@ public class RandomRollcall extends AppCompatActivity {
 
     //隨機取25%學生(無條件進位)
 
-    public List<String> getRandom(List<String> num,int member)
-    {
+    public static List<String> getRandomList(List<String> paramList,int count){
         int a1 = 4;
         int intresult;
         //把數字轉換成 bigDecimal
-        BigDecimal member2 = new BigDecimal((String.valueOf(member)));
+        BigDecimal member2 = new BigDecimal((String.valueOf(count)));
         BigDecimal a2 = new BigDecimal((String.valueOf(a1)));
 
         //將 BigDecimal 轉成 int 並 無條件進位
         intresult = ((member2.divide(a2,0,BigDecimal.ROUND_UP)).toBigInteger()).intValue();
         Log.i("memberB",Integer.toString(intresult));
-        List<String> arr = new ArrayList<>();
-        int n;
-        for(int i = 0; i < intresult; i++)
-        {
-            n = (int)(Math.random()*(member-i));
-            Log.i("rad",Integer.toString(n));
-            arr.add(i,num.get(n));
-
-            for(int j = n; j < num.size() -1; j++)
-            {
-                if((j+1)<(num.size()-1)){
-                    num.remove(j);
-                    num.add(j,num.get(j+1));
-                }
+        if(paramList.size()<intresult){
+            return paramList;
+        }
+        Random random=new Random();
+        List<Integer> tempList=new ArrayList<Integer>();
+        List<String> newList=new ArrayList<String>();
+        int temp=0;
+        for(int i=0;i<intresult;i++){
+            temp=random.nextInt(paramList.size());//将产生的随机数作为被抽list的索引
+            if(!tempList.contains(temp)){
+                tempList.add(temp);
+                newList.add(paramList.get(temp));
+            }
+            else{
+                i--;
             }
         }
-        return arr;
+        return newList;
     }
 
 
