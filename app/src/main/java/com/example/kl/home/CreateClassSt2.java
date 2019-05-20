@@ -54,7 +54,8 @@ public class CreateClassSt2 extends AppCompatActivity {
     private String teacherEmail ;
     private ArrayList<String> StudentList;
     private List<String> classList;
-    private String class_id,rollcall_id;
+    private String class_id;
+    private String rollcall_id = "1";
     private Date date; //DB:create_time
     private boolean group_state; //DB:group_state
     private boolean group_state_go; // DB:group_state_go
