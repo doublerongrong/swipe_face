@@ -69,6 +69,7 @@ public class LeaveRecord extends AppCompatActivity {
     private String leaveReasonStr; //此區為調整分數及出席用
     private String leaveCheckStr;//審核情況
     String ChangePage;
+    private List<String> rollcallIdList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,7 @@ public class LeaveRecord extends AppCompatActivity {
         officalList = new ArrayList<>();
         sickList = new ArrayList<>();
         absenceList = new ArrayList<>();
+        rollcallIdList = new ArrayList<>();
 
         mFirestore = FirebaseFirestore.getInstance();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Leave_photo");
@@ -145,16 +147,12 @@ public class LeaveRecord extends AppCompatActivity {
                         String photoUrl = leave.getLeave_photoUrl();
 
                         leaveReasonStr = leave.getLeave_reason();//改陣列
-                        getRollcallId();
+                        getRollcallId(); // 抓 List
                         getPerformanceId();
                         getScore();
 
-                        Log.d(TAG, "After Function p : " + performanceId);
-                        Log.d(TAG, "After Function r : " + rollcallId);
-                        Log.d(TAG, "After Function m : " + absenseMinus);
                         if (photoUrl != null) {
                             StorageReference path = storageReference.child(photoUrl);
-                            Log.d("TEST", path.toString());
                             Glide.with(LeaveRecord.this)
                                     .load(path)
                                     .into(leave_photo);
@@ -170,7 +168,6 @@ public class LeaveRecord extends AppCompatActivity {
         backIBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "TEST BACK Item");
                 finish();
             }
         });
@@ -211,35 +208,29 @@ public class LeaveRecord extends AppCompatActivity {
     }
 
     public void setScore() {
-        DocumentReference docRef = mFirestore.collection("Performance").document(performanceId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
 
-                        Performance performance = document.toObject(Performance.class);
-                        currentScore = performance.getPerformance_totalAttendance();
-                        //currentScore = document.get("performance_totalAttendance");
-                        currentScore += absenseMinus;
-                        Log.d(TAG, "Function Change r : " + rollcallId);
-                        Log.d(TAG, "Function Change p : " + performanceId);
-                        Log.d(TAG, "Function Change c : " + Integer.toString(currentScore));
+            DocumentReference docRef = mFirestore.collection("Performance").document(performanceId);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG,"Add points Flag :");
+                            Performance performance = document.toObject(Performance.class);
+                            currentScore = performance.getPerformance_totalAttendance();
+                            currentScore += absenseMinus*rollcallIdList.size();
+                            Log.d(TAG,"Check currentScore(223) : " + currentScore);
 
-                        Map<String, Object> attend = new HashMap<>();
-                        attend.put("performance_totalAttendance", currentScore);
-                        mFirestore.collection("Performance").document(performanceId).update(attend);
-
-                    } else {
-                        Log.d(TAG, "No such document");
+                            Map<String, Object> attend = new HashMap<>();
+                            attend.put("performance_totalAttendance", currentScore);
+                            mFirestore.collection("Performance").document(performanceId).update(attend);
+                        }
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
-            }
-        });
+            });
     }//加回缺席分數
+
 
     public void minusScore() {
         DocumentReference docRef = mFirestore.collection("Performance").document(performanceId);
@@ -249,12 +240,10 @@ public class LeaveRecord extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Log.d(TAG, "LEAVE CAHNGE TEST : " + "進入perFormance DB");
-                        Log.d(TAG, "LEAVE CAHNGE TEST : " + "表現id" + performanceId);
                         Performance performance = document.toObject(Performance.class);
                         currentScore = performance.getPerformance_totalAttendance();
                         //currentScore = document.get("performance_totalAttendance");
-                        currentScore -= absenseMinus;
+                        currentScore -= absenseMinus*rollcallIdList.size();
 
                         Map<String, Object> attend = new HashMap<>();
                         attend.put("performance_totalAttendance", currentScore);
@@ -282,13 +271,13 @@ public class LeaveRecord extends AppCompatActivity {
             for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
 
                 Rollcall rollcall = documentSnapshot.toObject(Rollcall.class);
-//                rollcallId = documentSnapshot.getId();
                 String checkDate = myFmt2.format(rollcall.getRollcall_time());
 
                 Log.d(TAG, "In Function getRollcall 點名時間" + checkDate);
                 if (checkDate.equals(leave_dateStr)) {
                     rollcallId = documentSnapshot.getId();
-                    Log.d(TAG, "In Function getRollcall id :" + rollcallId);
+                    rollcallIdList.add(rollcallId);
+                    Log.d(TAG, "In Function getRollcall id :" + rollcallIdList);
                 }
             }
         });
@@ -309,229 +298,249 @@ public class LeaveRecord extends AppCompatActivity {
     }
 
     public void addCasual() {
-        DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "TEST DB" + rollcallId);
-                        absenceList = (ArrayList) document.get("rollcall_absence");
-                        casualList = (ArrayList) document.get("rollcall_casual");
-                        if (!casualList.contains(student_id)) {
+        for(int i = 0; i < rollcallIdList.size(); i++){
+            DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallIdList.get(i));
+            String rollListGet = rollcallIdList.get(i);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "TEST DB" + rollcallId);
+                            absenceList = (ArrayList) document.get("rollcall_absence");
+                            casualList = (ArrayList) document.get("rollcall_casual");
+                            if (!casualList.contains(student_id)) {
 
-                            casualList.add(student_id);
-                        }
-                        if (absenceList.contains(student_id)) {
-                            for (int i = 0; i < absenceList.size(); i++) {
-                                if (absenceList.get(i).equals(student_id)) {
-                                    absenceList.remove(i);
-                                    i--;
+                                casualList.add(student_id);
+                            }
+                            if (absenceList.contains(student_id)) {
+                                for (int i = 0; i < absenceList.size(); i++) {
+                                    if (absenceList.get(i).equals(student_id)) {
+                                        absenceList.remove(i);
+                                        i--;
+                                    }
                                 }
                             }
-                        }
-                        Map<String, Object> attend = new HashMap<>();
-                        attend.put("rollcall_casual", casualList);
-                        attend.put("rollcall_absence", absenceList);
-                        mFirestore.collection("Rollcall").document(rollcallId).update(attend);
+                            Map<String, Object> attend = new HashMap<>();
+                            attend.put("rollcall_casual", casualList);
+                            attend.put("rollcall_absence", absenceList);
+                            mFirestore.collection("Rollcall").document(rollListGet).update(attend);
 
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
                     } else {
-                        Log.d(TAG, "No such document");
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
-            }
-        });
+            });
+        }
+
     }
 
     public void addFuneral() {
-        DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "TEST DB" + rollcallId);
-                        absenceList = (ArrayList) document.get("rollcall_absence");
-                        funeralList = (ArrayList) document.get("rollcall_funeral");
-                        if (!funeralList.contains(student_id)) {
+        for(int i = 0; i < rollcallIdList.size(); i++){
+            String rollListGet = rollcallIdList.get(i);
+            DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallIdList.get(i));
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "TEST DB" + rollcallId);
+                            absenceList = (ArrayList) document.get("rollcall_absence");
+                            funeralList = (ArrayList) document.get("rollcall_funeral");
+                            if (!funeralList.contains(student_id)) {
 
-                            funeralList.add(student_id);
-                        }
-                        if (absenceList.contains(student_id)) {
-                            for (int i = 0; i < absenceList.size(); i++) {
-                                if (absenceList.get(i).equals(student_id)) {
-                                    absenceList.remove(i);
-                                    i--;
+                                funeralList.add(student_id);
+                            }
+                            if (absenceList.contains(student_id)) {
+                                for (int i = 0; i < absenceList.size(); i++) {
+                                    if (absenceList.get(i).equals(student_id)) {
+                                        absenceList.remove(i);
+                                        i--;
+                                    }
                                 }
                             }
-                        }
-                        Map<String, Object> attend = new HashMap<>();
-                        attend.put("rollcall_funeral", funeralList);
-                        attend.put("rollcall_absence", absenceList);
-                        mFirestore.collection("Rollcall").document(rollcallId).update(attend);
+                            Map<String, Object> attend = new HashMap<>();
+                            attend.put("rollcall_funeral", funeralList);
+                            attend.put("rollcall_absence", absenceList);
+                            mFirestore.collection("Rollcall").document(rollListGet).update(attend);
 
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
                     } else {
-                        Log.d(TAG, "No such document");
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
-            }
-        });
+            });
+        }
+
     }
 
     public void addOffical() {
-        DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "TEST DB" + rollcallId);
-                        absenceList = (ArrayList) document.get("rollcall_absence");
-                        officalList = (ArrayList) document.get("rollcall_officall");
-                        if (!officalList.contains(student_id)) {
+        for(int i = 0; i < rollcallIdList.size(); i++){
+            String rollListGet = rollcallIdList.get(i);
+            Log.d(TAG,"rollListGet = " + rollListGet);
+            DocumentReference docRef = mFirestore.collection("Rollcall").document(rollListGet);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            absenceList = (ArrayList) document.get("rollcall_absence");
+                            officalList = (ArrayList) document.get("rollcall_offical");
+                            Log.d(TAG, "TEST DB exist " + rollListGet + "  St : " + student_id + "  officeList : " + officalList + "  absenceList : " + absenceList );
+                            if (!officalList.contains(student_id)) {
 
-                            officalList.add(student_id);
-                        }
-                        if (absenceList.contains(student_id)) {
-                            for (int i = 0; i < absenceList.size(); i++) {
-                                if (absenceList.get(i).equals(student_id)) {
-                                    absenceList.remove(i);
-                                    i--;
+                                officalList.add(student_id);
+                            }
+                            if (absenceList.contains(student_id)) {
+                                for (int i = 0; i < absenceList.size(); i++) {
+                                    if (absenceList.get(i).equals(student_id)) {
+                                        absenceList.remove(i);
+                                        i--;
+                                    }
                                 }
                             }
-                        }
-                        Map<String, Object> attend = new HashMap<>();
-                        attend.put("rollcall_officall", officalList);
-                        attend.put("rollcall_absence", absenceList);
-                        mFirestore.collection("Rollcall").document(rollcallId).update(attend);
+                            Map<String, Object> attend = new HashMap<>();
+                            attend.put("rollcall_offical", officalList);
+                            attend.put("rollcall_absence", absenceList);
+                            mFirestore.collection("Rollcall").document(rollListGet).update(attend);
 
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
                     } else {
-                        Log.d(TAG, "No such document");
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
-            }
-        });
+            });
+        }
+
     }
 
     public void addSick() {
-        DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "TEST DB" + rollcallId);
-                        absenceList = (ArrayList) document.get("rollcall_absence");
-                        sickList = (ArrayList) document.get("rollcall_sick");
-                        if (!sickList.contains(student_id)) {
+        for(int i = 0; i < rollcallIdList.size(); i++){
+            String rollListGet = rollcallIdList.get(i);
+            DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallIdList.get(i));
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "TEST DB" + rollcallId);
+                            absenceList = (ArrayList) document.get("rollcall_absence");
+                            sickList = (ArrayList) document.get("rollcall_sick");
+                            if (!sickList.contains(student_id)) {
 
-                            sickList.add(student_id);
-                        }
-                        if (absenceList.contains(student_id)) {
-                            for (int i = 0; i < absenceList.size(); i++) {
-                                if (absenceList.get(i).equals(student_id)) {
-                                    absenceList.remove(i);
-                                    i--;
+                                sickList.add(student_id);
+                            }
+                            if (absenceList.contains(student_id)) {
+                                for (int i = 0; i < absenceList.size(); i++) {
+                                    if (absenceList.get(i).equals(student_id)) {
+                                        absenceList.remove(i);
+                                        i--;
+                                    }
                                 }
                             }
-                        }
-                        Map<String, Object> attend = new HashMap<>();
-                        attend.put("rollcall_sick", sickList);
-                        attend.put("rollcall_absence", absenceList);
-                        mFirestore.collection("Rollcall").document(rollcallId).update(attend);
+                            Map<String, Object> attend = new HashMap<>();
+                            attend.put("rollcall_sick", sickList);
+                            attend.put("rollcall_absence", absenceList);
+                            mFirestore.collection("Rollcall").document(rollListGet).update(attend);
 
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
                     } else {
-                        Log.d(TAG, "No such document");
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
-            }
-        });
+            });
+        }
+
     }
 
     public void addAbsense() {
-        DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "LEAVE CAHNGE TEST : " + "進入Rollcall DB");
-                        Log.d(TAG, "LEAVE CAHNGE TEST : " + "學生id : " + student_id);
-                        Log.d(TAG, "TEST DB" + rollcallId);
-                        absenceList = (ArrayList) document.get("rollcall_absence");
-                        casualList = (ArrayList) document.get("rollcall_casual");
-                        sickList = (ArrayList) document.get("rollcall_sick");
-                        officalList = (ArrayList) document.get("rollcall_offical");
-                        funeralList = (ArrayList) document.get("rollcall_funeral");
-                        Log.d(TAG, "LEAVE CAHNGE TEST :  absenceList " + absenceList);
-                        Log.d(TAG, "LEAVE CAHNGE TEST :  casualList " + casualList);
-                        Log.d(TAG, "LEAVE CAHNGE TEST :  sickList " + sickList);
-                        Log.d(TAG, "LEAVE CAHNGE TEST :  officalList " + officalList);
-                        Log.d(TAG, "LEAVE CAHNGE TEST :  funeralList " + funeralList);
-                        if (!absenceList.contains(student_id)) {
-                            absenceList.add(student_id);
-                        }
-                        if (casualList.contains(student_id)) {
-                            for (int i = 0; i < casualList.size(); i++) {
-                                if (casualList.get(i).equals(student_id)) {
-                                    casualList.remove(i);
-                                    i--;
+        for(int i = 0; i < rollcallIdList.size(); i++){
+            String rollListGet = rollcallIdList.get(i);
+            DocumentReference docRef = mFirestore.collection("Rollcall").document(rollcallIdList.get(i));
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "LEAVE CAHNGE TEST : " + "進入Rollcall DB");
+                            Log.d(TAG, "LEAVE CAHNGE TEST : " + "學生id : " + student_id);
+                            Log.d(TAG, "TEST DB" + rollcallId);
+                            absenceList = (ArrayList) document.get("rollcall_absence");
+                            casualList = (ArrayList) document.get("rollcall_casual");
+                            sickList = (ArrayList) document.get("rollcall_sick");
+                            officalList = (ArrayList) document.get("rollcall_offical");
+                            funeralList = (ArrayList) document.get("rollcall_funeral");
+                            Log.d(TAG, "LEAVE CAHNGE TEST :  absenceList " + absenceList);
+                            Log.d(TAG, "LEAVE CAHNGE TEST :  casualList " + casualList);
+                            Log.d(TAG, "LEAVE CAHNGE TEST :  sickList " + sickList);
+                            Log.d(TAG, "LEAVE CAHNGE TEST :  officalList " + officalList);
+                            Log.d(TAG, "LEAVE CAHNGE TEST :  funeralList " + funeralList);
+                            if (!absenceList.contains(student_id)) {
+                                absenceList.add(student_id);
+                            }
+                            if (casualList.contains(student_id)) {
+                                for (int i = 0; i < casualList.size(); i++) {
+                                    if (casualList.get(i).equals(student_id)) {
+                                        casualList.remove(i);
+                                        i--;
+                                    }
                                 }
                             }
-                        }
-                        if (sickList.contains(student_id)) {
-                            for (int i = 0; i < sickList.size(); i++) {
-                                if (sickList.get(i).equals(student_id)) {
-                                    sickList.remove(i);
-                                    i--;
+                            if (sickList.contains(student_id)) {
+                                for (int i = 0; i < sickList.size(); i++) {
+                                    if (sickList.get(i).equals(student_id)) {
+                                        sickList.remove(i);
+                                        i--;
+                                    }
                                 }
                             }
-                        }
-                        if (officalList.contains(student_id)) {
-                            for (int i = 0; i < officalList.size(); i++) {
-                                if (officalList.get(i).equals(student_id)) {
-                                    officalList.remove(i);
-                                    i--;
+                            if (officalList.contains(student_id)) {
+                                for (int i = 0; i < officalList.size(); i++) {
+                                    if (officalList.get(i).equals(student_id)) {
+                                        officalList.remove(i);
+                                        i--;
+                                    }
                                 }
                             }
-                        }
-                        if (funeralList.contains(student_id)) {
-                            for (int i = 0; i < funeralList.size(); i++) {
-                                if (funeralList.get(i).equals(student_id)) {
-                                    funeralList.remove(i);
-                                    i--;
+                            if (funeralList.contains(student_id)) {
+                                for (int i = 0; i < funeralList.size(); i++) {
+                                    if (funeralList.get(i).equals(student_id)) {
+                                        funeralList.remove(i);
+                                        i--;
+                                    }
                                 }
                             }
+                            Map<String, Object> attend = new HashMap<>();
+                            attend.put("rollcall_casual", casualList);
+                            attend.put("rollcall_sick", sickList);
+                            attend.put("rollcall_offical", officalList);
+                            attend.put("rollcall_funeral", funeralList);
+                            attend.put("rollcall_absence", absenceList);
+                            mFirestore.collection("Rollcall").document(rollListGet).update(attend);
+                            minusScore();
+                        } else {
+                            Log.d(TAG, "No such document");
                         }
-                        Map<String, Object> attend = new HashMap<>();
-                        attend.put("rollcall_casual", casualList);
-                        attend.put("rollcall_sick", sickList);
-                        attend.put("rollcall_officall", officalList);
-                        attend.put("rollcall_funeral", funeralList);
-                        attend.put("rollcall_absence", absenceList);
-                        mFirestore.collection("Rollcall").document(rollcallId).update(attend);
-                        minusScore();
                     } else {
-                        Log.d(TAG, "No such document");
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
                 }
-            }
-        });
+            });
+        }
     }
 
     private void changeList() {
