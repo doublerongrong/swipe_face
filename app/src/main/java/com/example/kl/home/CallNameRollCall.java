@@ -292,15 +292,19 @@ public class CallNameRollCall extends AppCompatActivity {
                 Map<String, Object> attend = new HashMap<>();
                 attend.put("rollcall_attend", attendList);
                 db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
-                    dialog.dismiss();
-                    Intent intent = new Intent();
-                    intent.setClass(getApplicationContext(), RollcallResult.class);
-                    intent.putExtra("class_id", classId);
-                    intent.putExtra("class_doc", classDoc);
-                    intent.putExtra("classDoc_id", docId);
-                    intent.putExtra("request", "1");
-                    startActivity(intent);
-                    finish();
+                    Map<String, Object> rollcall = new HashMap<>();
+                    rollcall.put("rollcall_docId", docId);
+                    db.collection("Class").document(classDoc).update(rollcall).addOnCompleteListener(task2 -> {
+                        dialog.dismiss();
+                        Intent intent = new Intent();
+                        intent.setClass(getApplicationContext(), RollcallResult.class);
+                        intent.putExtra("class_id", classId);
+                        intent.putExtra("class_doc", classDoc);
+                        intent.putExtra("classDoc_id", docId);
+                        intent.putExtra("request", "1");
+                        startActivity(intent);
+                        finish();
+                    });
 
                 });
             });

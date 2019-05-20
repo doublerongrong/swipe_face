@@ -58,16 +58,16 @@ public class RandomRollcall extends AppCompatActivity {
     private RollCallAdapter rollCallAdapter;
     private List<RollCallStudent> rollCallList;
     private Button attend, absence;
-    private Button  finishBtn;
+    private Button finishBtn;
     private ImageButton returnBtn;
-    private String classId,classDoc,performanceId,AttendPointString;
-    private List<String> studentId,classMember,classMemberRandom ;
-    private List<String> attendList, absenceList,casualList,funeralList,lateList,officalList,sickList;
+    private String classId, classDoc, performanceId, AttendPointString;
+    private List<String> studentId, classMember, classMemberRandom;
+    private List<String> attendList, absenceList, casualList, funeralList, lateList, officalList, sickList;
     int currentPosition = 0;
     int count = 0;
-    private int AttendPoints,absenteeMinus;
-    private String docId ;
-    private Date time ;
+    private int AttendPoints, absenteeMinus;
+    private String docId, class_docId;
+    private Date time;
     private ImageView img_pgbar;
     private AnimationDrawable ad;
 
@@ -80,8 +80,8 @@ public class RandomRollcall extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         classId = bundle.getString("class_id");
         classDoc = bundle.getString("class_doc");
-        Log.i("classid:",classId);
-        Log.i("classdoc:",classDoc);
+        Log.i("classid:", classId);
+        Log.i("classdoc:", classDoc);
         studentId = new ArrayList<>();
         classMemberRandom = new ArrayList<>();
         classMember = new ArrayList<>();
@@ -92,7 +92,6 @@ public class RandomRollcall extends AppCompatActivity {
         lateList = new ArrayList<>();
         officalList = new ArrayList<>();
         sickList = new ArrayList<>();
-
 
 
         db = FirebaseFirestore.getInstance();
@@ -110,33 +109,34 @@ public class RandomRollcall extends AppCompatActivity {
         //链接：https://juejin.im/post/58dd3d53da2f60005fbb0a6c
         //来源：掘金
         //著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
-        Query query = db.collection("Class").whereEqualTo("class_id",classId);
+        Query query = db.collection("Class").whereEqualTo("class_id", classId);
         query.get().addOnCompleteListener(task -> {
-            QuerySnapshot querySnapshot = task.isSuccessful() ? task.getResult(): null;
-            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
-                classMember = (ArrayList)documentSnapshot.get("student_id");
+            QuerySnapshot querySnapshot = task.isSuccessful() ? task.getResult() : null;
+            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                classMember = (ArrayList) documentSnapshot.get("student_id");
+                class_docId = documentSnapshot.getId();
             }
-            classMemberRandom = getRandomList(classMember,classMember.size());
-            Log.i("Random",classMemberRandom.toString());
-            for (int i=0;i<classMemberRandom.size();i++){
-                Query query1 = db.collection("Student").whereEqualTo("student_id",classMemberRandom.get(i));
+            classMemberRandom = getRandomList(classMember, classMember.size());
+            Log.i("Random", classMemberRandom.toString());
+            for (int i = 0; i < classMemberRandom.size(); i++) {
+                Query query1 = db.collection("Student").whereEqualTo("student_id", classMemberRandom.get(i));
                 query1.get().addOnCompleteListener(task1 -> {
-                    QuerySnapshot querySnapshot1 = task1.isSuccessful() ? task1.getResult(): null;
-                    for(DocumentSnapshot documentSnapshot : querySnapshot1.getDocuments()){
+                    QuerySnapshot querySnapshot1 = task1.isSuccessful() ? task1.getResult() : null;
+                    for (DocumentSnapshot documentSnapshot : querySnapshot1.getDocuments()) {
                         RollCallStudent rollCallStudent = new RollCallStudent(documentSnapshot.getString("student_name"),
                                 documentSnapshot.getString("student_id"),
-                                documentSnapshot.getString("student_department"),documentSnapshot.getString("image_url"));
+                                documentSnapshot.getString("student_department"), documentSnapshot.getString("image_url"));
                         studentId.add(documentSnapshot.get("student_id").toString());
                         rollCallList.add(rollCallStudent);
                     }
-                    rollCallAdapter = new RollCallAdapter(RandomRollcall.this,rollCallList);
+                    rollCallAdapter = new RollCallAdapter(RandomRollcall.this, rollCallList);
                     mMainList.setAdapter(rollCallAdapter);
 
                     attend = (Button) findViewById(R.id.card_attendance);
                     attend.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(RandomRollcall.this,"出席",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RandomRollcall.this, "出席", Toast.LENGTH_SHORT).show();
                             count += 1;
                             if (mMainList != null && mMainList.getChildCount() > 0) {
                                 try {
@@ -170,7 +170,7 @@ public class RandomRollcall extends AppCompatActivity {
                                 attend.put("rollcall_late", lateList);
                                 attend.put("rollcall_offical", officalList);
                                 attend.put("rollcall_sick", sickList);
-                                attend.put("rollcall_time",time );
+                                attend.put("rollcall_time", time);
                                 db.collection("Rollcall").add(attend);
                             } else {
                                 Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
@@ -185,8 +185,8 @@ public class RandomRollcall extends AppCompatActivity {
                                     attend.put("rollcall_absence", absenceList);
                                     db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task2 -> {
                                         mMainList.smoothScrollToPosition(currentPosition + 1);
-                                        if (currentPosition == (classMemberRandom.size() - 1)){
-                                            Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                        if (currentPosition == (classMemberRandom.size() - 1)) {
+                                            Toast.makeText(getApplicationContext(), "這已經是最後一位同學囉", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 });
@@ -204,7 +204,7 @@ public class RandomRollcall extends AppCompatActivity {
                     absence.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(RandomRollcall.this,"缺席",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RandomRollcall.this, "缺席", Toast.LENGTH_SHORT).show();
                             count += 1;
                             if (mMainList != null && mMainList.getChildCount() > 0) {
                                 try {
@@ -253,8 +253,8 @@ public class RandomRollcall extends AppCompatActivity {
                                     absence.put("rollcall_absence", absenceList);
                                     db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
                                         mMainList.smoothScrollToPosition(currentPosition + 1);
-                                        if (currentPosition == (classMemberRandom.size() - 1)){
-                                            Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
+                                        if (currentPosition == (classMemberRandom.size() - 1)) {
+                                            Toast.makeText(getApplicationContext(), "這已經是最後一位同學囉", Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 });
@@ -270,38 +270,45 @@ public class RandomRollcall extends AppCompatActivity {
         finishBtn.setOnClickListener(view -> {
             //讀取dialog
             LayoutInflater lf = (LayoutInflater) RandomRollcall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_photo_rollcall2,null);
-            img_pgbar = (ImageView)vg.findViewById(R.id.img_pgbar);
-            ad = (AnimationDrawable)img_pgbar.getDrawable();
+            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_photo_rollcall2, null);
+            img_pgbar = (ImageView) vg.findViewById(R.id.img_pgbar);
+            ad = (AnimationDrawable) img_pgbar.getDrawable();
             ad.start();
             android.app.AlertDialog.Builder builder1 = new AlertDialog.Builder(RandomRollcall.this);
             builder1.setView(vg);
             AlertDialog dialog = builder1.create();
             dialog.show();
-            for (int i=0;i<classMember.size();i++){
-                    if (!absenceList.contains(classMember.get(i)) && !attendList.contains(classMember.get(i))){
-                        attendList.add(classMember.get(i));
-                    }
-                }
-                    Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
-                    query1.get().addOnCompleteListener(task1 -> {
-                        QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
 
-                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                            docId = documentSnapshot.getId();
-                        }
-                        Map<String, Object> attend = new HashMap<>();
-                        attend.put("rollcall_attend", attendList);
-                        db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
-                            dialog.dismiss();
-                    Intent intent = new Intent();
-                    intent.setClass(getApplicationContext(), RollcallResult.class);
-                    intent.putExtra("class_id", classId);
-                    intent.putExtra("class_doc",classDoc);
-                    intent.putExtra("classDoc_id",docId);
-                    intent.putExtra("request","0");
-                    startActivity(intent);
-                    finish();
+            for (int i = 0; i < classMember.size(); i++) {
+                if (!absenceList.contains(classMember.get(i)) && !attendList.contains(classMember.get(i))) {
+                    attendList.add(classMember.get(i));
+                }
+            }
+            Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
+            query1.get().addOnCompleteListener(task1 -> {
+                QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
+
+                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                    docId = documentSnapshot.getId();
+                }
+                Map<String, Object> attend = new HashMap<>();
+                attend.put("rollcall_attend", attendList);
+                db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
+
+                    Map<String, Object> rollcall = new HashMap<>();
+                    rollcall.put("rollcall_docId", docId);
+                    db.collection("Class").document(class_docId).update(rollcall).addOnCompleteListener(task2 -> {
+                        dialog.dismiss();
+                        Intent intent = new Intent();
+                        intent.setClass(getApplicationContext(), RollcallResult.class);
+                        intent.putExtra("class_id", classId);
+                        intent.putExtra("class_doc", classDoc);
+                        intent.putExtra("classDoc_id", docId);
+                        intent.putExtra("request", "0");
+                        startActivity(intent);
+                        finish();
+
+                    });
                 });
             });
 
@@ -322,7 +329,7 @@ public class RandomRollcall extends AppCompatActivity {
 
     //隨機取25%學生(無條件進位)
 
-    public static List<String> getRandomList(List<String> paramList,int count){
+    public static List<String> getRandomList(List<String> paramList, int count) {
         int a1 = 4;
         int intresult;
         //把數字轉換成 bigDecimal
@@ -330,22 +337,21 @@ public class RandomRollcall extends AppCompatActivity {
         BigDecimal a2 = new BigDecimal((String.valueOf(a1)));
 
         //將 BigDecimal 轉成 int 並 無條件進位
-        intresult = ((member2.divide(a2,0,BigDecimal.ROUND_UP)).toBigInteger()).intValue();
-        Log.i("memberB",Integer.toString(intresult));
-        if(paramList.size()<intresult){
+        intresult = ((member2.divide(a2, 0, BigDecimal.ROUND_UP)).toBigInteger()).intValue();
+        Log.i("memberB", Integer.toString(intresult));
+        if (paramList.size() < intresult) {
             return paramList;
         }
-        Random random=new Random();
-        List<Integer> tempList=new ArrayList<Integer>();
-        List<String> newList=new ArrayList<String>();
-        int temp=0;
-        for(int i=0;i<intresult;i++){
-            temp=random.nextInt(paramList.size());//将产生的随机数作为被抽list的索引
-            if(!tempList.contains(temp)){
+        Random random = new Random();
+        List<Integer> tempList = new ArrayList<Integer>();
+        List<String> newList = new ArrayList<String>();
+        int temp = 0;
+        for (int i = 0; i < intresult; i++) {
+            temp = random.nextInt(paramList.size());//将产生的随机数作为被抽list的索引
+            if (!tempList.contains(temp)) {
                 tempList.add(temp);
                 newList.add(paramList.get(temp));
-            }
-            else{
+            } else {
                 i--;
             }
         }
