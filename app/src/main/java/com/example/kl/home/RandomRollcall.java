@@ -48,6 +48,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class RandomRollcall extends AppCompatActivity {
 
@@ -115,7 +116,7 @@ public class RandomRollcall extends AppCompatActivity {
             for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
                 classMember = (ArrayList)documentSnapshot.get("student_id");
             }
-            classMemberRandom = getRandom(classMember,classMember.size());
+            classMemberRandom = getRandomList(classMember,classMember.size());
             Log.i("Random",classMemberRandom.toString());
             for (int i=0;i<classMemberRandom.size();i++){
                 Query query1 = db.collection("Student").whereEqualTo("student_id",classMemberRandom.get(i));
@@ -184,7 +185,7 @@ public class RandomRollcall extends AppCompatActivity {
                                     attend.put("rollcall_absence", absenceList);
                                     db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task2 -> {
                                         mMainList.smoothScrollToPosition(currentPosition + 1);
-                                        if (currentPosition == (classMember.size() - 1)){
+                                        if (currentPosition == (classMemberRandom.size() - 1)){
                                             Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
                                         }
                                     });
@@ -220,7 +221,7 @@ public class RandomRollcall extends AppCompatActivity {
                             if (attendList.contains(studentId.get(currentPosition))) {
                                 for (int i = 0; i < attendList.size(); i++) {
                                     if (attendList.get(i).equals(studentId.get(currentPosition))) {
-                                        attendList.remove(i);
+                                        attendList.remove(studentId.get(currentPosition));
                                         i--;
                                     }
                                 }
@@ -252,7 +253,7 @@ public class RandomRollcall extends AppCompatActivity {
                                     absence.put("rollcall_absence", absenceList);
                                     db.collection("Rollcall").document(docId).update(absence).addOnCompleteListener(task2 -> {
                                         mMainList.smoothScrollToPosition(currentPosition + 1);
-                                        if (currentPosition == (classMember.size() - 1)){
+                                        if (currentPosition == (classMemberRandom.size() - 1)){
                                             Toast.makeText(getApplicationContext(),"這已經是最後一位同學囉",Toast.LENGTH_SHORT).show();
                                         }
                                     });
@@ -267,11 +268,6 @@ public class RandomRollcall extends AppCompatActivity {
 
         finishBtn = (Button) findViewById(R.id.finishButton);
         finishBtn.setOnClickListener(view -> {
-            for (int i=0;i<classMember.size();i++){
-                    if (!absenceList.contains(classMember.get(i)) && !attendList.contains(classMember.get(i))){
-                        attendList.add(classMember.get(i));
-                    }
-                }
             //讀取dialog
             LayoutInflater lf = (LayoutInflater) RandomRollcall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_photo_rollcall2,null);
@@ -282,6 +278,11 @@ public class RandomRollcall extends AppCompatActivity {
             builder1.setView(vg);
             AlertDialog dialog = builder1.create();
             dialog.show();
+            for (int i=0;i<classMember.size();i++){
+                    if (!absenceList.contains(classMember.get(i)) && !attendList.contains(classMember.get(i))){
+                        attendList.add(classMember.get(i));
+                    }
+                }
                     Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
                     query1.get().addOnCompleteListener(task1 -> {
                         QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
@@ -321,35 +322,36 @@ public class RandomRollcall extends AppCompatActivity {
 
     //隨機取25%學生(無條件進位)
 
-    public List<String> getRandom(List<String> num,int member)
-    {
+    public static List<String> getRandomList(List<String> paramList,int count){
         int a1 = 4;
         int intresult;
         //把數字轉換成 bigDecimal
-        BigDecimal member2 = new BigDecimal((String.valueOf(member)));
+        BigDecimal member2 = new BigDecimal((String.valueOf(count)));
         BigDecimal a2 = new BigDecimal((String.valueOf(a1)));
 
         //將 BigDecimal 轉成 int 並 無條件進位
         intresult = ((member2.divide(a2,0,BigDecimal.ROUND_UP)).toBigInteger()).intValue();
         Log.i("memberB",Integer.toString(intresult));
-        List<String> arr = new ArrayList<>();
-        int n;
-        for(int i = 0; i < intresult; i++)
-        {
-            n = (int)(Math.random()*(member-i));
-            Log.i("rad",Integer.toString(n));
-            arr.add(i,num.get(n));
-
-            for(int j = n; j < num.size() -1; j++)
-            {
-                if((j+1)<(num.size()-1)){
-                    num.remove(j);
-                    num.add(j,num.get(j+1));
-                }
+        if(paramList.size()<intresult){
+            return paramList;
+        }
+        Random random=new Random();
+        List<Integer> tempList=new ArrayList<Integer>();
+        List<String> newList=new ArrayList<String>();
+        int temp=0;
+        for(int i=0;i<intresult;i++){
+            temp=random.nextInt(paramList.size());//将产生的随机数作为被抽list的索引
+            if(!tempList.contains(temp)){
+                tempList.add(temp);
+                newList.add(paramList.get(temp));
+            }
+            else{
+                i--;
             }
         }
-        return arr;
+        return newList;
     }
+    
 
 
 }
