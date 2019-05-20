@@ -5,7 +5,6 @@ package com.example.kl.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 
 
@@ -25,11 +24,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.kl.home.Model.Class;
-import com.example.kl.home.Model.Performance;
 import com.example.kl.home.Model.RollCallList;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -90,11 +85,8 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
         classDocId = bundle.getString("class_doc");
         if (bundle.getString("request") != null){
             request = bundle.getString("request");
-            Log.d(TAG,"request: "+request);
-
         }
-        Log.d(TAG,"classId: "+classId+" docId: "+docId+" classDocId: "+classDocId);
-
+        Log.i("classid",classId);
 
         mContext = getApplicationContext();
 
@@ -114,38 +106,22 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
         oriLate = new ArrayList<>();
         oriAbsence = new ArrayList<>();
 
-//        //獲取老師設定分數
-////        db.collection("Class").whereEqualTo("class_id", classId).
-////                addSnapshotListener(new EventListener<QuerySnapshot>() {
-////                    @Override
-////                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-////                        if (e != null) {
-////                            Log.d("RollcallResult", "Error :" + e.getMessage());
-////                        }
-////                        Class aClass = documentSnapshots.getDocuments().get(0).toObject(Class.class);
-////                        lateMinus = aClass.getClass_lateminus();
-////                        absenteeMinus = aClass.getClass_absenteeminus();
-////                        className = aClass.getClass_name();
-////                        ewatimes = aClass.getClass_ewtimes();
-////                        ewpoint = aClass.getClass_ewpoints();
-////                    }
-////                });
         //獲取老師設定分數
-        db.collection("Class").document(classDocId)
-                .get().addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        DocumentSnapshot documentSnapshotToGet = task.getResult();
-                        if(documentSnapshotToGet.exists()){
-                            Class aClass = documentSnapshotToGet.toObject(Class.class);
-                            lateMinus = aClass.getClass_lateminus();
-                            absenteeMinus = aClass.getClass_absenteeminus();
-                            className = aClass.getClass_name();
-                            ewatimes = aClass.getClass_ewtimes();
-                            ewpoint = aClass.getClass_ewpoints();
+        db.collection("Class").whereEqualTo("class_id", classId).
+                addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.d("RollcallResult", "Error :" + e.getMessage());
                         }
+                        Class aClass = documentSnapshots.getDocuments().get(0).toObject(Class.class);
+                        lateMinus = aClass.getClass_lateminus();
+                        absenteeMinus = aClass.getClass_absenteeminus();
+                        className = aClass.getClass_name();
+                        ewatimes = aClass.getClass_ewtimes();
+                        ewpoint = aClass.getClass_ewpoints();
                     }
                 });
-
 
         // 第一次扣分與設定初始狀態
 
@@ -574,20 +550,11 @@ public class RollcallResult extends AppCompatActivity implements ViewPager.OnPag
                                 .whereEqualTo("student_id", lateList.get(j));
                         query.get().addOnCompleteListener(task -> {
                             QuerySnapshot querySnapshot1 = task.isSuccessful() ? task.getResult() : null;
-
-                                Log.i("query", "work");
-                            for (DocumentChange documentSnapshot2 : querySnapshot1.getDocumentChanges()) {
-                                if (documentSnapshot2.getType() == DocumentChange.Type.ADDED){
-
-                                }
-                                Performance performance = new Performance();
-                                performance =documentSnapshot2.getDocument().toObject(Performance.class);
-                                perf = String.valueOf(performance.getPerformance_totalAttendance());
-//                                perf = documentSnapshot2.get("performance_totalAttendance").toString();
-                                absenceTimes = String.valueOf(performance.getPerformance_absenceTimes());
-//                                absenceTimes = documentSnapshot2.get("performance_absenceTimes").toString();
-                                perId = documentSnapshot2.getDocument().getId();
-//                                perId = documentSnapshot2.getId();
+                            Log.i("query", "work");
+                            for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
+                                perf = documentSnapshot2.get("performance_totalAttendance").toString();
+                                absenceTimes = documentSnapshot2.get("performance_absenceTimes").toString();
+                                perId = documentSnapshot2.getId();
                                 score = Integer.parseInt(perf);
                                 abTimes = Integer.parseInt(absenceTimes);
                                 scoreList1.add(perf);

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kl.home.Model.RollCallList;
+import com.example.kl.home.Model.Student;
 import com.example.kl.home.R;
 
 import java.util.List;
@@ -22,18 +23,18 @@ public class RollCallListAdapter extends RecyclerView.Adapter<RollCallListAdapte
 
     private RollCallListAdapter.transPageListener mTransPageListener;//adapter跳轉fragment
     private onClickMyButton onClickMyButton;
-    public List<RollCallList> Student_stateList;
+    public List<Student> Student_stateList;
     public Context context;
     public String state;
 
     public interface onClickMyButton{
-        public void myButton(int id);
+        void myButton(int id);
     }
     public void setOnClickMyButton(onClickMyButton onClickMyButton) {
         this.onClickMyButton = onClickMyButton;
     }
 
-    public RollCallListAdapter(Context context,List<RollCallList> Student_stateList,String state) {
+    public RollCallListAdapter(Context context,List<Student> Student_stateList,String state) {
 
         this.Student_stateList = Student_stateList;
         this.context =context;
@@ -52,21 +53,13 @@ public class RollCallListAdapter extends RecyclerView.Adapter<RollCallListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.rollcall_name.setText(Student_stateList.get(position).getRollcall_name());
-        holder.rollcall_id.setText(Student_stateList.get(position).getRollcall_id());
-        holder.rollcall_department.setText(Student_stateList.get(position).getRollcall_department());
+        holder.rollcall_name.setText(Student_stateList.get(position).getStudent_name());
+        holder.rollcall_id.setText(Student_stateList.get(position).getStudent_id());
+        holder.rollcall_department.setText(Student_stateList.get(position).getStudent_department());
         holder.rollcall_state.setText(state);
-        holder.checkAttendBtn.setTag(position);
-        holder.checkAttendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ///Toast.makeText(context,"Id  :  " + rollcallId + student_id, Toast.LENGTH_SHORT).show();
-                int position = (int) v.getTag();
-                //Toast.makeText(v.getContext(),Integer.toString(position),Toast.LENGTH_SHORT).show();
-                onClickMyButton.myButton(position);
-                notifyItemChanged(position);
-                mTransPageListener.onTransPageClick();
-            }
+        holder.checkAttendBtn.setOnClickListener(v -> {
+            notifyItemChanged(position);
+            mTransPageListener.onTransPageClick(Student_stateList.get(position));
         });
     }
 
@@ -98,7 +91,7 @@ public class RollCallListAdapter extends RecyclerView.Adapter<RollCallListAdapte
     }
 
     public interface transPageListener {
-        public void onTransPageClick();
+        void onTransPageClick(Student student);
     }//adapter跳轉fragment並攜帶需要的資料
 
     public void setOnTransPageClickListener(RollCallListAdapter.transPageListener transPageListener) {

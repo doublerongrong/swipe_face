@@ -3,6 +3,7 @@ package com.example.kl.home;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,10 @@ import android.widget.Toast;
 import com.example.kl.home.Adapter.RollCallListAdapter;
 import com.example.kl.home.Adapter.RollCallListAdapter2;
 import com.example.kl.home.Model.RollCallList;
+import com.example.kl.home.Model.Rollcall;
+import com.example.kl.home.Model.Student;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,9 +36,9 @@ public class Fragment_absence extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "Fragment_absence";
-    private RecyclerView mMainList;
-    private RollCallListAdapter2 rollCallListAdapter;
-    private List<RollCallList> rollCallList;
+    private RecyclerView recyclerViewAbsence;
+    private RollCallListAdapter2 rollCallListAdapterAbsence;
+    private List<Student> rollCallListAbsence;
     private String classId,docId;
     private List<String>absenceList,attendList,lateList;
     private int checkedItem = 1;
@@ -57,20 +62,28 @@ public class Fragment_absence extends Fragment {
     }
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        rollCallList = new ArrayList<>();
+        rollCallListAbsence = new ArrayList<>();
         absenceList = new ArrayList<>();
         absenceId = new ArrayList<>();
         db = FirebaseFirestore.getInstance();
         view1 = view;
 
+        rollCallListAdapterAbsence = new RollCallListAdapter2(getActivity().getApplicationContext(),rollCallListAbsence,"缺席");
+
+
+        rollCallListAdapterAbsence.setOnTransPageClickListener((student) -> {
+            singleClick(view,student,docId);
+            rollCallListAdapterAbsence.notifyDataSetChanged();
+        });
+
     }
 
     //dialog修改狀態
-    public void singleClick(View v,String student_id,String rollcallId) {
+    public void singleClick(View v,Student student,String rollcallId) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
         builder.setTitle("修改出席狀況：");
         String[] cities = {"出席", "缺席", "遲到"};
-
+        checkedItem=1;
         builder.setSingleChoiceItems(cities, checkedItem, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -81,129 +94,58 @@ public class Fragment_absence extends Fragment {
         builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                //按下出席
                 if (checkedItem == 0) {
-                    Log.d(TAG, "TEST DIALOG" + "出席");
-                    if (!attendList.contains(student_id)) {
-                        attendList.add(student_id);
+                    if (!attendList.contains(student.getStudent_id())) {
+                        attendList.add(student.getStudent_id());
+
                     }
-                    if (absenceList.contains(student_id)) {
-                        for (int i = 0; i < absenceList.size(); i++) {
-                            if (absenceList.get(i).equals(student_id)){
-                                absenceList.remove(i);
-                                i--;
-                            }
-                        }
+                    if (absenceList.contains(student.getStudent_id())) {
+                        absenceList.remove(student.getStudent_id());
+                        rollCallListAbsence.remove(student);
+                        rollCallListAdapterAbsence.notifyDataSetChanged();
+
                     }
-                    if (lateList.contains(student_id)) {
-                        for (int i = 0; i < lateList.size(); i++) {
-                            if (lateList.get(i).equals(student_id)){
-                                lateList.remove(i);
-                                i--;
-                            }
-                        }
+                    if (lateList.contains(student.getStudent_id())) {
+                        lateList.remove(student.getStudent_id());
                     }
 
-                } else if (checkedItem == 1) {
-                    Log.d(TAG, "TEST DIALOG" + "缺席");
-                    if (!absenceList.contains(student_id)) {
-                        absenceList.add(student_id);
+                }
+                //按下缺席
+                else if (checkedItem == 1) {
+                    if (!absenceList.contains(student.getStudent_id())) {
+                        absenceList.add(student.getStudent_id());
+                        rollCallListAbsence.add(student);
+                        rollCallListAdapterAbsence.notifyDataSetChanged();
                     }
-                    if (attendList.contains(student_id)) {
-                        for (int i = 0; i < attendList.size(); i++) {
-                            if (attendList.get(i).equals(student_id)){
-                                attendList.remove(i);
-                                i--;
-                            }
-                        }
+                    if (attendList.contains(student.getStudent_id())) {
+                        attendList.remove(student.getStudent_id());
+
                     }
-                    if (lateList.contains(student_id)) {
-                        for (int i = 0; i < lateList.size(); i++) {
-                            if (lateList.get(i).equals(student_id)){
-                                lateList.remove(i);
-                                i--;
-                            }
-                        }
+                    if (lateList.contains(student.getStudent_id())) {
+                        lateList.remove(student.getStudent_id());
                     }
-                } else if (checkedItem == 2) {
-                    Log.d(TAG, "TEST DIALOG" + "遲到");
-                    if (!lateList.contains(student_id)) {
-                        lateList.add(student_id);
+                }
+                //按下遲到
+                else if (checkedItem == 2) {
+                    if (!lateList.contains(student.getStudent_id())) {
+                        lateList.add(student.getStudent_id());
                     }
-                    if (attendList.contains(student_id)) {
-                        for (int i = 0; i < attendList.size(); i++) {
-                            if (attendList.get(i).equals(student_id)){
-                                attendList.remove(i);
-                                i--;
-                            }
-                        }
+                    if (attendList.contains(student.getStudent_id())) {
+                       attendList.remove(student.getStudent_id());
                     }
-                    if (absenceList.contains(student_id)) {
-                        for (int i = 0; i < absenceList.size(); i++) {
-                            if (absenceList.get(i).equals(student_id)){
-                                absenceList.remove(i);
-                                i--;
-                            }
-                        }
+                    if (absenceList.contains(student.getStudent_id())) {
+                       absenceList.remove(student.getStudent_id());
+                        rollCallListAbsence.remove(student);
+                        rollCallListAdapterAbsence.notifyDataSetChanged();
                     }
                 }
                 Map<String,Object> changeState = new HashMap<>();
                 changeState.put("rollcall_attend",attendList);
                 changeState.put("rollcall_absence",absenceList);
                 changeState.put("rollcall_late",lateList);
-                db.collection("Rollcall").document(rollcallId).update(changeState).addOnSuccessListener(task -> {
-                    rollCallList.clear();
-                    absenceId.clear();
-                    DocumentReference docRef = db.collection("Rollcall").document(docId);
-                    docRef.get().addOnSuccessListener(documentSnapshot -> {
-                        attendList = (ArrayList) documentSnapshot.get("rollcall_attend");
-                        lateList = (ArrayList) documentSnapshot.get("rollcall_late");
-                        absenceList = (ArrayList) documentSnapshot.get("rollcall_absence");
-                        Log.i("absenceagain", absenceList.toString());
-
-                        for (int i = 0; i < absenceList.size(); i++) {
-                            Query queryStudent = db.collection("Student").whereEqualTo("student_id", absenceList.get(i));
-                            queryStudent.get().addOnCompleteListener(task1 -> {
-                                QuerySnapshot querySnapshot1 = task1.isSuccessful() ? task1.getResult() : null;
-                                Log.i("queryagain", "work");
-                                for (DocumentSnapshot documentSnapshot2 : querySnapshot1.getDocuments()) {
-                                    RollCallList StudentList = new RollCallList(documentSnapshot2.getString("student_id"),
-                                            documentSnapshot2.getString("student_department"), documentSnapshot2.getString("student_name"));
-                                    absenceId.add(documentSnapshot2.getString("student_id"));
-                                    rollCallList.add(StudentList);
-                                    Log.i("rollcallagain",rollCallList.toString());
-                                    Log.i("studentList",StudentList.toString());
-                                    RollCallListAdapter2 rollCallListAdapter = new RollCallListAdapter2(getActivity().getApplicationContext(),rollCallList,"缺席");
-                                    rollCallListAdapter.notifyDataSetChanged();
-                                    mMainList = (RecyclerView)getView().findViewById(R.id.rollacll_list2);
-                                    mMainList.setHasFixedSize(true);
-                                    mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                                    mMainList.setAdapter(rollCallListAdapter);
-                                    Log.i("setAdapter","work");
-                                    rollCallListAdapter.setOnClickMyButton(new RollCallListAdapter2.onClickMyButton() {
-                                        @Override
-                                        public void myButton(int id) {
-                                            studentIndex = id;
-                                            Toast.makeText(getActivity(),Integer.toString(id),Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                    rollCallListAdapter.setOnTransPageClickListener(new RollCallListAdapter2.transPageListener() {
-                                        @Override
-                                        public void onTransPageClick() {
-                                            singleClick(getView(),absenceId.get(studentIndex),docId);
-                                        }
-
-                                    });//Fragment換頁
-                                }
-
-                            });
-                        }
-
-                        if (!rollCallList.isEmpty()){
-
-                        }
-                    });
-
-                });
+                db.collection("Rollcall").document(rollcallId).update(changeState)
+                        .addOnCompleteListener(task -> Log.d(TAG,"uploadAbsenceFinish"));
             }
         });
         //设置反面按钮
@@ -226,55 +168,41 @@ public class Fragment_absence extends Fragment {
         }
 
         if (isVisibleToUser) {
-            rollCallList.clear();
+            setData();
+            rollCallListAdapterAbsence.notifyDataSetChanged();
+        }else{
+            rollCallListAbsence.clear();
             absenceId.clear();
-            DocumentReference docRef = db.collection("Rollcall").document(docId);
-            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                absenceList = (ArrayList)documentSnapshot.get("rollcall_absence");
-                attendList = (ArrayList)documentSnapshot.get("rollcall_attend");
-                lateList = (ArrayList)documentSnapshot.get("rollcall_late");
-                Log.i("absence",absenceList.toString());
-
-                for (int i=0;i<absenceList.size();i++){
-                    Query queryStudent = db.collection("Student").whereEqualTo("student_id",absenceList.get(i));
-                    queryStudent.get().addOnCompleteListener(task -> {
-                        QuerySnapshot querySnapshot2 = task.isSuccessful() ? task.getResult() : null;
-                        for (DocumentSnapshot documentSnapshot2 : querySnapshot2.getDocuments()){
-                            RollCallList StudentList = new RollCallList(documentSnapshot2.getString("student_id"),
-                                    documentSnapshot2.getString("student_department"),documentSnapshot2.getString("student_name"));
-                            absenceId.add(documentSnapshot2.getString("student_id"));
-                            rollCallList.add(StudentList);
-                            RollCallListAdapter2 rollCallListAdapter = new RollCallListAdapter2(getActivity().getApplicationContext(),rollCallList,"缺席");
-                            mMainList = (RecyclerView)getView().findViewById(R.id.rollacll_list2);
-                            mMainList.setHasFixedSize(true);
-                            mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                            mMainList.setAdapter(rollCallListAdapter);
-                            Log.i("setAdapter","work");
-                            rollCallListAdapter.setOnClickMyButton(new RollCallListAdapter2.onClickMyButton() {
-                                @Override
-                                public void myButton(int id) {
-                                    studentIndex = id;
-                                    Toast.makeText(getActivity(),Integer.toString(id),Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            rollCallListAdapter.setOnTransPageClickListener(new RollCallListAdapter2.transPageListener() {
-                                @Override
-                                public void onTransPageClick() {
-                                    singleClick(view1,absenceId.get(studentIndex),docId);
-                                }
-
-                            });//Fragment換頁
-
-                        }
-                    });
-
-
-                }
-                Log.i("rollcall",rollCallList.toString());
-
-
-            });
-
+            rollCallListAdapterAbsence.notifyDataSetChanged();
         }
+    }
+
+    private void setData() {
+        DocumentReference docRef = db.collection("Rollcall").document(docId);
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            Rollcall rollcall = new Rollcall();
+            rollcall = documentSnapshot.toObject(Rollcall.class);
+            attendList = rollcall.getRollcall_attend();
+            lateList = rollcall.getRollcall_late();
+            absenceList = rollcall.getRollcall_absence();
+            Log.i("absence",absenceList.toString());
+
+            for (int i=0;i<absenceList.size();i++){
+                Query queryStudent = db.collection("Student").whereEqualTo("student_id",absenceList.get(i));
+                queryStudent.get().addOnCompleteListener(task -> {
+                    QuerySnapshot querySnapshot2 = task.isSuccessful() ? task.getResult() : null;
+                    for (DocumentSnapshot documentSnapshot2 : querySnapshot2.getDocuments()){
+                        Student StudentList = new Student();
+                        StudentList = documentSnapshot2.toObject(Student.class);
+                        absenceId.add(documentSnapshot2.getString("student_id"));
+                        rollCallListAbsence.add(StudentList);
+                        recyclerViewAbsence = getView().findViewById(R.id.rollacll_list2);
+                        recyclerViewAbsence.setHasFixedSize(true);
+                        recyclerViewAbsence.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        recyclerViewAbsence.setAdapter(rollCallListAdapterAbsence);
+                    }
+                });
+            }
+        });
     }
 }

@@ -63,7 +63,8 @@ public class PhotoRollcall extends AppCompatActivity {
     private Button finishBtn,photoBtn,btPick;
     private int REQUEST_CODE_CHOOSE = 9;
     public List<String> result,classMember;
-    private List<String> attendList, absenceList,casualList,funeralList,lateList,officalList,sickList;
+    private List<String>  absenceList,casualList,funeralList,lateList,officalList,sickList;
+    private ArrayList<String> attendList;
     String url = "http://"+ FlassSetting.ip+":8080/ProjectApi/api/FaceApi/RetrievePhoto";
     OkHttpClient client = new OkHttpClient();
     private static Context mContext;
@@ -73,11 +74,14 @@ public class PhotoRollcall extends AppCompatActivity {
     private int count = 0;
     private Date time ;
 
+    public PhotoRollcall() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_rollcall);
-
+        Log.d(TAG,"onCreate");
         Log.d(TAG,"url: "+url);
         PhotoRollcallPermissionsDispatcher.permissionWithPermissionCheck(this);
         Bundle bundle = this.getIntent().getExtras();
@@ -111,26 +115,27 @@ public class PhotoRollcall extends AppCompatActivity {
         });
 
         photoBtn.setOnClickListener(v ->{
-//            Matisse.from(PhotoRollcall.this)
-//                    .choose(MimeType.ofAll())//图片类型
-//                    .countable(false)//true:选中后显示数字;false:选中后显示对号
-//                    .maxSelectable(9)//可选的最大数
-//                    .capture(true)//选择照片时，是否显示拍照
-//                    .captureStrategy(new CaptureStrategy(true, "com.example.kl.home.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
-//                    .imageEngine(new MyGlideEngine())//图片加载引擎
-//                    .theme(R.style.Matisse_Zhihu)
-//                    .forResult(REQUEST_CODE_CHOOSE = 9);//REQUEST_CODE_CHOOSE自定
-//            Log.i("Create Android", "Test選圖");
             Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
             startActivityForResult(intent, 0);
 
         });
 
         finishBtn.setOnClickListener(view -> {
+            time = new Date();
+            for(int j =0;j<attendList.size();j++){
+                Log.d(TAG,"AttendList299: "+attendList.get(j));
+            }
             for (int i=0;i<classMember.size();i++){
                 if (!absenceList.contains(classMember.get(i)) && !attendList.contains(classMember.get(i))){
                     absenceList.add(classMember.get(i));
+                    Log.d(TAG,absenceList.toArray().toString()+attendList.toArray().toString());
                 }
+            }
+            for(String id :attendList){
+                Log.d(TAG,"attend: "+id);
+            }
+            for(String id :absenceList){
+                Log.d(TAG,"absenceList: "+id);
             }
             //讀取dialog
             LayoutInflater lf = (LayoutInflater) PhotoRollcall.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -142,27 +147,71 @@ public class PhotoRollcall extends AppCompatActivity {
             builder1.setView(vg);
             AlertDialog dialog = builder1.create();
             dialog.show();
-            Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
-            query1.get().addOnCompleteListener(task1 -> {
-                QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
+            Map<String, Object> attend = new HashMap<>();
+            attend.put("class_id", classId);
+            attend.put("rollcall_attend", attendList);
+            attend.put("rollcall_absence", absenceList);
+            attend.put("rollcall_casual", casualList);
+            attend.put("rollcall_funeral", funeralList);
+            attend.put("rollcall_late", lateList);
+            attend.put("rollcall_offical", officalList);
+            attend.put("rollcall_sick", sickList);
+            attend.put("rollcall_time", time);
+            db.collection("Rollcall").add(attend).addOnCompleteListener(task -> {
+                dialog.dismiss();
+                if(task.isSuccessful()){
 
-                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                    docId = documentSnapshot.getId();
+                    Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
+                    query1.get().addOnCompleteListener(task1 -> {
+                        QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
+
+                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                            docId = documentSnapshot.getId();
+                        }
+                        if(docId!=null){
+                            Log.d(TAG,"checkIntentDocId: "+docId);
+                            Intent intent = new Intent();
+                            intent.setClass(getApplicationContext(), RollcallResult.class);
+                            intent.putExtra("class_id", classId);
+                            intent.putExtra("class_doc",classDoc);
+                            intent.putExtra("classDoc_id",docId);
+                            intent.putExtra("request","0");
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }else{
+                    Log.d(TAG,"uploadFail");
                 }
-                Map<String, Object> attend = new HashMap<>();
-                attend.put("rollcall_absence", absenceList);
-                db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
-                    dialog.dismiss();
-                    Intent intent = new Intent();
-                    intent.setClass(getApplicationContext(), RollcallResult.class);
-                    intent.putExtra("class_id", classId);
-                    intent.putExtra("class_doc",classDoc);
-                    intent.putExtra("classDoc_id",docId);
-                    intent.putExtra("request","0");
-                    startActivity(intent);
-                    finish();
-                });
+
+
             });
+
+
+//            Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
+//            query1.get().addOnCompleteListener(task1 -> {
+//                QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
+//
+//                for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+//                    docId = documentSnapshot.getId();
+//                }
+//                if(docId!=null){
+//                    Map<String, Object> attend = new HashMap<>();
+//                    attend.put("rollcall_absence", absenceList);
+//                    db.collection("Rollcall").document(docId).update(attend).addOnCompleteListener(task -> {
+//                        dialog.dismiss();
+//                        Intent intent = new Intent();
+//                        intent.setClass(getApplicationContext(), RollcallResult.class);
+//                        intent.putExtra("class_id", classId);
+//                        intent.putExtra("class_doc",classDoc);
+//                        intent.putExtra("classDoc_id",docId);
+//                        intent.putExtra("request","0");
+//                        startActivity(intent);
+//                        finish();
+//                    });
+//                }
+//
+//            });
 
         });
 
@@ -187,6 +236,17 @@ public class PhotoRollcall extends AppCompatActivity {
                 .imageEngine(new MyGlideEngine())//图片加载引擎
                 .theme(R.style.Matisse_Zhihu)
                 .forResult(REQUEST_CODE_CHOOSE = 9);//REQUEST_CODE_CHOOSE自定
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for(String id :attendList){
+            Log.d(TAG,"attend: "+id);
+        }
+        for(String id :absenceList){
+            Log.d(TAG,"absenceList: "+id);
+        }
     }
 
     @Override
@@ -273,61 +333,59 @@ public class PhotoRollcall extends AppCompatActivity {
                         obj.getString("student_department"),
                         obj.getString("student_school")
                 );*/
-                name = obj.getString("student_name");
                 id = obj.getString("student_id");
-                email = obj.getString("student_email");
-                department =obj.getString("student_department");
-                school = obj.getString("student_school");
 
-                Log.i("name",name);
-                Log.i("id",id);
-                Log.i("email",email);
-                Log.i("department",department);
-                Log.i("school",school);
+                Log.d(TAG,"id: "+id);
+
 
                 if (classMember.contains(id)) {
-                    if (!attendList.contains(id)) {
+                    if (!attendList.contains(id)&&!id.equals("null")) {
                         attendList.add(id);
                         Log.i("attend",id);
                         //ToastUtils.show(getmContext(), "辨識成功 !");
                     }
                 }
-                if (id == null){
-                    continue;
-                }
+
+
+//                if (id == null){
+//                    continue;
+//                }
                 //ToastUtils.show(getmContext(),"名字:"+name+"\n"+"學號: "+id+"\n"+"email:"+email+"\n"+"系所:"+department+"\n"+"學校:"+school);
                 //heroList.add(hero);
             }
-            if (count == 0) {
-                time = new Date();
-                Map<String, Object> attend = new HashMap<>();
-                attend.put("class_id", classId);
-                attend.put("rollcall_attend", attendList);
-                attend.put("rollcall_absence", absenceList);
-                attend.put("rollcall_casual", casualList);
-                attend.put("rollcall_funeral", funeralList);
-                attend.put("rollcall_late", lateList);
-                attend.put("rollcall_offical", officalList);
-                attend.put("rollcall_sick", sickList);
-                attend.put("rollcall_time", time);
-                db.collection("Rollcall").add(attend);
-                count += 1;
-                //adapter = new HeroAdapter(heroList, getmContext());
-                //get_recyclerview().setAdapter(adapter);
-            }else{
-                Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
-                query.get().addOnCompleteListener(task1 -> {
-                    QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
-
-                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
-                        docId = documentSnapshot.getId();
-                    }
-                    Map<String, Object> attend = new HashMap<>();
-                    attend.put("rollcall_attend", attendList);
-                    attend.put("rollcall_absence", absenceList);
-                    db.collection("Rollcall").document(docId).update(attend);
-                });
-            }
+//            if (count == 0) {
+//                for(int i =0;i<attendList.size();i++){
+//                    Log.d(TAG,"AttendList299: "+attendList.get(i));
+//                }
+//                time = new Date();
+//                Map<String, Object> attend = new HashMap<>();
+//                attend.put("class_id", classId);
+//                attend.put("rollcall_attend", attendList);
+//                attend.put("rollcall_absence", absenceList);
+//                attend.put("rollcall_casual", casualList);
+//                attend.put("rollcall_funeral", funeralList);
+//                attend.put("rollcall_late", lateList);
+//                attend.put("rollcall_offical", officalList);
+//                attend.put("rollcall_sick", sickList);
+//                attend.put("rollcall_time", time);
+//                db.collection("Rollcall").add(attend);
+//                count += 1;
+//                //adapter = new HeroAdapter(heroList, getmContext());
+//                //get_recyclerview().setAdapter(adapter);
+//            }else{
+//                Query query = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
+//                query.get().addOnCompleteListener(task1 -> {
+//                    QuerySnapshot querySnapshot = task1.isSuccessful() ? task1.getResult() : null;
+//
+//                    for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+//                        docId = documentSnapshot.getId();
+//                    }
+//                    Map<String, Object> attend = new HashMap<>();
+//                    attend.put("rollcall_attend", attendList);
+//                    attend.put("rollcall_absence", absenceList);
+//                    db.collection("Rollcall").document(docId).update(attend);
+//                });
+//            }
 
         } catch (JSONException e) {
             e.printStackTrace();
