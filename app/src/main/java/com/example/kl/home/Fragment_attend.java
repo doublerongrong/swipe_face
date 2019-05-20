@@ -79,6 +79,16 @@ public class Fragment_attend extends Fragment {
         rollCallListAdapterLate = new RollCallListAdapter3(getActivity().getApplicationContext(),rollCallListLate,"遲到");
         rollCallListAdapterAttend = new RollCallListAdapter(getActivity().getApplicationContext(),rollCallListAttend,"出席");
 
+
+        recyclerViewAttend = getView().findViewById(R.id.rollcall_list);
+        recyclerViewAttend.setHasFixedSize(true);
+        recyclerViewAttend.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerViewAttend.setAdapter(rollCallListAdapterAttend);
+
+        recyclerViewLate = getView().findViewById(R.id.rollcall_list2);
+        recyclerViewLate.setHasFixedSize(true);
+        recyclerViewLate.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerViewLate.setAdapter(rollCallListAdapterLate);
         view1 = view;
 
         rollCallListAdapterAttend.setOnTransPageClickListener((student) -> {
@@ -143,12 +153,7 @@ public class Fragment_attend extends Fragment {
                         Student StudentList = new Student();
                         StudentList = documentSnapshot2.toObject(Student.class);
                         rollCallListAttend.add(StudentList);
-
                         rollCallListAdapterAttend.notifyDataSetChanged();
-                        recyclerViewAttend = getView().findViewById(R.id.rollcall_list);
-                        recyclerViewAttend.setHasFixedSize(true);
-                        recyclerViewAttend.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        recyclerViewAttend.setAdapter(rollCallListAdapterAttend);
                     }
 
                 });
@@ -164,12 +169,7 @@ public class Fragment_attend extends Fragment {
                         StudentList = documentSnapshot2.toObject(Student.class);
                         lateId.add(documentSnapshot2.getString("student_id"));
                         rollCallListLate.add(StudentList);
-
                         rollCallListAdapterLate.notifyDataSetChanged();
-                        recyclerViewLate = getView().findViewById(R.id.rollcall_list2);
-                        recyclerViewLate.setHasFixedSize(true);
-                        recyclerViewLate.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        recyclerViewLate.setAdapter(rollCallListAdapterLate);
                     }
                 });
             }

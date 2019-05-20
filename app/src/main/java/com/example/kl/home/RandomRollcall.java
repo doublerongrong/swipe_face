@@ -221,7 +221,7 @@ public class RandomRollcall extends AppCompatActivity {
                             if (attendList.contains(studentId.get(currentPosition))) {
                                 for (int i = 0; i < attendList.size(); i++) {
                                     if (attendList.get(i).equals(studentId.get(currentPosition))) {
-                                        attendList.remove(studentId.get(currentPosition));
+                                        attendList.remove(i);
                                         i--;
                                     }
                                 }
@@ -351,7 +351,6 @@ public class RandomRollcall extends AppCompatActivity {
         }
         return newList;
     }
-    
 
 
 }
