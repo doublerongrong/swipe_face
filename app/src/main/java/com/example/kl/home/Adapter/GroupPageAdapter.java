@@ -49,6 +49,7 @@ public class GroupPageAdapter extends RecyclerView.Adapter<GroupPageAdapter.View
         Integer groupBonus = groupList.get(position).getGroup_bonus();
         String groupLeader = groupList.get(position).getGroup_leader();
         String groupId = groupList.get(position).groupId;
+        Log.d(TAG,"groupId: "+groupId);
         holder.tvGroupNum.setText(groupNumberForCh.transNum(groupNumber));
         holder.tvGroupBonus.setText(String.format("回答分數\t\t%s", groupBonus.toString()));
         List<String> student_Id  =groupList.get(position).getStudent_id();

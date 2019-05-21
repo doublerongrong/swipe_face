@@ -198,6 +198,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                         case 0:
                             //intent activity
                             if(rollcallDocId != null) {
+                                Log.d(TAG,"case0: rollcallDocId: "+rollcallDocId);
                                 Intent i = new Intent();
                                 Bundle bundle = new Bundle();
                                 bundle.putString("class_id", class_id);

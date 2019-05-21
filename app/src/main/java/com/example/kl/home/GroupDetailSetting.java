@@ -259,5 +259,34 @@ public class GroupDetailSetting extends AppCompatActivity {
         groupDetailSettingAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG,"ActivityState: onResume");
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG,"ActivityState: onPause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG,"ActivityState: onRestart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG,"ActivityState: onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"ActivityState: onDestroy");
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.kl.home;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,8 +15,12 @@ import android.widget.TextView;
 
 import com.example.kl.home.Adapter.GroupPageAdapter;
 import com.example.kl.home.Model.Group;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +42,7 @@ public class GroupPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"ActivityState: onCreate");
         setContentView(R.layout.group_page);
         //init db
         db = FirebaseFirestore.getInstance();
@@ -81,44 +87,71 @@ public class GroupPage extends AppCompatActivity {
 //        ibBackIBtn.setOnClickListener(v -> finish());
 
         //AllGroup Method
-//        if (class_Id != null) {
-//            Log.d(TAG,"setAllLave");
-//            setAllGroup();
-//            groupPageAdapter.notifyDataSetChanged();
-//        }
+        if (class_Id != null) {
+            Log.d(TAG,"setAllLave");
+            setAllGroup();
+            groupPageAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setAllGroup();
+        Log.d(TAG,"ActivityState: onResume");
+//        setAllGroup();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        groupList.clear();
+        Log.d(TAG,"ActivityState: onPause");
+//        groupList.clear();
+//        groupPageAdapter.notifyItemRangeRemoved(0,groupList.size());
+
     }
 
     private void setAllGroup() {
+//        db.collection("Class")
+//                .document(classId)
+//                .collection("Group")
+//                .orderBy("group_num")
+//                .addSnapshotListener((documentSnapshots, e) -> {
+//                    if (e != null) {
+//                        Log.d(TAG, "Error :" + e.getMessage());
+//                    }
+//                    for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+//                        if (doc.getType() == DocumentChange.Type.ADDED ) {
+//                            String groupId = doc.getDocument().getId();//group docId
+//                            Log.d(TAG,groupId);
+//                            Group group = doc.getDocument().toObject(Group.class).withId(groupId);
+//                            groupList.add(group);
+//                            groupPageAdapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                });
+
         db.collection("Class")
                 .document(classId)
                 .collection("Group")
                 .orderBy("group_num")
-                .addSnapshotListener((documentSnapshots, e) -> {
-            if (e != null) {
-                Log.d(TAG, "Error :" + e.getMessage());
-            }
-            for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                if (doc.getType() == DocumentChange.Type.ADDED ) {
-                    String groupId = doc.getDocument().getId();//group docId
-                    Log.d(TAG,groupId);
-                    Group group = doc.getDocument().toObject(Group.class).withId(groupId);
-                    groupList.add(group);
-                    groupPageAdapter.notifyDataSetChanged();
-                }
-            }
-        });
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            String groupId = document.getId();//group docId
+                            Log.d(TAG,groupId);
+                            Group group = document.toObject(Group.class).withId(groupId);
+                            groupList.add(group);
+                        }
+                        groupPageAdapter.notifyDataSetChanged();
+
+
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
 
         groupPageAdapter.setOnTransPageClickListener((groupLeader, groupBonus, groupId) -> {
             Intent intent = new Intent();

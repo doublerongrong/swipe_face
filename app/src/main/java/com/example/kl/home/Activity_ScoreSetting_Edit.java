@@ -123,7 +123,7 @@ public class Activity_ScoreSetting_Edit extends AppCompatActivity {
         Integer absenteeminus = Integer.parseInt(editTextabsenteeMinus.getText().toString().trim());
         Integer EWtimes = Integer.parseInt(editTextEWtimes.getText().toString().trim());
         Integer EWpoints = Integer.parseInt(editTextEWpoints.getText().toString().trim());
-        Integer answerbonus = Integer.parseInt(editTextrandomAnswerBonus.getText().toString().trim());
+        Integer answerbonus = Integer.parseInt(editTextanswerBouns.getText().toString().trim());
         Integer randomanserbonus = Integer.parseInt(editTextrandomAnswerBonus.getText().toString().trim());
 
         //讀取dialog

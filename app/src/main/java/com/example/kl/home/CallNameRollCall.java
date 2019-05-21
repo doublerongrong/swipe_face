@@ -127,7 +127,7 @@ public class CallNameRollCall extends AppCompatActivity {
                             rollCallAdapter = new RollCallAdapter(CallNameRollCall.this,rollCallList);
                             mMainList.setAdapter(rollCallAdapter);
 
-                            attend = (Button) findViewById(R.id.card_attendance);
+                            attend = findViewById(R.id.card_attendance);
                             attend.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
