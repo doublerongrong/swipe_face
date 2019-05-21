@@ -55,6 +55,7 @@ public class CreateClassSt2 extends AppCompatActivity {
     private ArrayList<String> StudentList;
     private List<String> classList;
     private String class_id;
+    private String rollcall_id = "1";
     private Date date; //DB:create_time
     private boolean group_state; //DB:group_state
     private boolean group_state_go; // DB:group_state_go
@@ -172,14 +173,15 @@ public class CreateClassSt2 extends AppCompatActivity {
         uploadMap.put("class_answerbonus", answerbonus);
         uploadMap.put("class_rdanswerbonus", randomanserbonus);
         uploadMap.put("student_id", StudentList);
-        uploadMap.put("group_state", false);
-        uploadMap.put("group_state_go", false);
-        uploadMap.put("group_leader", group_leader);
-        uploadMap.put("group_num", group_num);
-        uploadMap.put("group_numHigh", group_numHigh);
-        uploadMap.put("group_numLow", group_numLow);
-        uploadMap.put("create_time", date);
-        uploadMap.put("question_state", false);
+        uploadMap.put("group_state",false);
+        uploadMap.put("group_state_go",false);
+        uploadMap.put("group_leader",group_leader);
+        uploadMap.put("group_num",group_num);
+        uploadMap.put("group_numHigh",group_numHigh);
+        uploadMap.put("group_numLow",group_numLow);
+        uploadMap.put("create_time",date);
+        uploadMap.put("question_state",false);
+        uploadMap.put("rollcall_docId",rollcall_id);
         Log.d(TAG, "TEST CREAT");
         mFirestore.collection("Class").add(uploadMap).addOnSuccessListener(a -> {
 
@@ -219,6 +221,10 @@ public class CreateClassSt2 extends AppCompatActivity {
                 mFirestore.collection("Teacher").document(docId).update(attend);
             }
         });
+
+
+
+
 
 
     }

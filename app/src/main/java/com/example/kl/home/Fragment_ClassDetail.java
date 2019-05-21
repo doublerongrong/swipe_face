@@ -29,6 +29,7 @@ import static com.example.kl.home.BackHandlerHelper.handleBackPress;
 
 import com.example.kl.home.Model.Class;
 
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -37,7 +38,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
     private String TAG = "ClassDetail";
     private String url = "http://192.168.0.108:8080/Export/StudentGrade/";
-    private String classId,rollcallDocId;
+    private String classId,rollcallDocId,today_rollcallDocId;
     private Class aclass;
     private Class firestore_class;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,6 +47,7 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
     private TextView text_class_title;
     private String class_id;
     private String teacher_email = (FirebaseAuth.getInstance().getCurrentUser()).toString();
+    private Date date,rollcall_date;
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
@@ -84,6 +86,8 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
             class_id = documentSnapshot.toObject(Class.class).getClass_id();
             Log.d(TAG,"class_id : "+class_id);
         });
+
+        date = new Date();
 
 
         setClass(new FirebaseCallback() {
@@ -197,45 +201,84 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                     switch (finalI) {
                         case 0:
                             //intent activity
-                            if(rollcallDocId != null) {
-                                Log.d(TAG,"case0: rollcallDocId: "+rollcallDocId);
-                                Intent i = new Intent();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("class_id", class_id);
-                                bundle.putString("class_doc", classId);
-                                bundle.putString("classDoc_id", rollcallDocId);
-                                i.putExtras(bundle);
-                                i.setClass(getActivity(), RollcallSelect.class);
-                                startActivity(i);
-                            }else {
-                                DocumentReference docRef = db.collection("Class").document(classId);
-                                docRef.get().addOnSuccessListener(documentSnapshot -> {
-                                    Class classG = documentSnapshot.toObject(Class.class);
-                                    class_id = classG.getClass_id();
+                            DocumentReference docRef = db.collection("Class").document(classId);
+                            docRef.get().addOnSuccessListener(documentSnapshot -> {
+                                today_rollcallDocId = documentSnapshot.getString("rollcall_docId");
+                                if (!today_rollcallDocId.equals("1")){
+                                    DocumentReference docRef1 = db.collection("Rollcall").document(today_rollcallDocId);
+                                    docRef1.get().addOnSuccessListener(documentSnapshot1 -> {
+                                        rollcall_date = documentSnapshot1.getDate("rollcall_time");
+                                        if(isSameDate(date,rollcall_date)){
+                                            Intent i = new Intent();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("class_id",class_id);
+                                            bundle.putString("class_doc",classId);
+                                            bundle.putString("classDoc_id",today_rollcallDocId);
+                                            i.putExtras(bundle);
+                                            i.setClass(getActivity(),RollcallSelect.class);
+                                            startActivity(i);
+                                        }
+                                    });
+                                }else if(rollcallDocId != null){
                                     Intent i = new Intent();
-                                    Bundle bundlecall = new Bundle();
-                                    bundlecall.putString("class_id", class_id);
-                                    bundlecall.putString("class_doc", classId);
-                                    i.putExtras(bundlecall);
-                                    i.setClass(getActivity(), RollcallSelect.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("class_id",class_id);
+                                    bundle.putString("class_doc",classId);
+                                    bundle.putString("classDoc_id",rollcallDocId);
+                                    i.putExtras(bundle);
+                                    i.setClass(getActivity(),RollcallSelect.class);
                                     startActivity(i);
-                                });
-                            }
+                                }else {
+                                    DocumentReference docRef1 = db.collection("Class").document(classId);
+                                    docRef1.get().addOnSuccessListener(documentSnapshot1 -> {
+                                        Class classG = documentSnapshot1.toObject(Class.class);
+                                        class_id = classG.getClass_id();
+                                        Intent i = new Intent();
+                                        Bundle bundlecall = new Bundle();
+                                        bundlecall.putString("class_id", class_id);
+                                        bundlecall.putString("class_doc", classId);
+                                        i.putExtras(bundlecall);
+                                        i.setClass(getActivity(), RollcallSelect.class);
+                                        startActivity(i);
+                                    });
+                                }
+                            });
+
                             break;
                         case 1:
                             //intent activity 今日出缺席
-                            if(rollcallDocId != null){
-                                Intent i = new Intent();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("class_id",class_id);
-                                bundle.putString("class_doc",classId);
-                                bundle.putString("classDoc_id",rollcallDocId);
-                                i.putExtras(bundle);
-                                i.setClass(getActivity(),RollcallResult.class);
-                                startActivity(i);
-                            }else{
-                                Toast.makeText(getActivity(),"今天還沒點名喔",Toast.LENGTH_LONG).show();
-                            }
+                            DocumentReference docRef1 = db.collection("Class").document(classId);
+                            docRef1.get().addOnSuccessListener(documentSnapshot -> {
+                                today_rollcallDocId = documentSnapshot.getString("rollcall_docId");
+                                Log.i("today",today_rollcallDocId);
+                                if (!today_rollcallDocId.equals("1")){
+                                    DocumentReference docRef2 = db.collection("Rollcall").document(today_rollcallDocId);
+                                    docRef2.get().addOnSuccessListener(documentSnapshot1 -> {
+                                        rollcall_date = documentSnapshot1.getDate("rollcall_time");
+                                        if(isSameDate(date,rollcall_date)){
+                                            Intent i = new Intent();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("class_id",class_id);
+                                            bundle.putString("class_doc",classId);
+                                            bundle.putString("classDoc_id",today_rollcallDocId);
+                                            i.putExtras(bundle);
+                                            i.setClass(getActivity(),RollcallResult.class);
+                                            startActivity(i);
+                                        }
+                                    });
+                                }else if(rollcallDocId != null){
+                                    Intent i = new Intent();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("class_id",class_id);
+                                    bundle.putString("class_doc",classId);
+                                    bundle.putString("classDoc_id",rollcallDocId);
+                                    i.putExtras(bundle);
+                                    i.setClass(getActivity(),RollcallResult.class);
+                                    startActivity(i);
+                                }else {
+                                    Toast.makeText(getActivity(),"今天還沒點名喔",Toast.LENGTH_LONG).show();
+                                }
+                            });
 
 
                             break;
@@ -398,6 +441,27 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
             });
         }
     }
+
+    //判斷點名日期是否為同一天
+    private static boolean isSameDate(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+
+        boolean isSameYear = cal1.get(Calendar.YEAR) == cal2
+                .get(Calendar.YEAR);
+        boolean isSameMonth = isSameYear
+                && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
+        boolean isSameDate = isSameMonth
+                && cal1.get(Calendar.DAY_OF_MONTH) == cal2
+                .get(Calendar.DAY_OF_MONTH);
+
+        return isSameDate;
+    }
+
+
 
 
 

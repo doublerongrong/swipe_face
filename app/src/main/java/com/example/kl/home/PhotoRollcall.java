@@ -158,7 +158,6 @@ public class PhotoRollcall extends AppCompatActivity {
             attend.put("rollcall_sick", sickList);
             attend.put("rollcall_time", time);
             db.collection("Rollcall").add(attend).addOnCompleteListener(task -> {
-                dialog.dismiss();
                 if(task.isSuccessful()){
 
                     Query query1 = db.collection("Rollcall").whereEqualTo("rollcall_time", time);
@@ -169,15 +168,20 @@ public class PhotoRollcall extends AppCompatActivity {
                             docId = documentSnapshot.getId();
                         }
                         if(docId!=null){
-                            Log.d(TAG,"checkIntentDocId: "+docId);
-                            Intent intent = new Intent();
-                            intent.setClass(getApplicationContext(), RollcallResult.class);
-                            intent.putExtra("class_id", classId);
-                            intent.putExtra("class_doc",classDoc);
-                            intent.putExtra("classDoc_id",docId);
-                            intent.putExtra("request","0");
-                            startActivity(intent);
-                            finish();
+                            Map<String, Object> rollcall = new HashMap<>();
+                            rollcall.put("rollcall_docId", docId);
+                            db.collection("Class").document(classDoc).update(rollcall).addOnCompleteListener(task2 -> {
+                                dialog.dismiss();
+                                Log.d(TAG, "checkIntentDocId: " + docId);
+                                Intent intent = new Intent();
+                                intent.setClass(getApplicationContext(), RollcallResult.class);
+                                intent.putExtra("class_id", classId);
+                                intent.putExtra("class_doc", classDoc);
+                                intent.putExtra("classDoc_id", docId);
+                                intent.putExtra("request", "0");
+                                startActivity(intent);
+                                finish();
+                            });
                         }
                     });
                 }else{
