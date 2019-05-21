@@ -2,6 +2,7 @@ package com.example.kl.home;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -29,6 +30,7 @@ public class GroupPage extends AppCompatActivity {
     private GroupPageAdapter groupPageAdapter; //Adapter
     private RecyclerView groupRecycleView; // RecycleView
     private FirebaseFirestore db;
+    SwipeRefreshLayout swipeRefreshLayout;
     private List<Group> groupList; // for RecycleView
     public String classYear; // 年度
     String className; // 課程名
@@ -46,6 +48,15 @@ public class GroupPage extends AppCompatActivity {
         setContentView(R.layout.group_page);
         //init db
         db = FirebaseFirestore.getInstance();
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+            }
+        });
 
         //init Adapter
         groupList = new ArrayList<>();
@@ -92,6 +103,51 @@ public class GroupPage extends AppCompatActivity {
             setAllGroup();
             groupPageAdapter.notifyDataSetChanged();
         }
+    }
+
+    void refreshItems() {
+        // Load items
+        // ...
+        int size = groupList.size();
+        groupList.clear();
+        groupPageAdapter.notifyItemRangeRemoved(0,size);
+
+        if(groupList.size()==0){
+            db.collection("Class")
+                    .document(classId)
+                    .collection("Group")
+                    .orderBy("group_num")
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                String groupId = document.getId();//group docId
+                                Log.d(TAG,groupId);
+                                Group group = document.toObject(Group.class).withId(groupId);
+                                groupList.add(group);
+                            }
+                            int sizeadd = groupList.size();
+                            groupPageAdapter.notifyItemRangeInserted(0,sizeadd);
+
+                            onItemsLoadComplete();
+
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    });
+        }
+
+        // Load complete
+    }
+
+    void onItemsLoadComplete() {
+        // Update the adapter and notify data set changed
+        // ...
+
+        // Stop refresh animation
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
