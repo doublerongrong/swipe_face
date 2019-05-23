@@ -6,10 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        style="@style/Header"
-        android:orientation="horizontal"
-        android:elevation="5dp"
-        android:background="#FFF">
+        style="@style/Header">
 
         <LinearLayout
             android:layout_width="match_parent"

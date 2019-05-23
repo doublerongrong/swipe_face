@@ -9,10 +9,7 @@
 
 
     <LinearLayout
-        style="@style/Header"
-        android:background="#FFFFFF"
-        android:orientation="horizontal"
-        android:elevation="10dp">
+        style="@style/Header">
 
         <LinearLayout
             android:layout_width="match_parent"

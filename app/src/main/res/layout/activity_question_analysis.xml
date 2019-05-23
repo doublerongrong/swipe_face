@@ -8,9 +8,7 @@
     tools:context=".QuestionAnalysis"
     android:background="#FFFFFF">
     <LinearLayout
-        style="@style/Header"
-        android:orientation="horizontal"
-        android:background="#FFFFFF">
+        style="@style/Header">
 
         <LinearLayout
             android:layout_width="match_parent"

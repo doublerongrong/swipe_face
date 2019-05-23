@@ -24,12 +24,6 @@
             android:paddingLeft="31dp">
 
 
-            <ImageButton
-                android:id="@+id/searchBtn"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@drawable/ic_outline_account_circle_24px" />
-
 
             <TextView
                 android:id="@+id/textViewStudentId"

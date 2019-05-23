@@ -10,9 +10,7 @@
     android:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="73dp"
-        android:orientation="horizontal">
+        style="@style/Header">
 
         <LinearLayout
             android:layout_width="match_parent"

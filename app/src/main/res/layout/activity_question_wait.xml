@@ -9,9 +9,7 @@
     tools:context=".QuestionWait">
 
     <LinearLayout
-        style="@style/Header"
-        android:orientation="horizontal"
-        android:background="#FFFFFF">
+        style="@style/Header">
 
         <LinearLayout
             android:layout_width="match_parent"

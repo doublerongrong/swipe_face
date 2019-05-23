@@ -79,7 +79,7 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMainList.setAdapter(classListAdapter);
 
-        fabCreateClass = (FloatingActionButton) view.findViewById(R.id.fab_creatClass);
+        fabCreateClass = view.findViewById(R.id.fab_creatClass);
         Log.d(TAG, "Flag1");
 
         int itemSpace = 10;
@@ -89,56 +89,45 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
 
         db.collection("Class").whereEqualTo("teacher_email", teacher_email)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                if (e != null) {
+                .addSnapshotListener((documentSnapshots, e) -> {
+                    if (e != null) {
 
-                    Log.d(TAG, "Error :" + e.getMessage());
-                }
-
-
-                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-
-
-                    if (doc.getType() == DocumentChange.Type.ADDED ) {
-                        classId = doc.getDocument().getId();
-                        Class aClass = doc.getDocument().toObject(Class.class).withId(classId);
-                        Log.d(TAG, "DB2 classId:"+classId);
-
-                        if(!classList.contains(aClass)){
-                            classList.add(aClass);
-                        }
-                        classListAdapter.notifyDataSetChanged();
-
+                        Log.d(TAG, "Error :" + e.getMessage());
                     }
-                }
-                if (classList.isEmpty()) {
-                    mMainList.setVisibility(View.GONE);
-                    imNoData.setVisibility(View.VISIBLE);
-                }
-                else {
-                    mMainList.setVisibility(View.VISIBLE);
-                    imNoData.setVisibility(View.GONE);
-                }
 
-            }
-        });
+
+                    for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() == DocumentChange.Type.ADDED ) {
+                            classId = doc.getDocument().getId();
+                            Class aClass = doc.getDocument().toObject(Class.class).withId(classId);
+                            Log.d(TAG, "DB2 classId:"+classId);
+
+                            if(!classList.contains(aClass)){
+                                classList.add(aClass);
+                            }
+                            classListAdapter.notifyDataSetChanged();
+                        }
+                    }
+                    if (classList.isEmpty()) {
+                        mMainList.setVisibility(View.GONE);
+                        imNoData.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        mMainList.setVisibility(View.VISIBLE);
+                        imNoData.setVisibility(View.GONE);
+                    }
+
+                });
         fabCreateClass.setOnClickListener(v -> {
             Intent intent = new Intent();
             intent.setClass(getActivity(), CreateClassSt1.class);
             startActivity(intent);
         });
 
-        classListAdapter.setOnTransPageClickListener(new ClassListAdapter.transPageListener() {
+        classListAdapter.setOnTransPageClickListener(classId2 -> {
+            Log.d(TAG,"onTransPageClick0" +classId2);
+            mCallback.onFragmentSelected(classId2 , "toClassListDetail");//fragment傳值
 
-            @Override
-            public void onTransPageClick(String classId2) {
-                Log.d(TAG,"onTransPageClick0" +classId2);
-                mCallback.onFragmentSelected(classId2 , "toClassListDetail");//fragment傳值
-
-
-            }
 
         });//Fragment換頁
 

@@ -8,9 +8,7 @@
     tools:context=".Export">
 
     <LinearLayout
-        style="@style/Header"
-        android:background="#FFFFFF"
-        android:orientation="horizontal">
+        style="@style/Header">
 
         <LinearLayout
             android:layout_width="match_parent"

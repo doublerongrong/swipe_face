@@ -53,7 +53,7 @@ public class Method {
 //
 //
 //    </LinearLayout>
-//
+
 //
 //    //Divider For xml
 //<ImageView
