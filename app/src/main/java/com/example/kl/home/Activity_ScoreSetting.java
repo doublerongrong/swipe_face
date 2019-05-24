@@ -90,7 +90,6 @@ public class Activity_ScoreSetting extends AppCompatActivity {
                             bundle7.putString("classId", classId);
                             intent.putExtras(bundle7);
                             startActivity(intent);
-                            finish();
 
 
                         });

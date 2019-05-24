@@ -52,7 +52,7 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class PhotoRollcall extends AppCompatActivity {
+public class  PhotoRollcall extends AppCompatActivity {
 
     private final String TAG = "PhotoRollcall";
     private String classId,classDoc,docId;

@@ -31,6 +31,8 @@ import com.example.kl.home.Model.Class;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Fragment_ClassDetail extends Fragment implements FragmentBackHandler {

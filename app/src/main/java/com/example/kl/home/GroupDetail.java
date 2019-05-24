@@ -163,20 +163,20 @@ public class GroupDetail extends AppCompatActivity {
                     for (String student : groupStudentListStr) {
                         db.collection("Student").whereEqualTo("student_id", student)
                                 .addSnapshotListener((documentSnapshots, e) -> {
-                            if (e != null) {
-                            }
-                            for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                                if (doc.getType() == DocumentChange.Type.ADDED) {
-                                    String studentId = doc.getDocument().getId();
-                                    Student aStudent = doc.getDocument().toObject(Student.class).withId(studentId);
+                                    if (e != null) {
+                                    }
+                                    for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                                            String studentId = doc.getDocument().getId();
+                                            Student aStudent = doc.getDocument().toObject(Student.class).withId(studentId);
 //                                    for(int i =0; i<studentList.size() ;i++){
 //
 //                                    }
-                                    studentList.add(aStudent);
-                                    groupDetailAdapter.notifyDataSetChanged();
-                                }
-                            }
-                        });
+                                            studentList.add(aStudent);
+                                            groupDetailAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                });
                     }
                 } else {
                     Log.d(TAG, "No such document");
