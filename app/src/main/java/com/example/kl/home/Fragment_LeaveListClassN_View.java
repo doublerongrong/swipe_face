@@ -96,6 +96,7 @@ public class Fragment_LeaveListClassN_View extends Fragment {
                     Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveRecordId);
                     if (!leaveList.contains(leave)) {
                         Log.d(TAG, leave.toString());
+                        leave.setCheckWay("課堂中");
                         leaveList.add(leave);
                         leaveListClassDetailAdapter.notifyDataSetChanged();
                     }

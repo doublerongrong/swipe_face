@@ -24,7 +24,7 @@ public class LeaveListClassDetailAdapter extends RecyclerView.Adapter<LeaveListC
     public Context context;
 
     public List<Leave> leaveList;
-
+    private final String TAG = "LeaveListCalssAdapter";
     public LeaveListClassDetailAdapter(Context context, List<Leave> leaveList) {
         this.leaveList = leaveList;
         this.context = context;
@@ -61,6 +61,7 @@ public class LeaveListClassDetailAdapter extends RecyclerView.Adapter<LeaveListC
 
         String leaveId = leaveList.get(position).LeaveId;
         String checkWay = leaveList.get(position).getCheckWay();
+        Log.d(TAG,"checkWay"+checkWay);
 
         holder.mView.setOnClickListener(v -> {
             Toast.makeText(context, "Id  :  " + leaveId, Toast.LENGTH_SHORT).show();

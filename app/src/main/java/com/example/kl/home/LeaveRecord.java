@@ -209,26 +209,26 @@ public class LeaveRecord extends AppCompatActivity {
 
     public void setScore() {
 
-            DocumentReference docRef = mFirestore.collection("Performance").document(performanceId);
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Log.d(TAG,"Add points Flag :");
-                            Performance performance = document.toObject(Performance.class);
-                            currentScore = performance.getPerformance_totalAttendance();
-                            currentScore += absenseMinus*rollcallIdList.size();
-                            Log.d(TAG,"Check currentScore(223) : " + currentScore);
+        DocumentReference docRef = mFirestore.collection("Performance").document(performanceId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG,"Add points Flag :");
+                        Performance performance = document.toObject(Performance.class);
+                        currentScore = performance.getPerformance_totalAttendance();
+                        currentScore += absenseMinus*rollcallIdList.size();
+                        Log.d(TAG,"Check currentScore(223) : " + currentScore);
 
-                            Map<String, Object> attend = new HashMap<>();
-                            attend.put("performance_totalAttendance", currentScore);
-                            mFirestore.collection("Performance").document(performanceId).update(attend);
-                        }
+                        Map<String, Object> attend = new HashMap<>();
+                        attend.put("performance_totalAttendance", currentScore);
+                        mFirestore.collection("Performance").document(performanceId).update(attend);
                     }
                 }
-            });
+            }
+        });
     }//加回缺席分數
 
 
