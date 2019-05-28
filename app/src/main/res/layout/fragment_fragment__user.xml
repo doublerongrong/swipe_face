@@ -11,7 +11,9 @@
         android:orientation="vertical">
 
         <LinearLayout
-            style="@style/Header">
+            style="@style/Header"
+            android:background="#FFF"
+            android:orientation="horizontal">
 
 
             <TextView

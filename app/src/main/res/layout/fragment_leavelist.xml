@@ -14,10 +14,9 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:elevation="5dp">
+            style="@style/Header"
+            android:background="#FFF"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -39,17 +39,14 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
 
     private String TAG = "ClassDetail";
-    private String url = "http://192.168.0.108:8080/Export/StudentGrade/";
-    private String classId,rollcallDocId,today_rollcallDocId;
-    private Class aclass;
+    private String classId, rollcallDocId, today_rollcallDocId;
     private Class firestore_class;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db;
     private GridLayout gridLayout;
-    private TextView text_class_id;
     private TextView text_class_title;
     private String class_id;
     private String teacher_email = (FirebaseAuth.getInstance().getCurrentUser()).toString();
-    private Date date,rollcall_date;
+    private Date date, rollcall_date;
 
 
     OnFragmentSelectedListener mCallback;//Fragment傳值
@@ -64,42 +61,30 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         args = getArguments();//fragment傳值
         classId = args.getString("info");
 
-        if(args.getString("rollcall_id") != null){
+        if (args.getString("rollcall_id") != null) {
             rollcallDocId = args.getString("rollcall_id");
             class_id = args.getString("class_id");
-            Log.d(TAG,"rollcallId : "+rollcallDocId+"\tclass_id : "+class_id);
+
+            Log.d(TAG, "rollcallId : " + rollcallDocId + "\tclass_id : " + class_id);
         }
         Log.d(TAG, "classId:" + classId);//fragment傳值
-//        Toast.makeText(getContext(), "現在課程資料庫代碼是" + classId, Toast.LENGTH_LONG).show();
         db = FirebaseFirestore.getInstance();
-        getTeacher_email(classId);
-
 
         return inflater.inflate(R.layout.fragment_fragment_class_detail, container, false);
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "classId2:" + classId);
-        text_class_title = (TextView) view.findViewById(R.id.text_class_title);
-        gridLayout = (GridLayout) view.findViewById(R.id.grid_class_detail);
-
-        DocumentReference docRef = db.collection("Class").document(classId);
-        docRef.get().addOnSuccessListener(documentSnapshot -> {
-            class_id = documentSnapshot.toObject(Class.class).getClass_id();
-            Log.d(TAG,"class_id : "+class_id);
-        });
+        text_class_title = view.findViewById(R.id.text_class_title);
+        gridLayout = view.findViewById(R.id.grid_class_detail);
 
         date = new Date();
 
 
-        setClass(new FirebaseCallback() {
-            @Override
-            public void onCallback(Class firestore_class) {
+        setClass(firestore_class -> {
 
-                text_class_title.setText(firestore_class.getClass_name());
+            text_class_title.setText(firestore_class.getClass_name());
 
-                setSingleEvent(gridLayout, firestore_class);
-            }
+            setSingleEvent(gridLayout, firestore_class);
         });
 
 
@@ -132,7 +117,11 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         firestore_class = documentSnapshot.toObject(Class.class);
-                        Log.d(TAG, "setClass here");
+                        today_rollcallDocId = firestore_class.getRollcall_docId();
+                        class_id = firestore_class.getClass_id();
+                        teacher_email = firestore_class.getTeacher_email();
+                        Log.d(TAG, "class_id : " + class_id);
+                        Log.d(TAG, "today_rollcallDocId: " + today_rollcallDocId);
                         firebaseCallback.onCallback(firestore_class);
                     }
                 });
@@ -173,275 +162,195 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
         }
     }
 
-    public void getTeacher_email(String classId){
-        DocumentReference docRef = db.collection("Class").document(classId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Class aClass = document.toObject(Class.class);
-                        teacher_email = aClass.getTeacher_email();
-                        class_id = aClass.getClass_id();
-
-                    }
-                }
-            }
-        });
-    }
-
     // we are setting onClickListener for each element 處理選項
     private void setSingleEvent(GridLayout gridLayout, Class firestore_class) {
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             CardView cardView = (CardView) gridLayout.getChildAt(i);
             final int finalI = i;
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                   Log.d(TAG,"index "+finalI);
-                    switch (finalI) {
-                        case 0:
-                            //intent activity
-                            DocumentReference docRef = db.collection("Class").document(classId);
-                            docRef.get().addOnSuccessListener(documentSnapshot -> {
-                                today_rollcallDocId = documentSnapshot.getString("rollcall_docId");
-                                if (!today_rollcallDocId.equals("1")){
-                                    DocumentReference docRef1 = db.collection("Rollcall").document(today_rollcallDocId);
-                                    docRef1.get().addOnSuccessListener(documentSnapshot1 -> {
-                                        rollcall_date = documentSnapshot1.getDate("rollcall_time");
-                                        if(isSameDate(date,rollcall_date)){
-                                            Intent i = new Intent();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("class_id",class_id);
-                                            bundle.putString("class_doc",classId);
-                                            bundle.putString("classDoc_id",today_rollcallDocId);
-                                            i.putExtras(bundle);
-                                            i.setClass(getActivity(),RollcallSelect.class);
-                                            startActivity(i);
-                                        }
-                                    });
-                                }else if(rollcallDocId != null){
-                                    Intent i = new Intent();
+            cardView.setOnClickListener(view -> {
+                Log.d(TAG, "index " + finalI);
+                switch (finalI) {
+                    case 0:
+                        if (!today_rollcallDocId.equals("1")) {
+                            DocumentReference docRef1 = db.collection("Rollcall").document(today_rollcallDocId);
+                            docRef1.get().addOnSuccessListener(documentSnapshot1 -> {
+                                rollcall_date = documentSnapshot1.getDate("rollcall_time");
+                                if (isSameDate(date, rollcall_date)) {
+                                    Intent i1 = new Intent();
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("class_id",class_id);
-                                    bundle.putString("class_doc",classId);
-                                    bundle.putString("classDoc_id",rollcallDocId);
-                                    i.putExtras(bundle);
-                                    i.setClass(getActivity(),RollcallSelect.class);
-                                    startActivity(i);
-                                }else {
-                                    DocumentReference docRef1 = db.collection("Class").document(classId);
-                                    docRef1.get().addOnSuccessListener(documentSnapshot1 -> {
-                                        Class classG = documentSnapshot1.toObject(Class.class);
-                                        class_id = classG.getClass_id();
-                                        Intent i = new Intent();
-                                        Bundle bundlecall = new Bundle();
-                                        bundlecall.putString("class_id", class_id);
-                                        bundlecall.putString("class_doc", classId);
-                                        i.putExtras(bundlecall);
-                                        i.setClass(getActivity(), RollcallSelect.class);
-                                        startActivity(i);
-                                    });
+                                    bundle.putString("class_id", class_id);
+                                    bundle.putString("class_doc", classId);
+                                    bundle.putString("classDoc_id", today_rollcallDocId);
+                                    i1.putExtras(bundle);
+                                    i1.setClass(getActivity(), RollcallSelect.class);
+                                    startActivity(i1);
+                                } else {
+                                    Intent i1 = new Intent();
+                                    Bundle bundlecall = new Bundle();
+                                    bundlecall.putString("class_id", class_id);
+                                    bundlecall.putString("class_doc", classId);
+                                    i1.putExtras(bundlecall);
+                                    i1.setClass(getActivity(), RollcallSelect.class);
+                                    startActivity(i1);
                                 }
                             });
+                        } else {
+                            Intent i1 = new Intent();
+                            Bundle bundlecall = new Bundle();
+                            bundlecall.putString("class_id", class_id);
+                            bundlecall.putString("class_doc", classId);
+                            i1.putExtras(bundlecall);
+                            i1.setClass(getActivity(), RollcallSelect.class);
+                            startActivity(i1);
+                        }
 
-                            break;
-                        case 1:
-                            //intent activity 今日出缺席
-                            DocumentReference docRef1 = db.collection("Class").document(classId);
-                            docRef1.get().addOnSuccessListener(documentSnapshot -> {
-                                today_rollcallDocId = documentSnapshot.getString("rollcall_docId");
-                                Log.i("today",today_rollcallDocId);
-                                if (!today_rollcallDocId.equals("1")){
-                                    DocumentReference docRef2 = db.collection("Rollcall").document(today_rollcallDocId);
-                                    docRef2.get().addOnSuccessListener(documentSnapshot1 -> {
-                                        rollcall_date = documentSnapshot1.getDate("rollcall_time");
-                                        if(isSameDate(date,rollcall_date)){
-                                            Intent i = new Intent();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("class_id",class_id);
-                                            bundle.putString("class_doc",classId);
-                                            bundle.putString("classDoc_id",today_rollcallDocId);
-                                            i.putExtras(bundle);
-                                            i.setClass(getActivity(),RollcallResult.class);
-                                            startActivity(i);
-                                        }
-                                    });
-                                }else if(rollcallDocId != null){
-                                    Intent i = new Intent();
+                        break;
+                    case 1:
+                        //intent activity 今日出缺席
+
+                        if (!today_rollcallDocId.equals("1")) {
+                            DocumentReference docRef2 = db.collection("Rollcall").document(today_rollcallDocId);
+                            docRef2.get().addOnSuccessListener(documentSnapshot1 -> {
+                                rollcall_date = documentSnapshot1.getDate("rollcall_time");
+                                if (isSameDate(date, rollcall_date)) {
+                                    Intent i1 = new Intent();
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("class_id",class_id);
-                                    bundle.putString("class_doc",classId);
-                                    bundle.putString("classDoc_id",rollcallDocId);
-                                    i.putExtras(bundle);
-                                    i.setClass(getActivity(),RollcallResult.class);
-                                    startActivity(i);
-                                }else {
-                                    Toast.makeText(getActivity(),"今天還沒點名喔",Toast.LENGTH_LONG).show();
+                                    bundle.putString("class_id", class_id);
+                                    bundle.putString("class_doc", classId);
+                                    bundle.putString("classDoc_id", today_rollcallDocId);
+                                    i1.putExtras(bundle);
+                                    i1.setClass(getActivity(), RollcallResult.class);
+                                    startActivity(i1);
+                                } else {
+                                    Toast.makeText(getActivity(), "今天還沒點名喔", Toast.LENGTH_LONG).show();
                                 }
                             });
+                        }
 
 
-                            break;
-                        case 2:
-                            //假單管理
-
+                        break;
+                    case 2:
+                        //假單管理
 //                            mCallback.onFragmentSelected(firestore_class.getClass_id(), "toLeaveManage");//fragment傳值
-                            Intent i = new Intent();
-                            Bundle bundleleave = new Bundle();
-                            bundleleave.putString("info",class_id);
-                            bundleleave.putString("teacher_email",teacher_email);
-                            Log.d(TAG,"LeaveListN set bundle" + bundleleave.toString());
-                            i.putExtras(bundleleave);
-                            i.setClass(getActivity(),Fragment_LeaveListClassN.class);
-                            startActivity(i);
-                            break;
-                        case 3:
-                            //學生清單
-                            mCallback.onFragmentSelected(classId, "toClassStudentList");//fragment傳值
-                            break;
-                        case 4:
-                            //小組清單
-                            DocumentReference docRefGroup = db.collection("Class").document(classId);
-                            docRefGroup.get().addOnSuccessListener(documentSnapshot -> {
-                                Class classG = documentSnapshot.toObject(Class.class);
-                                if (!classG.isGroup_state()&&!classG.isGroup_state_go()) {//判斷是否分組
-                                    Intent intentToCreateClassGroupSt1 = new Intent();
-                                    intentToCreateClassGroupSt1.setClass(getActivity(), CreateClassGroupSt1.class);
-                                    Bundle bundleToCreateClassGroupSt1 = new Bundle();
-                                    bundleToCreateClassGroupSt1.putString("classId", classId);
-                                    bundleToCreateClassGroupSt1.putString("classYear", classG.getClass_year());
-                                    bundleToCreateClassGroupSt1.putString("className", classG.getClass_name());
-                                    bundleToCreateClassGroupSt1.putInt("classStuNum", classG.getStudent_id().size());
-                                    intentToCreateClassGroupSt1.putExtras(bundleToCreateClassGroupSt1);
-                                    getActivity().startActivity(intentToCreateClassGroupSt1);
-                                } else if (!classG.isGroup_state()&&classG.isGroup_state_go()){
-                                    Intent intentToCreateClassGroupSt3 = new Intent();
-                                    intentToCreateClassGroupSt3.setClass(getActivity(), CreateClassGroupSt3.class);
-                                    Bundle bundleToCreateClassGroupSt3 = new Bundle();
-                                    bundleToCreateClassGroupSt3.putString("classId", classId);
-                                    bundleToCreateClassGroupSt3.putString("classYear", classG.getClass_year());
-                                    bundleToCreateClassGroupSt3.putString("className", classG.getClass_name());
-                                    bundleToCreateClassGroupSt3.putInt("classStuNum", classG.getStudent_id().size());
-                                    intentToCreateClassGroupSt3.putExtras(bundleToCreateClassGroupSt3);
-                                    getActivity().startActivity(intentToCreateClassGroupSt3);
-                                }
-                                else {
-                                    Intent intentToGroupPage = new Intent();
-                                    intentToGroupPage.setClass(getActivity(), GroupPage.class);
-                                    Bundle bundleToGroupPage = new Bundle();
-                                    bundleToGroupPage.putString("classId", classId);
-                                    bundleToGroupPage.putString("class_Id", classG.getClass_id());
-                                    bundleToGroupPage.putString("classYear", classG.getClass_year());
-                                    bundleToGroupPage.putString("className", classG.getClass_name());
-                                    bundleToGroupPage.putInt("classStuNum", classG.getStudent_id().size());
-                                    intentToGroupPage.putExtras(bundleToGroupPage);
-                                    getActivity().startActivity(intentToGroupPage);
-                                }
-                            });
-                            break;
-                        case 5:
-                            //點人答題
-                            Intent intent = new Intent();
-                            intent.setClass(getActivity(), Activity_PickAnswer.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("classId", classId);
-                            intent.putExtras(bundle);
-                            getActivity().startActivity(intent);
+                        Intent i1 = new Intent();
+                        Bundle bundleleave = new Bundle();
+                        bundleleave.putString("info", class_id);
+                        bundleleave.putString("teacher_email", teacher_email);
+                        Log.d(TAG, "LeaveListN set bundle" + bundleleave.toString());
+                        i1.putExtras(bundleleave);
+                        i1.setClass(getActivity(), Fragment_LeaveListClassN.class);
+                        startActivity(i1);
+                        break;
+                    case 3:
+                        //學生清單
+                        mCallback.onFragmentSelected(classId, "toClassStudentList");//fragment傳值
+                        break;
+                    case 4:
+                        //小組清單
+                        if (!firestore_class.isGroup_state() && !firestore_class.isGroup_state_go()) {//判斷是否分組
+                            Intent intentToCreateClassGroupSt1 = new Intent();
+                            intentToCreateClassGroupSt1.setClass(getActivity(), CreateClassGroupSt1.class);
+                            Bundle bundleToCreateClassGroupSt1 = new Bundle();
+                            bundleToCreateClassGroupSt1.putString("classId", classId);
+                            bundleToCreateClassGroupSt1.putString("classYear", firestore_class.getClass_year());
+                            bundleToCreateClassGroupSt1.putString("className", firestore_class.getClass_name());
+                            bundleToCreateClassGroupSt1.putInt("classStuNum", firestore_class.getStudent_id().size());
+                            intentToCreateClassGroupSt1.putExtras(bundleToCreateClassGroupSt1);
+                            getActivity().startActivity(intentToCreateClassGroupSt1);
+                        } else if (!firestore_class.isGroup_state() && firestore_class.isGroup_state_go()) {
+                            Intent intentToCreateClassGroupSt3 = new Intent();
+                            intentToCreateClassGroupSt3.setClass(getActivity(), CreateClassGroupSt3.class);
+                            Bundle bundleToCreateClassGroupSt3 = new Bundle();
+                            bundleToCreateClassGroupSt3.putString("classId", classId);
+                            bundleToCreateClassGroupSt3.putString("classYear", firestore_class.getClass_year());
+                            bundleToCreateClassGroupSt3.putString("className", firestore_class.getClass_name());
+                            bundleToCreateClassGroupSt3.putInt("classStuNum", firestore_class.getStudent_id().size());
+                            intentToCreateClassGroupSt3.putExtras(bundleToCreateClassGroupSt3);
+                            getActivity().startActivity(intentToCreateClassGroupSt3);
+                        } else {
+                            Intent intentToGroupPage = new Intent();
+                            intentToGroupPage.setClass(getActivity(), GroupPage.class);
+                            Bundle bundleToGroupPage = new Bundle();
+                            bundleToGroupPage.putString("classId", classId);
+                            bundleToGroupPage.putString("class_Id", firestore_class.getClass_id());
+                            bundleToGroupPage.putString("classYear", firestore_class.getClass_year());
+                            bundleToGroupPage.putString("className", firestore_class.getClass_name());
+                            bundleToGroupPage.putInt("classStuNum", firestore_class.getStudent_id().size());
+                            intentToGroupPage.putExtras(bundleToGroupPage);
+                            getActivity().startActivity(intentToGroupPage);
+                        }
+                        break;
+                    case 5:
+                        //點人答題
+                        Intent intent = new Intent();
+                        intent.setClass(getActivity(), Activity_PickAnswer.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("classId", classId);
+                        intent.putExtras(bundle);
+                        getActivity().startActivity(intent);
 
-                            break;
-                        case 6:
-                            //提問按鈕
-                            DocumentReference docRefClass = db.collection("Class").document(classId);
-                            docRefClass.get().addOnSuccessListener(documentSnapshot -> {
-                                Class classCheckQuestion = documentSnapshot.toObject(Class.class);
-                                if(!classCheckQuestion.isQuestion_state()){
+                        break;
+                    case 6:
+                        //提問按鈕
+                        if (!firestore_class.isQuestion_state()) {
+                            Intent intentToQuestion = new Intent();
+                            intentToQuestion.setClass(getActivity(), QuestionSt.class);
+                            Bundle bundleToQuestion = new Bundle();
+                            bundleToQuestion.putString("classId", classId);
+                            intentToQuestion.putExtras(bundleToQuestion);
+                            getActivity().startActivity(intentToQuestion);
+                        } else {
+                            DocumentReference questionDoc = db.collection("Class").document(classId)
+                                    .collection("Question").document("question");
+                            questionDoc.get().addOnSuccessListener(documentSnapshot2 -> {
+                                Question question = documentSnapshot2.toObject(Question.class);
+                                Date create_time = question.getCreate_time();
+                                Date nowDate = new Date();
+
+                                if (create_time.before(nowDate)) {
+                                    Intent intentToAnalysis = new Intent();
+                                    intentToAnalysis.setClass(getActivity(), QuestionAnalysis.class);
+                                    Bundle bundleToAnalysis = new Bundle();
+                                    bundleToAnalysis.putString("classId", classId);
+                                    intentToAnalysis.putExtras(bundleToAnalysis);
+                                    getActivity().startActivity(intentToAnalysis);
+                                } else {
                                     Intent intentToQuestion = new Intent();
-                                    intentToQuestion.setClass(getActivity(), QuestionSt.class);
+                                    intentToQuestion.setClass(getActivity(), QuestionWait.class);
                                     Bundle bundleToQuestion = new Bundle();
                                     bundleToQuestion.putString("classId", classId);
                                     intentToQuestion.putExtras(bundleToQuestion);
                                     getActivity().startActivity(intentToQuestion);
                                 }
-                                else{
-                                    DocumentReference questionDoc = db.collection("Class").document(classId)
-                                            .collection("Question").document("question");
-                                    questionDoc.get().addOnSuccessListener(documentSnapshot2 -> {
-                                        Question question = documentSnapshot2.toObject(Question.class);
-                                        Date create_time = question.getCreate_time();
-                                        Date nowDate = new Date();
 
-                                        if(create_time.before(nowDate)){
-                                            Intent intentToAnalysis = new Intent();
-                                            intentToAnalysis.setClass(getActivity(), QuestionAnalysis.class);
-                                            Bundle bundleToAnalysis = new Bundle();
-                                            bundleToAnalysis.putString("classId", classId);
-                                            intentToAnalysis.putExtras(bundleToAnalysis);
-                                            getActivity().startActivity(intentToAnalysis);
-                                        }
-                                        else{
-                                            Intent intentToQuestion = new Intent();
-                                            intentToQuestion.setClass(getActivity(), QuestionWait.class);
-                                            Bundle bundleToQuestion = new Bundle();
-                                            bundleToQuestion.putString("classId", classId);
-                                            intentToQuestion.putExtras(bundleToQuestion);
-                                            getActivity().startActivity(intentToQuestion);
-                                        }
-
-                                    });
-                                }
                             });
+                        }
 
+                        break;
+                    case 7:
+                        //intent activity 計分設定
+                        Intent intent7 = new Intent();
+                        intent7.setClass(getActivity(), Activity_ScoreSetting.class);
+                        Bundle bundle7 = new Bundle();
+                        bundle7.putString("classId", classId);
+                        intent7.putExtras(bundle7);
+                        getActivity().startActivity(intent7);
+                        break;
+                    case 8:
+                        //intent activity 繪出成績
+                        Intent intentToExport = new Intent();
+                        intentToExport.setClass(getActivity(), Export.class);
+                        Bundle bundleToExport = new Bundle();
+                        bundleToExport.putString("classId", classId);
+                        bundleToExport.putString("class_id", class_id);
+                        intentToExport.putExtras(bundleToExport);
+                        getActivity().startActivity(intentToExport);
+                        break;
 
-                            break;
-                        case 7:
-                            //intent activity 計分設定
-                            Intent intent7 = new Intent();
-                            intent7.setClass(getActivity(), Activity_ScoreSetting.class);
-                            Bundle bundle7 = new Bundle();
-                            bundle7.putString("classId", classId);
-                            intent7.putExtras(bundle7);
-                            getActivity().startActivity(intent7);
-                            break;
-                        case 8:
-                            //intent activity 繪出成績
-                            Intent intentToExport = new Intent();
-                            intentToExport.setClass(getActivity(), Export.class);
-                            Bundle bundleToExport = new Bundle();
-                            bundleToExport.putString("classId", classId);
-                            bundleToExport.putString("class_id",class_id);
-                            intentToExport.putExtras(bundleToExport);
-                            getActivity().startActivity(intentToExport);
-//                            OkHttpClient client = new OkHttpClient();
-//                            LayoutInflater lf = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//                            @SuppressLint("InflateParams")
-//                            ViewGroup vg = (ViewGroup) lf.inflate(R.layout.dialog_export_excel, null);
-//                            final EditText etShow = vg.findViewById(R.id.et_name);
-//                            new AlertDialog.Builder(getActivity())
-//                                    .setView(vg)
-//                                    .setPositiveButton("確定", (dialog, which) -> {
-//                                        final String email = etShow.getText().toString().trim();
-//                                        if ("".equals(email)) {
-//                                            Toast.makeText(getActivity(), "請輸入信箱", Toast.LENGTH_SHORT).show();
-//                                            Log.d(TAG, "Dialog取消");
-//                                        } else {
-//                                            String urlToApi = url+"\\"+class_id+"\\"+email;
-//                                            RequestBody reqbody = RequestBody.create(null, new byte[0]);
-//                                            Request.Builder formBody = new Request.Builder()
-//                                                    .url(urlToApi).method("POST",reqbody).header("Content-Length", "0");
-//                                            client.newCall(formBody.build());
-//                                            Log.d(TAG,"PostTest");
-//
-//                                        }
-//                                    })
-//                                    .setNegativeButton("取消", null).show();
-                            break;
-
-                    }
                 }
             });
         }
+
     }
 
     //判斷點名日期是否為同一天
@@ -462,10 +371,4 @@ public class Fragment_ClassDetail extends Fragment implements FragmentBackHandle
 
         return isSameDate;
     }
-
-
-
-
-
-
 }

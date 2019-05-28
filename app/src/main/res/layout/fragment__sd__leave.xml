@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment_SD_Leave">
+    tools:context=".Fragment_SD_Leave"
+    android:background="#FFFFFF">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/student_detail_Leavelist"

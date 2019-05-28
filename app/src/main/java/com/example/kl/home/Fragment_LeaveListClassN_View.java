@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.kl.home.Adapter.Detail_LeaveListAdapter;
 import com.example.kl.home.Adapter.LeaveListAdapter;
@@ -19,7 +20,10 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +37,10 @@ public class Fragment_LeaveListClassN_View extends Fragment {
 
     private RecyclerView mMainList;
     private FirebaseFirestore mFirestore;
-    private LeaveListAdapter leaveListAdapter;
     private LeaveListClassDetailAdapter leaveListClassDetailAdapter;
     private List<Leave> leaveList;
     private Bundle arg;
+    private TextView tvNoData;
 
 
     @Override
@@ -48,7 +52,7 @@ public class Fragment_LeaveListClassN_View extends Fragment {
         class_id = arg.getString("PassClass_Id");
         check_way = arg.getString("PassCheck_Way");
         list_way = arg.getString("PassList_Way");
-        Log.d(TAG,"TEST LOG RUN Times_class_v " + arg.toString());
+        Log.d(TAG, "TEST LOG RUN Times_class_v " + arg.toString());
 
 
         Log.d(TAG, "TEST LV  " + teacher_email);
@@ -64,62 +68,49 @@ public class Fragment_LeaveListClassN_View extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         leaveList = new ArrayList<>();
-        leaveListAdapter = new LeaveListAdapter(view.getContext(),leaveList);
-        leaveListClassDetailAdapter = new LeaveListClassDetailAdapter(view.getContext(),leaveList);
-
+//        leaveListAdapter = new LeaveListAdapter(view.getContext(), leaveList);
+        leaveListClassDetailAdapter = new LeaveListClassDetailAdapter(view.getContext(), leaveList);
+        tvNoData = view.findViewById(R.id.tvNoData);
         mFirestore = FirebaseFirestore.getInstance();
 
         mMainList = view.findViewById(R.id.leave_list);
         mMainList.setHasFixedSize(true);
         mMainList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mMainList.setAdapter(leaveListAdapter);
-
-            mMainList.setAdapter(leaveListClassDetailAdapter);
-            setClassLeave(list_way);
-
-
-
+//        mMainList.setAdapter(leaveListAdapter);
+        mMainList.setAdapter(leaveListClassDetailAdapter);
+        setClassLeave(list_way);
     }
 
 
-    public void setClassLeave(String listWay){
-        leaveList.clear();
-        mFirestore.collection("Leave").whereEqualTo("leave_check",listWay)
-                .whereEqualTo("class_id",class_id).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-
-                if(e != null){
-                    Log.d(TAG,"error00" + e.getMessage());
-                }
-
-                for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
-
-                    if(doc.getType() == DocumentChange.Type.ADDED){
-                        Log.d(TAG,"here" );
-
-                        String leaveRecordId = doc.getDocument().getId();
-
-                        Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveRecordId);
-                        leave.setCheckWay("課堂中");
-                        Log.d(TAG,"Check Teamil : " + leave.getTeacher_email());
+    public void setClassLeave(String listWay) {
+        mFirestore.collection("Leave")
+                .whereEqualTo("leave_check", listWay)
+                .whereEqualTo("class_id", class_id)
+                .whereEqualTo("teacher_email", teacher_email).addSnapshotListener((documentSnapshots, e) -> {
+            if (e != null) {
+                Log.d(TAG, "error00" + e.getMessage());
+            }
+            for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                if (doc.getType() == DocumentChange.Type.ADDED) {
+                    String leaveRecordId = doc.getDocument().getId();
+                    Leave leave = doc.getDocument().toObject(Leave.class).withId(leaveRecordId);
+                    if (!leaveList.contains(leave)) {
+                        Log.d(TAG, leave.toString());
                         leaveList.add(leave);
-
                         leaveListClassDetailAdapter.notifyDataSetChanged();
                     }
-
                 }
-                if(leaveList.isEmpty()){
-                    Log.d(TAG,"here0" );
-
-                    leaveListClassDetailAdapter.notifyDataSetChanged();
-                }
+            }
+            if (leaveList.isEmpty()) {
+                mMainList.setVisibility(View.GONE);
+                tvNoData.setVisibility(View.VISIBLE);
+            } else {
+                mMainList.setVisibility(View.VISIBLE);
+                tvNoData.setVisibility(View.GONE);
             }
         });
 
-
     }
-
 
 
 }

@@ -7,7 +7,9 @@
     android:orientation="vertical"
     tools:context=".CreateClassGroupSt1">
     <LinearLayout
-        style="@style/Header">
+        style="@style/Header"
+        android:background="#FFF"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"

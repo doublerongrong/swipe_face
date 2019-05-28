@@ -94,8 +94,6 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
 
                         Log.d(TAG, "Error :" + e.getMessage());
                     }
-
-
                     for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED ) {
                             classId = doc.getDocument().getId();
@@ -111,10 +109,6 @@ public class Fragment_ClassList extends Fragment  implements FragmentBackHandler
                     if (classList.isEmpty()) {
                         mMainList.setVisibility(View.GONE);
                         imNoData.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        mMainList.setVisibility(View.VISIBLE);
-                        imNoData.setVisibility(View.GONE);
                     }
 
                 });

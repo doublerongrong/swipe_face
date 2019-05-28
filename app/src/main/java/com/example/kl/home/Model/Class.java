@@ -35,14 +35,14 @@ public class Class extends ClassId implements Parcelable {
     private Integer group_numLow;//小組人數下限
     private Date create_time;//小組創立時間
     private boolean question_state;
-    private String rollcall_docid;
+    private String rollcall_docId;
 
-    public String getRollcall_docid() {
-        return rollcall_docid;
+    public String getRollcall_docId() {
+        return rollcall_docId;
     }
 
-    public void setRollcall_docid(String rollcall_docid) {
-        this.rollcall_docid = rollcall_docid;
+    public void setRollcall_docId(String rollcall_docId) {
+        this.rollcall_docId = rollcall_docId;
     }
 
     public boolean isQuestion_state() {
