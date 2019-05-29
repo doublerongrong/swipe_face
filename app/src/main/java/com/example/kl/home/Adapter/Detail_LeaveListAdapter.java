@@ -47,7 +47,6 @@ public class Detail_LeaveListAdapter extends RecyclerView.Adapter<Detail_LeaveLi
         holder.leave_reason.setText(leaveList.get(position).getLeave_reason());
         String leaveId = leaveList.get(position).LeaveId;
         holder.chectBtn.setOnClickListener(v -> {
-            Toast.makeText(context,"Id  :  " + leaveId, Toast.LENGTH_SHORT).show();
 
             Context context = v.getContext();
 

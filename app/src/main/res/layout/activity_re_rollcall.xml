@@ -20,8 +20,8 @@
 
             <ImageButton
                 android:id="@+id/backIBtn"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:background="@drawable/ic_chevron_left_black_24dp" />
 
 

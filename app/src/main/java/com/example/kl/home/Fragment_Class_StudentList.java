@@ -118,7 +118,6 @@ public class Fragment_Class_StudentList extends Fragment implements FragmentBack
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getActivity(), "搜尋結果為：" + query, Toast.LENGTH_SHORT).show();
                 if (classMember.contains(query)){
                     Query query1 = db.collection("Student")
                             .whereEqualTo("student_id", query);

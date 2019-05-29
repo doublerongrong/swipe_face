@@ -30,8 +30,7 @@ public class Activity_PickAnswer extends AppCompatActivity  {
         Intent Intent = getIntent(); /* 取得傳入的 Intent 物件 */
         Bundle bundle = Intent.getExtras();
         classId = bundle.getString("classId");
-        Toast.makeText(Activity_PickAnswer.this, "Now : " + classId,
-                Toast.LENGTH_SHORT).show();
+
         Log.d(TAG,"Now:" +classId );
         ib_pa_random_pick =  findViewById(R.id.ib_pa_random_pick);
         ib_pa_low_attendence = findViewById(R.id.ib_pa_low_attendence);
